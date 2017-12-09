@@ -5,3 +5,5 @@
 > Lanotalium now open sourced.
 
 You can create your own Lanota chart using this software.
+
+#### No Personal Build's Release is permitted.
