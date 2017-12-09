@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - MessageBox
+  - TunerCamera
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Tuner
+  - Note
+  - Background
+  - Beatline
+  - Angleline
+  - TunerUI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 532689549
+    locked: 0
+  - name: Tuner
+    uniqueID: 2344657839
+    locked: 0
+  - name: Beatline
+    uniqueID: 1602236827
+    locked: 0
+  - name: Angleline
+    uniqueID: 1215315607
+    locked: 0
+  - name: Note
+    uniqueID: 3024590477
+    locked: 0
+  - name: Core
+    uniqueID: 1794190327
+    locked: 0
+  - name: ClickToCreate
+    uniqueID: 3474716223
+    locked: 0
+  - name: TunerUI
+    uniqueID: 2676225853
+    locked: 0
+  - name: Effect
+    uniqueID: 2878759865
+    locked: 0
