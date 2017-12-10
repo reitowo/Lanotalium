@@ -146,7 +146,7 @@ PlayerSettings:
     Android: cn.Schwarzer.Lanotalium
     Standalone: com.Schwarzer.Lanotalium
   buildNumber:
-    Standalone: 25
+    Standalone: 26
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0

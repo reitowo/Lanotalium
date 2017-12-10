@@ -16,10 +16,7 @@ public class LimInspectorManager : MonoBehaviour
     public ComponentTypeManager ComponentType;
     public ComponentHoldNoteManager ComponentHoldNote;
     public ComponentMotionManager ComponentMotion;
-
-    public GameObject ComponentBpmView;
     public ComponentBpmManager ComponentBpm;
-
     public ComponentScrollSpeedManager ComponentScrollSpeed;
     public ComponentDefaultManager ComponentDefault;
 
@@ -82,7 +79,7 @@ public class LimInspectorManager : MonoBehaviour
             ComponentMotion.ComponentRect.anchoredPosition = new Vector2(0, Height);
             Height -= ComponentMotion.ComponentRect.sizeDelta.y;
         }
-        if (ComponentBpm.gameObject.activeInHierarchy)
+        if (ComponentBpm.ComponentBpmView.activeInHierarchy)
         {
             ComponentBpm.ComponentRect.anchoredPosition = new Vector2(0, Height);
             Height -= ComponentBpm.ComponentRect.sizeDelta.y;
@@ -119,16 +116,16 @@ public class LimInspectorManager : MonoBehaviour
     public void SwitchBpmList()
     {
         if (LimSystem.ChartContainer == null) return;
-        if (ComponentBpmView.activeInHierarchy)
+        if (ComponentBpm.ComponentBpmView.activeInHierarchy)
         {
             BpmListSwitcherImg.color = UnpressedColor;
-            ComponentBpmView.SetActive(false);
+            ComponentBpm.ComponentBpmView.SetActive(false);
             ArrangeComponentsUi();
         }
         else
         {
             BpmListSwitcherImg.color = PressedColor;
-            ComponentBpmView.SetActive(true);
+            ComponentBpm.ComponentBpmView.SetActive(true);
             ComponentBpm.InstantiateBpmList();
             ArrangeComponentsUi();
         }

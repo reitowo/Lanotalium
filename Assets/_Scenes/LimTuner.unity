@@ -21757,6 +21757,7 @@ MonoBehaviour:
     type: 2}
   BeatlinePrefab: {fileID: 1407586985510080, guid: 63c2b255e8c0d8746a887ad5507bb855,
     type: 2}
+  ComponentBpmView: {fileID: 550746784}
   PairsTransform: {fileID: 159508386}
   BeatlineTransform: {fileID: 511948264}
   LabelText: {fileID: 832822232}
@@ -29506,7 +29507,6 @@ MonoBehaviour:
   ComponentType: {fileID: 1398357341}
   ComponentHoldNote: {fileID: 544792543}
   ComponentMotion: {fileID: 221415066}
-  ComponentBpmView: {fileID: 550746784}
   ComponentBpm: {fileID: 652080610}
   ComponentScrollSpeed: {fileID: 1011435450}
   ComponentDefault: {fileID: 1817439771}

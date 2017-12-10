@@ -190,6 +190,7 @@ Project_BGA$背景图片
 Project_WizardLabel$工程向导
 Project_Open_Create$创建
 Project_Open_Open$打开
+Project_NoBGA$至少要有一个背景图片
 ChartZone_Rating_You$你
 ChartZone_Rating_Online$评分
 ChartZone_Head$谱面中心

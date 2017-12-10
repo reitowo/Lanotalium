@@ -11,6 +11,7 @@ public class ComponentBpmManager : MonoBehaviour
     public RectTransform ViewRect, ComponentRect;
     public Color InvalidColor, ValidColor, PressedColor, UnPressedColor;
     public GameObject TimeValuePrefab, BeatlinePrefab;
+    public GameObject ComponentBpmView;
     public Transform PairsTransform, BeatlineTransform;
     public Text LabelText, TimingText, BpmText, BeatlineText, DensityText, FixSelectedText, FixAllText;
     public List<float> BeatlineTimes = new List<float>();

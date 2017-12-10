@@ -173,6 +173,7 @@ Cloud_GetMTime_NotUploadedBefore$Not Uploaded Before
 Cloud_Error_UnsupportUserId$Error : UnsupportUserId
 Cloud_Error_NetworkNotReachable$Error : NetworkNotReachable
 Cloud_Error_NoProjectLoaded$Error : NoProjectLoaded
+Project_LoadFilter$Lanotalium Project(*.lap)|*.lap
 Project_Saved$Successfully saved.
 Project_InvalidProject$Invalid Project!
 Project_InvalidProjectFile$Invalid Project File!
