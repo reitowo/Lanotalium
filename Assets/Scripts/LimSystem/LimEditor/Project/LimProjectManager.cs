@@ -452,5 +452,3 @@ public class LimProjectManager : MonoBehaviour
         isLoadFinished = true;
     }
 }
-
-
