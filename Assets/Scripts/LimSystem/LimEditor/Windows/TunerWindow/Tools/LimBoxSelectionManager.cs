@@ -15,11 +15,15 @@ public class LimBoxSelectionManager : MonoBehaviour
     private void Update()
     {
         if (!TunerManager.isInitialized) return;
-        DrawBoxSelectionArea();
+        if (!DrawBoxSelectionArea()) return;
         SelectNotesInBoxArea();
     }
-    private void DrawBoxSelectionArea()
+    private bool DrawBoxSelectionArea()
     {
+        if (Input.GetMouseButtonUp(0))
+        {
+            BoxSelectionPanel.sizeDelta = new Vector2();
+        }
         Vector2 MousePositionInWindow = LimMousePosition.MousePositionInWindow(TunerWindowManager.BaseWindow.WindowRectTransform);
         if (Input.GetMouseButtonDown(0) && LimMousePosition.IsMouseOverWindow(TunerWindowManager.BaseWindow.WindowRectTransform))
         {
@@ -38,10 +42,7 @@ public class LimBoxSelectionManager : MonoBehaviour
         {
             if (BoxSelectionImage.enabled) BoxSelectionImage.enabled = false;
         }
-        if (Input.GetMouseButtonUp(0))
-        {
-            BoxSelectionPanel.sizeDelta = new Vector2();
-        }
+        return BoxSelectionImage.enabled;
     }
     public Vector2 TunerScreenToWindowPosition(Vector3 ScreenPosition, RectTransform Window)
     {
@@ -68,7 +69,7 @@ public class LimBoxSelectionManager : MonoBehaviour
                         OperationManager.SelectTapNote(Tap, true);
                     }
                 }
-                else
+                else if (!Input.GetKey(KeyCode.LeftControl))
                 {
                     if (Tap.OnSelect)
                     {
@@ -88,7 +89,7 @@ public class LimBoxSelectionManager : MonoBehaviour
                         OperationManager.SelectHoldNote(Hold, true);
                     }
                 }
-                else
+                else if (!Input.GetKey(KeyCode.LeftControl))
                 {
                     if (Hold.OnSelect)
                     {

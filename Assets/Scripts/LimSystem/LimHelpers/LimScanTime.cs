@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MathNet.Numerics.Statistics;
 
 public class LimScanTime : MonoBehaviour
 {

@@ -4,12 +4,6 @@ using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 using System;
-using System.Runtime.InteropServices;
-using System.Security.Principal;
-
-#if UNITY_STANDALONE
-using Microsoft.Win32;
-#endif
 
 namespace Lanotalium
 {
@@ -936,7 +930,7 @@ namespace Lanotalium
         public string LanguageName = "简体中文";
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset;
-        public int Build = 26;
+        public int Build = 27;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -944,6 +938,8 @@ namespace Lanotalium
         public bool AudioEffect = true;
         public bool Unsafe = false;
         public bool HideWhatsNew = false;
+        public bool DoNotRunAsAdmin = false;
+        public bool LapInjected = false;
         public Editor.TunerSkin TunerSkin;
         public Tuner.AudioEffectTheme AudioEffectTheme = Tuner.AudioEffectTheme.Lanota;
     }
@@ -951,13 +947,14 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.7.6";
-    public static int Build = 26;
+    public static string Version = "v1.7.7";
+    public static int Build = 27;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
     public LimOperationManager OperationManager;
     public LimDialogUtils DialogUtils;
+    public LimProjectManager ProjectManager;
 
     private string PreferencesSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Preferences.json";
     private string EditorLayoutSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/EditorLayout.json";
@@ -966,58 +963,17 @@ public class LimSystem : MonoBehaviour
     public static Lanotalium.Editor.EditorLayout EditorLayout = new Lanotalium.Editor.EditorLayout();
     public static string LanotaliumServer = "http://lanotalium.cn";
 
-#if UNITY_STANDALONE
-    private void RegisterLapFormat()
-    {
-        WindowsIdentity current = WindowsIdentity.GetCurrent();
-        WindowsPrincipal windowsPrincipal = new WindowsPrincipal(current);
-        bool isAdmin = windowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
-
-        if (!isAdmin) return;
-        try
-        {
-            RegistryKey Key = Registry.ClassesRoot.OpenSubKey("Lanotalium.Project");
-            if (Key == null)
-            {
-                Key = Registry.ClassesRoot.CreateSubKey("Lanotalium.Project");
-                Key.SetValue("", "Lanotalium Project");
-                RegistryKey Shell = Key.CreateSubKey("shell");
-                Shell = Shell.CreateSubKey("open");
-                Shell = Shell.CreateSubKey("command");
-                Shell.SetValue("", "\"" + Directory.GetParent(Application.dataPath).FullName + "\\Lanotalium.exe\"" + " \"%1\"");
-                RegistryKey Icon = Key.CreateSubKey("DefaultIcon");
-                Icon.SetValue("", "\"" + Directory.GetParent(Application.dataPath).FullName + "\\Lanotalium.exe\"" + ",1");
-            }
-            else
-            {
-                RegistryKey Shell = Key.OpenSubKey("shell");
-                Shell = Shell.OpenSubKey("open");
-                Shell = Shell.OpenSubKey("command", true);
-                Shell.SetValue("", "\"" + Directory.GetParent(Application.dataPath).FullName + "\\Lanotalium.exe\"" + " \"%1\"");
-                RegistryKey Icon = Key.OpenSubKey("DefaultIcon", true);
-                Icon.SetValue("", "\"" + Directory.GetParent(Application.dataPath).FullName + "\\Lanotalium.exe\"" + ",1");
-            }
-
-            Key = Registry.ClassesRoot.OpenSubKey(".lap");
-            if (Key == null)
-            {
-                Key = Registry.ClassesRoot.CreateSubKey(".lap");
-                Key.SetValue("", "Lanotalium.Project");
-            }
-        }
-        catch
-        {
-            return;
-        }
-    }
-#endif
-
     public void RestorePreferences()
     {
         if (!File.Exists(PreferencesSavePath)) return;
         string PreferencesStr = File.ReadAllText(PreferencesSavePath);
         Preferences = JsonConvert.DeserializeObject<Lanotalium.PreferencesContainer>(PreferencesStr);
-        if (Preferences.Build < Build) Preferences.HideWhatsNew = false;
+        if (Preferences.Build < Build)
+        {
+            Preferences.HideWhatsNew = false;
+            Preferences.DoNotRunAsAdmin = false;
+            Preferences.LapInjected = false;
+        }
         Preferences.Build = Build;
         if (!File.Exists(EditorLayoutSavePath)) return;
         string EditorLayoutStr = File.ReadAllText(EditorLayoutSavePath);
@@ -1036,12 +992,13 @@ public class LimSystem : MonoBehaviour
     private void Start()
     {
 #if UNITY_EDITOR
-        //if (File.Exists(PreferencesSavePath)) File.Delete(PreferencesSavePath);
+        if (File.Exists(PreferencesSavePath)) File.Delete(PreferencesSavePath);
 #endif
         if (!Directory.Exists(AppDataRoaming)) Directory.CreateDirectory(AppDataRoaming);
         RestorePreferences();
         Application.logMessageReceived += ReceiveUnityLog;
-        RegisterLapFormat();
+        if (ProjectManager == null) return;
+        DragAndDrop.DragAndDrop.Enable(ProjectManager.OnDragFile, Application.productName);
     }
 
     private string LastLog;
@@ -1059,5 +1016,6 @@ public class LimSystem : MonoBehaviour
     private void OnApplicationQuit()
     {
         SavePreferences();
+        DragAndDrop.DragAndDrop.Disable();
     }
 }

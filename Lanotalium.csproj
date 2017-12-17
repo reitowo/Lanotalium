@@ -76,9 +76,6 @@
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics">
-      <HintPath>Assets/Plugins/MathNet.Numerics.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -90,6 +87,9 @@
     </Reference>
     <Reference Include="System.Windows.Forms">
       <HintPath>Assets/Plugins/System.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="DragAndDrop">
+      <HintPath>Assets/Plugins/DragAndDrop.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +131,7 @@
     <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimDialogUtils.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimDisplayManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimEditableText.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimHighPermission.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMathUtil.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMouseOverHint.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMousePosition.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Assets\Scripts\LimSystem\LimTuner\UI\LimTunerHeadManager.cs" />
     <Compile Include="Assets\Scripts\Other\MessageBox\MessageBoxManager.cs" />
     <Compile Include="Assets\Scripts\Other\ProgressBar\ProgressBarManager.cs" />
+    <Compile Include="Assets\Scripts\Other\SchwarzerUtils\LasyLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_En.txt" />

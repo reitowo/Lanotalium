@@ -30,6 +30,9 @@ public class LimProjectManager : MonoBehaviour
     public static bool LapDirectOpened = false;
     private static string LapPath;
 
+    private static bool HasNewDroppedLapFile = false;
+    private static List<string> DroppedLapPaths;
+
     private static string ChartSaveLocation = string.Empty;
     private void Start()
     {
@@ -54,6 +57,19 @@ public class LimProjectManager : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.S))
             {
                 SaveProject();
+            }
+        }
+        if(HasNewDroppedLapFile)
+        {
+            HasNewDroppedLapFile = false;
+            foreach (string P in DroppedLapPaths)
+            {
+                if (Path.GetExtension(P) == ".lap")
+                {
+                    LapPath = P;
+                    InitializeProjectWizard(P);
+                    return;
+                }
             }
         }
     }
@@ -450,5 +466,12 @@ public class LimProjectManager : MonoBehaviour
         LimSystem.Preferences.Designer = CurrentProject.Designer;
         SceneManager.LoadScene("LimTuner");
         isLoadFinished = true;
+    }
+
+    //DragAndDrop
+    public void OnDragFile(List<string> Paths)
+    {
+        DroppedLapPaths = Paths;
+        HasNewDroppedLapFile = true;
     }
 }
