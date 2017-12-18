@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine.UI;
 using System.Diagnostics;
 using System;
+using System.Runtime.InteropServices;
 #if UNITY_STANDALONE
 using Microsoft.Win32;
 #endif
@@ -20,15 +21,47 @@ public class LimHighPermission : MonoBehaviour
         if (!LimSystem.Preferences.LapInjected) RegisterLapFormat();
     }
 #if UNITY_STANDALONE
+    #region PInvoke
+    [StructLayout(LayoutKind.Sequential)]
+    struct TokenElevation
+    {
+        public uint TokenIsElevated;
+    }
+    [DllImport("advapi32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool OpenProcessToken(IntPtr ProcessHandle, uint DesiredAccess, out IntPtr TokenHandle);
+    [DllImport("advapi32.dll", SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetTokenInformation(IntPtr TokenHandle, int TokenInformationClass, IntPtr TokenInformation, int TokenInformationLength, out int ReturnLength);
+    #endregion
     private bool IsAdministrator()
     {
-        WindowsIdentity current = WindowsIdentity.GetCurrent();
-        WindowsPrincipal windowsPrincipal = new WindowsPrincipal(current);
-        return windowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
+        IntPtr TokenHandle;
+        if (!OpenProcessToken(Process.GetCurrentProcess().Handle, 0x0008, out TokenHandle)) return false;
+        int ReturnLength;
+        IntPtr TokenInformation = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(TokenElevation)));
+        if (!GetTokenInformation(TokenHandle, 20, TokenInformation, Marshal.SizeOf(typeof(TokenElevation)), out ReturnLength))
+        {
+            Marshal.FreeHGlobal(TokenInformation);
+            return false;
+        }
+        if (ReturnLength == Marshal.SizeOf(typeof(TokenElevation)))
+        {
+            TokenElevation Elevation = (TokenElevation)Marshal.PtrToStructure(TokenInformation, typeof(TokenElevation));
+            bool IsElevated = Elevation.TokenIsElevated == 0 ? false : true;
+            Marshal.FreeHGlobal(TokenInformation);
+            return IsElevated;
+        }
+        else
+        {
+            Marshal.FreeHGlobal(TokenInformation);
+            return false;
+        }
     }
     public void RunAsNormal()
     {
         if (Application.platform == RuntimePlatform.WindowsEditor) return;
+        Application.Quit();
         ProcessStartInfo startInfo = new ProcessStartInfo();
         startInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
         Process.Start(startInfo);
@@ -40,7 +73,7 @@ public class LimHighPermission : MonoBehaviour
         ProcessStartInfo startInfo = new ProcessStartInfo();
         startInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
         startInfo.Arguments = string.Join(" ", Environment.GetCommandLineArgs());
-        startInfo.Verb = "runas"; 
+        startInfo.Verb = "runas";
         Process.Start(startInfo);
         Process.GetCurrentProcess().Kill();
     }
@@ -90,7 +123,6 @@ public class LimHighPermission : MonoBehaviour
                 Key = Registry.ClassesRoot.CreateSubKey(".lap");
                 Key.SetValue("", "Lanotalium.Project");
             }
-            RunAsNormal();
             LimSystem.Preferences.LapInjected = true;
         }
         catch
