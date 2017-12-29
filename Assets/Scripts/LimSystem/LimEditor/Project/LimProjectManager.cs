@@ -10,6 +10,8 @@ using UnityEngine.Video;
 using Lanotalium.Project;
 using Newtonsoft.Json;
 using System.Windows.Forms;
+using System.Text;
+using System.Diagnostics;
 
 public class LimProjectManager : MonoBehaviour
 {
@@ -59,7 +61,7 @@ public class LimProjectManager : MonoBehaviour
                 SaveProject();
             }
         }
-        if(HasNewDroppedLapFile)
+        if (HasNewDroppedLapFile)
         {
             HasNewDroppedLapFile = false;
             foreach (string P in DroppedLapPaths)
@@ -466,6 +468,49 @@ public class LimProjectManager : MonoBehaviour
         LimSystem.Preferences.Designer = CurrentProject.Designer;
         SceneManager.LoadScene("LimTuner");
         isLoadFinished = true;
+    }
+
+    private void SerializeInt(int Number, FileStream ToStream)
+    {
+        byte[] Bytes = BitConverter.GetBytes(Number);
+        ToStream.Write(Bytes, 0, Bytes.Length);
+    }
+    private void SerializeString(string Str, FileStream ToStream)
+    {
+        byte[] Bytes = Encoding.UTF8.GetBytes(Str);
+        byte[] BytesCount = BitConverter.GetBytes(Bytes.Length);
+        ToStream.Write(BytesCount, 0, BytesCount.Length);
+        ToStream.Write(Bytes, 0, Bytes.Length);
+    }
+    private void SerializeFile(string Path, FileStream ToStream)
+    {
+        byte[] Bytes = File.ReadAllBytes(Path);
+        byte[] BytesCount = BitConverter.GetBytes(Bytes.Length);
+        ToStream.Write(BytesCount, 0, BytesCount.Length);
+        ToStream.Write(Bytes, 0, Bytes.Length);
+    }
+    public void MakeRelease()
+    {
+        if (CurrentProject == null) return;
+        if (!CurrentProject.isValid()) return;
+
+        string SavePath = Directory.GetParent(CurrentProject.ChartPath).FullName + "/" + CurrentProject.Name + ".larelease";
+        FileStream Release = new FileStream(SavePath, FileMode.Create, FileAccess.Write);
+
+        SerializeInt(CurrentProject.BGACount(), Release);
+        SerializeString(CurrentProject.Name, Release);
+        SerializeString(CurrentProject.Designer, Release);
+
+        SerializeFile(CurrentProject.ChartPath, Release);
+        SerializeString(Path.GetExtension(CurrentProject.MusicPath), Release);
+        SerializeFile(CurrentProject.MusicPath, Release);
+        if (CurrentProject.BGACount() >= 1) SerializeFile(CurrentProject.BGA0Path, Release);
+        if (CurrentProject.BGACount() >= 2) SerializeFile(CurrentProject.BGA1Path, Release);
+        if (CurrentProject.BGACount() == 3) SerializeFile(CurrentProject.BGA2Path, Release);
+
+        Release.Close();
+
+        Process.Start("explorer.exe", "/select," + SavePath.Replace("/", "\\"));
     }
 
     //DragAndDrop

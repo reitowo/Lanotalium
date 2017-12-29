@@ -72,7 +72,7 @@ public class LimChartBarManager : MonoBehaviour
         SizeText.text = Data.Size;
         byte[] Chart = Download.bytes;
 
-        string SavePath = LimDialogUtils.SaveFileDialog("", "(.zip)|*.zip", "");
+        string SavePath = LimDialogUtils.SaveFileDialog("", "(.zip)|*.zip", Data.ChartName + ".zip");
         if (SavePath == null) yield break;
         File.WriteAllBytes(SavePath, Chart);
         Process.Start("explorer.exe", "/select," + SavePath);

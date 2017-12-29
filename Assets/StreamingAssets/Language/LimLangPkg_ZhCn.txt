@@ -116,6 +116,7 @@ TopMenu_File_NewProject$新建工程...
 TopMenu_File_OpenProject$打开工程...
 TopMenu_File_SaveProject$保存工程
 TopMenu_File_SaveAsProject$另存为工程
+TopMenu_File_Release$制作发布文件
 TopMenu_File_Exit$退出
 TopMenu_Window$视图
 TopMenu_Window_Inspector$属性
@@ -231,3 +232,5 @@ TunerWindow_FullScreen$按 ESC 返回
 Copier_Hint$按格式输入要复制的时间
 Create_Catch$在选中的两Note间创建等分的蓝键条
 Create_ConvertSelectedToHoldNote$将选中的普通Note转为长条，时间最先的作为长条头部，其余依次作为节点
+TxtToLap$要打开.txt，请创建一个新工程，在谱面路径选择您的.txt
+MusicFormat$目前仅支持wav与ogg格式

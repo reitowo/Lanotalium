@@ -34,7 +34,7 @@ public class LimCloudManager : MonoBehaviour
         }
     }
     private bool isUploading;
-    private Coroutine CloudAutosaveCoroutineRef;
+    private Coroutine CloudAutosaveCoroutineRef, BackupLoopCr;
 
     private void Start()
     {
@@ -43,6 +43,11 @@ public class LimCloudManager : MonoBehaviour
         {
             if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
             CloudAutosaveCoroutineRef = StartCoroutine(CloudAutosaveCoroutine());
+        }
+        if (UnityEngine.Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            if (BackupLoopCr != null) StopCoroutine(BackupLoopCr);
+            BackupLoopCr = StartCoroutine(BackupLoop());
         }
     }
     public void SetTexts()
@@ -188,5 +193,51 @@ public class LimCloudManager : MonoBehaviour
             ProgressSlider.value = 0;
             EntryText.text = LimLanguageManager.TextDict["Cloud_Cloud"];
         }
+    }
+
+    IEnumerator BackupLoop()
+    {
+        while (true)
+        {
+            BackupChart();
+            yield return new WaitForSeconds(45);
+        }
+    }
+    public void BackupChart()
+    {
+        if (Status != Status.Running) return;
+        if (isUploading) return;
+        StartCoroutine(UploadCoroutine(TransferType.Backup, null, System.Text.Encoding.Default.GetBytes(LimSystem.ChartContainer.ChartData.ToString())));
+        isUploading = true;
+    }
+    IEnumerator BackupCoroutine(TransferType Type, string LocalPath = null, byte[] Bytes = null)
+    {
+        if (Status != Status.Running) yield break;
+        if (LocalPath == null && Bytes == null) yield break;
+        ProgressSlider.value = 0;
+        EntryText.text = LimLanguageManager.TextDict["Cloud_Uploading"];
+        string FileName = string.Empty;
+        byte[] FileBytes = Bytes == null ? File.ReadAllBytes(LocalPath) : Bytes;
+        switch (Type)
+        {
+            case TransferType.Backup: FileName = "backup.txt"; break;
+            case TransferType.Chart: FileName = "chart.txt"; break;
+            case TransferType.Music: FileName = "music.ogg"; break;
+        }
+        WWWForm UploadForm = new WWWForm();
+        UploadForm.AddField("UserId", UserId);
+        UploadForm.AddField("FileName", FileName);
+        UploadForm.AddField("ProjectName", LimSystem.ChartContainer.ChartProperty.ChartName);
+        UploadForm.AddBinaryData("upload", FileBytes);
+        WWW Upload = new WWW(LimSystem.LanotaliumServer + "/lanotalium/cloud/LimCloudUploader.php", UploadForm);
+        while (!Upload.isDone)
+        {
+            ProgressSlider.value = Upload.uploadProgress;
+            yield return null;
+        }
+        ProgressSlider.value = 0;
+        EntryText.text = LimLanguageManager.TextDict["Cloud_Cloud"];
+        StartCoroutine(GetLastModifyTime());
+        isUploading = false;
     }
 }

@@ -116,6 +116,7 @@ TopMenu_File_NewProject$New Project...
 TopMenu_File_OpenProject$Open Project...
 TopMenu_File_SaveProject$Save Project
 TopMenu_File_SaveAsProject$Save As Project
+TopMenu_File_Release$Make Release
 TopMenu_File_Exit$Exit
 TopMenu_Window$Window
 TopMenu_Window_Inspector$Inspector
@@ -231,3 +232,5 @@ TunerWindow_FullScreen$Press ESC to return.
 Copier_Hint$Input Formatted Target Time(s)
 Create_Catch$Create catch note rail between two selected Notes
 Create_ConvertSelectedToHoldNote$Convert selected to Hold Note, first in time as Hold Note's head, the other as the joints.
+TxtToLap$To open old .txt file, please Create a New Project and select your .txt in Chart Path.
+MusicFormat$Only support .wav or .ogg

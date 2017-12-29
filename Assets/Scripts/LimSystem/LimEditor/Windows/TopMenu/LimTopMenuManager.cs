@@ -10,7 +10,7 @@ public class LimTopMenuManager : MonoBehaviour
     public LimProjectManager ProjectManager;
     public GameObject FilePanel, WindowPanel, SettingPanel, PluginPanel;
     public Text FileText;
-    public Text NewProjectText, OpenProjectText, SaveProjectText, SaveAsProjectText, ExitText;
+    public Text NewProjectText, OpenProjectText, SaveProjectText, SaveAsProjectText,ReleaseText, ExitText;
     public Text WindowText;
     public Text InspectorText, TunerWindowText, TimeLineText, MusicPlayerText, CreatorText;
     public Text SettingText;
@@ -31,6 +31,7 @@ public class LimTopMenuManager : MonoBehaviour
         OpenProjectText.text = LimLanguageManager.TextDict["TopMenu_File_OpenProject"];
         SaveProjectText.text = LimLanguageManager.TextDict["TopMenu_File_SaveProject"];
         SaveAsProjectText.text = LimLanguageManager.TextDict["TopMenu_File_SaveAsProject"];
+        ReleaseText.text = LimLanguageManager.TextDict["TopMenu_File_Release"];
         ExitText.text = LimLanguageManager.TextDict["TopMenu_File_Exit"];
         WindowText.text = LimLanguageManager.TextDict["TopMenu_Window"];
         InspectorText.text = LimLanguageManager.TextDict["TopMenu_Window_Inspector"];
