@@ -14,7 +14,7 @@ public class LimTopMenuManager : MonoBehaviour
     public Text WindowText;
     public Text InspectorText, TunerWindowText, TimeLineText, MusicPlayerText, CreatorText;
     public Text SettingText;
-    public Text PreferencesText;
+    public Text PreferencesText,ResetLayoutText;
     public Text PluginText;
     public Text PluginCenterText;
     public Text TopText;
@@ -41,6 +41,7 @@ public class LimTopMenuManager : MonoBehaviour
         CreatorText.text = LimLanguageManager.TextDict["TopMenu_Window_Creator"];
         SettingText.text = LimLanguageManager.TextDict["TopMenu_Setting"];
         PreferencesText.text = LimLanguageManager.TextDict["TopMenu_Setting_Preferences"];
+        ResetLayoutText.text = LimLanguageManager.TextDict["TopMenu_Setting_ResetLayout"];
         PluginText.text = LimLanguageManager.TextDict["TopMenu_Plugin"];
         PluginCenterText.text = LimLanguageManager.TextDict["TopMenu_Plugin_PluginCenter"];
     }

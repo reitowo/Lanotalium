@@ -64,7 +64,7 @@ TagManager:
   - name: ClickToCreate
     uniqueID: 3474716223
     locked: 0
-  - name: TunerUI
+  - name: EditorUI
     uniqueID: 2676225853
     locked: 0
   - name: Effect

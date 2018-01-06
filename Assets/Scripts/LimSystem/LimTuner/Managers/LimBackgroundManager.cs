@@ -16,7 +16,6 @@ public class LimBackgroundManager : MonoBehaviour
     public RectTransform TunerWindowRectTransform;
     public Image ColorImg, GrayImg, LinearImg;
     public RectTransform ColorRect, GrayRect, LinearRect;
-    //public LimCapturer Capturer;
     public LimDisplayManager DisplayManager;
     public Lanotalium.Background.BackgroundMode Mode = Lanotalium.Background.BackgroundMode.None;
     public float HorizontalRatio, VerticalRatio;
@@ -86,7 +85,7 @@ public class LimBackgroundManager : MonoBehaviour
 
     private void BackgroundVideoPlayer_seekCompleted(VideoPlayer source)
     {
-        Tuner.MusicPlayerManager.OnVideoTimeConfirmed((float)BackgroundVideoPlayer.time);
+
     }
     private void SyncRenderTextureWithWindowSize()
     {

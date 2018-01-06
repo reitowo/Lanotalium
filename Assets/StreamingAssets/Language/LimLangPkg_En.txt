@@ -126,6 +126,7 @@ TopMenu_Window_MusicPlayer$Music Player
 TopMenu_Window_Creator$Creator
 TopMenu_Setting$Setting
 TopMenu_Setting_Preferences$Preferences
+TopMenu_Setting_ResetLayout$Reset Editor Layout
 TopMenu_Plugin$Plugin
 TopMenu_Plugin_PluginCenter$Plugin Center
 GizmoMotion_Label$Manually Motion

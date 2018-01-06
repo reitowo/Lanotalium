@@ -1,16 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Lanotalium.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LimTimeLineManager : MonoBehaviour
 {
-    public class TimeLineTimeContainer
-    {
-        public float Timing;
-        public GameObject GameObject = null;
-    }
-
     public LimTunerManager TunerManager;
     public LimWindowManager BaseWindow;
     public LimOperationManager OperationManager;
@@ -30,6 +25,14 @@ public class LimTimeLineManager : MonoBehaviour
     void Start()
     {
         Initialize();
+        BaseWindow.OnWindowSorted.AddListener(OnWindowSorted);
+    }
+    public void Initialize()
+    {
+        WaveformToggle.isOn = LimSystem.Preferences.Waveform;
+        OnWaveformToggle();
+        if (LimSystem.ChartContainer == null) return;
+        ApplyScale();
     }
     public void SetTexts()
     {
@@ -45,18 +48,12 @@ public class LimTimeLineManager : MonoBehaviour
     {
         if (LimSystem.ChartContainer == null) return;
         if (!TunerManager.isInitialized) return;
+        UpdateMotionBarActive();
         UpdateTimePointer();
         UpdateTimelineTimes();
         UpdateTimeLinePosition();
         DetectScaleChange();
         TimingText.text = TunerManager.ChartTime.ToString("f4");
-    }
-    public void Initialize()
-    {
-        WaveformToggle.isOn = LimSystem.Preferences.Waveform;
-        OnWaveformToggle();
-        if (LimSystem.ChartContainer == null) return;
-        ApplyScale();
     }
 
     public void InstantiateAllTimeLine()
@@ -174,10 +171,7 @@ public class LimTimeLineManager : MonoBehaviour
                 float PointerTiming = (Mouse.x - ViewRect.anchoredPosition.x - 200) / Scale + TunerManager.ChartTime;
                 PointerTiming = Mathf.Clamp(PointerTiming, 0, TunerManager.MusicPlayerManager.Length);
                 TimePointer.GetComponentInChildren<Text>().text = PointerTiming.ToString("f4");
-                if (Mouse.y >= ViewRect.anchoredPosition.y - ViewRect.sizeDelta.y && Mouse.y <= ViewRect.anchoredPosition.y - 120)
-                    if (Input.GetMouseButtonDown(0))
-                        TunerManager.MusicPlayerManager.time = PointerTiming;
-                if (Mouse.y >= ViewRect.anchoredPosition.y - 30 && Mouse.y <= ViewRect.anchoredPosition.y)
+                if (Mouse.y >= ViewRect.anchoredPosition.y - 120 && Mouse.y <= ViewRect.anchoredPosition.y)
                 {
                     if (Input.GetMouseButton(0))
                     {
@@ -185,7 +179,6 @@ public class LimTimeLineManager : MonoBehaviour
                         float DeltaTime = -Delta / Scale;
                         TunerManager.MusicPlayerManager.time = Mathf.Clamp(TunerManager.ChartTime + DeltaTime, 0, TunerManager.MusicPlayerManager.Length);
                     }
-
                 }
             }
             else
@@ -196,6 +189,47 @@ public class LimTimeLineManager : MonoBehaviour
         else
         {
             if (TimePointer.gameObject.activeInHierarchy) TimePointer.gameObject.SetActive(false);
+        }
+    }
+    public void UpdateMotionBarActive()
+    {
+        float Start = TunerManager.ChartTime - 70f / Scale;
+        float End = TunerManager.ChartTime + (ViewRect.sizeDelta.x - 200f) / Scale;
+        foreach (Lanotalium.Chart.LanotaCameraXZ Hor in CameraManager.Horizontal)
+        {
+            if (Hor.TimeLineGameObject == null) continue;
+            if ((Hor.Time + Hor.Duration <= Start || Hor.Time >= End) && Hor.TimeLineGameObject.activeInHierarchy)
+            {
+                Hor.TimeLineGameObject.SetActive(false);
+            }
+            else if (Hor.Time + Hor.Duration > Start && Hor.Time < End && !Hor.TimeLineGameObject.activeInHierarchy)
+            {
+                Hor.TimeLineGameObject.SetActive(true);
+            }
+        }
+        foreach (Lanotalium.Chart.LanotaCameraY Ver in CameraManager.Vertical)
+        {
+            if (Ver.TimeLineGameObject == null) continue;
+            if ((Ver.Time + Ver.Duration <= Start || Ver.Time >= End) && Ver.TimeLineGameObject.activeInHierarchy)
+            {
+                Ver.TimeLineGameObject.SetActive(false);
+            }
+            else if (Ver.Time + Ver.Duration > Start && Ver.Time < End && !Ver.TimeLineGameObject.activeInHierarchy)
+            {
+                Ver.TimeLineGameObject.SetActive(true);
+            }
+        }
+        foreach (Lanotalium.Chart.LanotaCameraRot Rot in CameraManager.Rotation)
+        {
+            if (Rot.TimeLineGameObject == null) continue;
+            if ((Rot.Time + Rot.Duration <= Start || Rot.Time >= End) && Rot.TimeLineGameObject.activeInHierarchy)
+            {
+                Rot.TimeLineGameObject.SetActive(false);
+            }
+            else if (Rot.Time + Rot.Duration > Start && Rot.Time < End && !Rot.TimeLineGameObject.activeInHierarchy)
+            {
+                Rot.TimeLineGameObject.SetActive(true);
+            }
         }
     }
     public void ApplyScale()
@@ -268,21 +302,21 @@ public class LimTimeLineManager : MonoBehaviour
             ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Rotation, Mathf.Clamp(ComponentMotion.Index + Delta, 0, CameraManager.Rotation.Count - 1));
         }
     }
-
     public void OnWaveformToggle()
     {
         LimSystem.Preferences.Waveform = WaveformToggle.isOn;
         if (LimSystem.Preferences.Waveform)
         {
-            ViewRect.sizeDelta = new Vector2(ViewRect.sizeDelta.x, 220);
-            WaveformManager.enabled = true;
-            if (ViewRect.anchoredPosition.y < -860) ViewRect.anchoredPosition = new Vector2(ViewRect.anchoredPosition.x, -860);
+            WaveformManager.Show();
         }
         else
         {
-            ViewRect.sizeDelta = new Vector2(ViewRect.sizeDelta.x, 120);
             WaveformManager.Hide();
-            WaveformManager.enabled = false;
         }
+    }
+    public void OnWindowSorted(int Order)
+    {
+        WaveformManager.LineL.sortingOrder = Order + 1;
+        WaveformManager.LineR.sortingOrder = Order + 1;
     }
 }

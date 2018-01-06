@@ -118,7 +118,7 @@ TopMenu_File_SaveProject$保存工程
 TopMenu_File_SaveAsProject$另存为工程
 TopMenu_File_Release$制作发布文件
 TopMenu_File_Exit$退出
-TopMenu_Window$视图
+TopMenu_Window$窗口
 TopMenu_Window_Inspector$属性
 TopMenu_Window_Tuner$调律器
 TopMenu_Window_TimeLine$时间轴
@@ -126,6 +126,7 @@ TopMenu_Window_MusicPlayer$音乐播放器
 TopMenu_Window_Creator$创造
 TopMenu_Setting$设置
 TopMenu_Setting_Preferences$偏好
+TopMenu_Setting_ResetLayout$重置界面布局
 TopMenu_Plugin$插件
 TopMenu_Plugin_PluginCenter$插件中心
 GizmoMotion_Label$手动调律器动作编辑器

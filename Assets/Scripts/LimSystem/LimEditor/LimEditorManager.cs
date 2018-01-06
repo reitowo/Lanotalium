@@ -20,6 +20,19 @@ public class LimEditorManager : MonoBehaviour
     public Toggle WhatsNewHideToggle;
     public Text WhatsNewText, WhatsNewToggleText;
 
+    public void ResetEditorLayout()
+    {
+        MusicPlayerWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(1420, -890);
+        InspectorWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(1420, -60);
+        TunerWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(0, -60);
+        TimeLineWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(0, -860);
+        CreatorWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(1000, -60);
+        MusicPlayerWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(500, 190);
+        InspectorWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(500, 800);
+        TunerWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(1000, 562.5f);
+        TimeLineWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(1420, 220);
+        CreatorWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(420, 562.5f);
+    }
     public void RestoreEditorLayout()
     {
         if (!LimSystem.EditorLayout.isLayoutValid()) return;
@@ -33,11 +46,6 @@ public class LimEditorManager : MonoBehaviour
         TunerWindow.BaseWindow.WindowRectTransform.sizeDelta = LimSystem.EditorLayout.TunerWindowSize.ToVector2();
         TimeLineWindow.BaseWindow.WindowRectTransform.sizeDelta = LimSystem.EditorLayout.TimelineSize.ToVector2();
         CreatorWindow.BaseWindow.WindowRectTransform.sizeDelta = LimSystem.EditorLayout.CreatorSize.ToVector2();
-        MusicPlayerWindow.BaseWindow.WindowRectTransform.SetSiblingIndex(LimSystem.EditorLayout.MusicPlayerSibling);
-        InspectorWindow.BaseWindow.WindowRectTransform.SetSiblingIndex(LimSystem.EditorLayout.InspectorSibling);
-        TunerWindow.BaseWindow.WindowRectTransform.SetSiblingIndex(LimSystem.EditorLayout.TunerWindowSibling);
-        TimeLineWindow.BaseWindow.WindowRectTransform.SetSiblingIndex(LimSystem.EditorLayout.TimeLineSibling);
-        CreatorWindow.BaseWindow.WindowRectTransform.SetSiblingIndex(LimSystem.EditorLayout.CreatorSibling);
     }
     public void SaveEditorLayout()
     {
@@ -51,11 +59,6 @@ public class LimEditorManager : MonoBehaviour
         LimSystem.EditorLayout.TunerWindowSize = new Lanotalium.Editor.Vector2Save(TunerWindow.BaseWindow.WindowRectTransform.sizeDelta);
         LimSystem.EditorLayout.TimelineSize = new Lanotalium.Editor.Vector2Save(TimeLineWindow.BaseWindow.WindowRectTransform.sizeDelta);
         LimSystem.EditorLayout.CreatorSize = new Lanotalium.Editor.Vector2Save(CreatorWindow.BaseWindow.WindowRectTransform.sizeDelta);
-        LimSystem.EditorLayout.MusicPlayerSibling = MusicPlayerWindow.BaseWindow.WindowRectTransform.GetSiblingIndex();
-        LimSystem.EditorLayout.InspectorSibling = InspectorWindow.BaseWindow.WindowRectTransform.GetSiblingIndex();
-        LimSystem.EditorLayout.TunerWindowSibling = TunerWindow.BaseWindow.WindowRectTransform.GetSiblingIndex();
-        LimSystem.EditorLayout.TimeLineSibling = TimeLineWindow.BaseWindow.WindowRectTransform.GetSiblingIndex();
-        LimSystem.EditorLayout.CreatorSibling = CreatorWindow.BaseWindow.WindowRectTransform.GetSiblingIndex();
     }
 
     private void Start()

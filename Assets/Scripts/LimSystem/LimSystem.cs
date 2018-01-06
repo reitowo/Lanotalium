@@ -4,6 +4,7 @@ using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
 using System;
+using UnityEngine.Events;
 
 namespace Lanotalium
 {
@@ -733,6 +734,11 @@ namespace Lanotalium
             Ritmo,
             Fisica
         }
+        public class TimeLineTimeContainer
+        {
+            public float Timing;
+            public GameObject GameObject = null;
+        }
         public class Vector2Save
         {
             public float x, y;
@@ -757,7 +763,6 @@ namespace Lanotalium
         }
         public class EditorLayout
         {
-            public int MusicPlayerSibling, InspectorSibling, TimeLineSibling, TunerWindowSibling, CreatorSibling;
             public Vector2Save MusicPlayerPos = new Vector2Save(), MusicPlayerSize = new Vector2Save(), InspectorPos = new Vector2Save(), InspectorSize = new Vector2Save(), TimelinePos = new Vector2Save(),
                 TimelineSize = new Vector2Save(), TunerWindowPos = new Vector2Save(), TunerWindowSize = new Vector2Save(), CreatorPos = new Vector2Save(), CreatorSize = new Vector2Save();
             public bool isLayoutValid()
@@ -781,6 +786,14 @@ namespace Lanotalium
             public Dictionary<string, string> NotificationDict = new Dictionary<string, string>();
             public Dictionary<string, string> HintDict = new Dictionary<string, string>();
             public string LanguageName;
+        }
+        public class OnWindowSortingEvent : UnityEvent<LimWindowManager>
+        {
+
+        }
+        public class OnWindowSortedEvent : UnityEvent<int>
+        {
+
         }
         public delegate void SetTextDelegate();
         public delegate void GizmoEditMode();
@@ -930,8 +943,9 @@ namespace Lanotalium
         public string LastOpenedChartFolder = string.Empty;
         public string LanguageName = "简体中文";
         public string Designer = string.Empty;
-        public float MusicPlayerPreciseOffset;
-        public int Build = 29;
+        public float MusicPlayerPreciseOffset = 0;
+        public float WaveformBlockerPosition = 0;
+        public int Build = 31;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -948,8 +962,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.7.9";
-    public static int Build = 29;
+    public static string Version = "v1.8.0";
+    public static int Build = 31;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
@@ -993,8 +1007,9 @@ public class LimSystem : MonoBehaviour
     private void Start()
     {
 #if UNITY_EDITOR
-        if (File.Exists(PreferencesSavePath)) File.Delete(PreferencesSavePath);
+        //if (File.Exists(PreferencesSavePath)) File.Delete(PreferencesSavePath);
 #endif
+        if (Directory.Exists(AppDataRoaming + "/Updator")) Directory.Delete(AppDataRoaming + "/Updator",true);
         if (!Directory.Exists(AppDataRoaming)) Directory.CreateDirectory(AppDataRoaming);
         RestorePreferences();
         Application.logMessageReceived += ReceiveUnityLog;

@@ -123,7 +123,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.7.9
+  bundleVersion: 1.8.0
   preloadedAssets: []
   metroInputSource: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -146,7 +146,7 @@ PlayerSettings:
     Android: cn.Schwarzer.Lanotalium
     Standalone: com.Schwarzer.Lanotalium
   buildNumber:
-    Standalone: 29
+    Standalone: 31
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0

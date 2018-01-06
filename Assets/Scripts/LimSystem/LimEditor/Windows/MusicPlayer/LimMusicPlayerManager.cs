@@ -9,7 +9,6 @@ public class LimMusicPlayerManager : MonoBehaviour
     private bool isInitialized = false;
     public LimTunerManager TunerManager;
     public LimWindowManager BaseWindow;
-    //public LimCapturer Capturer;
     public ComponentBpmManager ComponentBpm;
     public Text MusicNameText, ProgressLabel, PitchLabel, PitchResetText, PlayText, PauseText, StopText;
     public Text PreciseControllerLabel, OffsetLabel, SwitchPlayerModeLabel, FixTimeLabel, CurrentModeText;
@@ -62,10 +61,6 @@ public class LimMusicPlayerManager : MonoBehaviour
         {
             MusicPlayer.time = value;
             CurrentTime = value;
-            if (TunerManager.BackgroundManager.Mode == Lanotalium.Background.BackgroundMode.Video)
-            {
-                TunerManager.BackgroundManager.SetVideoTimeTo(value);
-            }
         }
     }
     public float Length
@@ -85,7 +80,6 @@ public class LimMusicPlayerManager : MonoBehaviour
     public Lanotalium.MusicPlayer.MusicPlayerMode MusicPlayerMode = Lanotalium.MusicPlayer.MusicPlayerMode.Sync;
     private float UiWidth;
     private bool ProgressOnEdit, PitchOnEdit;
-    private bool shouldPlayerResumeWhenTimeSet = false;
 
     void Start()
     {
@@ -109,6 +103,7 @@ public class LimMusicPlayerManager : MonoBehaviour
         if (MusicPlayerMode == Lanotalium.MusicPlayer.MusicPlayerMode.Precise) CurrentModeText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Precise"];
         else CurrentModeText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Sync"];
     }
+
     void Update()
     {
         OnUiWidthChange();
@@ -163,7 +158,7 @@ public class LimMusicPlayerManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftArrow)) time = ComponentBpm.FindPrevOrNextBeatline(TunerManager.ChartTime, false);
             else if (Input.GetKeyDown(KeyCode.RightArrow)) time = ComponentBpm.FindPrevOrNextBeatline(TunerManager.ChartTime, true);
         }
-        else if(Input.GetKey(KeyCode.LeftAlt))
+        else if (Input.GetKey(KeyCode.LeftAlt))
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow)) time = Mathf.Clamp(time - 0.001f, 0, Length);
             else if (Input.GetKeyDown(KeyCode.RightArrow)) time = Mathf.Clamp(time + 0.001f, 0, Length);
@@ -174,6 +169,7 @@ public class LimMusicPlayerManager : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.RightArrow)) time = Mathf.Clamp(time + 0.01f, 0, Length);
         }
     }
+
     public void Initialize(Lanotalium.Chart.ChartMusic MusicData, Lanotalium.Chart.ChartProperty PropertyData)
     {
         MusicName = PropertyData.ChartName;
@@ -184,27 +180,6 @@ public class LimMusicPlayerManager : MonoBehaviour
         OffsetInputField.text = PreciseModeTimeOffset.ToString();
         isInitialized = true;
         WaveformManager.OnMusicLoaded();
-    }
-
-    //Experimental - VideoPlayer
-    public void OnVideoTimeConfirmed(float Time)
-    {
-        MusicPlayer.time = Time;
-        if (MusicPlayerMode != Lanotalium.MusicPlayer.MusicPlayerMode.Precise)
-        {
-            CurrentTime = MusicPlayer.time + PreciseModeTimeOffset;
-            ProgressSlider.value = CurrentTime;
-        }
-        else
-        {
-            CurrentTime = MusicPlayer.time;
-            ProgressSlider.value = CurrentTime;
-        }
-        if (shouldPlayerResumeWhenTimeSet)
-        {
-            TunerManager.BackgroundManager.Play();
-            MusicPlayer.Play();
-        }
     }
 
     public void SwitchPlayerMode()
@@ -246,7 +221,7 @@ public class LimMusicPlayerManager : MonoBehaviour
         if (MusicPlayer.isPlaying) CurrentTime += Time.deltaTime * MusicPlayer.pitch;
         if (CurrentTime > MusicPlayer.clip.length)
         {
-            StopMusic(); 
+            StopMusic();
             PlayMusic();
         }
         if (!isProgressPressed) ProgressSlider.value = CurrentTime;
@@ -259,16 +234,8 @@ public class LimMusicPlayerManager : MonoBehaviour
     {
         if (!MusicPlayer.isPlaying)
         {
-            if (TunerManager.BackgroundManager.Mode != Lanotalium.Background.BackgroundMode.Video)
-            {
-                MusicPlayer.Play();
-                FixCurrentTime();
-            }
-            else
-            {
-                TunerManager.BackgroundManager.SetVideoTimeTo(MusicPlayer.time);
-                shouldPlayerResumeWhenTimeSet = true;
-            }
+            MusicPlayer.Play();
+            FixCurrentTime();
         }
     }
     private void PauseMusicPreciseMode()
@@ -276,8 +243,6 @@ public class LimMusicPlayerManager : MonoBehaviour
         if (MusicPlayer.isPlaying)
         {
             MusicPlayer.Pause();
-            TunerManager.BackgroundManager.Pause();
-            shouldPlayerResumeWhenTimeSet = false;
         }
     }
     private void StopMusicPreciseMode()
@@ -285,18 +250,12 @@ public class LimMusicPlayerManager : MonoBehaviour
         MusicPlayer.Stop();
         MusicPlayer.time = 0;
         CurrentTime = 0;
-        TunerManager.BackgroundManager.Stop();
-        shouldPlayerResumeWhenTimeSet = false;
     }
     public void FixCurrentTime()
     {
         if (MusicPlayerMode != Lanotalium.MusicPlayer.MusicPlayerMode.Precise) return;
-        bool shouldPlaySave = shouldPlayerResumeWhenTimeSet;
-        if (TunerManager.BackgroundManager.Mode == Lanotalium.Background.BackgroundMode.Video) PauseMusic();
-        shouldPlayerResumeWhenTimeSet = shouldPlaySave;
         CurrentTime = MusicPlayer.time + PreciseModeTimeOffset;
         ProgressSlider.value = CurrentTime;
-        TunerManager.BackgroundManager.SetVideoTimeTo(CurrentTime);
     }
     public void OnOffsetChange()
     {
@@ -331,35 +290,18 @@ public class LimMusicPlayerManager : MonoBehaviour
     }
     private void PlayMusicSyncMode()
     {
-        if (!MusicPlayer.isPlaying)
-        {
-            if (TunerManager.BackgroundManager.Mode != Lanotalium.Background.BackgroundMode.Video)
-            {
-                MusicPlayer.Play();
-            }
-            else
-            {
-                TunerManager.BackgroundManager.Play();
-                TunerManager.BackgroundManager.SetVideoTimeTo(MusicPlayer.time);
-                MusicPlayer.Play();
-                shouldPlayerResumeWhenTimeSet = true;
-            }
-        }
+        if (!MusicPlayer.isPlaying) MusicPlayer.Play();
     }
     private void PauseMusicSyncMode()
     {
         if (MusicPlayer.isPlaying)
         {
             MusicPlayer.Pause();
-            TunerManager.BackgroundManager.Pause();
-            shouldPlayerResumeWhenTimeSet = false;
         }
     }
     private void StopMusicSyncMode()
     {
         MusicPlayer.Stop();
-        TunerManager.BackgroundManager.Stop();
-        shouldPlayerResumeWhenTimeSet = false;
     }
 
     public void CallPlayMusicFromUi()

@@ -13,7 +13,6 @@ public class LimTunerWindowManager : MonoBehaviour
     public Image RitmoImg, FisicaImg;
     public SpriteRenderer TunerBackground, TunerBorder;
     public Sprite RitmoU, RitmoP, FisicaU, FisicaP, RitmoBg, FisicaBg, RitmoBd, FisicaBd;
-    //public LimCapturer Capturer;
     public LimDisplayManager DisplayManager;
     public LimTunerHeadManager TunerHeadManager;
     public GameObject TunerSettingPanel;
@@ -38,7 +37,6 @@ public class LimTunerWindowManager : MonoBehaviour
     }
     private void SyncRenderTextureWithWindowSize()
     {
-        //if (Capturer.isCapturing) return;
         if (new Vector2(TunerRenderTexture.width, TunerRenderTexture.height) != BaseWindow.WindowRectTransform.sizeDelta)
         {
             TunerRenderTexture.Release();

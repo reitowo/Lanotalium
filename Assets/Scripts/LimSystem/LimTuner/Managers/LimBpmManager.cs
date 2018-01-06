@@ -8,7 +8,7 @@ public class LimBpmManager : MonoBehaviour
     public Transform Background, Border, JudgeLine, Arrow, Core;
     public List<Lanotalium.Chart.LanotaChangeBpm> Bpm;
     public LimTunerManager Tuner;
-    //public LimCapturer Capturer;
+    
     public float CurrentBpm = 100f;
 
     void Update()

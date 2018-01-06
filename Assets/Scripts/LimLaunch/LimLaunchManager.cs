@@ -18,7 +18,6 @@ public class LimLaunchManager : MonoBehaviour
 
     private int LatestBuild;
     private string LatestVersion;
-    private string LatestVersionLink;
     private Dictionary<string, string> LaunchLanguageDict = new Dictionary<string, string>();
 
     private void Start()
@@ -95,8 +94,6 @@ public class LimLaunchManager : MonoBehaviour
         {
             string[] Splited = CheckUpdate.text.Split(' ');
             LatestVersion = Splited[1];
-            if (Splited.Length == 3) LatestVersionLink = Splited[2];
-            else LatestVersionLink = LimSystem.LanotaliumServer + "/lanotalium/full/Lanotalium_" + LatestVersion + ".zip";
             if (!int.TryParse(Splited[0], out LatestBuild)) yield break;
             if (LatestBuild > LimSystem.Build)
             {
@@ -123,22 +120,13 @@ public class LimLaunchManager : MonoBehaviour
     }
     public void DownloadUpdate()
     {
-        string SavePath = LimDialogUtils.SaveFileDialog("", "Lanotalium Update (*.zip)|*.zip", Directory.GetParent(UnityEngine.Application.dataPath).FullName);
-        if (SavePath == null) return;
-        StartCoroutine(DownloadUpdateCoroutine(SavePath));
-        UpdateBtn.gameObject.SetActive(false);
-    }
-    IEnumerator DownloadUpdateCoroutine(string SavePath)
-    {
-        WWW Download = new WWW(LatestVersionLink);
-        while (!Download.isDone)
-        {
-            Message.text = "Downloading......(" + (Download.progress * 100).ToString("f2") + "%)";
-            yield return null;
-        }
-        Message.text = "Download Complete";
-        File.WriteAllBytes(SavePath, Download.bytes);
-        Process.Start("explorer.exe", "/select," + SavePath);
+        if (!File.Exists(UnityEngine.Application.streamingAssetsPath + "/Updator/Newtonsoft.Json.dll"))
+            File.Copy(UnityEngine.Application.dataPath + "/Managed/Newtonsoft.Json.dll", UnityEngine.Application.streamingAssetsPath + "/Updator/Newtonsoft.Json.dll", true);
+        ProcessStartInfo Updator = new ProcessStartInfo();
+        Updator.FileName = UnityEngine.Application.streamingAssetsPath + "/Updator/LanotaliumUpdateClient.exe";
+        Updator.Arguments = string.Format("{0} {1} {2}", Directory.GetParent(UnityEngine.Application.dataPath).FullName.Replace(" ", "%20"), LimSystem.Version, "http://lanotalium.cn/lanotalium/updator");
+        Process.Start(Updator);
+        Process.GetCurrentProcess().Kill();
     }
     public void EnterLanotalium()
     {

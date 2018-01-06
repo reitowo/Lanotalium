@@ -102,6 +102,7 @@
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Operation\LimOperationManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Project\LimProjectManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Service\LimCloudManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Arranger\LimWindowArranger.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Base\LimWindowManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\LimCreatorManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\Base\LimCreatorToolBase.cs" />
@@ -121,6 +122,8 @@
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\LimInspectorManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\MusicPlayer\LimMusicPlayerManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Preferences\LimPreferencesManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Spectrum\LimSpectrumManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Spectrum\Tools\LimSpectrumBarManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TimeLine\LimTimeLineManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TimeLine\Tools\LimWaveformManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TopMenu\LimTopMenuManager.cs" />
@@ -152,7 +155,7 @@
     <Compile Include="Assets\Scripts\LimSystem\LimTuner\UI\LimTunerHeadManager.cs" />
     <Compile Include="Assets\Scripts\Other\MessageBox\MessageBoxManager.cs" />
     <Compile Include="Assets\Scripts\Other\ProgressBar\ProgressBarManager.cs" />
-    <Compile Include="Assets\Scripts\Other\SchwarzerUtils\LasyLogger.cs" />
+    <Compile Include="Assets\Scripts\Other\SchwarzerUtils\SchwarzerUtilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_En.txt" />

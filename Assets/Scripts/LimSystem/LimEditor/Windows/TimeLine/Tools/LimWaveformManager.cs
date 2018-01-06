@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LimWaveformManager : MonoBehaviour
 {
     public LimTimeLineManager TimeLineManager;
     public LimTunerManager TunerManager;
     public LineRenderer LineL, LineR;
+    public RectTransform Blocker;
     public float[] FormL, FormR;
     public int SamplesToRead = 10000;
     public int WaveScale = 25;
@@ -30,8 +32,13 @@ public class LimWaveformManager : MonoBehaviour
         FormR = R.ToArray();
         isDataLoaded = true;
     }
+    private void Start()
+    {
+        Blocker.anchoredPosition = new Vector2(Mathf.Clamp(LimSystem.Preferences.WaveformBlockerPosition, 200, TimeLineManager.ViewRect.sizeDelta.x - 25), Blocker.anchoredPosition.y);
+    }
     public void Update()
     {
+        MoveBlocker();
         if (!isDataLoaded || !TunerManager.isInitialized) return;
         UpdateWaveform();
     }
@@ -42,11 +49,16 @@ public class LimWaveformManager : MonoBehaviour
     }
     public void UpdateWaveform()
     {
-        int ScaledSamplesToRead = (int)((TimeLineManager.ViewRect.sizeDelta.x - 200f) / 1220f * SamplesToRead);
-        if (ScaledSamplesToRead <= 0) return;
+        int ScaledSamplesToRead = (int)((Blocker.anchoredPosition.x - 200f) / 1220f * SamplesToRead);
+        if (ScaledSamplesToRead <= 0)
+        {
+            LineL.positionCount = 0;
+            LineR.positionCount = 0;
+            return;
+        }
         int StartSample = TunerManager.MusicPlayerManager.MusicPlayer.timeSamples;
         int CurrentSample = StartSample;
-        int EndSample = (int)((TimeLineManager.ViewRect.sizeDelta.x - 200f) / TimeLineManager.Scale * Music.frequency) + StartSample;
+        int EndSample = (int)((Blocker.anchoredPosition.x - 200f) / TimeLineManager.Scale * Music.frequency) + StartSample;
         int SampleDelta = Mathf.CeilToInt((EndSample - CurrentSample) * 1f / ScaledSamplesToRead);
         int PositionCount = (int)(ScaledSamplesToRead * (EndSample > Music.samples ? (Music.samples - CurrentSample) * 1f / (EndSample - CurrentSample) : 1));
         if (PositionCount <= 0) return;
@@ -63,7 +75,7 @@ public class LimWaveformManager : MonoBehaviour
         for (int i = PositionIndex; i < PositionCount; ++i)
         {
             float x = 1f * (CurrentSample - StartSample) / Music.frequency * TimeLineManager.Scale;
-            if (x > TimeLineManager.ViewRect.sizeDelta.x - 200f)
+            if (x > Blocker.anchoredPosition.x - 200f)
             {
                 LineL.positionCount = i;
                 LineR.positionCount = i;
@@ -75,9 +87,35 @@ public class LimWaveformManager : MonoBehaviour
             CurrentSample += SampleDelta;
         }
     }
+    private bool isBlockerDown = false;
+    public void OnBlockerDown()
+    {
+        isBlockerDown = true;
+    }
+    public void MoveBlocker()
+    {
+        Blocker.anchoredPosition = new Vector2(Mathf.Clamp(Blocker.anchoredPosition.x, 200, TimeLineManager.ViewRect.sizeDelta.x - 25), Blocker.anchoredPosition.y);
+        if (!isBlockerDown) return;
+        if (!Blocker.GetComponent<Button>().interactable) return;
+        Blocker.anchoredPosition = new Vector2(Mathf.Clamp(Blocker.anchoredPosition.x + LimMousePosition.DeltaPosition.x, 200, TimeLineManager.ViewRect.sizeDelta.x - 25), Blocker.anchoredPosition.y);
+        LimSystem.Preferences.WaveformBlockerPosition = Blocker.anchoredPosition.x;
+    }
+    public void OnBlockerUp()
+    {
+        isBlockerDown = false;
+    }
+    public void Show()
+    {
+        if (Blocker == null) return;
+        Blocker.GetComponent<Button>().interactable = true;
+        Blocker.anchoredPosition = new Vector2(Mathf.Clamp(LimSystem.Preferences.WaveformBlockerPosition, 200, TimeLineManager.ViewRect.sizeDelta.x - 25), Blocker.anchoredPosition.y);
+    }
     public void Hide()
     {
+        if (Blocker == null) return;
         LineL.positionCount = 0;
         LineR.positionCount = 0;
+        Blocker.GetComponent<Button>().interactable = false;
+        Blocker.anchoredPosition = new Vector2(200, Blocker.anchoredPosition.y);
     }
 }

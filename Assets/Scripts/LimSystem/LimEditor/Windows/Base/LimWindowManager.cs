@@ -2,13 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LimWindowManager : MonoBehaviour
 {
     public bool Moveable, ResizeableVertical, ResizeableHorizontal;
-    public LimEditorManager EditorManager;
     public RectTransform WindowRectTransform;
     public Text NameUiText;
     public GameObject ResizeHandles;
@@ -16,6 +16,33 @@ public class LimWindowManager : MonoBehaviour
     {
         get { return NameUiText.text; }
         set { NameUiText.text = value; }
+    }
+    public float MinVertical = 1, MaxVertical = float.PositiveInfinity;
+    public float MinHorizontal = 1, MaxHorizontal = float.PositiveInfinity;
+
+    public int RequiredSortingOrder;
+    public int SortingOrder
+    {
+        get
+        {
+            return WindowCanvas.sortingOrder;
+        }
+        set
+        {
+            WindowCanvas.sortingOrder = value;
+            OnWindowSorted.Invoke(value);
+        }
+    }
+    [HideInInspector]
+    public Lanotalium.Editor.OnWindowSortingEvent OnWindowSorting = new Lanotalium.Editor.OnWindowSortingEvent();
+    [HideInInspector]
+    public Lanotalium.Editor.OnWindowSortedEvent OnWindowSorted = new Lanotalium.Editor.OnWindowSortedEvent();
+    public Canvas WindowCanvas
+    {
+        get
+        {
+            return gameObject.GetComponent<Canvas>();
+        }
     }
 
     private bool isHandlePressed = false, isLeftResizePressed = false, isBottomResizePressed = false, isRightResizePressed = false, isTopResizePressed = false;
@@ -56,8 +83,10 @@ public class LimWindowManager : MonoBehaviour
         ResizeBottom();
         ResizeRight();
         ResizeTop();
-        if (WindowRectTransform.sizeDelta.x <= 0) WindowRectTransform.sizeDelta = new Vector2(1, WindowRectTransform.sizeDelta.y);
-        if (WindowRectTransform.sizeDelta.y <= 0) WindowRectTransform.sizeDelta = new Vector2(WindowRectTransform.sizeDelta.x, 1);
+        if (WindowRectTransform.sizeDelta.x < MinHorizontal) WindowRectTransform.sizeDelta = new Vector2(MinHorizontal, WindowRectTransform.sizeDelta.y);
+        else if (WindowRectTransform.sizeDelta.x > MaxHorizontal) WindowRectTransform.sizeDelta = new Vector2(MaxHorizontal, WindowRectTransform.sizeDelta.y);
+        if (WindowRectTransform.sizeDelta.y < MinVertical) WindowRectTransform.sizeDelta = new Vector2(WindowRectTransform.sizeDelta.x, MinVertical);
+        else if (WindowRectTransform.sizeDelta.y > MaxVertical) WindowRectTransform.sizeDelta = new Vector2(WindowRectTransform.sizeDelta.x, MaxVertical);
     }
     private void ResizeLeft()
     {
@@ -97,7 +126,7 @@ public class LimWindowManager : MonoBehaviour
     public void OnMovePointerDown()
     {
         isHandlePressed = true;
-        transform.SetSiblingIndex(transform.parent.childCount - 1);
+        OnWindowSorting.Invoke(this);
     }
     public void OnMovePointerUp()
     {
