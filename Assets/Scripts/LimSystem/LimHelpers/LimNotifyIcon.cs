@@ -31,6 +31,7 @@ public class LimNotifyIcon : MonoBehaviour
     }
     public static void ShowMessage(string Message, ToolTipIcon Mode, string Title = "Lanotalium", string MessageBoxOnlyText = "")
     {
+        if (UnityEngine.Application.isEditor) return;
         if (!Initialized) { Debug.Log("NotifyIcon: " + Message); return; }
         MessageBoxMessage = Message + "\n" + MessageBoxOnlyText;
         MessageBoxTitle = Title;

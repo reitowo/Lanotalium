@@ -374,7 +374,7 @@ public class LimHoldNoteManager : MonoBehaviour
             {
                 if (!Note.EndEffectPlayed)
                 {
-                    if (Tuner.MusicPlayerManager.isPlaying) Tuner.AudioEffectManager.PlayRailEnd();
+                    if (Tuner.MusicPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayRailEnd();
                     Note.EndEffectPlayed = true;
                 }
             }
@@ -382,7 +382,7 @@ public class LimHoldNoteManager : MonoBehaviour
             {
                 if (!Note.StartEffectPlayed)
                 {
-                    if (Tuner.MusicPlayerManager.isPlaying) Tuner.AudioEffectManager.PlayClick();
+                    if (Tuner.MusicPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayClick();
                     Note.StartEffectPlayed = true;
                 }
                 ShouldPlayRail = true;
@@ -394,7 +394,7 @@ public class LimHoldNoteManager : MonoBehaviour
                 Note.EndEffectPlayed = false;
             }
         }
-        if (Tuner.MusicPlayerManager.isPlaying)
+        if (Tuner.MusicPlayerManager.IsPlaying)
         {
             if (ShouldPlayRail) Tuner.AudioEffectManager.StartPlayRail();
             else Tuner.AudioEffectManager.StopPlayRail();

@@ -4,14 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 public class LimEditorManager : MonoBehaviour
 {
-    public LimMusicPlayerManager MusicPlayerWindow;
+    public LimMediaPlayerManager MusicPlayerWindow;
     public LimInspectorManager InspectorWindow;
     public LimTunerWindowManager TunerWindow;
     public LimTimeLineManager TimeLineWindow;
     public LimCreatorManager CreatorWindow;
     public LimPreferencesManager PreferencesWindow;
     public LimGizmoMotionManager GizmoMotionWindow;
-    //public LimCapturer CapturerWindow;
     public LimCloudManager CloudManager;
     public LimPluginManager PluginManager;
     public LimTopMenuManager TopMenu;

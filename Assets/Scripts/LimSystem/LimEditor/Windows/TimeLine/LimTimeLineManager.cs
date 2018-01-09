@@ -177,7 +177,7 @@ public class LimTimeLineManager : MonoBehaviour
                     {
                         float Delta = LimMousePosition.MousePosition.x - LimMousePosition.LastMousePosition.x;
                         float DeltaTime = -Delta / Scale;
-                        TunerManager.MusicPlayerManager.time = Mathf.Clamp(TunerManager.ChartTime + DeltaTime, 0, TunerManager.MusicPlayerManager.Length);
+                        TunerManager.MusicPlayerManager.Time = Mathf.Clamp(TunerManager.ChartTime + DeltaTime, 0, TunerManager.MusicPlayerManager.Length);
                     }
                 }
             }

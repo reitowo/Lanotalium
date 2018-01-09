@@ -18,6 +18,7 @@ public class LimHighPermission : MonoBehaviour
 
     private void Start()
     {
+        if (Application.isEditor) return;
         if (!LimSystem.Preferences.LapInjected) RegisterLapFormat();
     }
 #if UNITY_STANDALONE
@@ -87,7 +88,7 @@ public class LimHighPermission : MonoBehaviour
         if (LimSystem.Preferences.DoNotRunAsAdmin) return;
         RequestAdminPanel.SetActive(true);
         RequestAdminText.text = (LimSystem.Preferences.LanguageName == "简体中文") ?
-            "为了关联Lanotalium 工程文件后缀名(*.lap)，\n每次更新后，需要以管理员身份运行\n<color=red>一次</color>\nLanotalium。是否同意？" :
+            "为了关联Lanotalium 工程文件\n后缀名(*.lap)，每次更新后，\n需要以管理员身份运行\n<color=red>一次</color>\nLanotalium。是否同意？" :
             "To associate Lanotalium Project\n files (*.lap) with Lanotalium,\n you need to run Lanotalium as Administrator <color=red>once</color>\n after each update. Do you agree?";
     }
     private void RegisterLapFormat()

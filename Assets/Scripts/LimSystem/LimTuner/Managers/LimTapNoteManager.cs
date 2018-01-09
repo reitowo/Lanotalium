@@ -217,13 +217,13 @@ public class LimTapNoteManager : MonoBehaviour
                     {
                         case 0:
                         case 4:
-                            if (Tuner.MusicPlayerManager.isPlaying) Tuner.AudioEffectManager.PlayClick();
+                            if (Tuner.MusicPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayClick();
                             break;
                         case 2:
-                            if (Tuner.MusicPlayerManager.isPlaying) Tuner.AudioEffectManager.PlayFlickIn();
+                            if (Tuner.MusicPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayFlickIn();
                             break;
                         case 3:
-                            if (Tuner.MusicPlayerManager.isPlaying) Tuner.AudioEffectManager.PlayFlickOut();
+                            if (Tuner.MusicPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayFlickOut();
                             break;
                     }
                     Note.AudioEffectPlayed = true;

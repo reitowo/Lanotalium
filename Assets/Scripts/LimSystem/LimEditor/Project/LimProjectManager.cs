@@ -40,6 +40,7 @@ public class LimProjectManager : MonoBehaviour
     {
         if (Environment.GetCommandLineArgs().Length == 2 && !LapDirectOpened)
         {
+            if (!File.Exists(Environment.GetCommandLineArgs()[1])) return;
             string ProjectFileString = File.ReadAllText(Environment.GetCommandLineArgs()[1]);
             CurrentProject = JsonConvert.DeserializeObject<LanotaliumProject>(ProjectFileString);
             if (CurrentProject == null) return;
@@ -334,7 +335,7 @@ public class LimProjectManager : MonoBehaviour
             DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_NoBGA"]);
             return;
         }
-        if (!CurrentProject.isValid())
+        if (!CurrentProject.IsValid())
         {
             DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_InvalidProject"]);
             return;
@@ -343,7 +344,7 @@ public class LimProjectManager : MonoBehaviour
     }
     public void SaveProjectFile()
     {
-        if (!CurrentProject.isValid()) return;
+        if (!CurrentProject.IsValid()) return;
         string ProjectFile = JsonConvert.SerializeObject(CurrentProject);
         File.WriteAllText(isCreateProject ? (ProjectFolderPath.text + "/" + CurrentProject.Name + ".lap") : LapPath, ProjectFile);
     }
@@ -352,9 +353,11 @@ public class LimProjectManager : MonoBehaviour
         bool isLoadFinished = false;
         DialogUtils.ProgressBar.ShowProgress(() => { return isLoadFinished; });
 
-        LimSystem.ChartContainer = new Lanotalium.ChartContainer();
-        LimSystem.ChartContainer.ChartProperty = new Lanotalium.Chart.ChartProperty(CurrentProject.ChartPath);
-        LimSystem.ChartContainer.ChartLoadResult = new Lanotalium.Chart.ChartLoadResult();
+        LimSystem.ChartContainer = new Lanotalium.ChartContainer
+        {
+            ChartProperty = new Lanotalium.Chart.ChartProperty(CurrentProject.ChartPath),
+            ChartLoadResult = new Lanotalium.Chart.ChartLoadResult()
+        };
         SystemManager.SavePreferences();
         DialogUtils.ProgressBar.Percent = 0.5f;
 
@@ -460,6 +463,13 @@ public class LimProjectManager : MonoBehaviour
                 yield break;
             }
         }
+
+        if (File.Exists(CurrentProject.ProjectFolder + "/background.mp4"))
+        {
+            LimSystem.ChartContainer.ChartBackground.VideoPath = CurrentProject.ProjectFolder + "/background.mp4";
+            LimSystem.ChartContainer.ChartLoadResult.isBackgroundVideoDetected = true;
+        }
+
         ChartSaveLocation = LimSystem.ChartContainer.ChartProperty.ChartPath;
         DialogUtils.ProgressBar.Percent = 1f;
         yield return new WaitForSeconds(0.5f);
@@ -492,7 +502,7 @@ public class LimProjectManager : MonoBehaviour
     public void MakeRelease()
     {
         if (CurrentProject == null) return;
-        if (!CurrentProject.isValid()) return;
+        if (!CurrentProject.IsValid()) return;
 
         string SavePath = Directory.GetParent(CurrentProject.ChartPath).FullName + "/" + CurrentProject.Name + ".larelease";
         FileStream Release = new FileStream(SavePath, FileMode.Create, FileAccess.Write);

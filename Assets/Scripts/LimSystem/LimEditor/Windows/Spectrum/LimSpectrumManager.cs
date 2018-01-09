@@ -103,14 +103,6 @@ public class LimSpectrumManager : MonoBehaviour
         {
             SpectrumBars[i].Amplitude = Mathf.Clamp((SpectrumDataL[LogAxis[i]] + SpectrumDataR[LogAxis[i]]) * 4.16f * SpectrumContent.rect.height, 0, SpectrumContent.rect.height);
         }
-        float AvgFreq = 0;
-        float TotalAmp = 0;
-        for (int i = 113; i < 3975; ++i)
-        {
-            AvgFreq += 2.9296875f * i * (SpectrumDataL[i] + SpectrumDataR[i]) / 2;
-            TotalAmp += (SpectrumDataL[i] + SpectrumDataR[i]) / 2;
-        }
-        Debug.Log(AvgFreq / TotalAmp);
     }
 
 }

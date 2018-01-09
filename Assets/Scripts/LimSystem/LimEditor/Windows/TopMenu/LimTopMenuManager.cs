@@ -37,7 +37,7 @@ public class LimTopMenuManager : MonoBehaviour
         InspectorText.text = LimLanguageManager.TextDict["TopMenu_Window_Inspector"];
         TunerWindowText.text = LimLanguageManager.TextDict["TopMenu_Window_Tuner"];
         TimeLineText.text = LimLanguageManager.TextDict["TopMenu_Window_TimeLine"];
-        MusicPlayerText.text = LimLanguageManager.TextDict["TopMenu_Window_MusicPlayer"];
+        MusicPlayerText.text = LimLanguageManager.TextDict["TopMenu_Window_MediaPlayer"];
         CreatorText.text = LimLanguageManager.TextDict["TopMenu_Window_Creator"];
         SettingText.text = LimLanguageManager.TextDict["TopMenu_Setting"];
         PreferencesText.text = LimLanguageManager.TextDict["TopMenu_Setting_Preferences"];

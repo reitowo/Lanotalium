@@ -324,7 +324,7 @@ public class ComponentMotionManager : MonoBehaviour
     }
     public void OpenManuallyMotionEditor()
     {
-        OperationManager.TunerManager.MusicPlayerManager.isPlaying = false;
+        OperationManager.TunerManager.MusicPlayerManager.IsPlaying = false;
         if (Mode == Lanotalium.Editor.ComponentMotionMode.Horizontal) GizmoMotionManager.Edit(OperationManager.TunerManager.CameraManager.Horizontal[Index]);
         else if (Mode == Lanotalium.Editor.ComponentMotionMode.Vertical) GizmoMotionManager.Edit(OperationManager.TunerManager.CameraManager.Vertical[Index]);
         else if (Mode == Lanotalium.Editor.ComponentMotionMode.Rotation) GizmoMotionManager.Edit(OperationManager.TunerManager.CameraManager.Rotation[Index]);

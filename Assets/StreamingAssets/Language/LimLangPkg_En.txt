@@ -10,19 +10,19 @@ Window_Inspector_Label$Inspector
 Window_Inspector_Switcher_Bpm$BPM
 Window_Inspector_Switcher_Scroll$Scroll Speed
 Window_Inspector_Switcher_Default$Default
-Window_MusicPlayer_Label$Music Player
-Window_MusicPlayer_Progress$Progress
-Window_MusicPlayer_Pitch$Pitch
-Window_MusicPlayer_PitchReset$Reset
-Window_MusicPlayer_Play$Play
-Window_MusicPlayer_Pause$Pause
-Window_MusicPlayer_Stop$Stop
-Window_MusicPlayer_PreciseControl$Precise Mode Controller
-Window_MusicPlayer_Offset$Offset
-Window_MusicPlayer_SwitchPlayerMode$Switch Mode
-Window_MusicPlayer_FixTime$Fix Time
-Window_MusicPlayer_Precise$Precise
-Window_MusicPlayer_Sync$Sync
+Window_MediaPlayer_Label$Media Player
+Window_MediaPlayer_Progress$Progress
+Window_MediaPlayer_Pitch$Pitch
+Window_MediaPlayer_PitchReset$Reset
+Window_MediaPlayer_Play$Play
+Window_MediaPlayer_Pause$Pause
+Window_MediaPlayer_Stop$Stop
+Window_MediaPlayer_PreciseControl$Precise Mode Controller
+Window_MediaPlayer_Offset$Offset
+Window_MediaPlayer_SwitchPlayerMode$Switch Mode
+Window_MediaPlayer_FixTime$Fix Time
+Window_MediaPlayer_Precise$Precise
+Window_MediaPlayer_Sync$Sync
 Window_TimeLine_Label$TimeLine
 Window_TimeLine_Hor_Label$Motion (Horizontal)
 Window_TimeLine_Ver_Label$Motion (Vertical)
@@ -122,7 +122,7 @@ TopMenu_Window$Window
 TopMenu_Window_Inspector$Inspector
 TopMenu_Window_Tuner$Tuner
 TopMenu_Window_TimeLine$TimeLine
-TopMenu_Window_MusicPlayer$Music Player
+TopMenu_Window_MediaPlayer$Music Player
 TopMenu_Window_Creator$Creator
 TopMenu_Setting$Setting
 TopMenu_Setting_Preferences$Preferences
@@ -166,6 +166,7 @@ Plugin_Download$Download
 Plugin_Complete$Complete
 Plugin_Center_Label$Plugin Center
 Cloud_Cloud$Cloud
+Cloud_Backuping$Backuping
 Cloud_Uploading$Uploading
 Cloud_Downloading$Downloading
 Cloud_CloudAutosave$Auto Cloud Save
@@ -208,8 +209,7 @@ WhatsNew_Toggle$Don't show again.
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.
 Motion_DurationOverflow$(Duration Invalid) Current time + duration is larger than next motion. Failed to create.
-Background_VideoWarning$Background video is experimental and currently not exist in Lanota. Click to view detail.
-Background_VideoWarning_Detail$Background video will lead a delay when play the music to ensure the time of AudioSource and VideoPlayer is same. It may lead to some potential errors. Currently Lanota doesn't have such Background Animation and it is just for fun.
+Background_VideoWarning$If chart and audio not sync, adjust offset and click on fix time.
 Project_Saved$Saved.
 #HintDict
 GizmoMotion_Tp8$Motion (Horizontal) - Spiral
@@ -223,8 +223,8 @@ EaseRange$Ease : 0 - 12 Integer.
 Timeline_Scroll$Ctrl + Scroll to zoom timeline.<br>Drag timebar above to adjust time.
 Timeline_Prev$Switch to the previous motion of the selected motion's type.
 Timeline_Next$Switch to the next motion of the selected motion's type.
-MusicPlayer_PlayControl$When no button is selected, Press Spacebar to Play/Pause.
-MusicPlayer_Progress$Ctrl + ←/→ Move Progress forward/afterward a beatline's time.<br>Alt + ←/→ Move Progress forward/afterward 0.001s<br>Shift + ←/→ Move Progress forward/afterward 0.01s
+MediaPlayer_PlayControl$When no button is selected, Press Spacebar to Play/Pause.
+MediaPlayer_Progress$Ctrl + ←/→ Move Progress forward/afterward a beatline's time.<br>Alt + ←/→ Move Progress forward/afterward 0.001s<br>Shift + ←/→ Move Progress forward/afterward 0.01s
 ClickToCreate_Beatline$You can also Hold Alt when click.
 ClickToCreate_Angleline$You can also Hold Ctrl when click.
 ClickToCreate_Enable$Click to create joint when you select ONE long note.

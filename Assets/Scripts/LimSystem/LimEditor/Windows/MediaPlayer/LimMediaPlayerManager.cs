@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LimMusicPlayerManager : MonoBehaviour
+public class LimMediaPlayerManager : MonoBehaviour
 {
     private bool isInitialized = false;
     public LimTunerManager TunerManager;
@@ -20,6 +20,7 @@ public class LimMusicPlayerManager : MonoBehaviour
     public Color InvalidColor, ValidColor;
     public Button PlayBtn, PauseBtn, StopBtn, SwitchModeBtn, ResetBtn, FixTimeBtn;
     public LimWaveformManager WaveformManager;
+    public LimBackgroundManager BackgroundManager;
     public bool isProgressPressed = false, isPitchPressed = false;
     public float CurrentTime = 0;
     public float PreciseModeTimeOffset = 0;
@@ -39,19 +40,20 @@ public class LimMusicPlayerManager : MonoBehaviour
             TunerManager.BackgroundManager.BackgroundVideoPlayer.playbackSpeed = value;
         }
     }
-    public bool isPlaying
+    public bool IsPlaying
     {
         get
         {
-            return MusicPlayer.isPlaying;
+            if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return BackgroundManager.BackgroundVideoPlayer.isPlaying;
+            else return MusicPlayer.isPlaying;
         }
         set
         {
-            if (value) PlayMusic();
-            else PauseMusic();
+            if (value) PlayMedia();
+            else PauseMedia();
         }
     }
-    public float time
+    public float Time
     {
         get
         {
@@ -67,49 +69,56 @@ public class LimMusicPlayerManager : MonoBehaviour
     {
         get
         {
-            return MusicPlayer.clip.length;
+            if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return BackgroundManager.VideoLength;
+            else return MusicPlayer.clip.length;
         }
     }
 
-    public Lanotalium.MusicPlayer.SyncValuesDelegate SyncValues;
-    public Lanotalium.MusicPlayer.PlayMusicDelegate PlayMusic;
-    public Lanotalium.MusicPlayer.PauseMusicDelegate PauseMusic;
-    public Lanotalium.MusicPlayer.StopMusicDelegate StopMusic;
+    public Lanotalium.MediaPlayer.SyncValuesDelegate SyncValues;
+    public Lanotalium.MediaPlayer.PlayMediaDelegate PlayMedia;
+    public Lanotalium.MediaPlayer.PauseMediaDelegate PauseMedia;
+    public Lanotalium.MediaPlayer.StopMediaDelegate StopMedia;
 
     private RectTransform ViewRect;
-    public Lanotalium.MusicPlayer.MusicPlayerMode MusicPlayerMode = Lanotalium.MusicPlayer.MusicPlayerMode.Sync;
+    public Lanotalium.MediaPlayer.MediaPlayerMode MediaPlayerMode = Lanotalium.MediaPlayer.MediaPlayerMode.MusicSync;
     private float UiWidth;
     private bool ProgressOnEdit, PitchOnEdit;
 
     void Start()
     {
-        UsePreciseMode();
         ViewRect = BaseWindow.WindowRectTransform;
         UiWidth = ViewRect.rect.width;
+        if (LimSystem.ChartContainer == null) return;
+        if (LimSystem.ChartContainer.ChartLoadResult.isBackgroundVideoDetected)
+        {
+            InitializeVideo();
+            return;
+        }
+        UsePreciseMode();
     }
     public void SetTexts()
     {
-        BaseWindow.WindowName = LimLanguageManager.TextDict["Window_MusicPlayer_Label"];
-        ProgressLabel.text = LimLanguageManager.TextDict["Window_MusicPlayer_Progress"];
-        PitchLabel.text = LimLanguageManager.TextDict["Window_MusicPlayer_Pitch"];
-        PitchResetText.text = LimLanguageManager.TextDict["Window_MusicPlayer_PitchReset"];
-        PlayText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Play"];
-        PauseText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Pause"];
-        StopText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Stop"];
-        PreciseControllerLabel.text = LimLanguageManager.TextDict["Window_MusicPlayer_PreciseControl"];
-        OffsetLabel.text = LimLanguageManager.TextDict["Window_MusicPlayer_Offset"];
-        SwitchPlayerModeLabel.text = LimLanguageManager.TextDict["Window_MusicPlayer_SwitchPlayerMode"];
-        FixTimeLabel.text = LimLanguageManager.TextDict["Window_MusicPlayer_FixTime"];
-        if (MusicPlayerMode == Lanotalium.MusicPlayer.MusicPlayerMode.Precise) CurrentModeText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Precise"];
-        else CurrentModeText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Sync"];
+        BaseWindow.WindowName = LimLanguageManager.TextDict["Window_MediaPlayer_Label"];
+        ProgressLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_Progress"];
+        PitchLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_Pitch"];
+        PitchResetText.text = LimLanguageManager.TextDict["Window_MediaPlayer_PitchReset"];
+        PlayText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Play"];
+        PauseText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Pause"];
+        StopText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Stop"];
+        PreciseControllerLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_PreciseControl"];
+        OffsetLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_Offset"];
+        SwitchPlayerModeLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_SwitchPlayerMode"];
+        FixTimeLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_FixTime"];
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.MusicPrecise) CurrentModeText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Precise"];
+        else CurrentModeText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Sync"];
     }
-
     void Update()
     {
         OnUiWidthChange();
         if (!isInitialized) return;
-        SyncValues();
         DetectPlayControl();
+        SyncValues();
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return;
         DetectHotkey();
     }
     public void OnUiWidthChange()
@@ -142,36 +151,35 @@ public class LimMusicPlayerManager : MonoBehaviour
     }
     public void DetectPlayControl()
     {
-        //if (Capturer.isCapturing) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (EventSystem.current.currentSelectedGameObject != null) return;
-            if (MusicPlayer.isPlaying) PauseMusic();
-            else if (!MusicPlayer.isPlaying) PlayMusic();
+            if (IsPlaying) PauseMedia();
+            else if (!IsPlaying) PlayMedia();
         }
     }
     public void DetectHotkey()
     {
-        //if (Capturer.isCapturing) return;
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) time = ComponentBpm.FindPrevOrNextBeatline(TunerManager.ChartTime, false);
-            else if (Input.GetKeyDown(KeyCode.RightArrow)) time = ComponentBpm.FindPrevOrNextBeatline(TunerManager.ChartTime, true);
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) Time = ComponentBpm.FindPrevOrNextBeatline(TunerManager.ChartTime, false);
+            else if (Input.GetKeyDown(KeyCode.RightArrow)) Time = ComponentBpm.FindPrevOrNextBeatline(TunerManager.ChartTime, true);
         }
         else if (Input.GetKey(KeyCode.LeftAlt))
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) time = Mathf.Clamp(time - 0.001f, 0, Length);
-            else if (Input.GetKeyDown(KeyCode.RightArrow)) time = Mathf.Clamp(time + 0.001f, 0, Length);
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) Time = Mathf.Clamp(Time - 0.001f, 0, Length);
+            else if (Input.GetKeyDown(KeyCode.RightArrow)) Time = Mathf.Clamp(Time + 0.001f, 0, Length);
         }
         else if (Input.GetKey(KeyCode.LeftShift))
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow)) time = Mathf.Clamp(time - 0.01f, 0, Length);
-            else if (Input.GetKeyDown(KeyCode.RightArrow)) time = Mathf.Clamp(time + 0.01f, 0, Length);
+            if (Input.GetKeyDown(KeyCode.LeftArrow)) Time = Mathf.Clamp(Time - 0.01f, 0, Length);
+            else if (Input.GetKeyDown(KeyCode.RightArrow)) Time = Mathf.Clamp(Time + 0.01f, 0, Length);
         }
     }
-
+    #region MusicPlayer
     public void Initialize(Lanotalium.Chart.ChartMusic MusicData, Lanotalium.Chart.ChartProperty PropertyData)
     {
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return;
         MusicName = PropertyData.ChartName;
         ProgressSlider.maxValue = MusicData.Length;
         MusicPlayer.clip = MusicData.Music;
@@ -184,11 +192,11 @@ public class LimMusicPlayerManager : MonoBehaviour
 
     public void SwitchPlayerMode()
     {
-        if (MusicPlayerMode == Lanotalium.MusicPlayer.MusicPlayerMode.Sync)
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.MusicSync)
         {
             UsePreciseMode();
         }
-        else if (MusicPlayerMode == Lanotalium.MusicPlayer.MusicPlayerMode.Precise)
+        else if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.MusicPrecise)
         {
             UseSyncMode();
         }
@@ -196,36 +204,36 @@ public class LimMusicPlayerManager : MonoBehaviour
     private void UsePreciseMode()
     {
         SyncValues = SyncValuesPreciseMode;
-        PlayMusic = PlayMusicPreciseMode;
-        PauseMusic = PauseMusicPreciseMode;
-        StopMusic = StopMusicPreciseMode;
+        PlayMedia = PlayMusicPreciseMode;
+        PauseMedia = PauseMusicPreciseMode;
+        StopMedia = StopMusicPreciseMode;
         PreciseModeController.SetActive(true);
         BaseWindow.WindowRectTransform.sizeDelta = new Vector2(500, 190);
-        CurrentModeText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Precise"];
-        MusicPlayerMode = Lanotalium.MusicPlayer.MusicPlayerMode.Precise;
+        CurrentModeText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Precise"];
+        MediaPlayerMode = Lanotalium.MediaPlayer.MediaPlayerMode.MusicPrecise;
     }
     private void UseSyncMode()
     {
         SyncValues = SyncValuesSyncMode;
-        PlayMusic = PlayMusicSyncMode;
-        PauseMusic = PauseMusicSyncMode;
-        StopMusic = StopMusicSyncMode;
+        PlayMedia = PlayMusicSyncMode;
+        PauseMedia = PauseMusicSyncMode;
+        StopMedia = StopMusicSyncMode;
         PreciseModeController.SetActive(true);
         BaseWindow.WindowRectTransform.sizeDelta = new Vector2(500, 150);
-        CurrentModeText.text = LimLanguageManager.TextDict["Window_MusicPlayer_Sync"];
-        MusicPlayerMode = Lanotalium.MusicPlayer.MusicPlayerMode.Sync;
+        CurrentModeText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Sync"];
+        MediaPlayerMode = Lanotalium.MediaPlayer.MediaPlayerMode.MusicSync;
     }
 
     private void SyncValuesPreciseMode()
     {
-        if (MusicPlayer.isPlaying) CurrentTime += Time.deltaTime * MusicPlayer.pitch;
+        if (MusicPlayer.isPlaying) CurrentTime += UnityEngine.Time.deltaTime * MusicPlayer.pitch;
         if (CurrentTime > MusicPlayer.clip.length)
         {
-            StopMusic();
-            PlayMusic();
+            StopMedia();
+            PlayMedia();
         }
         if (!isProgressPressed) ProgressSlider.value = CurrentTime;
-        else time = ProgressSlider.value;
+        else Time = ProgressSlider.value;
         if (isPitchPressed) Pitch = PitchSlider.value;
         if (!ProgressOnEdit) ProgressInputField.text = CurrentTime.ToString("f4");
         if (!PitchOnEdit) PitchInputField.text = MusicPlayer.pitch.ToString("f3");
@@ -253,7 +261,11 @@ public class LimMusicPlayerManager : MonoBehaviour
     }
     public void FixCurrentTime()
     {
-        if (MusicPlayerMode != Lanotalium.MusicPlayer.MusicPlayerMode.Precise) return;
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video)
+        {
+            CurrentTime = BackgroundManager.VideoTime + PreciseModeTimeOffset;
+        }
+        if (MediaPlayerMode != Lanotalium.MediaPlayer.MediaPlayerMode.MusicPrecise) return;
         CurrentTime = MusicPlayer.time + PreciseModeTimeOffset;
         ProgressSlider.value = CurrentTime;
     }
@@ -272,17 +284,17 @@ public class LimMusicPlayerManager : MonoBehaviour
     }
     private void OnApplicationFocus(bool focus)
     {
-        if (focus) if (isPlaying) FixCurrentTime();
+        if (focus) if (IsPlaying) FixCurrentTime();
     }
     private void OnApplicationPause(bool pause)
     {
-        if (!pause) if (isPlaying) FixCurrentTime();
+        if (!pause) if (IsPlaying) FixCurrentTime();
     }
 
     private void SyncValuesSyncMode()
     {
         if (!isProgressPressed) ProgressSlider.value = MusicPlayer.time;
-        else time = ProgressSlider.value;
+        else Time = ProgressSlider.value;
         if (isPitchPressed) Pitch = PitchSlider.value;
         if (!ProgressOnEdit) ProgressInputField.text = MusicPlayer.time.ToString("f3");
         if (!PitchOnEdit) PitchInputField.text = MusicPlayer.pitch.ToString("f3");
@@ -306,15 +318,15 @@ public class LimMusicPlayerManager : MonoBehaviour
 
     public void CallPlayMusicFromUi()
     {
-        PlayMusic();
+        PlayMedia();
     }
     public void CallPauseMusicFromUi()
     {
-        PauseMusic();
+        PauseMedia();
     }
     public void CallStopMusicFromUi()
     {
-        StopMusic();
+        StopMedia();
     }
 
     public void ResetPitch()
@@ -328,6 +340,10 @@ public class LimMusicPlayerManager : MonoBehaviour
     public void OnProgressUp()
     {
         isProgressPressed = false;
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video)
+        {
+            BackgroundManager.SetVideoTimeTo(ProgressSlider.value);
+        }
     }
     public void OnPitchDown()
     {
@@ -355,6 +371,7 @@ public class LimMusicPlayerManager : MonoBehaviour
     }
     public void OnProgressValueChange()
     {
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return;
         if (!ProgressOnEdit) return;
         float ProgressTmp;
         if (!float.TryParse(ProgressInputField.text, out ProgressTmp))
@@ -368,10 +385,11 @@ public class LimMusicPlayerManager : MonoBehaviour
             return;
         }
         ProgressImg.color = ValidColor;
-        time = ProgressTmp;
+        Time = ProgressTmp;
     }
     public void OnPitchValueChange()
     {
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return;
         if (!PitchOnEdit) return;
         float PitchTmp;
         if (!float.TryParse(PitchInputField.text, out PitchTmp))
@@ -387,4 +405,47 @@ public class LimMusicPlayerManager : MonoBehaviour
         PitchImg.color = ValidColor;
         MusicPlayer.pitch = PitchTmp;
     }
+    #endregion
+    #region VideoPlayer
+    public void InitializeVideo()
+    {
+        SyncValues = SyncValuesVideoMode;
+        PlayMedia = PlayMediaVideoMode;
+        PauseMedia = PauseMediaVideoMode;
+        StopMedia = StopMediaVideoMode;
+        MediaPlayerMode = Lanotalium.MediaPlayer.MediaPlayerMode.Video;
+    }
+    public void OnPrepared()
+    {
+        MusicName = LimSystem.ChartContainer.ChartProperty.ChartName;
+        ProgressSlider.maxValue = BackgroundManager.VideoLength;
+        LimSystem.ChartContainer.ChartData.SongLength = BackgroundManager.VideoLength;
+        PreciseModeTimeOffset = LimSystem.Preferences.MusicPlayerPreciseOffset;
+        OffsetInputField.text = PreciseModeTimeOffset.ToString();
+        isInitialized = true;
+        WaveformManager.OnMusicLoaded();
+    }
+    public void OnTimeSeekEnd()
+    {
+        CurrentTime = BackgroundManager.VideoTime + PreciseModeTimeOffset;
+    }
+    public void SyncValuesVideoMode()
+    {
+        if (IsPlaying) CurrentTime += UnityEngine.Time.deltaTime * MusicPlayer.pitch;
+        if (!isProgressPressed) ProgressSlider.value = CurrentTime;
+        if (!ProgressOnEdit) ProgressInputField.text = CurrentTime.ToString("f4");
+    }
+    public void PlayMediaVideoMode()
+    {
+        BackgroundManager.Play();
+    }
+    public void PauseMediaVideoMode()
+    {
+        BackgroundManager.Pause();
+    }
+    public void StopMediaVideoMode()
+    {
+        BackgroundManager.Stop();
+    }
+    #endregion
 }

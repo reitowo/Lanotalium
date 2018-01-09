@@ -17,8 +17,28 @@ public class LimBackgroundManager : MonoBehaviour
     public Image ColorImg, GrayImg, LinearImg;
     public RectTransform ColorRect, GrayRect, LinearRect;
     public LimDisplayManager DisplayManager;
+    public LimMediaPlayerManager MediaPlayerManager;
     public Lanotalium.Background.BackgroundMode Mode = Lanotalium.Background.BackgroundMode.None;
     public float HorizontalRatio, VerticalRatio;
+
+    public float VideoTime
+    {
+        set
+        {
+            BackgroundVideoPlayer.time = value;
+        }
+        get
+        {
+            return (float)BackgroundVideoPlayer.time;
+        }
+    }
+    public float VideoLength
+    {
+        get
+        {
+            return BackgroundVideoPlayer.frameCount / BackgroundVideoPlayer.frameRate;
+        }
+    }
 
     private void Update()
     {
@@ -47,13 +67,15 @@ public class LimBackgroundManager : MonoBehaviour
         BackgroundVideoPlayer.url = BackgroundData.VideoPath;
         BackgroundVideoPlayer.waitForFirstFrame = true;
         BackgroundVideoPlayer.Prepare();
+        BackgroundVideoPlayer.prepareCompleted += BackgroundVideoPlayer_prepareCompleted;
         BackgroundVideoPlayer.seekCompleted += BackgroundVideoPlayer_seekCompleted;
         ColorImg.material = BackgroundRenderTextureMaterial;
         ColorImg.color = new Color(1, 1, 1, 1);
         GrayImg.color = new Color(1, 1, 1, 0);
         LinearImg.color = new Color(1, 1, 1, 0);
-        LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Background_VideoWarning"], System.Windows.Forms.ToolTipIcon.Warning, "Lanotalium", LimLanguageManager.NotificationDict["Background_VideoWarning_Detail"]);
+        LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Background_VideoWarning"], System.Windows.Forms.ToolTipIcon.Warning);
     }
+
     private void ImageBackgroundInitialize()
     {
         ColorImg.material = null;
@@ -85,8 +107,14 @@ public class LimBackgroundManager : MonoBehaviour
 
     private void BackgroundVideoPlayer_seekCompleted(VideoPlayer source)
     {
-
+        MediaPlayerManager.OnTimeSeekEnd();
     }
+    private void BackgroundVideoPlayer_prepareCompleted(VideoPlayer source)
+    {
+        MediaPlayerManager.OnPrepared();
+        Play();
+    }
+
     private void SyncRenderTextureWithWindowSize()
     {
         if (Mode == Lanotalium.Background.BackgroundMode.Video)
@@ -127,12 +155,13 @@ public class LimBackgroundManager : MonoBehaviour
     public void Stop()
     {
         if (Mode != Lanotalium.Background.BackgroundMode.Video) return;
-        Pause();
+        VideoTime = 0;
+        BackgroundVideoPlayer.Pause();
     }
     public void SetVideoTimeTo(float Time)
     {
         if (Mode != Lanotalium.Background.BackgroundMode.Video) return;
-        BackgroundVideoPlayer.time = Time;
+        VideoTime = Time;
     }
 
     public void BackgroundUpdator()
@@ -140,7 +169,7 @@ public class LimBackgroundManager : MonoBehaviour
         float Progress = Tuner.ChartTime / Tuner.MusicPlayerManager.Length;
         if (Mode == Lanotalium.Background.BackgroundMode.Duo)
         {
-            GrayImg.color = new Color(1, 1, 1, 1- Progress);
+            GrayImg.color = new Color(1, 1, 1, 1 - Progress);
         }
         else if (Mode == Lanotalium.Background.BackgroundMode.Triple)
         {
@@ -160,7 +189,6 @@ public class LimBackgroundManager : MonoBehaviour
     }
     public void BackgroundImageSizeUpdator()
     {
-        //if (Capturer.isCapturing) return;
         if (DisplayManager.FullScreenTuner)
         {
             if (Mode != Lanotalium.Background.BackgroundMode.Video) SetBackgroundImageSize(Screen.height);

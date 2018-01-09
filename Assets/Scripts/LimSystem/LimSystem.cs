@@ -670,16 +670,17 @@ namespace Lanotalium
             Stellights
         }
     }
-    namespace MusicPlayer
+    namespace MediaPlayer
     {
         public delegate void SyncValuesDelegate();
-        public delegate void PlayMusicDelegate();
-        public delegate void PauseMusicDelegate();
-        public delegate void StopMusicDelegate();
-        public enum MusicPlayerMode
+        public delegate void PlayMediaDelegate();
+        public delegate void PauseMediaDelegate();
+        public delegate void StopMediaDelegate();
+        public enum MediaPlayerMode
         {
-            Sync,
-            Precise
+            MusicSync,
+            MusicPrecise,
+            Video
         }
     }
     namespace Editor
@@ -913,6 +914,13 @@ namespace Lanotalium
             public string BGA0Path;
             public string BGA1Path;
             public string BGA2Path;
+            public string ProjectFolder
+            {
+                get
+                {
+                    return Directory.GetParent(ChartPath).FullName;
+                }
+            }
             public int BGACount()
             {
                 int Count = 0;
@@ -921,7 +929,7 @@ namespace Lanotalium
                 if (BGA2Path != null) Count++;
                 return Count;
             }
-            public bool isValid()
+            public bool IsValid()
             {
                 if (ChartPath == null) return false;
                 if (MusicPath == null) return false;
@@ -1009,7 +1017,7 @@ public class LimSystem : MonoBehaviour
 #if UNITY_EDITOR
         //if (File.Exists(PreferencesSavePath)) File.Delete(PreferencesSavePath);
 #endif
-        if (Directory.Exists(AppDataRoaming + "/Updator")) Directory.Delete(AppDataRoaming + "/Updator",true);
+        if (Directory.Exists(AppDataRoaming + "/Updator")) Directory.Delete(AppDataRoaming + "/Updator", true);
         if (!Directory.Exists(AppDataRoaming)) Directory.CreateDirectory(AppDataRoaming);
         RestorePreferences();
         Application.logMessageReceived += ReceiveUnityLog;

@@ -420,12 +420,12 @@ public class LimGizmoMotionManager : MonoBehaviour
     }
     private void SetTimeToInputField()
     {
-        if (!TunerManager.MusicPlayerManager.isPlaying) return;
+        if (!TunerManager.MusicPlayerManager.IsPlaying) return;
         TimeInput.text = TunerManager.ChartTime.ToString();
     }
     private void SetMotionPreviewer()
     {
-        if (TunerManager.MusicPlayerManager.isPlaying)
+        if (TunerManager.MusicPlayerManager.IsPlaying)
         {
             MotionPreviewer.positionCount = 0;
             return;
@@ -494,7 +494,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         }
         TimeImg.color = ValidColor;
         TimeToCreate = TimeTmp;
-        if (TunerManager.MusicPlayerManager.isPlaying) TunerManager.MusicPlayerManager.time = TimeTmp;
+        if (TunerManager.MusicPlayerManager.IsPlaying) TunerManager.MusicPlayerManager.Time = TimeTmp;
     }
     public void OnPointerEnterTunerWindow()
     {
