@@ -169,7 +169,7 @@ public class LimTimeLineManager : MonoBehaviour
                 if (!TimePointer.gameObject.activeInHierarchy) TimePointer.gameObject.SetActive(true);
                 TimePointer.anchoredPosition = new Vector2((Mouse.x - ViewRect.anchoredPosition.x), -28);
                 float PointerTiming = (Mouse.x - ViewRect.anchoredPosition.x - 200) / Scale + TunerManager.ChartTime;
-                PointerTiming = Mathf.Clamp(PointerTiming, 0, TunerManager.MusicPlayerManager.Length);
+                PointerTiming = Mathf.Clamp(PointerTiming, 0, TunerManager.MediaPlayerManager.Length);
                 TimePointer.GetComponentInChildren<Text>().text = PointerTiming.ToString("f4");
                 if (Mouse.y >= ViewRect.anchoredPosition.y - 120 && Mouse.y <= ViewRect.anchoredPosition.y)
                 {
@@ -177,7 +177,7 @@ public class LimTimeLineManager : MonoBehaviour
                     {
                         float Delta = LimMousePosition.MousePosition.x - LimMousePosition.LastMousePosition.x;
                         float DeltaTime = -Delta / Scale;
-                        TunerManager.MusicPlayerManager.Time = Mathf.Clamp(TunerManager.ChartTime + DeltaTime, 0, TunerManager.MusicPlayerManager.Length);
+                        TunerManager.MediaPlayerManager.Time = Mathf.Clamp(TunerManager.ChartTime + DeltaTime, 0, TunerManager.MediaPlayerManager.Length);
                     }
                 }
             }
@@ -239,7 +239,7 @@ public class LimTimeLineManager : MonoBehaviour
             if (t.GameObject != null) Destroy(t.GameObject);
         }
         TimeLineTimes.Clear();
-        for (float t = 0; t < TunerManager.MusicPlayerManager.Length; t += 70f / Scale)
+        for (float t = 0; t < TunerManager.MediaPlayerManager.Length; t += 70f / Scale)
         {
             TimeLineTimeContainer c = new TimeLineTimeContainer();
             c.Timing = t;

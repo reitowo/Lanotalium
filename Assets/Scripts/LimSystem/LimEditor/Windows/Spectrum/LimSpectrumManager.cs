@@ -34,7 +34,6 @@ public class LimSpectrumManager : MonoBehaviour
     private void Update()
     {
         DetectRectChange();
-        if (MusicPlayer.clip == null) return;
         DrawSpectrumData();
     }
     public void OnWindowSorted(int Order)
@@ -104,5 +103,4 @@ public class LimSpectrumManager : MonoBehaviour
             SpectrumBars[i].Amplitude = Mathf.Clamp((SpectrumDataL[LogAxis[i]] + SpectrumDataR[LogAxis[i]]) * 4.16f * SpectrumContent.rect.height, 0, SpectrumContent.rect.height);
         }
     }
-
 }

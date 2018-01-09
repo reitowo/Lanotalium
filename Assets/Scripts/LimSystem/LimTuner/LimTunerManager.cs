@@ -13,7 +13,7 @@ public class LimTunerManager : MonoBehaviour
     public LimScrollManager ScrollManager;
     public LimTapNoteManager TapNoteManager;
     public LimHoldNoteManager HoldNoteManager;
-    public LimMediaPlayerManager MusicPlayerManager;
+    public LimMediaPlayerManager MediaPlayerManager;
     public LimBackgroundManager BackgroundManager;
     public LimAudioEffectManager AudioEffectManager;
     public bool isInitialized = false;
@@ -36,13 +36,13 @@ public class LimTunerManager : MonoBehaviour
         ScrollManager.Initialize(ChartContainer.ChartData.LanotaScroll);
         TapNoteManager.Initialize(ChartContainer.ChartData.LanotaTapNote);
         HoldNoteManager.Initialize(ChartContainer.ChartData.LanotaHoldNote);
-        MusicPlayerManager.Initialize(ChartContainer.ChartMusic, ChartContainer.ChartProperty);
+        MediaPlayerManager.Initialize(ChartContainer.ChartMusic, ChartContainer.ChartProperty);
         BackgroundManager.Initialize(ChartContainer.ChartBackground, ChartContainer.ChartLoadResult);
         isInitialized = true;
     }
     private void UpdateChartTime()
     {
-        ChartTime = MusicPlayerManager.CurrentTime;
+        ChartTime = MediaPlayerManager.CurrentTime;
     }
     void Update()
     {

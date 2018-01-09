@@ -100,7 +100,7 @@ public class LimMediaPlayerManager : MonoBehaviour
     {
         BaseWindow.WindowName = LimLanguageManager.TextDict["Window_MediaPlayer_Label"];
         ProgressLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_Progress"];
-        PitchLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_Pitch"];
+        PitchLabel.text = LimLanguageManager.TextDict[MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video ? "Window_MediaPlayer_PlaybackSpeed" : "Window_MediaPlayer_Pitch"];
         PitchResetText.text = LimLanguageManager.TextDict["Window_MediaPlayer_PitchReset"];
         PlayText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Play"];
         PauseText.text = LimLanguageManager.TextDict["Window_MediaPlayer_Pause"];
@@ -389,7 +389,6 @@ public class LimMediaPlayerManager : MonoBehaviour
     }
     public void OnPitchValueChange()
     {
-        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return;
         if (!PitchOnEdit) return;
         float PitchTmp;
         if (!float.TryParse(PitchInputField.text, out PitchTmp))
@@ -397,13 +396,26 @@ public class LimMediaPlayerManager : MonoBehaviour
             PitchImg.color = InvalidColor;
             return;
         }
-        if (Pitch < -3 || Pitch > 3)
+        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video)
         {
-            PitchImg.color = InvalidColor;
-            return;
+            if (Pitch < 0 || Pitch > 10)
+            {
+                PitchImg.color = InvalidColor;
+                return;
+            }
+            PitchImg.color = ValidColor;
+            BackgroundManager.BackgroundVideoPlayer.playbackSpeed = PitchTmp;
         }
-        PitchImg.color = ValidColor;
-        MusicPlayer.pitch = PitchTmp;
+        else
+        {
+            if (Pitch < -3 || Pitch > 3)
+            {
+                PitchImg.color = InvalidColor;
+                return;
+            }
+            PitchImg.color = ValidColor;
+            MusicPlayer.pitch = PitchTmp;
+        }
     }
     #endregion
     #region VideoPlayer
@@ -422,8 +434,11 @@ public class LimMediaPlayerManager : MonoBehaviour
         LimSystem.ChartContainer.ChartData.SongLength = BackgroundManager.VideoLength;
         PreciseModeTimeOffset = LimSystem.Preferences.MusicPlayerPreciseOffset;
         OffsetInputField.text = PreciseModeTimeOffset.ToString();
-        isInitialized = true;
+        PitchLabel.text = LimLanguageManager.TextDict["Window_MediaPlayer_PlaybackSpeed"];
+        PitchSlider.maxValue = 10;
+        PitchSlider.minValue = 0;
         WaveformManager.OnMusicLoaded();
+        isInitialized = true;
     }
     public void OnTimeSeekEnd()
     {
@@ -431,9 +446,11 @@ public class LimMediaPlayerManager : MonoBehaviour
     }
     public void SyncValuesVideoMode()
     {
-        if (IsPlaying) CurrentTime += UnityEngine.Time.deltaTime * MusicPlayer.pitch;
+        if (IsPlaying) CurrentTime += UnityEngine.Time.deltaTime * BackgroundManager.BackgroundVideoPlayer.playbackSpeed;
         if (!isProgressPressed) ProgressSlider.value = CurrentTime;
+        if (isPitchPressed) BackgroundManager.BackgroundVideoPlayer.playbackSpeed = PitchSlider.value;
         if (!ProgressOnEdit) ProgressInputField.text = CurrentTime.ToString("f4");
+        if (!PitchOnEdit) PitchInputField.text = BackgroundManager.BackgroundVideoPlayer.playbackSpeed.ToString("f3");
     }
     public void PlayMediaVideoMode()
     {

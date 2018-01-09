@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class LimGizmoMotionManager : MonoBehaviour
 {
     public Text LabelText, MotionToCreateText;
-    public Text BeginRadiusText, BeginDegreeText, BeginHeightText, BeginRotationText, EndTimeText;
+    public Text BeginRadiusText, BeginDegreeText, BeginHeightText, BeginRotationText;
     public Text EditModeText, FromText, ToText, RadiusText, DegreeText, HeightText, RotationText, TimeText, WithText, EaseText, DurationText, ApplyText;
     public Color PressedColor, UnPressedColor;
     public Color ValidColor, InvalidColor;
     public Image Tp8Btn, Tp10Btn, Tp11Btn, Tp13Btn, MoveBtn, RotateBtn, InputBtn;
-    public Image RadImg, DegImg, HeiImg, RotImg, TimeImg, DurationImg, EaseImg;
-    public InputField RadiusInput, DegreeInput, HeightInput, RotationInput, TimeInput, DurationInput, EaseInput;
+    public Image RadImg, DegImg, HeiImg, RotImg, TimeStartImg, TimeEndImg, DurationImg, EaseImg;
+    public InputField RadiusInput, DegreeInput, HeightInput, RotationInput, TimeStartInput, TimeEndInput, DurationInput, EaseInput;
     public RectTransform TunerWindowRect;
     public GameObject TunerGameObject;
     public Camera TunerCamera;
@@ -240,7 +240,6 @@ public class LimGizmoMotionManager : MonoBehaviour
         SetStartStatusToText();
         SetTimeToInputField();
         SetMotionPreviewer();
-        SetEndTimeToText();
         LastMousePosition = Input.mousePosition;
     }
 
@@ -420,12 +419,12 @@ public class LimGizmoMotionManager : MonoBehaviour
     }
     private void SetTimeToInputField()
     {
-        if (!TunerManager.MusicPlayerManager.IsPlaying) return;
-        TimeInput.text = TunerManager.ChartTime.ToString();
+        if (!TunerManager.MediaPlayerManager.IsPlaying) return;
+        TimeStartInput.text = TunerManager.ChartTime.ToString();
     }
     private void SetMotionPreviewer()
     {
-        if (TunerManager.MusicPlayerManager.IsPlaying)
+        if (TunerManager.MediaPlayerManager.IsPlaying)
         {
             MotionPreviewer.positionCount = 0;
             return;
@@ -464,7 +463,7 @@ public class LimGizmoMotionManager : MonoBehaviour
             MotionPreviewer.SetPosition(1, End);
         }
     }
-    private void SetEndTimeToText()
+    public void OnDurationChange()
     {
         float Duration;
         if (!float.TryParse(DurationInput.text, out Duration))
@@ -476,25 +475,43 @@ public class LimGizmoMotionManager : MonoBehaviour
         { DurationImg.color = InvalidColor; return; }
         else DurationImg.color = ValidColor;
         DurationImg.color = ValidColor;
-        EndTimeText.text = (TimeToCreate + Duration).ToString();
+        TimeEndInput.text = (TimeToCreate + Duration).ToString();
     }
-    public void OnTimeChange()
+    public void OnTimeStartChange()
     {
         if (LimSystem.ChartContainer == null || !TunerManager.isInitialized) return;
         float TimeTmp;
-        if (!float.TryParse(TimeInput.text, out TimeTmp))
+        if (!float.TryParse(TimeStartInput.text, out TimeTmp))
         {
-            TimeImg.color = InvalidColor;
+            TimeStartImg.color = InvalidColor;
             return;
         }
-        if (TimeTmp < 0 || TimeTmp > TunerManager.MusicPlayerManager.MusicPlayer.clip.length)
+        if (TimeTmp < 0 || TimeTmp > TunerManager.MediaPlayerManager.Length)
         {
-            TimeImg.color = InvalidColor;
+            TimeStartImg.color = InvalidColor;
             return;
         }
-        TimeImg.color = ValidColor;
+        TimeStartImg.color = ValidColor;
         TimeToCreate = TimeTmp;
-        if (TunerManager.MusicPlayerManager.IsPlaying) TunerManager.MusicPlayerManager.Time = TimeTmp;
+        OnDurationChange();
+        if (TunerManager.MediaPlayerManager.IsPlaying) TunerManager.MediaPlayerManager.Time = TimeTmp;
+    }
+    public void OnTimeEndChange()
+    {
+        if (LimSystem.ChartContainer == null || !TunerManager.isInitialized) return;
+        float TimeTmp;
+        if (!float.TryParse(TimeEndInput.text, out TimeTmp))
+        {
+            TimeEndImg.color = InvalidColor;
+            return;
+        }
+        if (TimeTmp < TimeToCreate + 0.0001f)
+        {
+            TimeEndImg.color = InvalidColor;
+            return;
+        }
+        TimeEndImg.color = ValidColor;
+        DurationInput.text = (TimeTmp - TimeToCreate).ToString();
     }
     public void OnPointerEnterTunerWindow()
     {
@@ -517,13 +534,14 @@ public class LimGizmoMotionManager : MonoBehaviour
         UseMove = false;
         UseRotate = false;
         UseInput = true;
-        TimeInput.text = TunerManager.ChartTime.ToString();
+        TimeStartInput.text = TunerManager.ChartTime.ToString();
         TimeToCreate = TunerManager.ChartTime;
         SetStartStatusToText();
-        DurationInput.text = 0.ToString();
+        DurationInput.text = 1.ToString();
         EaseInput.text = 0.ToString();
         SetTunerStatusToInputField();
         gameObject.SetActive(true);
+        OnDurationChange();
     }
     public void Edit(Lanotalium.Chart.LanotaCameraXZ Hor)
     {
@@ -540,7 +558,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         UseMove = false;
         UseRotate = false;
         UseInput = true;
-        TimeInput.text = Hor.Time.ToString();
+        TimeStartInput.text = Hor.Time.ToString();
         TimeToCreate = Hor.Time;
         SetStartStatusToText();
         DurationInput.text = Hor.Duration.ToString();
@@ -573,7 +591,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         UseMove = false;
         UseRotate = false;
         UseInput = true;
-        TimeInput.text = Ver.Time.ToString();
+        TimeStartInput.text = Ver.Time.ToString();
         TimeToCreate = Ver.Time;
         SetStartStatusToText();
         DurationInput.text = Ver.Duration.ToString();
@@ -596,7 +614,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         UseMove = false;
         UseRotate = false;
         UseInput = true;
-        TimeInput.text = Rot.Time.ToString();
+        TimeStartInput.text = Rot.Time.ToString();
         TimeToCreate = Rot.Time;
         SetStartStatusToText();
         DurationInput.text = Rot.Duration.ToString();
@@ -636,9 +654,9 @@ public class LimGizmoMotionManager : MonoBehaviour
             { RotImg.color = InvalidColor; return; }
             else RotImg.color = ValidColor;
         }
-        if (!float.TryParse(TimeInput.text, out Time))
-        { TimeImg.color = InvalidColor; return; }
-        else TimeImg.color = ValidColor;
+        if (!float.TryParse(TimeStartInput.text, out Time))
+        { TimeStartImg.color = InvalidColor; return; }
+        else TimeStartImg.color = ValidColor;
         if (!float.TryParse(DurationInput.text, out Duration))
         { DurationImg.color = InvalidColor; return; }
         else DurationImg.color = ValidColor;
@@ -656,8 +674,8 @@ public class LimGizmoMotionManager : MonoBehaviour
             if (Mode == Lanotalium.Editor.GizmoMotionMode.Horizontal)
             {
                 if (!OperationManager.CheckHorizontalTimeValid(HorReference, Time))
-                { TimeImg.color = InvalidColor; return; }
-                else TimeImg.color = ValidColor;
+                { TimeStartImg.color = InvalidColor; return; }
+                else TimeStartImg.color = ValidColor;
                 OperationManager.SetHorizontalTime(HorReference, Time);
                 if (!OperationManager.CheckHorizontalDurationValid(HorReference, Duration))
                 { DurationImg.color = InvalidColor; return; }
@@ -680,8 +698,8 @@ public class LimGizmoMotionManager : MonoBehaviour
             else if (Mode == Lanotalium.Editor.GizmoMotionMode.Vertical)
             {
                 if (!OperationManager.CheckVerticalTimeValid(VerReference, Time))
-                { TimeImg.color = InvalidColor; return; }
-                else TimeImg.color = ValidColor;
+                { TimeStartImg.color = InvalidColor; return; }
+                else TimeStartImg.color = ValidColor;
                 OperationManager.SetVerticalTime(VerReference, Time);
                 if (!OperationManager.CheckVerticalDurationValid(VerReference, Duration))
                 { DurationImg.color = InvalidColor; return; }
@@ -693,8 +711,8 @@ public class LimGizmoMotionManager : MonoBehaviour
             else if (Mode == Lanotalium.Editor.GizmoMotionMode.Rotation)
             {
                 if (!OperationManager.CheckRotationTimeValid(RotReference, Time))
-                { TimeImg.color = InvalidColor; return; }
-                else TimeImg.color = ValidColor;
+                { TimeStartImg.color = InvalidColor; return; }
+                else TimeStartImg.color = ValidColor;
                 OperationManager.SetRotationTime(RotReference, Time);
                 if (!OperationManager.CheckRotationDurationValid(RotReference, Duration))
                 { DurationImg.color = InvalidColor; return; }

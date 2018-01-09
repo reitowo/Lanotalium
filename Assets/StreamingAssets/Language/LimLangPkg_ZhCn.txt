@@ -12,6 +12,7 @@ Window_Inspector_Switcher_Scroll$谱面速度
 Window_Inspector_Switcher_Default$初始值
 Window_MediaPlayer_Label$播放器
 Window_MediaPlayer_Progress$进度
+Window_MediaPlayer_PlaybackSpeed$速度
 Window_MediaPlayer_Pitch$音高
 Window_MediaPlayer_PitchReset$重置
 Window_MediaPlayer_Play$播放

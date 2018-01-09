@@ -764,15 +764,20 @@ namespace Lanotalium
         }
         public class EditorLayout
         {
-            public Vector2Save MusicPlayerPos = new Vector2Save(), MusicPlayerSize = new Vector2Save(), InspectorPos = new Vector2Save(), InspectorSize = new Vector2Save(), TimelinePos = new Vector2Save(),
-                TimelineSize = new Vector2Save(), TunerWindowPos = new Vector2Save(), TunerWindowSize = new Vector2Save(), CreatorPos = new Vector2Save(), CreatorSize = new Vector2Save();
-            public bool isLayoutValid()
+            public Vector2Save MusicPlayerPos = new Vector2Save(), MusicPlayerSize = new Vector2Save(),
+                InspectorPos = new Vector2Save(), InspectorSize = new Vector2Save(),
+                TimelinePos = new Vector2Save(), TimelineSize = new Vector2Save(),
+                TunerWindowPos = new Vector2Save(), TunerWindowSize = new Vector2Save(),
+                CreatorPos = new Vector2Save(), CreatorSize = new Vector2Save(),
+            SpectrumPos = new Vector2Save(), SpectrumSize = new Vector2Save();
+            public bool IsLayoutValid()
             {
                 if (MusicPlayerSize.isZero()) return false;
                 if (InspectorSize.isZero()) return false;
                 if (TimelineSize.isZero()) return false;
                 if (TunerWindowSize.isZero()) return false;
                 if (CreatorSize.isZero()) return false;
+                if (SpectrumSize.isZero()) return false;
                 return true;
             }
         }

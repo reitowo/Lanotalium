@@ -61,7 +61,7 @@ public class LimScanTime : MonoBehaviour
                 }
                 else if (i == EndScroll)
                 {
-                    Delta = (TunerManager.MusicPlayerManager.Length - TunerManager.ScrollManager.Scroll[i].Time) * TunerManager.ScrollManager.Scroll[i].Speed * 10 * TunerManager.ChartPlaySpeed;
+                    Delta = (TunerManager.MediaPlayerManager.Length - TunerManager.ScrollManager.Scroll[i].Time) * TunerManager.ScrollManager.Scroll[i].Speed * 10 * TunerManager.ChartPlaySpeed;
                     if ((StartPercent - Delta < EndPercent && StartPercent >= EndPercent) || (StartPercent - Delta > EndPercent && StartPercent <= EndPercent)) { if (Depth == DepthCount) { BreakLocation = i; break; } else { DepthCount++; } }
                     StartPercent -= Delta;
                 }
@@ -71,7 +71,7 @@ public class LimScanTime : MonoBehaviour
         {
             Delta = (StartPercent - EndPercent);
             EndTime = Delta / (TunerManager.ScrollManager.Scroll[EndScroll].Speed * 10 * TunerManager.ChartPlaySpeed) + TunerManager.ChartTime;
-            if (EndTime > TunerManager.MusicPlayerManager.Length) return TunerManager.MusicPlayerManager.Length;
+            if (EndTime > TunerManager.MediaPlayerManager.Length) return TunerManager.MediaPlayerManager.Length;
             else return EndTime;
         }
         if (BreakLocation == StartScroll)
@@ -84,8 +84,8 @@ public class LimScanTime : MonoBehaviour
             Delta = (StartPercent - EndPercent);
             EndTime = Delta / (TunerManager.ScrollManager.Scroll[BreakLocation].Speed * 10 * TunerManager.ChartPlaySpeed) + TunerManager.ScrollManager.Scroll[BreakLocation].Time;
         }
-        else if (BreakLocation == -1) EndTime = TunerManager.MusicPlayerManager.Length;
-        if (EndTime > TunerManager.MusicPlayerManager.Length) return TunerManager.MusicPlayerManager.Length;
+        else if (BreakLocation == -1) EndTime = TunerManager.MediaPlayerManager.Length;
+        if (EndTime > TunerManager.MediaPlayerManager.Length) return TunerManager.MediaPlayerManager.Length;
         else return EndTime;
     }
     private void TryCalculateKeyTimes()
@@ -100,11 +100,11 @@ public class LimScanTime : MonoBehaviour
             KeyTimes.Add(KeyTime2);
             Depth++;
         }
-        while (KeyTime1 != TunerManager.MusicPlayerManager.Length || KeyTime1 != TunerManager.MusicPlayerManager.Length);
+        while (KeyTime1 != TunerManager.MediaPlayerManager.Length || KeyTime1 != TunerManager.MediaPlayerManager.Length);
     }
     private void TryGeneratePairs()
     {
-        if (KeyTimes.Count % 2 == 1) KeyTimes.Add(TunerManager.MusicPlayerManager.Length);
+        if (KeyTimes.Count % 2 == 1) KeyTimes.Add(TunerManager.MediaPlayerManager.Length);
         //KeyTimes.Sort();
         for (int i = 0; i < KeyTimes.Count; i += 2)
         {

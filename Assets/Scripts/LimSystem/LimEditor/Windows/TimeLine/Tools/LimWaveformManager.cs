@@ -56,7 +56,7 @@ public class LimWaveformManager : MonoBehaviour
             LineR.positionCount = 0;
             return;
         }
-        int StartSample = TunerManager.MusicPlayerManager.MusicPlayer.timeSamples;
+        int StartSample = TunerManager.MediaPlayerManager.MusicPlayer.timeSamples;
         int CurrentSample = StartSample;
         int EndSample = (int)((Blocker.anchoredPosition.x - 200f) / TimeLineManager.Scale * Music.frequency) + StartSample;
         int SampleDelta = Mathf.CeilToInt((EndSample - CurrentSample) * 1f / ScaledSamplesToRead);

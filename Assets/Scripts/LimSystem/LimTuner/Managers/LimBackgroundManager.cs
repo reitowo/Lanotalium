@@ -166,7 +166,7 @@ public class LimBackgroundManager : MonoBehaviour
 
     public void BackgroundUpdator()
     {
-        float Progress = Tuner.ChartTime / Tuner.MusicPlayerManager.Length;
+        float Progress = Tuner.ChartTime / Tuner.MediaPlayerManager.Length;
         if (Mode == Lanotalium.Background.BackgroundMode.Duo)
         {
             GrayImg.color = new Color(1, 1, 1, 1 - Progress);

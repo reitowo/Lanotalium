@@ -12,7 +12,7 @@ public class LimNoteCounter : MonoBehaviour
     private void Update()
     {
         if (TunerManager.isInitialized == false) return;
-        NoteCountText.text = string.Format("{0}/{1}", CalculateNoteCount(TunerManager.ChartTime), CalculateNoteCount(TunerManager.MusicPlayerManager.Length));
+        NoteCountText.text = string.Format("{0}/{1}", CalculateNoteCount(TunerManager.ChartTime), CalculateNoteCount(TunerManager.MediaPlayerManager.Length));
     }
 
     private bool Approximately(float a,float b)

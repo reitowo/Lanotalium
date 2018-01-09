@@ -167,7 +167,7 @@ public class ComponentBpmManager : MonoBehaviour
         {
             float BpmDeltaTime = (60 / TunerManager.BpmManager.Bpm[i].Bpm) / Density;
             float StartTime = (i == 0 ? 0 : TunerManager.BpmManager.Bpm[i].Time);
-            float EndTime = (i == TunerManager.BpmManager.Bpm.Count - 1 ? TunerManager.MusicPlayerManager.Length : TunerManager.BpmManager.Bpm[i + 1].Time);
+            float EndTime = (i == TunerManager.BpmManager.Bpm.Count - 1 ? TunerManager.MediaPlayerManager.Length : TunerManager.BpmManager.Bpm[i + 1].Time);
             for (float t = StartTime; t <= EndTime; t += BpmDeltaTime) BeatlineTimes.Add(t);
         }
     }

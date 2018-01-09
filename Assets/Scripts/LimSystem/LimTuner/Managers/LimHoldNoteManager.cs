@@ -5,6 +5,7 @@ using UnityEngine;
 public class LimHoldNoteManager : MonoBehaviour
 {
     private bool isInitialized = false;
+    public float OnTouchWidthAdd = 0.1f;
     public List<Lanotalium.Chart.LanotaHoldNote> HoldNote;
     public LimTunerManager Tuner;
     public Material HoldUntouch, HoldTouch;
@@ -18,10 +19,10 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         if (!isInitialized) return;
         UpdateAllNoteTransforms();
+        UpdateAllLineMaterial();
         UpdateAllLineRenderers();
         UpdateAllNoteActive();
         UpdateAllJointActive();
-        UpdateAllLineMaterial();
         UpdateAllNoteColor();
         UpdateNoteAudioEffect();
     }
@@ -236,8 +237,8 @@ public class LimHoldNoteManager : MonoBehaviour
                 float Rotation = Note.Degree + Tuner.CameraManager.CurrentRotation;
                 float EndPercent = CalculateMovePercent(Note.Time + Note.Duration);
                 Note.LineRenderer.positionCount = 10;
-                Note.LineRenderer.startWidth = Note.Percent / 100;
-                Note.LineRenderer.endWidth = CalculateEasedPercent(EndPercent) / 100;
+                Note.LineRenderer.startWidth = Note.Percent / 100 + (Note.OnTouch ? OnTouchWidthAdd : 0);
+                Note.LineRenderer.endWidth = CalculateEasedPercent(EndPercent) / 100 + (Note.OnTouch ? OnTouchWidthAdd : 0);
                 Vector3 Start = CalculateLineRendererPoint(Note.Percent, Rotation);
                 Vector3 End = CalculateLineRendererPoint(CalculateEasedPercent(EndPercent), Rotation);
                 Vector3 Delta = (End - Start) / 9;
@@ -268,8 +269,8 @@ public class LimHoldNoteManager : MonoBehaviour
                 }
                 Note.LineRenderer.positionCount = Positions.Count;
                 Note.LineRenderer.SetPositions(Positions.ToArray());
-                Note.LineRenderer.startWidth = Note.Percent / 100;
-                Note.LineRenderer.endWidth = EndPercent / 100;
+                Note.LineRenderer.startWidth = Note.Percent / 100 + (Note.OnTouch ? OnTouchWidthAdd : 0);
+                Note.LineRenderer.endWidth = EndPercent / 100 + (Note.OnTouch ? OnTouchWidthAdd : 0);
             }
         }
     }
@@ -374,7 +375,7 @@ public class LimHoldNoteManager : MonoBehaviour
             {
                 if (!Note.EndEffectPlayed)
                 {
-                    if (Tuner.MusicPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayRailEnd();
+                    if (Tuner.MediaPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayRailEnd();
                     Note.EndEffectPlayed = true;
                 }
             }
@@ -382,7 +383,7 @@ public class LimHoldNoteManager : MonoBehaviour
             {
                 if (!Note.StartEffectPlayed)
                 {
-                    if (Tuner.MusicPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayClick();
+                    if (Tuner.MediaPlayerManager.IsPlaying) Tuner.AudioEffectManager.PlayClick();
                     Note.StartEffectPlayed = true;
                 }
                 ShouldPlayRail = true;
@@ -394,7 +395,7 @@ public class LimHoldNoteManager : MonoBehaviour
                 Note.EndEffectPlayed = false;
             }
         }
-        if (Tuner.MusicPlayerManager.IsPlaying)
+        if (Tuner.MediaPlayerManager.IsPlaying)
         {
             if (ShouldPlayRail) Tuner.AudioEffectManager.StartPlayRail();
             else Tuner.AudioEffectManager.StopPlayRail();

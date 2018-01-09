@@ -122,7 +122,7 @@ public class LimCreatorManager : MonoBehaviour
     public void CreateGizmoMotion()
     {
         if (LimSystem.ChartContainer == null) return;
-        TunerManager.MusicPlayerManager.IsPlaying = false;
+        TunerManager.MediaPlayerManager.IsPlaying = false;
         GizmoMotionManager.Create();
     }
     public void CreateBpm()

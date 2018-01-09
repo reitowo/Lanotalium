@@ -12,6 +12,7 @@ Window_Inspector_Switcher_Scroll$Scroll Speed
 Window_Inspector_Switcher_Default$Default
 Window_MediaPlayer_Label$Media Player
 Window_MediaPlayer_Progress$Progress
+Window_MediaPlayer_PlaybackSpeed$Speed
 Window_MediaPlayer_Pitch$Pitch
 Window_MediaPlayer_PitchReset$Reset
 Window_MediaPlayer_Play$Play

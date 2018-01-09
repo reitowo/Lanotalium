@@ -202,7 +202,7 @@ public class LimClickToCreateManager : MonoBehaviour
                 }
                 else if (i == EndScroll)
                 {
-                    Delta = (TunerManager.MusicPlayerManager.Length - TunerManager.ScrollManager.Scroll[i].Time) * TunerManager.ScrollManager.Scroll[i].Speed * 10 * TunerManager.ChartPlaySpeed;
+                    Delta = (TunerManager.MediaPlayerManager.Length - TunerManager.ScrollManager.Scroll[i].Time) * TunerManager.ScrollManager.Scroll[i].Speed * 10 * TunerManager.ChartPlaySpeed;
                     if (StartPercent - Delta < EndPercent) { BreakLocation = i; break; }
                     StartPercent -= Delta;
                 }
@@ -212,7 +212,7 @@ public class LimClickToCreateManager : MonoBehaviour
         {
             Delta = (StartPercent - EndPercent);
             EndTime = Delta / (TunerManager.ScrollManager.Scroll[EndScroll].Speed * 10 * TunerManager.ChartPlaySpeed) + TunerManager.ChartTime;
-            if (EndTime > TunerManager.MusicPlayerManager.Length) return float.NaN;
+            if (EndTime > TunerManager.MediaPlayerManager.Length) return float.NaN;
             return EndTime;
         }
         if (BreakLocation == StartScroll)
