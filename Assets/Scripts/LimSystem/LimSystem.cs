@@ -672,6 +672,18 @@ namespace Lanotalium
     }
     namespace MediaPlayer
     {
+        public class OnPauseEvent : UnityEvent<float>
+        {
+
+        }
+        public class OnPlayEvent : UnityEvent<float>
+        {
+
+        }
+        public class OnMusicLoadEvent : UnityEvent<AudioClip>
+        {
+
+        }
         public delegate void SyncValuesDelegate();
         public delegate void PlayMediaDelegate();
         public delegate void PauseMediaDelegate();
@@ -968,6 +980,7 @@ namespace Lanotalium
         public bool HideWhatsNew = false;
         public bool DoNotRunAsAdmin = false;
         public bool LapInjected = false;
+        public bool PlayWorkingBGM = true;
         public Editor.TunerSkin TunerSkin;
         public Tuner.AudioEffectTheme AudioEffectTheme = Tuner.AudioEffectTheme.Lanota;
     }

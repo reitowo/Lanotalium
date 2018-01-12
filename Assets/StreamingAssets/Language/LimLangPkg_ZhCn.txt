@@ -112,6 +112,7 @@ Preferences_JudgeColor$判定颜色
 Preferences_AudioEffect$Note音效
 Preferences_AudioEffectTheme$音效主题
 Preferences_Unsafe$取消限制
+Preferences_WorkingBGM$背景音乐
 TopMenu_File$文件
 TopMenu_File_NewProject$新建工程...
 TopMenu_File_OpenProject$打开工程...

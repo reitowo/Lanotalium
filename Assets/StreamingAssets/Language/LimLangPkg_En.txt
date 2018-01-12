@@ -112,6 +112,7 @@ Preferences_JudgeColor$Judge Color
 Preferences_AudioEffect$Audio Effect
 Preferences_AudioEffectTheme$Effect Theme
 Preferences_Unsafe$Unsafe Motion
+Preferences_WorkingBGM$Pausing BGM
 TopMenu_File$File
 TopMenu_File_NewProject$New Project...
 TopMenu_File_OpenProject$Open Project...

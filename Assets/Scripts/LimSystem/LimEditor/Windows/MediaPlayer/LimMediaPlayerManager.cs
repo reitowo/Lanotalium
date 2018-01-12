@@ -1,11 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Lanotalium.MediaPlayer;
 
 public class LimMediaPlayerManager : MonoBehaviour
 {
+    public static OnPauseEvent OnPause;
+    public static OnPlayEvent OnPlay;
+    public static OnMusicLoadEvent OnMusicLoad;
+
     private bool isInitialized = false;
     public LimTunerManager TunerManager;
     public LimWindowManager BaseWindow;
@@ -49,8 +55,16 @@ public class LimMediaPlayerManager : MonoBehaviour
         }
         set
         {
-            if (value) PlayMedia();
-            else PauseMedia();
+            if (value)
+            {
+                PlayMedia();
+                OnPlay.Invoke(Time);
+            }
+            else
+            {
+                PauseMedia();
+                OnPause.Invoke(Time);
+            }
         }
     }
     public float Time
@@ -86,6 +100,9 @@ public class LimMediaPlayerManager : MonoBehaviour
 
     void Start()
     {
+        OnPause = new OnPauseEvent();
+        OnPlay = new OnPlayEvent();
+        OnMusicLoad = new OnMusicLoadEvent();
         ViewRect = BaseWindow.WindowRectTransform;
         UiWidth = ViewRect.rect.width;
         if (LimSystem.ChartContainer == null) return;
@@ -154,8 +171,7 @@ public class LimMediaPlayerManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (EventSystem.current.currentSelectedGameObject != null) return;
-            if (IsPlaying) PauseMedia();
-            else if (!IsPlaying) PlayMedia();
+            IsPlaying = !IsPlaying;
         }
     }
     public void DetectHotkey()
@@ -183,11 +199,13 @@ public class LimMediaPlayerManager : MonoBehaviour
         MusicName = PropertyData.ChartName;
         ProgressSlider.maxValue = MusicData.Length;
         MusicPlayer.clip = MusicData.Music;
+        OnMusicLoad.Invoke(MusicPlayer.clip);
         LimSystem.ChartContainer.ChartData.SongLength = MusicData.Length;
         PreciseModeTimeOffset = LimSystem.Preferences.MusicPlayerPreciseOffset;
         OffsetInputField.text = PreciseModeTimeOffset.ToString();
-        isInitialized = true;
         WaveformManager.OnMusicLoaded();
+        IsPlaying = true;
+        isInitialized = true;
     }
 
     public void SwitchPlayerMode()
@@ -229,8 +247,7 @@ public class LimMediaPlayerManager : MonoBehaviour
         if (MusicPlayer.isPlaying) CurrentTime += UnityEngine.Time.deltaTime * MusicPlayer.pitch;
         if (CurrentTime > MusicPlayer.clip.length)
         {
-            StopMedia();
-            PlayMedia();
+            Time = 0;
         }
         if (!isProgressPressed) ProgressSlider.value = CurrentTime;
         else Time = ProgressSlider.value;
@@ -318,11 +335,11 @@ public class LimMediaPlayerManager : MonoBehaviour
 
     public void CallPlayMusicFromUi()
     {
-        PlayMedia();
+        IsPlaying = true;
     }
     public void CallPauseMusicFromUi()
     {
-        PauseMedia();
+        IsPlaying = false;
     }
     public void CallStopMusicFromUi()
     {

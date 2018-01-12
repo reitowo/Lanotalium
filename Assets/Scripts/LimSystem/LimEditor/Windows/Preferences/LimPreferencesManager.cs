@@ -9,9 +9,9 @@ public class LimPreferencesManager : MonoBehaviour
     public LimLanguageManager LanguageManager;
     public LimAudioEffectManager AudioEffectManager;
     public Text LabelText;
-    public Text LanguageText, AutosaveText, JudgeColorText, AudioEffectText, AudioEffectThemeText, UnsafeText;
+    public Text LanguageText, AutosaveText, JudgeColorText, AudioEffectText, AudioEffectThemeText, UnsafeText, WorkingBGMText;
     public Dropdown LanguageDropDown, AudioEffectThemeDropdown;
-    public Toggle AutosaveToggle, JudgeColorToggle, AudioEffectToggle , UnsafeToggle;
+    public Toggle AutosaveToggle, JudgeColorToggle, AudioEffectToggle, UnsafeToggle, WorkingBGMToggle;
 
     private void OnEnable()
     {
@@ -26,6 +26,7 @@ public class LimPreferencesManager : MonoBehaviour
         AudioEffectText.text = LimLanguageManager.TextDict["Preferences_AudioEffect"];
         AudioEffectThemeText.text = LimLanguageManager.TextDict["Preferences_AudioEffectTheme"];
         UnsafeText.text = LimLanguageManager.TextDict["Preferences_Unsafe"];
+        WorkingBGMText.text = LimLanguageManager.TextDict["Preferences_WorkingBGM"];
     }
     public void OpenPreferencesMenu()
     {
@@ -64,5 +65,9 @@ public class LimPreferencesManager : MonoBehaviour
     public void OnUnsafeToggleChange()
     {
         LimSystem.Preferences.Unsafe = UnsafeToggle.isOn;
+    }
+    public void OnWorkingBGMToggleChange()
+    {
+        LimSystem.Preferences.PlayWorkingBGM = WorkingBGMToggle.isOn;
     }
 }

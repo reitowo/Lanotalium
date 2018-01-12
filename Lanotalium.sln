@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lanotalium", "Lanotalium.csproj", "{F9FB416B-927F-614F-59BD-12E03D898691}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwarzer", "Schwarzer.csproj", "{175F6F14-55CE-27BD-896F-DA4E02E3BBA3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{F9FB416B-927F-614F-59BD-12E03D898691}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9FB416B-927F-614F-59BD-12E03D898691}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9FB416B-927F-614F-59BD-12E03D898691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{175F6F14-55CE-27BD-896F-DA4E02E3BBA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{175F6F14-55CE-27BD-896F-DA4E02E3BBA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{175F6F14-55CE-27BD-896F-DA4E02E3BBA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{175F6F14-55CE-27BD-896F-DA4E02E3BBA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

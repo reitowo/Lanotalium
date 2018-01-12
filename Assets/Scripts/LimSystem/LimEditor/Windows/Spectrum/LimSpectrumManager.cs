@@ -22,6 +22,7 @@ public class LimSpectrumManager : MonoBehaviour
     private float[] SpectrumDataL;
     private float[] SpectrumDataR;
     private float LastContentWidth = 0;
+
     private void Start()
     {
         SpectrumDataL = new float[SampleCount];
