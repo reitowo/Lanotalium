@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Windows.Forms;
 using UnityEngine.Analytics;
+using UnityEngine.UI;
 
 public class LimOperationManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class LimOperationManager : MonoBehaviour
 
     public List<Lanotalium.Chart.LanotaTapNote> SelectedTapNote = new List<Lanotalium.Chart.LanotaTapNote>();
     public List<Lanotalium.Chart.LanotaHoldNote> SelectedHoldNote = new List<Lanotalium.Chart.LanotaHoldNote>();
+    public List<Lanotalium.Chart.LanotaCameraBase> SelectedMotions = new List<Lanotalium.Chart.LanotaCameraBase>();
     private List<Lanotalium.Editor.OperationSave> OperationSaver = new List<Lanotalium.Editor.OperationSave>();
     private int CurrentOperationSaverPosition = -1;
 
@@ -83,7 +85,11 @@ public class LimOperationManager : MonoBehaviour
                 }
             }
         }
-        if (Input.GetMouseButtonUp(1)) SelectNothing();
+        if (Input.GetMouseButtonUp(1))
+        {
+            SelectNothing();
+            DeSelectAllMotions();
+        }
     }
     public void DetectDeleteRequest()
     {
@@ -117,12 +123,31 @@ public class LimOperationManager : MonoBehaviour
         SelectedTapNote.Clear();
         SelectedHoldNote.Clear();
         InspectorManager.OnSelectChange();
-        InspectorManager.ComponentMotion.DeleteCurrentSelected();
+        DeleteSelectedMotions();
         InspectorManager.ArrangeComponentsUi();
+    }
+    public void DeleteSelectedMotions()
+    {
+        InspectorManager.ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Idle);
+        foreach (Lanotalium.Chart.LanotaCameraBase Base in SelectedMotions)
+        {
+            Destroy(Base.TimeLineGameObject);
+            switch (Base.Type)
+            {
+                case 8:
+                case 11:
+                    TunerManager.CameraManager.Horizontal.Remove(Base as Lanotalium.Chart.LanotaCameraXZ); break;
+                case 10:
+                    TunerManager.CameraManager.Vertical.Remove(Base as Lanotalium.Chart.LanotaCameraY); break;
+                case 13:
+                    TunerManager.CameraManager.Rotation.Remove(Base as Lanotalium.Chart.LanotaCameraRot); break;
+            }
+        }
+        SelectedMotions.Clear();
     }
     public void SelectTapNote(Lanotalium.Chart.LanotaTapNote TapNoteData, bool MultiSelect = false)
     {
-        if (isTapNoteSelected(TapNoteData))
+        if (IsTapNoteSelected(TapNoteData))
         {
             if (!Input.GetKey(KeyCode.LeftControl)) SelectNothing();
             else DeSelectTapNote(TapNoteData);
@@ -136,7 +161,7 @@ public class LimOperationManager : MonoBehaviour
     }
     public void SelectHoldNote(Lanotalium.Chart.LanotaHoldNote HoldNoteData, bool MultiSelect = false)
     {
-        if (isHoldNoteSelected(HoldNoteData))
+        if (IsHoldNoteSelected(HoldNoteData))
         {
             if (!Input.GetKey(KeyCode.LeftControl)) SelectNothing();
             else DeSelectHoldNote(HoldNoteData);
@@ -172,7 +197,7 @@ public class LimOperationManager : MonoBehaviour
         SelectedHoldNote.RemoveAt(Index);
         InspectorManager.OnSelectChange();
     }
-    public bool isTapNoteSelected(Lanotalium.Chart.LanotaTapNote TapNoteData)
+    public bool IsTapNoteSelected(Lanotalium.Chart.LanotaTapNote TapNoteData)
     {
         foreach (Lanotalium.Chart.LanotaTapNote Note in SelectedTapNote)
         {
@@ -180,7 +205,7 @@ public class LimOperationManager : MonoBehaviour
         }
         return false;
     }
-    public bool isHoldNoteSelected(Lanotalium.Chart.LanotaHoldNote HoldNoteData)
+    public bool IsHoldNoteSelected(Lanotalium.Chart.LanotaHoldNote HoldNoteData)
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in SelectedHoldNote)
         {
@@ -686,6 +711,17 @@ public class LimOperationManager : MonoBehaviour
     {
         SelectNothing();
         int InstanceId = EventSystem.current.currentSelectedGameObject.gameObject.GetInstanceID();
+        if (!Input.GetKey(KeyCode.LeftControl)) DeSelectAllMotions();
+        Lanotalium.Chart.LanotaCameraBase MotionBase = FindMotionBase(InstanceId);
+        if (MotionBase == null) return;
+        SelectedMotions.Add(MotionBase);
+        MotionBase.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Selected;
+        if (SelectedMotions.Count >= 2)
+        {
+            InspectorManager.ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Multiple, 0);
+            InspectorManager.ArrangeComponentsUi();
+            return;
+        }
         int Index = FindHorizontalIndexByInstanceId(InstanceId);
         if (Index != -1) InspectorManager.ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Horizontal, Index);
         else
@@ -700,6 +736,48 @@ public class LimOperationManager : MonoBehaviour
             }
         }
         InspectorManager.ArrangeComponentsUi();
+
+    }
+    public void DeSelectMotion(Lanotalium.Chart.LanotaCameraBase Base)
+    {
+        switch (Base.Type)
+        {
+            case 8: Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Tp8; break;
+            case 10: Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Tp10; break;
+            case 11: Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Tp11; break;
+            case 13: Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Tp13; break;
+        }
+        SelectedMotions.Remove(Base);
+    }
+    public void DeSelectAllMotions()
+    {
+        foreach (Lanotalium.Chart.LanotaCameraBase Base in SelectedMotions)
+        {
+            switch (Base.Type)
+            {
+                case 8: Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Tp8; break;
+                case 10: Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Tp10; break;
+                case 11: Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Tp11; break;
+                case 13: Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Tp13; break;
+            }
+        }
+        SelectedMotions.Clear();
+    }
+    public Lanotalium.Chart.LanotaCameraBase FindMotionBase(int InstanceId)
+    {
+        int Index = FindHorizontalIndexByInstanceId(InstanceId);
+        if (Index != -1) return TunerManager.CameraManager.Horizontal[Index];
+        else
+        {
+            Index = FindVerticalIndexByInstanceId(InstanceId);
+            if (Index != -1) return TunerManager.CameraManager.Vertical[Index];
+            else
+            {
+                Index = FindRotationIndexByInstanceId(InstanceId);
+                if (Index == -1) return null;
+                else return TunerManager.CameraManager.Rotation[Index];
+            }
+        }
     }
     public int FindHorizontalIndexByInstanceId(int InstanceId)
     {

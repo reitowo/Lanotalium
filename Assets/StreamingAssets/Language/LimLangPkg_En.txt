@@ -89,6 +89,7 @@ Component_Motion_Ctp1_Tp10$None
 Component_Motion_Ctp0_Tp13$Rotate Degree
 Component_Motion_Ctp1_Tp13$None
 Component_Motion_ManuallyMotion$Manually Motion
+Component_Motion_Unavaliable$Unavaliable
 Component_Bpm_Label$BPM
 Component_Bpm_Timing$Timing
 Component_Bpm_Bpm$BPM
@@ -126,6 +127,7 @@ TopMenu_Window_Tuner$Tuner
 TopMenu_Window_TimeLine$TimeLine
 TopMenu_Window_MediaPlayer$Music Player
 TopMenu_Window_Creator$Creator
+TopMenu_Window_Spectrum$Spectrum
 TopMenu_Setting$Setting
 TopMenu_Setting_Preferences$Preferences
 TopMenu_Setting_ResetLayout$Reset Editor Layout
@@ -156,7 +158,8 @@ ClickToCreate_Degree$Degree
 ClickToCreate_Deltatime$Delta
 Copier_CopyNote$Copy Selected Note(s)
 Copier_CopyMotion$Copy Selected Motion
-Copier_Msg_Success$Successfully copied 
+Copier_Msg_Success$Successfully copied
+Copier_Hint$Target Time,Example:1,2,4+0.1*3 equals to 1,2,4,4.1,4.2,4.3
 Capturer_Label$Capturer
 Capturer_Resolution$Resolution
 Capturer_FrameRate$Frame Rate
@@ -168,6 +171,7 @@ Plugin_Download$Download
 Plugin_Complete$Complete
 Plugin_Center_Label$Plugin Center
 Cloud_Cloud$Cloud
+Cloud_Backup$Backup
 Cloud_Backuping$Backuping
 Cloud_Uploading$Uploading
 Cloud_Downloading$Downloading
@@ -185,7 +189,7 @@ Project_InvalidProjectFile$Invalid Project File!
 Project_ReadChartFailed$Unable to read chart, please check if it is valid!
 Project_ReadImageFailed$Unable to read image(s), please check if it is valid!
 Project_ReadMusicFailed$Unable to read music, please check if it is valid!
-Project_ChartWillGenerate$Empty chart has been generated, you can also select a exist chart. 
+Project_ChartWillGenerate$Empty chart has been generated, you can also select a exist chart if you have one.
 Project_FolderLabel$Project Folder
 Project_Name$Name
 Project_Designer$Designer
@@ -205,8 +209,20 @@ ChartZone_Notes$Notes
 ChartZone_Download$Download
 ChartZone_Video$Video
 ChartZone_Rating$Rating
+ChartZone_CopyRight$Recording and uploading to video sites is not permitted
 WhatsNew_Label$What's New
 WhatsNew_Toggle$Don't show again.
+Spectrum_Name$Spectrum
+Exception_QueuedCount${0} more exceptions occured.
+Exception_Next$Next
+Exception_Restart$Save and restart Lanotalium
+Exception_Ignore$Ignore and continue working
+Exception_Exception$Exception
+Updator_Update$Update
+Updator_DoUpdate$Save and update Lanotalium
+Updator_Ignore$Ignore and continue working
+Updator_DeltaFileSize$Delta update: {0}
+Updator_FullFileSize$Unable to delta update, full size update needed: {0}
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.
@@ -222,7 +238,7 @@ GizmoMotion_MoveMode$Left key to drag. Scroll to move vertical. Ctrl to move fas
 GizmoMotion_RotateMode$Drag around the Tuner to rotate. Ctrl to move faster.
 GizmoMotion_InputMode$Input values directly to set position. Deselect ALL modes to enable motion.
 EaseRange$Ease : 0 - 12 Integer.
-Timeline_Scroll$Ctrl + Scroll to zoom timeline.<br>Drag timebar above to adjust time.
+Timeline_Scroll$Alt to box select, + Ctrl multi select.<br>Ctrl + Scroll to zoom timeline.<br>Drag timebar above to adjust time.
 Timeline_Prev$Switch to the previous motion of the selected motion's type.
 Timeline_Next$Switch to the next motion of the selected motion's type.
 MediaPlayer_PlayControl$When no button is selected, Press Spacebar to Play/Pause.

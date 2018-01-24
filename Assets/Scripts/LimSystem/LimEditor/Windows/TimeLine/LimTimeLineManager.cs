@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Lanotalium.Editor;
 using UnityEngine;
 using UnityEngine.UI;
+using Lanotalium.Chart;
 
 public class LimTimeLineManager : MonoBehaviour
 {
@@ -16,13 +17,15 @@ public class LimTimeLineManager : MonoBehaviour
     public RectTransform HorTransform, VerTransform, RotTransform, TimeTransform;
     public GameObject TimeLineObject, TimeLineTime;
     public List<TimeLineTimeContainer> TimeLineTimes = new List<TimeLineTimeContainer>();
-    public Color Tp8, Tp11, Tp10, Tp13;
+    public Color Tp8, Tp11, Tp10, Tp13, Selected;
     public Toggle WaveformToggle;
     public LimWaveformManager WaveformManager;
     public RectTransform TimePointer;
+    public LimBoxSelectionManager BoxSelectionManager;
+
     public float Scale;
 
-    void Start()
+    private void Start()
     {
         Initialize();
         BaseWindow.OnWindowSorted.AddListener(OnWindowSorted);
@@ -44,7 +47,7 @@ public class LimTimeLineManager : MonoBehaviour
         WaveRText.text = LimLanguageManager.TextDict["Window_TimeLine_WaveformR"];
         WaveformText.text = LimLanguageManager.TextDict["Window_TimeLine_Waveform"];
     }
-    void Update()
+    private void Update()
     {
         if (LimSystem.ChartContainer == null) return;
         if (!TunerManager.isInitialized) return;
@@ -53,7 +56,48 @@ public class LimTimeLineManager : MonoBehaviour
         UpdateTimelineTimes();
         UpdateTimeLinePosition();
         DetectScaleChange();
+        SelectMotionsInBoxArea();
         TimingText.text = TunerManager.ChartTime.ToString("f4");
+    }
+    private void TrySelectMotion(LanotaCameraBase Base)
+    {
+        if (Base.TimeLineGameObject.activeInHierarchy)
+        {
+            if (BoxSelectionManager.IsMotionInBoxArea(Base.TimeLineGameObject))
+            {
+                if (!OperationManager.SelectedMotions.Contains(Base))
+                {
+                    Base.TimeLineGameObject.GetComponent<Image>().color = Selected;
+                    OperationManager.SelectedMotions.Add(Base);
+                }
+            }
+            else if (!Input.GetKey(KeyCode.LeftControl))
+            {
+                if (OperationManager.SelectedMotions.Contains(Base))
+                {
+                    OperationManager.DeSelectMotion(Base);
+                }
+            }
+        }
+    }
+    private void SelectMotionsInBoxArea()
+    {
+        if (!TunerManager.isInitialized) return;
+        BoxSelectionManager.Enable = Input.GetKey(KeyCode.LeftAlt);
+        if (BoxSelectionManager.Size < 50) return;
+        if (!BoxSelectionManager.Enable) return;
+        foreach (LanotaCameraXZ Hor in TunerManager.CameraManager.Horizontal)
+        {
+            TrySelectMotion(Hor);
+        }
+        foreach (LanotaCameraY Ver in TunerManager.CameraManager.Vertical)
+        {
+            TrySelectMotion(Ver);
+        }
+        foreach (LanotaCameraRot Rot in TunerManager.CameraManager.Rotation)
+        {
+            TrySelectMotion(Rot);
+        }
     }
 
     public void InstantiateAllTimeLine()
@@ -173,7 +217,7 @@ public class LimTimeLineManager : MonoBehaviour
                 TimePointer.GetComponentInChildren<Text>().text = PointerTiming.ToString("f4");
                 if (Mouse.y >= ViewRect.anchoredPosition.y - 120 && Mouse.y <= ViewRect.anchoredPosition.y)
                 {
-                    if (Input.GetMouseButton(0))
+                    if (Input.GetMouseButton(0) && !Input.GetKey(KeyCode.LeftAlt))
                     {
                         float Delta = LimMousePosition.MousePosition.x - LimMousePosition.LastMousePosition.x;
                         float DeltaTime = -Delta / Scale;

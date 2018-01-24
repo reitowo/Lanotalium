@@ -11,12 +11,13 @@ public class LimCopierManager : MonoBehaviour
     public LimOperationManager OperationManager;
     public Color InvalidColor, ValidColor;
     public Image CopyInstructionImg;
-    public Text CopyNoteText, CopyMotionText;
+    public Text CopyNoteText, CopyMotionText, HintText;
 
     private List<float> CopyTargets = new List<float>();
 
     public void SetTexts()
     {
+        HintText.text = LimLanguageManager.TextDict["Copier_Hint"];
         CopyNoteText.text = LimLanguageManager.TextDict["Copier_CopyNote"];
         CopyMotionText.text = LimLanguageManager.TextDict["Copier_CopyMotion"];
     }
@@ -114,35 +115,29 @@ public class LimCopierManager : MonoBehaviour
     {
         if (!OperationManager.TunerManager.isInitialized) return;
         if (!ValidateCopyInstruction()) return;
-        if (OperationManager.InspectorManager.ComponentMotion.Mode != Lanotalium.Editor.ComponentMotionMode.Idle)
+        if (OperationManager.SelectedMotions.Count < 1) return;
+        OperationManager.SelectedMotions.Sort((Lanotalium.Chart.LanotaCameraBase a, Lanotalium.Chart.LanotaCameraBase b) => { return a.Time.CompareTo(b.Time); });
+        float FirstTime = OperationManager.SelectedMotions[0].Time;
+        foreach (float Target in CopyTargets)
         {
-            int Index = OperationManager.InspectorManager.ComponentMotion.Index;
-            switch (OperationManager.InspectorManager.ComponentMotion.Mode)
+            foreach (Lanotalium.Chart.LanotaCameraBase Base in OperationManager.SelectedMotions)
             {
-                case Lanotalium.Editor.ComponentMotionMode.Horizontal:
-                    foreach (float Target in CopyTargets)
-                    {
-                        Lanotalium.Chart.LanotaCameraXZ New = OperationManager.TunerManager.CameraManager.Horizontal[Index].DeepCopy();
-                        New.Time = Target;
-                        OperationManager.AddHorizontal(New, false, true, false);
-                    }
-                    break;
-                case Lanotalium.Editor.ComponentMotionMode.Vertical:
-                    foreach (float Target in CopyTargets)
-                    {
-                        Lanotalium.Chart.LanotaCameraY New = OperationManager.TunerManager.CameraManager.Vertical[Index].DeepCopy();
-                        New.Time = Target;
-                        OperationManager.AddVertical(New, false, true, false);
-                    }
-                    break;
-                case Lanotalium.Editor.ComponentMotionMode.Rotation:
-                    foreach (float Target in CopyTargets)
-                    {
-                        Lanotalium.Chart.LanotaCameraRot New = OperationManager.TunerManager.CameraManager.Rotation[Index].DeepCopy();
-                        New.Time = Target;
-                        OperationManager.AddRotation(New, false, true, false);
-                    }
-                    break;
+                switch (Base.Type)
+                {
+                    case 8:
+                    case 11:
+                        Lanotalium.Chart.LanotaCameraXZ NewH = (Base as Lanotalium.Chart.LanotaCameraXZ).DeepCopy();
+                        NewH.Time = Base.Time - FirstTime + Target;
+                        OperationManager.AddHorizontal(NewH, false, true, false); break;
+                    case 10:
+                        Lanotalium.Chart.LanotaCameraY NewV = (Base as Lanotalium.Chart.LanotaCameraY).DeepCopy();
+                        NewV.Time = Base.Time - FirstTime + Target;
+                        OperationManager.AddVertical(NewV, false, true, false); break;
+                    case 13:
+                        Lanotalium.Chart.LanotaCameraRot NewR = (Base as Lanotalium.Chart.LanotaCameraRot).DeepCopy();
+                        NewR.Time = Base.Time - FirstTime + Target;
+                        OperationManager.AddRotation(NewR, false, true, false); break;
+                }
             }
         }
         LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Copier_Msg_Success"], System.Windows.Forms.ToolTipIcon.Info);

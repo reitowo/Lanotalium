@@ -271,6 +271,9 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>H:/Program Files/Unity2017.3.0f3/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions">
+      <HintPath>H:/Program Files/Unity2017.3.0f3/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>H:/Program Files/Unity2017.3.0f3/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
@@ -279,6 +282,9 @@
     </Reference>
     <Reference Include="DragAndDrop">
       <HintPath>Assets/Plugins/DragAndDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets/Plugins/Newtonsoft.Json.dll</HintPath>
@@ -310,11 +316,19 @@
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/hasee/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.10/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>H:/Program Files/Unity2017.3.0f3/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>H:/Program Files/Unity2017.3.0f3/Editor/Data/PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Other\Schwarzer\SchLanotalium.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\IOS\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
+    <None Include="Assets\IOS\JsonDotNet\link.xml" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_En.txt" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_ZhCn.txt" />
   </ItemGroup>

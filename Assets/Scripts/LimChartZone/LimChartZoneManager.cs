@@ -7,9 +7,11 @@ using Newtonsoft.Json;
 
 public class LimChartZoneManager : MonoBehaviour
 {
+    public static bool OpenDownloadedChart = false;
+    public static string DownloadedChartLapPath = string.Empty;
     public static string BilibiliVideoPrefix = "https://www.bilibili.com/video/";
     public static string QrCodeProvider = "http://qr.liantu.com/api.php?text=";
-    public Text HeadText, ChartNameText, DesignerText, NotesText, DownloadText, VideoText, RatingText;
+    public Text HeadText, ChartNameText, DesignerText, NotesText, DownloadText, VideoText, RatingText, CopyRightText;
     public RectTransform ChartListContent;
     public GameObject ChartBarPrefab;
 
@@ -28,6 +30,7 @@ public class LimChartZoneManager : MonoBehaviour
         DownloadText.text = LimLanguageManager.TextDict["ChartZone_Download"];
         VideoText.text = LimLanguageManager.TextDict["ChartZone_Video"];
         RatingText.text = LimLanguageManager.TextDict["ChartZone_Rating"];
+        CopyRightText.text = LimLanguageManager.TextDict["ChartZone_CopyRight"];
     }
     IEnumerator GetChartList()
     {

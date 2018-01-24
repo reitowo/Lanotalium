@@ -9,20 +9,24 @@ using UnityEngine.SceneManagement;
 public class LimFirstRunManager : MonoBehaviour
 {
     public GameObject FirstRunPanel;
+#if UNITY_STANDALONE
     private string PreferencesSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Preferences.json";
     private string AppDataRoaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium";
+#elif UNITY_IOS
+    private string PreferencesSavePath;
+    private string AppDataRoaming;
+#endif
     private Lanotalium.PreferencesContainer Preferences;
 
     private void Start()
     {
+#if UNITY_IOS
+        PreferencesSavePath = Application.persistentDataPath + "/Lanotalium/Preferences.json";
+        AppDataRoaming = Application.persistentDataPath + "/Lanotalium";
+#endif
         if (!Directory.Exists(AppDataRoaming)) Directory.CreateDirectory(AppDataRoaming);
         if (File.Exists(PreferencesSavePath))
         {
-            if (Environment.GetCommandLineArgs().Length == 2)
-            {
-                SceneManager.LoadScene("LimTuner");
-                return;
-            }
             SceneManager.LoadScene(1);
             return;
         }

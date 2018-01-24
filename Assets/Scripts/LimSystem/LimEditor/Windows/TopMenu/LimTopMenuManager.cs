@@ -10,11 +10,11 @@ public class LimTopMenuManager : MonoBehaviour
     public LimProjectManager ProjectManager;
     public GameObject FilePanel, WindowPanel, SettingPanel, PluginPanel;
     public Text FileText;
-    public Text NewProjectText, OpenProjectText, SaveProjectText, SaveAsProjectText,ReleaseText, ExitText;
+    public Text NewProjectText, OpenProjectText, SaveProjectText, SaveAsProjectText, ExitText;
     public Text WindowText;
-    public Text InspectorText, TunerWindowText, TimeLineText, MusicPlayerText, CreatorText;
+    public Text InspectorText, TunerWindowText, TimeLineText, MusicPlayerText, CreatorText, SpectrumText;
     public Text SettingText;
-    public Text PreferencesText,ResetLayoutText;
+    public Text PreferencesText, ResetLayoutText;
     public Text PluginText;
     public Text PluginCenterText;
     public Text TopText;
@@ -31,7 +31,6 @@ public class LimTopMenuManager : MonoBehaviour
         OpenProjectText.text = LimLanguageManager.TextDict["TopMenu_File_OpenProject"];
         SaveProjectText.text = LimLanguageManager.TextDict["TopMenu_File_SaveProject"];
         SaveAsProjectText.text = LimLanguageManager.TextDict["TopMenu_File_SaveAsProject"];
-        ReleaseText.text = LimLanguageManager.TextDict["TopMenu_File_Release"];
         ExitText.text = LimLanguageManager.TextDict["TopMenu_File_Exit"];
         WindowText.text = LimLanguageManager.TextDict["TopMenu_Window"];
         InspectorText.text = LimLanguageManager.TextDict["TopMenu_Window_Inspector"];
@@ -39,6 +38,7 @@ public class LimTopMenuManager : MonoBehaviour
         TimeLineText.text = LimLanguageManager.TextDict["TopMenu_Window_TimeLine"];
         MusicPlayerText.text = LimLanguageManager.TextDict["TopMenu_Window_MediaPlayer"];
         CreatorText.text = LimLanguageManager.TextDict["TopMenu_Window_Creator"];
+        SpectrumText.text = LimLanguageManager.TextDict["TopMenu_Window_Spectrum"];
         SettingText.text = LimLanguageManager.TextDict["TopMenu_Setting"];
         PreferencesText.text = LimLanguageManager.TextDict["TopMenu_Setting_Preferences"];
         ResetLayoutText.text = LimLanguageManager.TextDict["TopMenu_Setting_ResetLayout"];

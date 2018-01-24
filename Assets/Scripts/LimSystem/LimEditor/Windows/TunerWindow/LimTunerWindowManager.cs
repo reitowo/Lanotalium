@@ -18,8 +18,11 @@ public class LimTunerWindowManager : MonoBehaviour
     public GameObject TunerSettingPanel;
     public Toggle EnableMotionToggle;
     public LimCameraManager CameraManager;
+    public LimBoxSelectionManager BoxSelectionManager;
+    public LimTunerManager TunerManager;
+    public LimOperationManager OperationManager;
 
-    void Start()
+    private void Start()
     {
         EnsureSkinUIWorksProperly();
     }
@@ -34,6 +37,52 @@ public class LimTunerWindowManager : MonoBehaviour
     private void Update()
     {
         SyncRenderTextureWithWindowSize();
+        SelectNotesInBoxArea();
+    }
+    private void SelectNotesInBoxArea()
+    {
+        if (!TunerManager.isInitialized) return;
+        if (BoxSelectionManager.Size < 50) return;
+        foreach (Lanotalium.Chart.LanotaTapNote Tap in TunerManager.TapNoteManager.TapNote)
+        {
+            if (Tap.TapNoteGameObject.activeInHierarchy)
+            {
+                if (BoxSelectionManager.IsNoteInBoxArea(Tap.TapNoteGameObject))
+                {
+                    if (!Tap.OnSelect)
+                    {
+                        OperationManager.SelectTapNote(Tap, true);
+                    }
+                }
+                else if (!Input.GetKey(KeyCode.LeftControl))
+                {
+                    if (Tap.OnSelect)
+                    {
+                        OperationManager.DeSelectTapNote(Tap);
+                    }
+                }
+            }
+        }
+        foreach (Lanotalium.Chart.LanotaHoldNote Hold in TunerManager.HoldNoteManager.HoldNote)
+        {
+            if (Hold.HoldNoteGameObject.activeInHierarchy)
+            {
+                if (BoxSelectionManager.IsNoteInBoxArea(Hold.HoldNoteGameObject))
+                {
+                    if (!Hold.OnSelect)
+                    {
+                        OperationManager.SelectHoldNote(Hold, true);
+                    }
+                }
+                else if (!Input.GetKey(KeyCode.LeftControl))
+                {
+                    if (Hold.OnSelect)
+                    {
+                        OperationManager.DeSelectHoldNote(Hold);
+                    }
+                }
+            }
+        }
     }
     private void SyncRenderTextureWithWindowSize()
     {

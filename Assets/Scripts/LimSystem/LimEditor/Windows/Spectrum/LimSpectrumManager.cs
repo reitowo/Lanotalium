@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 public class LimSpectrumManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class LimSpectrumManager : MonoBehaviour
     public int BarCount = 256;
     public int SampleCount = 8192;
     public FFTWindow FFTType = FFTWindow.Triangle;
-
+    public Text NameText;
     private int[] LogAxis;
     private float[] SpectrumDataL;
     private float[] SpectrumDataR;
@@ -31,6 +32,10 @@ public class LimSpectrumManager : MonoBehaviour
         InstantiateBars();
         FillLogAxis();
         BaseWindow.OnWindowSorted.AddListener(OnWindowSorted);
+    }
+    public void SetTexts()
+    {
+        NameText.text = LimLanguageManager.TextDict["Spectrum_Name"];
     }
     private void Update()
     {

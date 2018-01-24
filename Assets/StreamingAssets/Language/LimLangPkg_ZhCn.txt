@@ -89,6 +89,7 @@ Component_Motion_Ctp1_Tp10$无
 Component_Motion_Ctp0_Tp13$旋转角度
 Component_Motion_Ctp1_Tp13$无
 Component_Motion_ManuallyMotion$手动动作编辑
+Component_Motion_Unavaliable$不可用
 Component_Bpm_Label$BPM
 Component_Bpm_Timing$时间
 Component_Bpm_Bpm$BPM
@@ -126,6 +127,7 @@ TopMenu_Window_Tuner$调律器
 TopMenu_Window_TimeLine$时间轴
 TopMenu_Window_MediaPlayer$音乐播放器
 TopMenu_Window_Creator$创造
+TopMenu_Window_Spectrum$频谱
 TopMenu_Setting$设置
 TopMenu_Setting_Preferences$偏好
 TopMenu_Setting_ResetLayout$重置界面布局
@@ -157,6 +159,7 @@ ClickToCreate_Deltatime$时差
 Copier_CopyNote$复制选中的Note(s)
 Copier_CopyMotion$复制选择的调律器动画
 Copier_Msg_Success$复制成功
+Copier_Hint$目标时间 例：1,2,4+0.1*5 等同于 1,2,4,4.1,4.2,4.3,4.4,4.5
 Capturer_Label$导出视频
 Capturer_Resolution$分辨率
 Capturer_FrameRate$帧率
@@ -168,6 +171,7 @@ Plugin_Download$下载
 Plugin_Complete$完成
 Plugin_Center_Label$插件中心
 Cloud_Cloud$云
+Cloud_Backup$备份
 Cloud_Backuping$备份中
 Cloud_Uploading$上传中
 Cloud_Downloading$下载中
@@ -185,7 +189,7 @@ Project_InvalidProjectFile$无法打开：工程文件不合法
 Project_ReadChartFailed$无法读取谱面，请确认它是有效的
 Project_ReadImageFailed$无法读取图片，请确认它（们）是有效的
 Project_ReadMusicFailed$无法读取音乐，请确认它是有效的
-Project_ChartWillGenerate$为您自动生成空白谱面，您也可以选择已存在的谱面
+Project_ChartWillGenerate$若您正新建工程，此项忽略，若需要打开已有.txt，则请选择
 Project_FolderLabel$工程文件夹
 Project_Name$名称
 Project_Designer$设计者
@@ -205,8 +209,20 @@ ChartZone_Notes$Note数
 ChartZone_Download$下载
 ChartZone_Video$视频
 ChartZone_Rating$评分
+ChartZone_CopyRight$请勿上传视频网站
 WhatsNew_Label$更新日志
 WhatsNew_Toggle$下次不再显示
+Spectrum_Name$频谱
+Exception_QueuedCount$还有 {0} 个异常
+Exception_Next$下一个
+Exception_Restart$保存并重启Lanotalium
+Exception_Ignore$忽略并继续制谱
+Exception_Exception$异常
+Updator_Update$更新
+Updator_DoUpdate$保存并更新Lanotalium
+Updator_Ignore$忽略并继续制谱
+Updator_DeltaFileSize$增量升级: {0}
+Updator_FullFileSize$无法增量升级，需要下载完整包: {0}
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建
@@ -222,7 +238,7 @@ GizmoMotion_MoveMode$按住左键拖动，滚轮调整远近，Ctrl加大幅度
 GizmoMotion_RotateMode$沿调律器周围拖动旋转，Ctrl加大幅度
 GizmoMotion_InputMode$直接输入数据更改位置，取消选择所有编辑模式并播放来预览动作
 EaseRange$缓动 : 0 - 12 整数
-Timeline_Scroll$Ctrl+滚轮进行缩放<br>拖动顶部时间条调整时间
+Timeline_Scroll$Alt进行框选动作,+ Ctrl多选框选<br>Ctrl+滚轮进行缩放<br>拖动顶部时间条调整时间
 Timeline_Prev$切换至已选调律器动作类型的上一个动作
 Timeline_Next$切换至已选调律器动作类型的下一个动作
 MediaPlayer_PlayControl$没有按钮被选中时，按空格 播放/暂停

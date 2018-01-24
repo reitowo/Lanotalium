@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class LimLanguageManager : MonoBehaviour
 {
+    public LimUpdateDetector UpdateDetector;
+    public LimExceptionManager ExceptionManager;
     public LimEditorManager EditorManager;
     public LimChartZoneManager ChartZoneManager;
     public List<Lanotalium.Editor.SetTextDelegate> SetTextDelegates = new List<Lanotalium.Editor.SetTextDelegate>();
@@ -71,17 +73,25 @@ public class LimLanguageManager : MonoBehaviour
             SetTextDelegates.Add(EditorManager.PreferencesWindow.SetTexts);
             SetTextDelegates.Add(EditorManager.GizmoMotionWindow.SetTexts);
             SetTextDelegates.Add(EditorManager.CreatorWindow.ClickToCreateManager.SetTexts);
-            //SetTextDelegates.Add(EditorManager.CapturerWindow.SetTexts);
             SetTextDelegates.Add(EditorManager.PluginManager.SetTexts);
             SetTextDelegates.Add(EditorManager.CloudManager.SetTexts);
             SetTextDelegates.Add(EditorManager.TunerWindow.TunerHeadManager.SetTexts);
             SetTextDelegates.Add(EditorManager.CreatorWindow.CopierManager.SetTexts);
             SetTextDelegates.Add(EditorManager.TopMenu.ProjectManager.SetTexts);
             SetTextDelegates.Add(EditorManager.SetTexts);
+            SetTextDelegates.Add(EditorManager.SpectrumWindow.SetTexts);
         }
         if (ChartZoneManager != null)
         {
             SetTextDelegates.Add(ChartZoneManager.SetTexts);
+        }
+        if (ExceptionManager != null)
+        {
+            SetTextDelegates.Add(ExceptionManager.SetTexts);
+        }
+        if (UpdateDetector != null)
+        {
+            SetTextDelegates.Add(UpdateDetector.SetTexts);
         }
     }
     public void CallAllSetTexts()

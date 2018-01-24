@@ -170,7 +170,6 @@ public class LimMediaPlayerManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (EventSystem.current.currentSelectedGameObject != null) return;
             IsPlaying = !IsPlaying;
         }
     }
@@ -245,10 +244,6 @@ public class LimMediaPlayerManager : MonoBehaviour
     private void SyncValuesPreciseMode()
     {
         if (MusicPlayer.isPlaying) CurrentTime += UnityEngine.Time.deltaTime * MusicPlayer.pitch;
-        if (CurrentTime > MusicPlayer.clip.length)
-        {
-            Time = 0;
-        }
         if (!isProgressPressed) ProgressSlider.value = CurrentTime;
         else Time = ProgressSlider.value;
         if (isPitchPressed) Pitch = PitchSlider.value;
@@ -259,6 +254,7 @@ public class LimMediaPlayerManager : MonoBehaviour
     {
         if (!MusicPlayer.isPlaying)
         {
+            if (CurrentTime > Length) Time = 0;
             MusicPlayer.Play();
             FixCurrentTime();
         }
@@ -388,6 +384,7 @@ public class LimMediaPlayerManager : MonoBehaviour
     }
     public void OnProgressValueChange()
     {
+        //if (!TunerManager.isInitialized) return;
         if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return;
         if (!ProgressOnEdit) return;
         float ProgressTmp;
@@ -406,6 +403,7 @@ public class LimMediaPlayerManager : MonoBehaviour
     }
     public void OnPitchValueChange()
     {
+        if (!TunerManager.isInitialized) return;
         if (!PitchOnEdit) return;
         float PitchTmp;
         if (!float.TryParse(PitchInputField.text, out PitchTmp))

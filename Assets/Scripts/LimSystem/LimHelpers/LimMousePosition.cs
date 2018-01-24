@@ -18,8 +18,23 @@ public class LimMousePosition : MonoBehaviour
     {
         float Ratio = 1920f / Screen.width;
         LastMousePosition = MousePosition;
+        if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            if (Input.touchCount == 0)
+                return;
+        }
         MousePosition.x = Input.mousePosition.x * Ratio;
         MousePosition.y = (Input.mousePosition.y - Screen.height) * Ratio;
+        if(Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            if (Input.touchCount == 1)
+            {
+                if (Input.touches[0].phase == TouchPhase.Began)
+                {
+                    LastMousePosition = MousePosition;
+                }
+            }
+        }
     }
     public static Vector2 MousePositionInWindow(RectTransform Window)
     {

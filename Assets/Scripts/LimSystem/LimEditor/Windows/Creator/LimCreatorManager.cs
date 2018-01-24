@@ -18,6 +18,7 @@ public class LimCreatorManager : MonoBehaviour
     public LimAngleLineManager AngleLineManager;
     public LimCopierManager CopierManager;
     public InputField CreateCatchRailQuantityInputField;
+    public List<Canvas> SubCanvases = new List<Canvas>();
 
     public void SetTexts()
     {
@@ -41,6 +42,12 @@ public class LimCreatorManager : MonoBehaviour
     private void Start()
     {
         ArrangeCreatorsUi();
+        BaseWindow.OnWindowSorted.AddListener(OnWindowSorted);
+    }
+    private void OnWindowSorted(int Order)
+    {
+        Canvas[] Cs = transform.GetComponentsInChildren<Canvas>(true);
+        Debug.Log(Cs.Length);
     }
     private void Update()
     {
@@ -173,14 +180,16 @@ public class LimCreatorManager : MonoBehaviour
         else if (Quantity == 1) { OperationManager.ConvertTapNoteToHoldNote(OperationManager.SelectedTapNote[0]); return; }
         else
         {
-            Lanotalium.Chart.LanotaHoldNote New = new Lanotalium.Chart.LanotaHoldNote();
-            New.Duration = OperationManager.SelectedTapNote[Quantity - 1].Time - OperationManager.SelectedTapNote[0].Time;
-            New.Time = OperationManager.SelectedTapNote[0].Time;
-            New.Degree = OperationManager.SelectedTapNote[0].Degree;
-            New.Type = 5;
-            New.Size = 1;
-            New.Jcount = Quantity - 1;
-            New.Joints = new List<Lanotalium.Chart.LanotaJoints>();
+            Lanotalium.Chart.LanotaHoldNote New = new Lanotalium.Chart.LanotaHoldNote
+            {
+                Duration = OperationManager.SelectedTapNote[Quantity - 1].Time - OperationManager.SelectedTapNote[0].Time,
+                Time = OperationManager.SelectedTapNote[0].Time,
+                Degree = OperationManager.SelectedTapNote[0].Degree,
+                Type = 5,
+                Size = 1,
+                Jcount = Quantity - 1,
+                Joints = new List<Lanotalium.Chart.LanotaJoints>()
+            };
             float DegreeCount = New.Degree;
             float TimeCount = New.Time;
             for (int i = 1; i < Quantity; ++i)

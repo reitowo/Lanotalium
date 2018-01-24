@@ -11,7 +11,6 @@ using System;
 public class LimLaunchManager : MonoBehaviour
 {
     public Text Message, VersionText;
-    public UnityEngine.UI.Button UpdateBtn;
     public Slider EnterLanotaliumSlider;
     public Text EnterLanotaliumText, TutorialText, SupportMeText, AboutText, QuitText, ChartZoneText;
     public GameObject SupportMePanel, About;
@@ -25,11 +24,8 @@ public class LimLaunchManager : MonoBehaviour
         VersionText.text = LimSystem.Version;
         SetLanguageDict();
         SetTexts();
-        RemoteSettings.Updated += () =>
-        {
-            LimSystem.LanotaliumServer = RemoteSettings.GetString("LanotaliumServer", "http://lanotalium.cn");
-            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("LimLaunch")) StartCoroutine(CheckUpdateCoroutine());
-        };
+        StartCoroutine(LoadNotification());
+        LimSystem.LanotaliumServer = RemoteSettings.GetString("LanotaliumServer", "http://lanotalium.cn");
     }
     private void SetLanguageDict()
     {
@@ -81,52 +77,19 @@ public class LimLaunchManager : MonoBehaviour
     {
         UnityEngine.Application.Quit();
     }
-    IEnumerator CheckUpdateCoroutine()
+    IEnumerator LoadNotification()
     {
         if (UnityEngine.Application.internetReachability == NetworkReachability.NotReachable)
         {
             Message.text = (LimSystem.Preferences.LanguageName == "简体中文" ? "网络不可用" : "Network Unavaliable.");
             yield break;
         }
-        WWW CheckUpdate = new WWW(LimSystem.LanotaliumServer + "/lanotalium/build.txt");
-        yield return CheckUpdate;
-        if (CheckUpdate != null && string.IsNullOrEmpty(CheckUpdate.error))
+        WWW LoadNotification = new WWW(LimSystem.LanotaliumServer + (LimSystem.Preferences.LanguageName == "简体中文" ? "/lanotalium/notification-zhcn.txt" : "/lanotalium/notification-en.txt"));
+        yield return LoadNotification;
+        if (LoadNotification != null && string.IsNullOrEmpty(LoadNotification.error))
         {
-            string[] Splited = CheckUpdate.text.Split(' ');
-            LatestVersion = Splited[1];
-            if (!int.TryParse(Splited[0], out LatestBuild)) yield break;
-            if (LatestBuild > LimSystem.Build)
-            {
-                UpdateBtn.gameObject.SetActive(true);
-                Message.alignment = TextAnchor.UpperLeft;
-                Message.text = (LimSystem.Preferences.LanguageName == "简体中文" ? "发现更新" : "Update Found! ") + LatestVersion + "\n";
-                WWW LoadWhatsnew = new WWW(LimSystem.LanotaliumServer + (LimSystem.Preferences.LanguageName == "简体中文" ? "/lanotalium/whatsnew-zhcn.txt" : "/lanotalium/whatsnew-en.txt"));
-                yield return LoadWhatsnew;
-                if (LoadWhatsnew != null && string.IsNullOrEmpty(LoadWhatsnew.error))
-                {
-                    Message.text += LoadWhatsnew.text;
-                }
-            }
-            else
-            {
-                WWW LoadNotification = new WWW(LimSystem.LanotaliumServer + (LimSystem.Preferences.LanguageName == "简体中文" ? "/lanotalium/notification-zhcn.txt" : "/lanotalium/notification-en.txt"));
-                yield return LoadNotification;
-                if (LoadNotification != null && string.IsNullOrEmpty(LoadNotification.error))
-                {
-                    Message.text = LoadNotification.text;
-                }
-            }
+            Message.text = LoadNotification.text;
         }
-    }
-    public void DownloadUpdate()
-    {
-        if (!File.Exists(UnityEngine.Application.streamingAssetsPath + "/Updator/Newtonsoft.Json.dll"))
-            File.Copy(UnityEngine.Application.dataPath + "/Managed/Newtonsoft.Json.dll", UnityEngine.Application.streamingAssetsPath + "/Updator/Newtonsoft.Json.dll", true);
-        ProcessStartInfo Updator = new ProcessStartInfo();
-        Updator.FileName = UnityEngine.Application.streamingAssetsPath + "/Updator/LanotaliumUpdateClient.exe";
-        Updator.Arguments = string.Format("{0} {1} {2}", Directory.GetParent(UnityEngine.Application.dataPath).FullName.Replace(" ", "%20"), LimSystem.Version, "http://lanotalium.cn/lanotalium/updator");
-        Process.Start(Updator);
-        Process.GetCurrentProcess().Kill();
     }
     public void EnterLanotalium()
     {

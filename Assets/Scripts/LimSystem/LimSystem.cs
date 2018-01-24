@@ -243,15 +243,17 @@ namespace Lanotalium
         {
             public LanotaCameraXZ DeepCopy()
             {
-                LanotaCameraXZ New = new LanotaCameraXZ();
-                New.Type = Type;
-                New.Time = Time;
-                New.Duration = Duration;
-                New.ctp = ctp;
-                New.ctp1 = ctp1;
-                New.ctp2 = ctp2;
-                New.cfmi = cfmi;
-                New.cflg = cflg;
+                LanotaCameraXZ New = new LanotaCameraXZ
+                {
+                    Type = Type,
+                    Time = Time,
+                    Duration = Duration,
+                    ctp = ctp,
+                    ctp1 = ctp1,
+                    ctp2 = ctp2,
+                    cfmi = cfmi,
+                    cflg = cflg
+                };
                 return New;
             }
         };
@@ -259,15 +261,17 @@ namespace Lanotalium
         {
             public LanotaCameraY DeepCopy()
             {
-                LanotaCameraY New = new LanotaCameraY();
-                New.Type = Type;
-                New.Time = Time;
-                New.Duration = Duration;
-                New.ctp = ctp;
-                New.ctp1 = ctp1;
-                New.ctp2 = ctp2;
-                New.cfmi = cfmi;
-                New.cflg = cflg;
+                LanotaCameraY New = new LanotaCameraY
+                {
+                    Type = Type,
+                    Time = Time,
+                    Duration = Duration,
+                    ctp = ctp,
+                    ctp1 = ctp1,
+                    ctp2 = ctp2,
+                    cfmi = cfmi,
+                    cflg = cflg
+                };
                 return New;
             }
         };
@@ -275,15 +279,17 @@ namespace Lanotalium
         {
             public LanotaCameraRot DeepCopy()
             {
-                LanotaCameraRot New = new LanotaCameraRot();
-                New.Type = Type;
-                New.Time = Time;
-                New.Duration = Duration;
-                New.ctp = ctp;
-                New.ctp1 = ctp1;
-                New.ctp2 = ctp2;
-                New.cfmi = cfmi;
-                New.cflg = cflg;
+                LanotaCameraRot New = new LanotaCameraRot
+                {
+                    Type = Type,
+                    Time = Time,
+                    Duration = Duration,
+                    ctp = ctp,
+                    ctp1 = ctp1,
+                    ctp2 = ctp2,
+                    cfmi = cfmi,
+                    cflg = cflg
+                };
                 return New;
             }
         };
@@ -726,7 +732,8 @@ namespace Lanotalium
             Idle,
             Horizontal,
             Vertical,
-            Rotation
+            Rotation,
+            Multiple
         }
         public enum TimeValuePairMode
         {
@@ -997,9 +1004,16 @@ public class LimSystem : MonoBehaviour
     public LimDialogUtils DialogUtils;
     public LimProjectManager ProjectManager;
 
+#if UNITY_STANDALONE
     private string PreferencesSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Preferences.json";
     private string EditorLayoutSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/EditorLayout.json";
     private string AppDataRoaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium";
+#endif
+#if UNITY_IOS
+    private string PreferencesSavePath;
+    private string EditorLayoutSavePath;
+    private string AppDataRoaming;
+#endif
     public static Lanotalium.PreferencesContainer Preferences = new Lanotalium.PreferencesContainer();
     public static Lanotalium.Editor.EditorLayout EditorLayout = new Lanotalium.Editor.EditorLayout();
     public static string LanotaliumServer = "http://lanotalium.cn";
@@ -1032,6 +1046,12 @@ public class LimSystem : MonoBehaviour
     }
     private void Start()
     {
+#if UNITY_IOS
+        Application.targetFrameRate = 60;
+        PreferencesSavePath = Application.persistentDataPath + "/Lanotalium/Preferences.json";
+        EditorLayoutSavePath = Application.persistentDataPath + "/Lanotalium/EditorLayout.json";
+        AppDataRoaming = Application.persistentDataPath + "/Lanotalium";
+#endif
 #if UNITY_EDITOR
         //if (File.Exists(PreferencesSavePath)) File.Delete(PreferencesSavePath);
 #endif
@@ -1040,7 +1060,9 @@ public class LimSystem : MonoBehaviour
         RestorePreferences();
         Application.logMessageReceived += ReceiveUnityLog;
         if (ProjectManager == null) return;
+#if UNITY_STANDALONE
         DragAndDrop.DragAndDrop.Enable(ProjectManager.OnDragFile, Application.productName);
+#endif
     }
 
     private string LastLog;
@@ -1058,6 +1080,8 @@ public class LimSystem : MonoBehaviour
     private void OnApplicationQuit()
     {
         SavePreferences();
+#if UNITY_STANDALONE
         DragAndDrop.DragAndDrop.Disable();
+#endif
     }
 }

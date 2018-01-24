@@ -27,7 +27,7 @@ public class LimPluginManager : MonoBehaviour
 
     private void Start()
     {
-        LanotaliumDataPath = Application.dataPath;
+        LanotaliumDataPath = Application.persistentDataPath;
         if (!Directory.Exists(Application.streamingAssetsPath + "/Plugins")) Directory.CreateDirectory(Application.streamingAssetsPath + "/Plugins");
         StartCoroutine(LoadPlugins());
     }

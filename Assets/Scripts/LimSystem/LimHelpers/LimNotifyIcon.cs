@@ -9,6 +9,7 @@ using System.ComponentModel;
 
 public class LimNotifyIcon : MonoBehaviour
 {
+#if UNITY_STANDALONE
     public Texture2D Icon;
     private static NotifyIcon Notify;
     private static bool Initialized = false;
@@ -32,6 +33,7 @@ public class LimNotifyIcon : MonoBehaviour
     public static void ShowMessage(string Message, ToolTipIcon Mode, string Title = "Lanotalium", string MessageBoxOnlyText = "")
     {
         if (UnityEngine.Application.isEditor) return;
+        if (UnityEngine.Application.platform != RuntimePlatform.WindowsPlayer) return;
         if (!Initialized) { Debug.Log("NotifyIcon: " + Message); return; }
         MessageBoxMessage = Message + "\n" + MessageBoxOnlyText;
         MessageBoxTitle = Title;
@@ -49,4 +51,11 @@ public class LimNotifyIcon : MonoBehaviour
     {
         if (Notify != null) Notify.Dispose();
     }
+#endif
+#if UNITY_IOS
+    public static void ShowMessage(string Message, ToolTipIcon Mode, string Title = "Lanotalium", string MessageBoxOnlyText = "")
+    {
+        Debug.Log(Message);
+    }
+#endif
 }

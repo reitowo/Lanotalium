@@ -8,6 +8,7 @@ public class LimDisplayManager : MonoBehaviour
     public Camera TunerCamera, MainCamera;
     public List<GameObject> GameObjectsToSetActiveFalse;
     public LimTunerHeadManager TunerHeadManager;
+    public GameObject ReplayKitController;
 
     public bool FullScreenTuner
     {
@@ -24,6 +25,7 @@ public class LimDisplayManager : MonoBehaviour
                 MainCamera.gameObject.SetActive(false);
                 foreach (GameObject G in GameObjectsToSetActiveFalse) G.SetActive(false);
                 TunerHeadManager.Mode = Lanotalium.Editor.TunerHeadMode.InTuner;
+                if (Application.platform == RuntimePlatform.IPhonePlayer) ReplayKitController.SetActive(true);
             }
             else
             {
@@ -31,6 +33,7 @@ public class LimDisplayManager : MonoBehaviour
                 MainCamera.gameObject.SetActive(true);
                 foreach (GameObject G in GameObjectsToSetActiveFalse) G.SetActive(true);
                 TunerHeadManager.Mode = Lanotalium.Editor.TunerHeadMode.InEditor;
+                if (Application.platform == RuntimePlatform.IPhonePlayer) ReplayKitController.SetActive(false);
             }
         }
     }

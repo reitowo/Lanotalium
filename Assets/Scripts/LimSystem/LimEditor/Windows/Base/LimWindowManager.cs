@@ -73,7 +73,7 @@ public class LimWindowManager : MonoBehaviour
         if (!Moveable) return;
         if (!isHandlePressed) return;
         if (LastMousePosition.x > 1920 || LastMousePosition.y > 1080) return;
-        Vector2 Delta = LimMousePosition.MousePosition - LastMousePosition;
+        Vector2 Delta = LimMousePosition.DeltaPosition;
         WindowRectTransform.anchoredPosition += Delta;
     }
     public void ResizeWindow()

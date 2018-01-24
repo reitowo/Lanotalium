@@ -103,6 +103,8 @@ public class ComponentMotionManager : MonoBehaviour
             Cfmi.text = OperationManager.TunerManager.CameraManager.Horizontal[Index].cfmi.ToString();
             Ctp0.text = OperationManager.TunerManager.CameraManager.Horizontal[Index].ctp.ToString("f5");
             Ctp1.text = OperationManager.TunerManager.CameraManager.Horizontal[Index].ctp1.ToString("f5");
+            Timing.interactable = true;
+            Ctp0.interactable = true;
             Ctp1.interactable = true;
         }
         else if (Mode == Lanotalium.Editor.ComponentMotionMode.Vertical)
@@ -114,6 +116,8 @@ public class ComponentMotionManager : MonoBehaviour
             Duration.text = OperationManager.TunerManager.CameraManager.Vertical[Index].Duration.ToString("f5");
             Cfmi.text = OperationManager.TunerManager.CameraManager.Vertical[Index].cfmi.ToString();
             Ctp0.text = OperationManager.TunerManager.CameraManager.Vertical[Index].ctp.ToString("f5");
+            Timing.interactable = true;
+            Ctp0.interactable = true;
             Ctp1.interactable = false;
             Type8.interactable = false;
             Type11.interactable = false;
@@ -127,6 +131,24 @@ public class ComponentMotionManager : MonoBehaviour
             Duration.text = OperationManager.TunerManager.CameraManager.Rotation[Index].Duration.ToString("f5");
             Cfmi.text = OperationManager.TunerManager.CameraManager.Rotation[Index].cfmi.ToString();
             Ctp0.text = OperationManager.TunerManager.CameraManager.Rotation[Index].ctp.ToString("f5");
+            Timing.interactable = true;
+            Ctp0.interactable = true;
+            Ctp1.interactable = false;
+            Type8.interactable = false;
+            Type11.interactable = false;
+        }
+        else if (Mode == Lanotalium.Editor.ComponentMotionMode.Multiple)
+        {
+            gameObject.SetActive(true);
+            Ctp0Text.text = LimLanguageManager.TextDict["Component_Motion_Unavaliable"];
+            Ctp1Text.text = LimLanguageManager.TextDict["Component_Motion_Unavaliable"];
+            Timing.text = " - ";
+            Ctp1.text = " - ";
+            Ctp0.text = " - ";
+            Duration.text = " - ";
+            Cfmi.text = " - ";
+            Timing.interactable = false;
+            Ctp0.interactable = false;
             Ctp1.interactable = false;
             Type8.interactable = false;
             Type11.interactable = false;
@@ -254,6 +276,43 @@ public class ComponentMotionManager : MonoBehaviour
             }
             OperationManager.SetRotationDuration(OperationManager.TunerManager.CameraManager.Rotation[Index], DurationTmp);
         }
+        else if (Mode == Lanotalium.Editor.ComponentMotionMode.Multiple)
+        {
+            foreach (Lanotalium.Chart.LanotaCameraBase Base in OperationManager.SelectedMotions)
+            {
+                switch (Base.Type)
+                {
+                    case 8:
+                    case 11:
+                        Lanotalium.Chart.LanotaCameraXZ XZ = Base as Lanotalium.Chart.LanotaCameraXZ;
+                        if (!OperationManager.CheckHorizontalDurationValid(XZ, DurationTmp))
+                        {
+                            DurationImg.color = InvalidColor;
+                            return;
+                        }
+                        OperationManager.SetHorizontalDuration(XZ, DurationTmp);
+                        break;
+                    case 10:
+                        Lanotalium.Chart.LanotaCameraY Y = Base as Lanotalium.Chart.LanotaCameraY;
+                        if (!OperationManager.CheckVerticalDurationValid(Y, DurationTmp))
+                        {
+                            DurationImg.color = InvalidColor;
+                            return;
+                        }
+                        OperationManager.SetVerticalDuration(Y, DurationTmp);
+                        break;
+                    case 13:
+                        Lanotalium.Chart.LanotaCameraRot Rot = Base as Lanotalium.Chart.LanotaCameraRot;
+                        if (!OperationManager.CheckRotationDurationValid(Rot, DurationTmp))
+                        {
+                            DurationImg.color = InvalidColor;
+                            return;
+                        }
+                        OperationManager.SetRotationDuration(Rot, DurationTmp);
+                        break;
+                }
+            }
+        }
         DurationImg.color = ValidColor;
     }
     public void OnEaseChange()
@@ -324,6 +383,7 @@ public class ComponentMotionManager : MonoBehaviour
     }
     public void OpenManuallyMotionEditor()
     {
+        if (Mode == Lanotalium.Editor.ComponentMotionMode.Multiple) return;
         OperationManager.TunerManager.MediaPlayerManager.IsPlaying = false;
         if (Mode == Lanotalium.Editor.ComponentMotionMode.Horizontal) GizmoMotionManager.Edit(OperationManager.TunerManager.CameraManager.Horizontal[Index]);
         else if (Mode == Lanotalium.Editor.ComponentMotionMode.Vertical) GizmoMotionManager.Edit(OperationManager.TunerManager.CameraManager.Vertical[Index]);

@@ -16,12 +16,12 @@ public class LimHighPermission : MonoBehaviour
     public GameObject RequestAdminPanel;
     public Text RequestAdminText;
 
+#if UNITY_STANDALONE
     private void Start()
     {
         if (Application.isEditor) return;
         if (!LimSystem.Preferences.LapInjected) RegisterLapFormat();
     }
-#if UNITY_STANDALONE
     #region PInvoke
     [StructLayout(LayoutKind.Sequential)]
     struct TokenElevation

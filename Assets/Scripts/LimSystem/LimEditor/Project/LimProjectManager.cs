@@ -30,7 +30,7 @@ public class LimProjectManager : MonoBehaviour
 
     public static LanotaliumProject CurrentProject = null;
     public static bool LapDirectOpened = false;
-    private static string LapPath;
+    public static string LapPath;
 
     private static bool HasNewDroppedLapFile = false;
     private static List<string> DroppedLapPaths;
@@ -47,6 +47,16 @@ public class LimProjectManager : MonoBehaviour
             LapPath = Environment.GetCommandLineArgs()[1];
             StartCoroutine(LoadCurrentProject());
             LapDirectOpened = true;
+            return;
+        }
+        if(LimChartZoneManager.OpenDownloadedChart)
+        {
+            LimChartZoneManager.OpenDownloadedChart = false;
+            CurrentProject = JsonConvert.DeserializeObject<LanotaliumProject>(File.ReadAllText(LimChartZoneManager.DownloadedChartLapPath));
+            if (CurrentProject == null) return;
+            LapPath = LimChartZoneManager.DownloadedChartLapPath;
+            StartCoroutine(LoadCurrentProject());
+            return;
         }
     }
     private void Update()
@@ -361,9 +371,9 @@ public class LimProjectManager : MonoBehaviour
         SystemManager.SavePreferences();
         DialogUtils.ProgressBar.Percent = 0.5f;
 
-        string ChartJson = File.ReadAllText(CurrentProject.ChartPath);
         try
         {
+            string ChartJson = File.ReadAllText(CurrentProject.ChartPath);
             LimSystem.ChartContainer.ChartData = new Lanotalium.Chart.ChartData(ChartJson);
         }
         catch
@@ -393,17 +403,29 @@ public class LimProjectManager : MonoBehaviour
         }
         DialogUtils.ProgressBar.Percent = 0.65f;
 
-        if (File.Exists(BGAColor))
+        if (CurrentProject.BGACount() >= 1)
         {
-            WWW ImageRead = new WWW("file:///" + BGAColor);
-            yield return ImageRead;
-            if (ImageRead != null && string.IsNullOrEmpty(ImageRead.error))
+            WWW ImageRead = null;
+            try
             {
+                if (!File.Exists(BGAColor)) throw new FileNotFoundException();
+                ImageRead = new WWW("file:///" + BGAColor);
+            }
+            catch (Exception)
+            {
+                DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadImageFailed"]);
+                isLoadFinished = true;
+                yield break;
+            }
+            yield return ImageRead;
+            try
+            {
+                if (ImageRead == null || !string.IsNullOrEmpty(ImageRead.error)) throw new Exception("Color Image Invalid");
                 Texture2D BackgroundImage = ImageRead.texture;
                 LimSystem.ChartContainer.ChartBackground.Color = Sprite.Create(BackgroundImage, new Rect(0, 0, BackgroundImage.width, BackgroundImage.height), new Vector2(0.5f, 0.5f), 100);
                 LimSystem.ChartContainer.ChartLoadResult.isBackgroundLoaded = true;
             }
-            else
+            catch (Exception)
             {
                 DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadImageFailed"]);
                 isLoadFinished = true;
@@ -411,17 +433,29 @@ public class LimProjectManager : MonoBehaviour
             }
         }
         DialogUtils.ProgressBar.Percent = 0.7f;
-        if (File.Exists(BGAGray))
+        if (CurrentProject.BGACount() >= 2)
         {
-            WWW ImageRead = new WWW("file:///" + BGAGray);
-            yield return ImageRead;
-            if (ImageRead != null && string.IsNullOrEmpty(ImageRead.error))
+            WWW ImageRead = null;
+            try
             {
+                if (!File.Exists(BGAGray)) throw new FileNotFoundException();
+                ImageRead = new WWW("file:///" + BGAGray);
+            }
+            catch (Exception)
+            {
+                DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadImageFailed"]);
+                isLoadFinished = true;
+                yield break;
+            }
+            yield return ImageRead;
+            try
+            {
+                if (ImageRead == null || !string.IsNullOrEmpty(ImageRead.error)) throw new Exception("Gray Image Invalid");
                 Texture2D BackgroundGray = ImageRead.texture;
                 LimSystem.ChartContainer.ChartBackground.Gray = Sprite.Create(BackgroundGray, new Rect(0, 0, BackgroundGray.width, BackgroundGray.height), new Vector2(0.5f, 0.5f), 100);
                 LimSystem.ChartContainer.ChartLoadResult.isBackgroundGrayLoaded = true;
             }
-            else
+            catch (Exception)
             {
                 DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadImageFailed"]);
                 isLoadFinished = true;
@@ -429,17 +463,29 @@ public class LimProjectManager : MonoBehaviour
             }
         }
         DialogUtils.ProgressBar.Percent = 0.8f;
-        if (File.Exists(BGALinear))
+        if (CurrentProject.BGACount() == 3)
         {
-            WWW ImageRead = new WWW("file:///" + BGALinear);
-            yield return ImageRead;
-            if (ImageRead != null && string.IsNullOrEmpty(ImageRead.error))
+            WWW ImageRead = null;
+            try
             {
+                if (!File.Exists(BGALinear)) throw new FileNotFoundException();
+                ImageRead = new WWW("file:///" + BGALinear);
+            }
+            catch (Exception)
+            {
+                DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadImageFailed"]);
+                isLoadFinished = true;
+                yield break;
+            }
+            yield return ImageRead;
+            try
+            {
+                if (ImageRead == null || !string.IsNullOrEmpty(ImageRead.error)) throw new Exception("Linear Image Invalid");
                 Texture2D BackgroundLinear = ImageRead.texture;
                 LimSystem.ChartContainer.ChartBackground.Linear = Sprite.Create(BackgroundLinear, new Rect(0, 0, BackgroundLinear.width, BackgroundLinear.height), new Vector2(0.5f, 0.5f), 100);
                 LimSystem.ChartContainer.ChartLoadResult.isBackgroundLinearLoaded = true;
             }
-            else
+            catch (Exception)
             {
                 DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadImageFailed"]);
                 isLoadFinished = true;
@@ -447,21 +493,39 @@ public class LimProjectManager : MonoBehaviour
             }
         }
         DialogUtils.ProgressBar.Percent = 0.9f;
-        if (File.Exists(CurrentProject.MusicPath))
+
+        WWW AudioRead = null;
+        try
         {
-            WWW AudioRead = new WWW("file:///" + CurrentProject.MusicPath);
-            yield return AudioRead;
-            if (AudioRead != null && string.IsNullOrEmpty(AudioRead.error))
+            if (!File.Exists(CurrentProject.MusicPath)) throw new FileNotFoundException();
+            AudioRead = new WWW("file:///" + CurrentProject.MusicPath);
+        }
+        catch (Exception)
+        {
+            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+            isLoadFinished = true;
+            yield break;
+        }
+        yield return AudioRead;
+        if (AudioRead != null && string.IsNullOrEmpty(AudioRead.error))
+        {
+            try
             {
                 LimSystem.ChartContainer.ChartMusic = new Lanotalium.Chart.ChartMusic(AudioRead.GetAudioClip());
                 LimSystem.ChartContainer.ChartLoadResult.isMusicLoaded = true;
             }
-            else
+            catch (Exception)
             {
                 DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
                 isLoadFinished = true;
                 yield break;
             }
+        }
+        else
+        {
+            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+            isLoadFinished = true;
+            yield break;
         }
 
         if (File.Exists(CurrentProject.ProjectFolder + "/background.mp4"))

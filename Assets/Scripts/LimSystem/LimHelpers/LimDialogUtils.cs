@@ -49,4 +49,19 @@ public class LimDialogUtils : MonoBehaviour
 #if UNITY_ANDROID
     
 #endif
+
+#if UNITY_IOS
+    public static string OpenFileDialog(string Title, string Filter, string InitPath)
+    {
+        return null;
+    }
+    public static string OpenFolderDialog(string Description)
+    {
+        return null;
+    }
+    public static string SaveFileDialog(string Title, string Filter, string InitPath)
+    {
+        return null;
+    }
+#endif
 }

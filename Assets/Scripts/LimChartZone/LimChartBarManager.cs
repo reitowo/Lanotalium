@@ -5,6 +5,11 @@ using System.IO;
 using System.Windows.Forms;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
+#if UNITY_IOS
+using System.IO.Compression;
+#endif
 
 public class LimChartBarManager : MonoBehaviour
 {
@@ -71,12 +76,35 @@ public class LimChartBarManager : MonoBehaviour
         SizeText.text = "100.00%";
         SizeText.text = Data.Size;
         byte[] Chart = Download.bytes;
-
+#if UNITY_STANDALONE
         string SavePath = LimDialogUtils.SaveFileDialog("", "(.zip)|*.zip", Data.ChartName + ".zip");
         if (SavePath == null) yield break;
         File.WriteAllBytes(SavePath, Chart);
         Process.Start("explorer.exe", "/select," + SavePath);
-
+#endif
+#if UNITY_IOS
+        string SaveDirectory = UnityEngine.Application.persistentDataPath + "/chartzone/" + Data.ChartName;
+        string SavePath = UnityEngine.Application.persistentDataPath + "/chartzone/" + Data.ChartName + "/" + Data.ChartName + ".zip";
+        Directory.CreateDirectory(Directory.GetParent(SavePath).FullName);
+        File.WriteAllBytes(SavePath, Chart);
+        ICSharpCode.SharpZipLib.Zip.FastZip fastZip = new ICSharpCode.SharpZipLib.Zip.FastZip();
+        Task ExtractTask = new Task(() => fastZip.ExtractZip(SavePath, SaveDirectory, ""));
+        ExtractTask.Start();
+        while (ExtractTask.Status == TaskStatus.Running) yield return null;
+        Lanotalium.Project.LanotaliumProject lanotaliumProject = new Lanotalium.Project.LanotaliumProject
+        {
+            Name = Data.ChartName,
+            Designer = Data.Designer,
+            BGA0Path = SaveDirectory + "/background0.png",
+            ChartPath = SaveDirectory + "/chart.txt",
+            MusicPath = SaveDirectory + "/music.ogg"
+        };
+        File.WriteAllText(SaveDirectory + "/project.lap", Newtonsoft.Json.JsonConvert.SerializeObject(lanotaliumProject));
+        LimChartZoneManager.OpenDownloadedChart = true;
+        LimChartZoneManager.DownloadedChartLapPath = SaveDirectory + "/project.lap";
+        isDownloading = false;
+        SceneManager.LoadScene("LimTuner");
+#endif
         isDownloading = false;
     }
 
