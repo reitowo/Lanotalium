@@ -562,6 +562,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         TimeToCreate = Hor.Time;
         SetStartStatusToText();
         DurationInput.text = Hor.Duration.ToString();
+        TimeEndInput.text = (TimeToCreate + Hor.Duration).ToString();
         EaseInput.text = Hor.cfmi.ToString();
         if (UseType8)
         {
@@ -595,6 +596,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         TimeToCreate = Ver.Time;
         SetStartStatusToText();
         DurationInput.text = Ver.Duration.ToString();
+        TimeEndInput.text = (TimeToCreate + Ver.Duration).ToString();
         EaseInput.text = Ver.cfmi.ToString();
         float BeginHeight;
         if (!float.TryParse(BeginHeightText.text, out BeginHeight)) return;
@@ -618,6 +620,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         TimeToCreate = Rot.Time;
         SetStartStatusToText();
         DurationInput.text = Rot.Duration.ToString();
+        TimeEndInput.text = (TimeToCreate + Rot.Duration).ToString();
         EaseInput.text = Rot.cfmi.ToString();
         float BeginRotation;
         if (!float.TryParse(BeginRotationText.text, out BeginRotation)) return;

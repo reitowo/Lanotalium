@@ -50,28 +50,28 @@ public class FileSize
     {
         get
         {
-            return KB.ToString() + " KB";
+            return KB.ToString("f2") + " KB";
         }
     }
     public string StrMB
     {
         get
         {
-            return MB.ToString() + " MB";
+            return MB.ToString("f2") + " MB";
         }
     }
     public string StrGB
     {
         get
         {
-            return GB.ToString() + " GB";
+            return GB.ToString("f2") + " GB";
         }
     }
     public string StrTB
     {
         get
         {
-            return TB.ToString() + " TB";
+            return TB.ToString("f2") + " TB";
         }
     }
     public FileSize(long ByteCount)

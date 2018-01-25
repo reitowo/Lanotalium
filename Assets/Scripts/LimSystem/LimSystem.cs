@@ -995,8 +995,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.8.0";
-    public static int Build = 31;
+    public static string Version = "v1.8.1";
+    public static int Build = 32;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;

@@ -373,6 +373,7 @@ public class LimProjectManager : MonoBehaviour
 
         try
         {
+            File.Copy(CurrentProject.ChartPath, CurrentProject.ChartPath.Replace(".txt", "_backup.txt"), true);
             string ChartJson = File.ReadAllText(CurrentProject.ChartPath);
             LimSystem.ChartContainer.ChartData = new Lanotalium.Chart.ChartData(ChartJson);
         }
