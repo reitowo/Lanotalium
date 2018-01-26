@@ -40,11 +40,11 @@ public class LimCloudManager : MonoBehaviour
     private void Start()
     {
         CloudAutosaveToggle.isOn = LimSystem.Preferences.CloudAutosave;
-        if (LimSystem.Preferences.CloudAutosave)
+        /*if (LimSystem.Preferences.CloudAutosave)
         {
             if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
             CloudAutosaveCoroutineRef = StartCoroutine(CloudAutosaveCoroutine());
-        }
+        }*/
         if (UnityEngine.Application.internetReachability != NetworkReachability.NotReachable)
         {
             if (BackupLoopCr != null) StopCoroutine(BackupLoopCr);
@@ -63,7 +63,7 @@ public class LimCloudManager : MonoBehaviour
     {
         while (true)
         {
-            UploadChart();
+            //UploadChart();
             yield return new WaitForSeconds(30);
         }
     }
@@ -72,8 +72,8 @@ public class LimCloudManager : MonoBehaviour
         LimSystem.Preferences.CloudAutosave = CloudAutosaveToggle.isOn;
         if (LimSystem.Preferences.CloudAutosave)
         {
-            if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
-            CloudAutosaveCoroutineRef = StartCoroutine(CloudAutosaveCoroutine());
+           /* if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
+            CloudAutosaveCoroutineRef = StartCoroutine(CloudAutosaveCoroutine());*/
         }
         else
         {
@@ -218,6 +218,7 @@ public class LimCloudManager : MonoBehaviour
 
     IEnumerator BackupLoop()
     {
+        yield return new WaitForSeconds(60);
         while (true)
         {
             BackupChart();

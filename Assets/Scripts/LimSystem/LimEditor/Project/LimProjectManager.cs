@@ -118,7 +118,7 @@ public class LimProjectManager : MonoBehaviour
         LimAutosaver.Autosave();
         string ChartPath = ChartSaveLocation;
         File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
-        if (LimSystem.Preferences.CloudAutosave) CloudManager.UploadChart();
+        CloudManager.UploadChart();
         LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Project_Saved"], ToolTipIcon.Info, "Lanotalium", ChartPath);
         SaveProjectFile();
     }

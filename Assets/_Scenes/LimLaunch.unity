@@ -144,7 +144,7 @@ RectTransform:
   - {fileID: 1273768407}
   - {fileID: 420352069}
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -388,7 +388,7 @@ RectTransform:
   - {fileID: 1963590337}
   - {fileID: 1738028335}
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -645,7 +645,7 @@ RectTransform:
   m_Children:
   - {fileID: 800043935}
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -1373,7 +1373,7 @@ RectTransform:
   - {fileID: 114820793}
   - {fileID: 1476913299}
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1745,7 +1745,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2017805290
+  randomSeed: -1522582589
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5076,7 +5076,7 @@ RectTransform:
   m_Children:
   - {fileID: 600005644}
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -5316,7 +5316,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1071623534}
-  - component: {fileID: 1071623535}
   m_Layer: 5
   m_Name: Winter
   m_TagString: Untagged
@@ -5336,35 +5335,14 @@ RectTransform:
   m_Children:
   - {fileID: 954206838}
   - {fileID: 1535310506}
-  - {fileID: 1400496876}
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!223 &1071623535
-Canvas:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1071623533}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -1618741443
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &1130869288
 GameObject:
   m_ObjectHideFlags: 0
@@ -5584,7 +5562,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -5799,8 +5777,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1071623534}
-  m_RootOrder: 2
+  m_Father: {fileID: 1945130411}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5871,7 +5849,7 @@ RectTransform:
   - {fileID: 451469200}
   - {fileID: 1130869289}
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -6345,7 +6323,7 @@ RectTransform:
   m_Children:
   - {fileID: 269436644}
   m_Father: {fileID: 1945130411}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -6672,8 +6650,8 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: -1618741443
-  m_SortingOrder: 10
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1945130411
 RectTransform:
@@ -6686,6 +6664,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2055198489}
+  - {fileID: 1400496876}
   - {fileID: 1255116453}
   - {fileID: 791291451}
   - {fileID: 1759275789}
