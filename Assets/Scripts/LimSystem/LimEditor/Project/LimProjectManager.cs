@@ -12,6 +12,8 @@ using Newtonsoft.Json;
 using System.Windows.Forms;
 using System.Text;
 using System.Diagnostics;
+using System.Security.Permissions;
+using System.Security;
 
 public class LimProjectManager : MonoBehaviour
 {
@@ -136,6 +138,7 @@ public class LimProjectManager : MonoBehaviour
     {
         if (LimSystem.ChartContainer == null) return;
         string ChartPath = LimDialogUtils.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
+        if (ChartPath == null) return;
         File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
         LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Project_Saved"], ToolTipIcon.Info, "Lanotalium", ChartPath);
         if (LimSystem.Preferences.CloudAutosave) CloudManager.UploadChart();
@@ -330,8 +333,8 @@ public class LimProjectManager : MonoBehaviour
         if (isCreateProject)
         {
             ChartPath.text = LimLanguageManager.TextDict["Project_ChartWillGenerate"];
+            File.WriteAllText(Path + "/EmptyChart.txt", "{\"events\":null,\"eos\":0,\"bpm\":null,\"scroll\":null}");
             CurrentProject.ChartPath = Path + "/EmptyChart.txt";
-            File.WriteAllText(CurrentProject.ChartPath, "{\"events\":null,\"eos\":0,\"bpm\":null,\"scroll\":null}");
             Name.text = new DirectoryInfo(Path).Name;
         }
         LimTutorialManager.ShowTutorial("FirstProject4");
@@ -376,14 +379,14 @@ public class LimProjectManager : MonoBehaviour
         bool isLoadFinished = false;
         DialogUtils.ProgressBar.ShowProgress(() => { return isLoadFinished; });
 
-        if (Name.text == "")
+        if (string.IsNullOrEmpty(CurrentProject.Name))
         {
             DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_NoName"]);
             isLoadFinished = true;
             yield break;
         }
 
-        if (Designer.text == "")
+        if (string.IsNullOrEmpty(CurrentProject.Designer))
         {
             DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_NoDesigner"]);
             isLoadFinished = true;
@@ -404,7 +407,7 @@ public class LimProjectManager : MonoBehaviour
             string ChartJson = File.ReadAllText(CurrentProject.ChartPath);
             LimSystem.ChartContainer.ChartData = new Lanotalium.Chart.ChartData(ChartJson);
         }
-        catch
+        catch (Exception)
         {
             DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadChartFailed"]);
             isLoadFinished = true;
@@ -563,12 +566,19 @@ public class LimProjectManager : MonoBehaviour
         }
 
         ChartSaveLocation = LimSystem.ChartContainer.ChartProperty.ChartPath;
-        DialogUtils.ProgressBar.Percent = 1f;
-        yield return new WaitForSeconds(0.5f);
+        DialogUtils.ProgressBar.Percent = 0.95f;
         SaveProjectFile();
         LimSystem.Preferences.LastOpenedChartFolder = LimSystem.ChartContainer.ChartProperty.ChartFolder;
         LimSystem.Preferences.Designer = CurrentProject.Designer;
-        SceneManager.LoadScene("LimTuner");
+
+        AsyncOperation LoadAsync = SceneManager.LoadSceneAsync("LimTuner");
+        while (!LoadAsync.isDone)
+        {
+            DialogUtils.ProgressBar.Percent = 0.95f + LoadAsync.progress * 0.05f;
+            yield return null;
+        }
+
+        DialogUtils.ProgressBar.Percent = 1f;
         isLoadFinished = true;
     }
 

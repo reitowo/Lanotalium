@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ public class LimWaveformManager : MonoBehaviour
     public LimTunerManager TunerManager;
     public LineRenderer LineL, LineR;
     public RectTransform Blocker;
-    public float[] FormL, FormR;
+    public List<float> FormL, FormR;
     public int SamplesToRead = 10000;
     public int WaveScale = 25;
 
@@ -18,19 +19,24 @@ public class LimWaveformManager : MonoBehaviour
 
     public void OnMusicLoaded()
     {
-        Music = LimSystem.ChartContainer.ChartMusic.Music;
-        float[] Data = new float[Music.samples * Music.channels];
-        Music.GetData(Data, 0);
-        List<float> L = new List<float>();
-        List<float> R = new List<float>();
-        for (int i = 0; i < Music.samples * Music.channels; i += 2)
+        try
         {
-            L.Add(Data[i]);
-            R.Add(Data[i + 1]);
+            Music = LimSystem.ChartContainer.ChartMusic.Music;
+            float[] Data = new float[Music.samples * Music.channels];
+            Music.GetData(Data, 0);
+            FormL.Clear();
+            FormR.Clear();
+            for (int i = 0; i < Music.samples * Music.channels; i += 2)
+            {
+                FormL.Add(Data[i]);
+                FormR.Add(Data[i + 1]);
+            }
+            isDataLoaded = true;
         }
-        FormL = L.ToArray();
-        FormR = R.ToArray();
-        isDataLoaded = true;
+        catch(OutOfMemoryException)
+        {
+
+        }
     }
     private void Start()
     {

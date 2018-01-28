@@ -26,6 +26,8 @@ public class LimExceptionManager : MonoBehaviour
     public Button ShowNextExceptionBtn;
     public RectTransform Banner, StackTraceRect;
     public LimProjectManager ProjectManager;
+    public Sprite PopPipiIdle, PopPipiHit;
+    public Image PopPipi;
 
     private bool IsOpened = false;
     private string ExceptionMessage
@@ -168,6 +170,7 @@ public class LimExceptionManager : MonoBehaviour
                 Arguments = LimProjectManager.LapPath
             };
             Process.Start(processStartInfo);
+            Process.GetCurrentProcess().Kill();
         }
         catch (Exception)
         {
@@ -216,5 +219,13 @@ public class LimExceptionManager : MonoBehaviour
         }
         Banner.sizeDelta = new Vector2(Banner.sizeDelta.x, 0);
         Banner.gameObject.SetActive(false);
+    }
+    public void PopPipiShowHit()
+    {
+        PopPipi.sprite = PopPipiHit;
+    }
+    public void PopPipiShowIdle()
+    {
+        PopPipi.sprite = PopPipiIdle;
     }
 }

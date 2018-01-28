@@ -960,10 +960,9 @@ namespace Lanotalium
                 get
                 {
                     if (chartPath == null) return null;
-                    if (File.Exists(chartPath)) return chartPath;
+                    if (File.Exists(chartPath)) return chartPath.Replace("\\", "/");
                     else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(chartPath)).Replace("\\", "/");
                 }
-
                 set
                 {
                     chartPath = value;
@@ -974,10 +973,9 @@ namespace Lanotalium
                 get
                 {
                     if (musicPath == null) return null;
-                    if (File.Exists(musicPath)) return musicPath;
+                    if (File.Exists(musicPath)) return musicPath.Replace("\\", "/");
                     else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(musicPath)).Replace("\\", "/");
                 }
-
                 set
                 {
                     musicPath = value;
@@ -988,10 +986,9 @@ namespace Lanotalium
                 get
                 {
                     if (bGA0Path == null) return null;
-                    if (File.Exists(bGA0Path)) return bGA0Path;
+                    if (File.Exists(bGA0Path)) return bGA0Path.Replace("\\", "/");
                     else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(bGA0Path)).Replace("\\", "/");
                 }
-
                 set
                 {
                     bGA0Path = value;
@@ -1002,10 +999,9 @@ namespace Lanotalium
                 get
                 {
                     if (bGA1Path == null) return null;
-                    if (File.Exists(bGA1Path)) return bGA1Path;
+                    if (File.Exists(bGA1Path)) return bGA1Path.Replace("\\", "/");
                     else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(bGA1Path)).Replace("\\", "/");
                 }
-
                 set
                 {
                     bGA1Path = value;
@@ -1016,10 +1012,9 @@ namespace Lanotalium
                 get
                 {
                     if (bGA2Path == null) return null;
-                    if (File.Exists(bGA2Path)) return bGA2Path;
+                    if (File.Exists(bGA2Path)) return bGA2Path.Replace("\\", "/");
                     else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(bGA2Path)).Replace("\\", "/");
                 }
-
                 set
                 {
                     bGA2Path = value;
@@ -1058,7 +1053,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 33;
+        public int Build = 35;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1076,8 +1071,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.8.3";
-    public static int Build = 34;
+    public static string Version = "v1.8.4";
+    public static int Build = 35;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
@@ -1086,8 +1081,11 @@ public class LimSystem : MonoBehaviour
     public LimProjectManager ProjectManager;
 
 #if UNITY_STANDALONE
+    [HideInInspector]
     public string PreferencesSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Preferences.json";
+    [HideInInspector]
     public string EditorLayoutSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/EditorLayout.json";
+    [HideInInspector]
     public string AppDataRoaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium";
 #endif
 #if UNITY_IOS
@@ -1136,6 +1134,7 @@ public class LimSystem : MonoBehaviour
 #if UNITY_EDITOR
         //if (File.Exists(PreferencesSavePath)) File.Delete(PreferencesSavePath);
 #endif
+        
         if (Directory.Exists(AppDataRoaming + "/Updator")) Directory.Delete(AppDataRoaming + "/Updator", true);
         if (!Directory.Exists(AppDataRoaming)) Directory.CreateDirectory(AppDataRoaming);
         RestorePreferences();
