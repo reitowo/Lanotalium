@@ -186,6 +186,8 @@ Project_LoadFilter$Lanotalium Project(*.lap)|*.lap
 Project_Saved$Successfully saved.
 Project_InvalidProject$Invalid Project!
 Project_InvalidProjectFile$Invalid Project File!
+Project_NoName$You must input name!
+Project_NoDesigner$You must input designer!
 Project_ReadChartFailed$Unable to read chart, please check if it is valid!
 Project_ReadImageFailed$Unable to read image(s), please check if it is valid!
 Project_ReadMusicFailed$Unable to read music, please check if it is valid!
@@ -253,3 +255,11 @@ Create_Catch$Create catch note rail between two selected Notes
 Create_ConvertSelectedToHoldNote$Convert selected to Hold Note, first in time as Hold Note's head, the other as the joints.
 TxtToLap$To open old .txt file, please Create a New Project and select your .txt in Chart Path.
 MusicFormat$Only support .wav or .ogg
+#TutorialDict
+FirstProject1$Welcome to use Lanotalium!<br>Click 'File' to create your first project!
+FirstProject2$Click 'New Project' to create your first project!
+FirstProject3$Choose your project folder!
+FirstProject4$Note: Music format only support ogg or wav.
+FirstProject5$As you are creating a project, leave chart path blank!<br>Or you can select one if you have a chart.
+FirstProject6$Click here to add (up to 3) background image(s).
+FirstProject7$Click here to create!

@@ -213,7 +213,7 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.isHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
             float Percent = CalculateMovePercent(Note.Time);
             Percent = CalculateEasedPercent(Percent);
             Note.Percent = Percent;
@@ -230,7 +230,7 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.isHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
             if (Note.Percent < 20) continue;
             if (Note.Jcount == 0)
             {
@@ -257,10 +257,21 @@ public class LimHoldNoteManager : MonoBehaviour
                         float Percent = (t - LastaTime) / Note.Joints[i].dTime;
                         float LocationPercent = CalculateMovePercent(t);
                         EndPercent = CalculateEasedPercent(LocationPercent);
-                        Positions.Add(CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
+                        if (Tuner.ScrollManager.IsBackwarding(Tuner.ChartTime))
+                        {
+                            if (EndPercent != 100)
+                                Positions.Add(CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
+                        }
+                        else Positions.Add(CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
                         if (t + Interval > Note.Joints[i].aTime)
                         {
-                            Positions.Add(CalculateLineRendererPoint(CalculateEasedPercent(CalculateMovePercent(Note.Joints[i].aTime)), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
+                            float TempPercent = CalculateMovePercent(Note.Joints[i].aTime);
+                            if (Tuner.ScrollManager.IsBackwarding(Tuner.ChartTime))
+                            {
+                                if (TempPercent != 100)
+                                    Positions.Add(CalculateLineRendererPoint(CalculateEasedPercent(TempPercent), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
+                            }
+                            else Positions.Add(CalculateLineRendererPoint(CalculateEasedPercent(TempPercent), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
                             break;
                         }
                     }
@@ -278,17 +289,26 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.isHoldNoteinScanRange(Note))
+            if (!LimScanTime.IsHoldNoteinScanRange(Note))
             { if (Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false); continue; }
             if (Tuner.ChartTime > Note.Time + Note.Duration && Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
             else if (Tuner.ChartTime < Note.Time)
             {
                 if (Note.Percent <= 20 || Note.Percent >= 100)
                 {
-                    if (Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
+                    if (Tuner.ScrollManager.IsBackwarding(Tuner.ChartTime))
+                    {
+                        if (Note.Percent == 100 && !Note.HoldNoteGameObject.activeInHierarchy)
+                        {
+                            Note.HoldNoteGameObject.SetActive(true);
+                            Note.SetSpritesActive(false);
+                        }
+                    }
+                    else if (Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
                 }
                 else
                 {
+                    Note.SetSpritesActive(true);
                     if (!Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(true);
                 }
             }
@@ -302,7 +322,7 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.isHoldNoteinScanRange(Note))
+            if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
                 if (Note.Joints == null) continue;
                 for (int i = 0; i < Note.Joints.Count - 1; ++i)
@@ -335,7 +355,7 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.isHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
             if (Note.Percent < 20) continue;
             if (Tuner.ChartTime >= Note.Time && Tuner.ChartTime < Note.Time + Note.Duration)
             {
@@ -359,7 +379,7 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.isHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
             if (Note.OnSelect) { if (Note.Sprite.color == NormalColor) Note.Sprite.color = OnSelectColor; }
             else if (!Note.OnSelect) { if (Note.Sprite.color == OnSelectColor) Note.Sprite.color = NormalColor; }
         }
@@ -370,7 +390,7 @@ public class LimHoldNoteManager : MonoBehaviour
         bool ShouldPlayRail = false;
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.isHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
             if (Note.Time + Note.Duration <= Tuner.ChartTime)
             {
                 if (!Note.EndEffectPlayed)

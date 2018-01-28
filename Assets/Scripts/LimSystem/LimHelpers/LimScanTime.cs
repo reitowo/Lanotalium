@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class LimScanTime : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class LimScanTime : MonoBehaviour
     public bool Enable = true;
     public List<float> KeyTimes = new List<float>();
 
-    public static bool isTapNoteinScanRange(Lanotalium.Chart.LanotaTapNote Note)
+    public static bool IsTapNoteinScanRange(Lanotalium.Chart.LanotaTapNote Note)
     {
         if (RangePairCount == 0) return true;
         for (int i = 0; i < RangePairCount; ++i)
@@ -20,13 +21,16 @@ public class LimScanTime : MonoBehaviour
         }
         return false;
     }
-    public static bool isHoldNoteinScanRange(Lanotalium.Chart.LanotaHoldNote Note)
+    public static bool IsHoldNoteinScanRange(Lanotalium.Chart.LanotaHoldNote Note)
     {
         if (RangePairCount == 0) return true;
         for (int i = 0; i < RangePairCount; ++i)
         {
-            if (Note.Time + Note.Duration >= Starts[i] && Note.Time <= Ends[i]) return true;
-        }
+            if (Note.Time >= Starts[i] && Note.Time <= Ends[i]) return true;
+            else if (Note.Time <= Starts[i] && Note.Time + Note.Duration >= Ends[i]) return true;
+            else if (Note.Time + Note.Duration >= Starts[i] && Note.Time + Note.Duration <= Ends[i]) return true;
+            else if (Note.Time >= Starts[i] && Note.Time + Note.Duration <= Ends[i]) return true;
+        } 
         return false;
     }
     private float CalculateTimeByPercent(float Percent, int Depth = 0)
@@ -90,22 +94,39 @@ public class LimScanTime : MonoBehaviour
     }
     private void TryCalculateKeyTimes()
     {
+        bool KeyTime1End = false, KeyTime2End = false;
         float KeyTime1 = 0, KeyTime2 = 0;
         int Depth = 0;
         do
         {
             KeyTime1 = CalculateTimeByPercent(100, Depth);
-            KeyTimes.Add(KeyTime1);
+            if (KeyTimes.Contains(KeyTime1)) KeyTime1End = true;
+            else KeyTimes.Add(KeyTime1);
             KeyTime2 = CalculateTimeByPercent(77, Depth);
-            KeyTimes.Add(KeyTime2);
+            if (KeyTimes.Contains(KeyTime2)) KeyTime2End = true;
+            else KeyTimes.Add(KeyTime2);
             Depth++;
+            if (Depth == 20)
+            {
+                Enable = false;
+                throw new System.Exception("Too Deep Exception");
+            }
         }
-        while (KeyTime1 != TunerManager.MediaPlayerManager.Length || KeyTime1 != TunerManager.MediaPlayerManager.Length);
+        while (!KeyTime1End || !KeyTime2End);
     }
     private void TryGeneratePairs()
     {
-        if (KeyTimes.Count % 2 == 1) KeyTimes.Add(TunerManager.MediaPlayerManager.Length);
-        //KeyTimes.Sort();
+        KeyTimes = KeyTimes.Distinct().ToList();
+        KeyTimes.Sort();
+        if (TunerManager.ScrollManager.IsBackwarding(KeyTimes[0])) KeyTimes.RemoveAt(0);
+        if (KeyTimes.Count % 2 == 1)
+        {
+            if (KeyTimes[KeyTimes.Count - 1] == TunerManager.MediaPlayerManager.Length)
+            {
+                KeyTimes.RemoveAt(KeyTimes.Count - 1);
+            }
+            else KeyTimes.Add(TunerManager.MediaPlayerManager.Length);
+        }
         for (int i = 0; i < KeyTimes.Count; i += 2)
         {
             Starts.Add(KeyTimes[i]);

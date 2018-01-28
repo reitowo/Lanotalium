@@ -384,8 +384,8 @@ public class LimMediaPlayerManager : MonoBehaviour
     }
     public void OnProgressValueChange()
     {
-        //if (!TunerManager.isInitialized) return;
-        if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return;
+        if (!TunerManager.isInitialized) return;
+        if (MediaPlayerMode == MediaPlayerMode.Video) return;
         if (!ProgressOnEdit) return;
         float ProgressTmp;
         if (!float.TryParse(ProgressInputField.text, out ProgressTmp))

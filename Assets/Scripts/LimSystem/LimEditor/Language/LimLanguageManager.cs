@@ -16,6 +16,7 @@ public class LimLanguageManager : MonoBehaviour
     public static Dictionary<string, string> TextDict;
     public static Dictionary<string, string> NotificationDict;
     public static Dictionary<string, string> HintDict;
+    public static Dictionary<string, string> TutorialDict;
 
     private string LanguagePackageFolder;
 
@@ -44,6 +45,7 @@ public class LimLanguageManager : MonoBehaviour
                 if (CurrentWriteDict == 0) Lang.TextDict.Add(KeyValue[0], KeyValue[1]);
                 else if (CurrentWriteDict == 1) Lang.NotificationDict.Add(KeyValue[0], KeyValue[1]);
                 else if (CurrentWriteDict == 2) Lang.HintDict.Add(KeyValue[0], KeyValue[1].Replace("<br>", "\n"));
+                else if (CurrentWriteDict == 3) Lang.TutorialDict.Add(KeyValue[0], KeyValue[1].Replace("<br>", "\n"));
             }
         }
         LanguagePackages.Add(Lang.LanguageName, Lang);
@@ -108,6 +110,7 @@ public class LimLanguageManager : MonoBehaviour
         TextDict = LanguagePackages[LanguageName].TextDict;
         NotificationDict = LanguagePackages[LanguageName].NotificationDict;
         HintDict = LanguagePackages[LanguageName].HintDict;
+        TutorialDict = LanguagePackages[LanguageName].TutorialDict;
         CallAllSetTexts();
     }
 

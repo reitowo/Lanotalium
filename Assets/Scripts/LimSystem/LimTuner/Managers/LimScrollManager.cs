@@ -25,5 +25,20 @@ public class LimScrollManager : MonoBehaviour
             return A.Time.CompareTo(B.Time);
         });
     }
+    public bool IsBackwarding(float Time)
+    {
+        for (int i = 0; i < Scroll.Count - 1; ++i)
+        {
+            if (Time >= Scroll[i].Time && Time < Scroll[i + 1].Time)
+            {
+                if (Scroll[i].Speed < 0) return true;
+            }
+        }
+        if (Time > Scroll[Scroll.Count - 1].Time)
+        {
+            if (Scroll[Scroll.Count - 1].Speed < 0) return true;
+        }
+        return false;
+    }
 
 }

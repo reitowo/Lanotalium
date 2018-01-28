@@ -21,6 +21,7 @@ public class LimTopMenuManager : MonoBehaviour
 
     private void Start()
     {
+        LimTutorialManager.ShowTutorial("FirstProject1");
         if (LimSystem.ChartContainer == null) return;
         TopText.text = string.Format("Lanotalium - <{0}>", LimSystem.ChartContainer.ChartProperty.ChartName);
     }
@@ -49,6 +50,7 @@ public class LimTopMenuManager : MonoBehaviour
     {
         if (FilePanel.activeInHierarchy) FilePanel.SetActive(false);
         else FilePanel.SetActive(true);
+        LimTutorialManager.ShowTutorial("FirstProject2");
     }
     public void NewProject()
     {

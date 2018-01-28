@@ -11,6 +11,10 @@ public class LimQuitBox : MonoBehaviour {
     public static UnityEvent OnQuitBoxConfirmed = new UnityEvent();
     private bool AllowQuitting = false;
 
+    private void Awake()
+    {
+        OnQuitBoxConfirmed.RemoveAllListeners();
+    }
     public void ConfirmQuitApplication()
     {
         AllowQuitting = true;

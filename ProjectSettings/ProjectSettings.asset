@@ -72,7 +72,7 @@ PlayerSettings:
   runInBackground: 1
   captureSingleScreen: 0
   muteOtherAudioSources: 0
-  Prepare IOS For Recording: 0
+  Prepare IOS For Recording: 1
   Force IOS Speakers When Recording: 0
   deferSystemGesturesMode: 0
   hideHomeButton: 0
@@ -128,7 +128,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.8.2
+  bundleVersion: 1.8.3
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -164,7 +164,7 @@ PlayerSettings:
     Standalone: com.Schwarzer.Lanotalium
     iOS: com.Schwarzer.Lanotalium
   buildNumber:
-    Standalone: 33
+    Standalone: 34
     iOS: 31
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16

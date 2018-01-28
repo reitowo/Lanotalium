@@ -176,6 +176,13 @@ namespace Lanotalium
             public int InstanceId;
             public SpriteRenderer Sprite;
 
+            public void SetSpritesActive(bool Active)
+            {
+                foreach(SpriteRenderer s in HoldNoteGameObject.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    s.enabled = Active;
+                }
+            }
             public LanotaTapNote ToTapNote(int Type)
             {
                 LanotaTapNote TapNote = new LanotaTapNote();
@@ -810,6 +817,7 @@ namespace Lanotalium
             public Dictionary<string, string> TextDict = new Dictionary<string, string>();
             public Dictionary<string, string> NotificationDict = new Dictionary<string, string>();
             public Dictionary<string, string> HintDict = new Dictionary<string, string>();
+            public Dictionary<string, string> TutorialDict = new Dictionary<string, string>();
             public string LanguageName;
         }
         public class OnWindowSortingEvent : UnityEvent<LimWindowManager>
@@ -933,18 +941,91 @@ namespace Lanotalium
         {
             public string Name;
             public string Designer;
-            public string ChartPath;
-            public string MusicPath;
-            public string BGA0Path;
-            public string BGA1Path;
-            public string BGA2Path;
+            private string chartPath;
+            private string musicPath;
+            private string bGA0Path;
+            private string bGA1Path;
+            private string bGA2Path;
+
             public string ProjectFolder
             {
                 get
                 {
-                    return Directory.GetParent(ChartPath).FullName;
+                    if (LimProjectManager.LapFolder == null) return null;
+                    return (LimProjectManager.LapFolder).Replace("\\", "/");
                 }
             }
+            public string ChartPath
+            {
+                get
+                {
+                    if (chartPath == null) return null;
+                    if (File.Exists(chartPath)) return chartPath;
+                    else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(chartPath)).Replace("\\", "/");
+                }
+
+                set
+                {
+                    chartPath = value;
+                }
+            }
+            public string MusicPath
+            {
+                get
+                {
+                    if (musicPath == null) return null;
+                    if (File.Exists(musicPath)) return musicPath;
+                    else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(musicPath)).Replace("\\", "/");
+                }
+
+                set
+                {
+                    musicPath = value;
+                }
+            }
+            public string BGA0Path
+            {
+                get
+                {
+                    if (bGA0Path == null) return null;
+                    if (File.Exists(bGA0Path)) return bGA0Path;
+                    else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(bGA0Path)).Replace("\\", "/");
+                }
+
+                set
+                {
+                    bGA0Path = value;
+                }
+            }
+            public string BGA1Path
+            {
+                get
+                {
+                    if (bGA1Path == null) return null;
+                    if (File.Exists(bGA1Path)) return bGA1Path;
+                    else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(bGA1Path)).Replace("\\", "/");
+                }
+
+                set
+                {
+                    bGA1Path = value;
+                }
+            }
+            public string BGA2Path
+            {
+                get
+                {
+                    if (bGA2Path == null) return null;
+                    if (File.Exists(bGA2Path)) return bGA2Path;
+                    else return (LimProjectManager.LapFolder + "/" + Path.GetFileName(bGA2Path)).Replace("\\", "/");
+                }
+
+                set
+                {
+                    bGA2Path = value;
+                }
+            }
+
             public int BGACount()
             {
                 int Count = 0;
@@ -995,8 +1076,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.8.2";
-    public static int Build = 33;
+    public static string Version = "v1.8.3";
+    public static int Build = 34;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
@@ -1005,14 +1086,14 @@ public class LimSystem : MonoBehaviour
     public LimProjectManager ProjectManager;
 
 #if UNITY_STANDALONE
-    private string PreferencesSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Preferences.json";
-    private string EditorLayoutSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/EditorLayout.json";
-    private string AppDataRoaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium";
+    public string PreferencesSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Preferences.json";
+    public string EditorLayoutSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/EditorLayout.json";
+    public string AppDataRoaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium";
 #endif
 #if UNITY_IOS
-    private string PreferencesSavePath;
-    private string EditorLayoutSavePath;
-    private string AppDataRoaming;
+     public string PreferencesSavePath;
+     public string EditorLayoutSavePath;
+     public string AppDataRoaming;
 #endif
     public static Lanotalium.PreferencesContainer Preferences = new Lanotalium.PreferencesContainer();
     public static Lanotalium.Editor.EditorLayout EditorLayout = new Lanotalium.Editor.EditorLayout();

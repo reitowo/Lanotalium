@@ -10,13 +10,13 @@ using System.ComponentModel;
 public class LimNotifyIcon : MonoBehaviour
 {
 #if UNITY_STANDALONE
-    public Texture2D Icon;
-    private static NotifyIcon Notify;
+    /*public Texture2D Icon = null;
+    private static NotifyIcon Notify = null;
     private static bool Initialized = false;
-    private static string MessageBoxMessage, MessageBoxTitle;
+    private static string MessageBoxMessage = null, MessageBoxTitle = null;*/
     void Start()
     {
-        try
+        /*try
         {
             if (UnityEngine.Application.isEditor) return;
             if (Environment.GetCommandLineArgs().Length == 2 && !LimProjectManager.LapDirectOpened) return;
@@ -35,28 +35,28 @@ public class LimNotifyIcon : MonoBehaviour
         catch(Exception)
         {
             
-        }
+        }*/
     }
     public static void ShowMessage(string Message, ToolTipIcon Mode, string Title = "Lanotalium", string MessageBoxOnlyText = "")
     {
-        if (UnityEngine.Application.isEditor) return;
+        /*if (UnityEngine.Application.isEditor) return;
         if (UnityEngine.Application.platform != RuntimePlatform.WindowsPlayer) return;
         if (!Initialized) { Debug.Log("NotifyIcon: " + Message); return; }
         MessageBoxMessage = Message + "\n" + MessageBoxOnlyText;
         MessageBoxTitle = Title;
-        Notify.ShowBalloonTip(3000, Title, Message, Mode);
+        Notify.ShowBalloonTip(3000, Title, Message, Mode);*/
     }
     private static void ShowMessageBox()
     {
-        MessageBox.Show(MessageBoxMessage, MessageBoxTitle);
+        //MessageBox.Show(MessageBoxMessage, MessageBoxTitle);
     }
     private void OnApplicationQuit()
     {
-        if (Notify != null) Notify.Dispose();
+        //if (Notify != null) Notify.Dispose();
     }
     private void OnDestroy()
     {
-        if (Notify != null) Notify.Dispose();
+        //if (Notify != null) Notify.Dispose();
     }
 #endif
 #if UNITY_IOS

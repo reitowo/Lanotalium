@@ -31,6 +31,14 @@ public class LimProjectManager : MonoBehaviour
     public static LanotaliumProject CurrentProject = null;
     public static bool LapDirectOpened = false;
     public static string LapPath;
+    public static string LapFolder
+    {
+        get
+        {
+            if (LapPath == null) return null;
+            return Directory.GetParent(LapPath).FullName;
+        }
+    }
 
     private static bool HasNewDroppedLapFile = false;
     private static List<string> DroppedLapPaths;
@@ -49,7 +57,7 @@ public class LimProjectManager : MonoBehaviour
             LapDirectOpened = true;
             return;
         }
-        if(LimChartZoneManager.OpenDownloadedChart)
+        if (LimChartZoneManager.OpenDownloadedChart)
         {
             LimChartZoneManager.OpenDownloadedChart = false;
             CurrentProject = JsonConvert.DeserializeObject<LanotaliumProject>(File.ReadAllText(LimChartZoneManager.DownloadedChartLapPath));
@@ -58,6 +66,7 @@ public class LimProjectManager : MonoBehaviour
             StartCoroutine(LoadCurrentProject());
             return;
         }
+        LimQuitBox.OnQuitBoxConfirmed.AddListener(SaveProject);
     }
     private void Update()
     {
@@ -104,6 +113,7 @@ public class LimProjectManager : MonoBehaviour
         CurrentProject = new LanotaliumProject();
         ProjectWizard.SetActive(true);
         InitializeProjectWizard();
+        LimTutorialManager.ShowTutorial("FirstProject3");
     }
     public void LoadProject()
     {
@@ -210,7 +220,7 @@ public class LimProjectManager : MonoBehaviour
             }
             BGAScroll.sizeDelta = new Vector2(845, 150);
         }
-        ProjectFolderPath.text = Directory.GetParent(CurrentProject.ChartPath).FullName;
+        ProjectFolderPath.text = CurrentProject.ProjectFolder;
     }
 
     //Wizard
@@ -322,7 +332,9 @@ public class LimProjectManager : MonoBehaviour
             ChartPath.text = LimLanguageManager.TextDict["Project_ChartWillGenerate"];
             CurrentProject.ChartPath = Path + "/EmptyChart.txt";
             File.WriteAllText(CurrentProject.ChartPath, "{\"events\":null,\"eos\":0,\"bpm\":null,\"scroll\":null}");
+            Name.text = new DirectoryInfo(Path).Name;
         }
+        LimTutorialManager.ShowTutorial("FirstProject4");
     }
     public void OpenChartDialog()
     {
@@ -337,6 +349,7 @@ public class LimProjectManager : MonoBehaviour
         if (Path == null) return;
         MusicPath.text = Path;
         CurrentProject.MusicPath = Path;
+        LimTutorialManager.ShowTutorial("FirstProject5");
     }
     public void WizardOpenProject()
     {
@@ -362,6 +375,20 @@ public class LimProjectManager : MonoBehaviour
     {
         bool isLoadFinished = false;
         DialogUtils.ProgressBar.ShowProgress(() => { return isLoadFinished; });
+
+        if (Name.text == "")
+        {
+            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_NoName"]);
+            isLoadFinished = true;
+            yield break;
+        }
+
+        if (Designer.text == "")
+        {
+            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_NoDesigner"]);
+            isLoadFinished = true;
+            yield break;
+        }
 
         LimSystem.ChartContainer = new Lanotalium.ChartContainer
         {

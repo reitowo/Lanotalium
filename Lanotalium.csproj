@@ -394,12 +394,15 @@
     <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimScrollManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimTapNoteManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimTuner\UI\LimTunerHeadManager.cs" />
+    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialAsset.cs" />
+    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialComponent.cs" />
+    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialManager.cs" />
     <Compile Include="Assets\Scripts\Other\MessageBox\MessageBoxManager.cs" />
     <Compile Include="Assets\Scripts\Other\ProgressBar\ProgressBarManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\IOS\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
-    <None Include="Assets\IOS\JsonDotNet\link.xml" />
+    <None Include="Assets\Extras\IOS\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
+    <None Include="Assets\Extras\IOS\JsonDotNet\link.xml" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_En.txt" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_ZhCn.txt" />
   </ItemGroup>

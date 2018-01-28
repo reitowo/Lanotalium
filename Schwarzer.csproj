@@ -327,8 +327,8 @@
     <Compile Include="Assets\Scripts\Other\Schwarzer\SchLanotalium.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\IOS\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
-    <None Include="Assets\IOS\JsonDotNet\link.xml" />
+    <None Include="Assets\Extras\IOS\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
+    <None Include="Assets\Extras\IOS\JsonDotNet\link.xml" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_En.txt" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_ZhCn.txt" />
   </ItemGroup>

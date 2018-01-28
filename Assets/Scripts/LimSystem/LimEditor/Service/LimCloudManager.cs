@@ -35,7 +35,7 @@ public class LimCloudManager : MonoBehaviour
         }
     }
     private bool isUploading;
-    private Coroutine CloudAutosaveCoroutineRef, BackupLoopCr;
+    private Coroutine BackupLoopCr;
 
     private void Start()
     {
@@ -70,15 +70,15 @@ public class LimCloudManager : MonoBehaviour
     public void OnCloudAutosaveToggleChange()
     {
         LimSystem.Preferences.CloudAutosave = CloudAutosaveToggle.isOn;
-        if (LimSystem.Preferences.CloudAutosave)
+        /*if (LimSystem.Preferences.CloudAutosave)
         {
-           /* if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
-            CloudAutosaveCoroutineRef = StartCoroutine(CloudAutosaveCoroutine());*/
+           if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
+            CloudAutosaveCoroutineRef = StartCoroutine(CloudAutosaveCoroutine());
         }
         else
         {
             if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
-        }
+        }*/
     }
 
     private bool CheckStatusError()

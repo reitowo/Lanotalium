@@ -61,18 +61,25 @@ public class LimExceptionManager : MonoBehaviour
     }
     private void Update()
     {
-        if (IsOpened)
+        try
         {
-            if (QueuedException.Count == 0)
+            if (IsOpened)
             {
-                QueuedExceptionCountText.text = "";
-                if (ShowNextExceptionBtn.interactable) ShowNextExceptionBtn.interactable = false;
+                if (QueuedException.Count == 0)
+                {
+                    QueuedExceptionCountText.text = "";
+                    if (ShowNextExceptionBtn.interactable) ShowNextExceptionBtn.interactable = false;
+                }
+                else
+                {
+                    QueuedExceptionCountText.text = string.Format(LimLanguageManager.TextDict["Exception_QueuedCount"], QueuedException.Count);
+                    if (!ShowNextExceptionBtn.interactable) ShowNextExceptionBtn.interactable = true;
+                }
             }
-            else
-            {
-                QueuedExceptionCountText.text = string.Format(LimLanguageManager.TextDict["Exception_QueuedCount"], QueuedException.Count);
-                if (!ShowNextExceptionBtn.interactable) ShowNextExceptionBtn.interactable = true;
-            }
+        }
+        catch (Exception)
+        {
+
         }
     }
     public void SetTexts()
@@ -84,59 +91,101 @@ public class LimExceptionManager : MonoBehaviour
     }
     private void OnLogMessageReceived(string condition, string stackTrace, LogType type)
     {
-        if (type != LogType.Exception) return;
-        DummyException Ex = new DummyException(condition, stackTrace);
-        if (IsOpened)
+        try
         {
-            QueuedException.Add(Ex);
-            return;
+            if (type != LogType.Exception) return;
+            DummyException Ex = new DummyException(condition, stackTrace);
+            if (IsOpened)
+            {
+                QueuedException.Add(Ex);
+                return;
+            }
+            ExceptionMessage = Ex.Message;
+            ExceptionStackTrace = Ex.StackTrace;
+            StartBannerAnimation(true);
         }
-        ExceptionMessage = Ex.Message;
-        ExceptionStackTrace = Ex.StackTrace;
-        StartBannerAnimation(true);
+        catch (Exception)
+        {
+
+        }
     }
     private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
-        Exception Ex = e.ExceptionObject as Exception;
-        if (IsOpened)
+        try
         {
-            QueuedException.Add(new DummyException(Ex));
-            return;
+            Exception Ex = e.ExceptionObject as Exception;
+            if (IsOpened)
+            {
+                QueuedException.Add(new DummyException(Ex));
+                return;
+            }
+            ExceptionMessage = Ex.Message;
+            ExceptionStackTrace = Ex.StackTrace;
+            StartBannerAnimation(true);
         }
-        ExceptionMessage = Ex.Message;
-        ExceptionStackTrace = Ex.StackTrace;
-        StartBannerAnimation(true);
+        catch (Exception)
+        {
+
+        }
     }
     public void ShowNextException()
     {
-        if (QueuedException.Count != 0)
+        try
         {
-            ExceptionMessage = QueuedException[0].Message;
-            ExceptionStackTrace = QueuedException[0].StackTrace;
-            QueuedException.RemoveAt(0);
+            if (QueuedException.Count != 0)
+            {
+                ExceptionMessage = QueuedException[0].Message;
+                ExceptionStackTrace = QueuedException[0].StackTrace;
+                QueuedException.RemoveAt(0);
+            }
+        }
+        catch (Exception)
+        {
+
         }
     }
     public void CloseExceptionBanner()
     {
-        QueuedException.Clear();
-        StartBannerAnimation(false);
+        try
+        {
+            QueuedException.Clear();
+            StartBannerAnimation(false);
+        }
+        catch (Exception)
+        {
+
+        }
     }
     public void SaveAndRestartLanotalium()
     {
-        ProjectManager.SaveProject();
-        if (Application.platform == RuntimePlatform.WindowsEditor) return;
-        ProcessStartInfo processStartInfo = new ProcessStartInfo
+        try
         {
-            FileName = Environment.GetCommandLineArgs()[0],
-            Arguments = LimProjectManager.LapPath
-        };
-        Process.Start(processStartInfo);
+            ProjectManager.SaveProject();
+            if (Application.platform == RuntimePlatform.WindowsEditor) return;
+            ProcessStartInfo processStartInfo = new ProcessStartInfo
+            {
+                FileName = Environment.GetCommandLineArgs()[0],
+                Arguments = LimProjectManager.LapPath
+            };
+            Process.Start(processStartInfo);
+        }
+        catch (Exception)
+        {
+
+        }
     }
     public void StartBannerAnimation(bool Show)
     {
-        if (BannerAnimationCoroutine != null) StopCoroutine(BannerAnimationCoroutine);
-        if (Show) BannerAnimationCoroutine = StartCoroutine(ShowBannerCoroutine());
-        else BannerAnimationCoroutine = StartCoroutine(HideBannerCoroutine());
+        try
+        {
+            if (BannerAnimationCoroutine != null) StopCoroutine(BannerAnimationCoroutine);
+            if (Show) BannerAnimationCoroutine = StartCoroutine(ShowBannerCoroutine());
+            else BannerAnimationCoroutine = StartCoroutine(HideBannerCoroutine());
+        }
+        catch (Exception)
+        {
+
+        }
     }
     IEnumerator ShowBannerCoroutine()
     {

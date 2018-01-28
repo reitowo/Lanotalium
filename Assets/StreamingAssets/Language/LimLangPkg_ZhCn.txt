@@ -186,6 +186,8 @@ Project_LoadFilter$Lanotalium 工程文件(*.lap)|*.lap
 Project_Saved$保存成功
 Project_InvalidProject$无法创建：工程不合法
 Project_InvalidProjectFile$无法打开：工程文件不合法
+Project_NoName$必须输入名称
+Project_NoDesigner$必须输入设计者
 Project_ReadChartFailed$无法读取谱面，请确认它是有效的
 Project_ReadImageFailed$无法读取图片，请确认它（们）是有效的
 Project_ReadMusicFailed$无法读取音乐，请确认它是有效的
@@ -253,3 +255,11 @@ Create_Catch$在选中的两Note间创建等分的蓝键条
 Create_ConvertSelectedToHoldNote$将选中的普通Note转为长条，时间最先的作为长条头部，其余依次作为节点
 TxtToLap$要打开.txt，请创建一个新工程，在谱面路径选择您的.txt
 MusicFormat$目前仅支持wav与ogg格式
+#TutorialDict
+FirstProject1$欢迎使用Lanotalium!<br>点击“文件”创建您的第一个工程
+FirstProject2$点击“新建工程”创建您的第一个工程
+FirstProject3$选择一个文件夹保存您的工程文件
+FirstProject4$选择音乐时需要注意<br>目前只支持ogg或wav格式的音频
+FirstProject5$您正在创建工程，谱面路径留空即可<br>若您有现成谱面，也可选择一个打开
+FirstProject6$点击此处添加背景，最多3张
+FirstProject7$点击此处创建！
