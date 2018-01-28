@@ -145,7 +145,7 @@ public class LimUpdateDetector : MonoBehaviour
                 #region Get Filesize
                 ValueRef<long> Filesize = new ValueRef<long>();
                 yield return GetWebFileLength(Filesize, LimSystem.LanotaliumServer + "/lanotalium/updator/patch/" + LimSystem.Version + ".lapatch");
-                if (Filesize.Value == -1)
+                if (Filesize.Value == -1 || !Environment.Is64BitProcess)
                 {
                     ValueRef<long> FullFilesize = new ValueRef<long>();
                     yield return GetWebFileLength(FullFilesize, LimSystem.LanotaliumServer + "/lanotalium/full/Lanotalium_Latest.zip");

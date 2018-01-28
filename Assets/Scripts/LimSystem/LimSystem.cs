@@ -1053,7 +1053,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 35;
+        public int Build = 36;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1071,8 +1071,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.8.4";
-    public static int Build = 35;
+    public static string Version = "v1.8.5";
+    public static int Build = 36;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
@@ -1081,12 +1081,27 @@ public class LimSystem : MonoBehaviour
     public LimProjectManager ProjectManager;
 
 #if UNITY_STANDALONE
-    [HideInInspector]
-    public string PreferencesSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Preferences.json";
-    [HideInInspector]
-    public string EditorLayoutSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/EditorLayout.json";
-    [HideInInspector]
-    public string AppDataRoaming = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium";
+    public string PreferencesSavePath
+    {
+        get
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Preferences.json";
+        }
+    }
+    public string EditorLayoutSavePath
+    {
+        get
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/EditorLayout.json";
+        }
+    }
+    public string AppDataRoaming
+    {
+        get
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium";
+        }
+    }
 #endif
 #if UNITY_IOS
      public string PreferencesSavePath;

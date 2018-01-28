@@ -48,27 +48,34 @@ public class LimProjectManager : MonoBehaviour
     private static string ChartSaveLocation = string.Empty;
     private void Start()
     {
-        if (Environment.GetCommandLineArgs().Length == 2 && !LapDirectOpened)
+        try
         {
-            if (!File.Exists(Environment.GetCommandLineArgs()[1])) return;
-            string ProjectFileString = File.ReadAllText(Environment.GetCommandLineArgs()[1]);
-            CurrentProject = JsonConvert.DeserializeObject<LanotaliumProject>(ProjectFileString);
-            if (CurrentProject == null) return;
-            LapPath = Environment.GetCommandLineArgs()[1];
-            StartCoroutine(LoadCurrentProject());
-            LapDirectOpened = true;
-            return;
+            if (Environment.GetCommandLineArgs().Length == 2 && !LapDirectOpened)
+            {
+                if (!File.Exists(Environment.GetCommandLineArgs()[1])) return;
+                string ProjectFileString = File.ReadAllText(Environment.GetCommandLineArgs()[1]);
+                CurrentProject = JsonConvert.DeserializeObject<LanotaliumProject>(ProjectFileString);
+                if (CurrentProject == null) return;
+                LapPath = Environment.GetCommandLineArgs()[1];
+                StartCoroutine(LoadCurrentProject());
+                LapDirectOpened = true;
+                return;
+            }
+            if (LimChartZoneManager.OpenDownloadedChart)
+            {
+                LimChartZoneManager.OpenDownloadedChart = false;
+                CurrentProject = JsonConvert.DeserializeObject<LanotaliumProject>(File.ReadAllText(LimChartZoneManager.DownloadedChartLapPath));
+                if (CurrentProject == null) return;
+                LapPath = LimChartZoneManager.DownloadedChartLapPath;
+                StartCoroutine(LoadCurrentProject());
+                return;
+            }
+            LimQuitBox.OnQuitBoxConfirmed.AddListener(SaveProject);
         }
-        if (LimChartZoneManager.OpenDownloadedChart)
+        catch (Exception)
         {
-            LimChartZoneManager.OpenDownloadedChart = false;
-            CurrentProject = JsonConvert.DeserializeObject<LanotaliumProject>(File.ReadAllText(LimChartZoneManager.DownloadedChartLapPath));
-            if (CurrentProject == null) return;
-            LapPath = LimChartZoneManager.DownloadedChartLapPath;
-            StartCoroutine(LoadCurrentProject());
-            return;
+
         }
-        LimQuitBox.OnQuitBoxConfirmed.AddListener(SaveProject);
     }
     private void Update()
     {
