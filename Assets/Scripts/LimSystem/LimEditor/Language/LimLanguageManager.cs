@@ -104,7 +104,7 @@ public class LimLanguageManager : MonoBehaviour
     {
         if (!LanguagePackages.ContainsKey(LanguageName))
         {
-            LimNotifyIcon.ShowMessage("Language Not Found !", System.Windows.Forms.ToolTipIcon.Error, "Lanotalium", "The language you select can't be loaded.");
+            LimNotifyIcon.ShowMessage("Language Not Found !");
             return;
         }
         TextDict = LanguagePackages[LanguageName].TextDict;

@@ -109,7 +109,7 @@ public class LimCopierManager : MonoBehaviour
             }
         }
         OperationManager.SelectNothing();
-        LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Copier_Msg_Success"], System.Windows.Forms.ToolTipIcon.Info);
+        LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Copier_Msg_Success"]);
     }
     public void CopySelectedMotion()
     {
@@ -140,7 +140,7 @@ public class LimCopierManager : MonoBehaviour
                 }
             }
         }
-        LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Copier_Msg_Success"], System.Windows.Forms.ToolTipIcon.Info);
+        LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Copier_Msg_Success"]);
     }
     public void OnCopyInstructionChange()
     {

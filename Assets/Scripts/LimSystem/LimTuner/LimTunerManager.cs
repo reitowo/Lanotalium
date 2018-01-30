@@ -46,6 +46,7 @@ public class LimTunerManager : MonoBehaviour
     }
     void Update()
     {
+        if (LimSystem.ChartContainer == null) return;
         UpdateChartTime();
     }
 }

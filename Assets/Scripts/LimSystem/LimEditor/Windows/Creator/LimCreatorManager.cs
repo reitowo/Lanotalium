@@ -155,9 +155,9 @@ public class LimCreatorManager : MonoBehaviour
     {
         if (LimSystem.ChartContainer == null) return;
         int Quantity;
-        if (OperationManager.SelectedTapNote.Count != 2) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrSelection"], System.Windows.Forms.ToolTipIcon.Warning); return; }
-        if (!int.TryParse(CreateCatchRailQuantityInputField.text, out Quantity)) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrQuantity"], System.Windows.Forms.ToolTipIcon.Warning); return; }
-        if (Quantity > 40 || Quantity <= 0) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrRange"], System.Windows.Forms.ToolTipIcon.Warning); return; }
+        if (OperationManager.SelectedTapNote.Count != 2) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrSelection"]); return; }
+        if (!int.TryParse(CreateCatchRailQuantityInputField.text, out Quantity)) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrQuantity"]); return; }
+        if (Quantity > 40 || Quantity <= 0) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrRange"]); return; }
         OperationManager.SelectedTapNote.Sort((Lanotalium.Chart.LanotaTapNote a, Lanotalium.Chart.LanotaTapNote b) => { return a.Time.CompareTo(b.Time); });
         float DeltaTime = (OperationManager.SelectedTapNote[1].Time - OperationManager.SelectedTapNote[0].Time) / (Quantity + 1);
         float DeltaDegree = (OperationManager.SelectedTapNote[1].Degree - OperationManager.SelectedTapNote[0].Degree) / (Quantity + 1);
@@ -169,7 +169,7 @@ public class LimCreatorManager : MonoBehaviour
             New.Degree += i * DeltaDegree;
             OperationManager.AddTapNote(New, true, false, false);
         }
-        LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_Success"], System.Windows.Forms.ToolTipIcon.Info);
+        LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_Success"]);
     }
     public void ConvertSelectedToHoldNote()
     {

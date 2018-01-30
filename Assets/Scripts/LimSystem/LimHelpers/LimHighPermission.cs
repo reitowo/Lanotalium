@@ -64,7 +64,7 @@ public class LimHighPermission : MonoBehaviour
         if (Application.platform == RuntimePlatform.WindowsEditor) return;
         Application.Quit();
         ProcessStartInfo startInfo = new ProcessStartInfo();
-        startInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
+        startInfo.FileName = Environment.GetCommandLineArgs()[0];
         Process.Start(startInfo);
         Process.GetCurrentProcess().Kill();
     }
@@ -72,7 +72,7 @@ public class LimHighPermission : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.WindowsEditor) return;
         ProcessStartInfo startInfo = new ProcessStartInfo();
-        startInfo.FileName = System.Windows.Forms.Application.ExecutablePath;
+        startInfo.FileName = Environment.GetCommandLineArgs()[0];
         startInfo.Arguments = string.Join(" ", Environment.GetCommandLineArgs());
         startInfo.Verb = "runas";
         Process.Start(startInfo);

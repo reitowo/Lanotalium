@@ -1045,6 +1045,13 @@ namespace Lanotalium
         public Chart.ChartLoadResult ChartLoadResult;
         public Chart.ChartProperty ChartProperty;
         public Chart.ChartMusic ChartMusic;
+        public void CleanUp()
+        {
+            UnityEngine.Object.DestroyImmediate(ChartBackground.Color);
+            UnityEngine.Object.DestroyImmediate(ChartBackground.Gray);
+            UnityEngine.Object.DestroyImmediate(ChartBackground.Linear);
+            UnityEngine.Object.DestroyImmediate(ChartMusic.Music);
+        }
     }
     public class PreferencesContainer
     {
@@ -1053,7 +1060,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 36;
+        public int Build = 37;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1063,7 +1070,7 @@ namespace Lanotalium
         public bool HideWhatsNew = false;
         public bool DoNotRunAsAdmin = false;
         public bool LapInjected = false;
-        public bool PlayWorkingBGM = true;
+        public bool PlayWorkingBGM = false;
         public Editor.TunerSkin TunerSkin;
         public Tuner.AudioEffectTheme AudioEffectTheme = Tuner.AudioEffectTheme.Lanota;
     }
@@ -1071,8 +1078,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.8.5";
-    public static int Build = 36;
+    public static string Version = "v1.8.6";
+    public static int Build = 37;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
@@ -1164,7 +1171,7 @@ public class LimSystem : MonoBehaviour
     private void ReceiveUnityLog(string condition, string stackTrace, LogType type)
     {
         if (condition == LastLog) return;
-        LimNotifyIcon.ShowMessage(condition, System.Windows.Forms.ToolTipIcon.Error, type.ToString(), stackTrace);
+        LimNotifyIcon.ShowMessage(condition);
         LastLog = condition;
     }
 

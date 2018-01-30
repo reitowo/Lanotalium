@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using Lanotalium.Service.Cloud;
 using System.IO;
 using System;
-using System.Windows.Forms;
 using System.Diagnostics;
 
 public class LimCloudManager : MonoBehaviour

@@ -9,11 +9,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using Lanotalium.Project;
 using Newtonsoft.Json;
-using System.Windows.Forms;
 using System.Text;
 using System.Diagnostics;
 using System.Security.Permissions;
 using System.Security;
+using UnityEngine.Events;
 
 public class LimProjectManager : MonoBehaviour
 {
@@ -44,12 +44,15 @@ public class LimProjectManager : MonoBehaviour
 
     private static bool HasNewDroppedLapFile = false;
     private static List<string> DroppedLapPaths;
-
     private static string ChartSaveLocation = string.Empty;
+    private static UnityEvent CleanUpEvent = new UnityEvent();
+
     private void Start()
     {
         try
         {
+            CleanUpEvent.Invoke();
+            CleanUpEvent.RemoveAllListeners();
             if (Environment.GetCommandLineArgs().Length == 2 && !LapDirectOpened)
             {
                 if (!File.Exists(Environment.GetCommandLineArgs()[1])) return;
@@ -138,7 +141,7 @@ public class LimProjectManager : MonoBehaviour
         string ChartPath = ChartSaveLocation;
         File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
         CloudManager.UploadChart();
-        LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Project_Saved"], ToolTipIcon.Info, "Lanotalium", ChartPath);
+        LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Project_Saved"]);
         SaveProjectFile();
     }
     public void SaveAsProject()
@@ -147,7 +150,7 @@ public class LimProjectManager : MonoBehaviour
         string ChartPath = LimDialogUtils.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
         if (ChartPath == null) return;
         File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
-        LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Project_Saved"], ToolTipIcon.Info, "Lanotalium", ChartPath);
+        LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Project_Saved"]);
         if (LimSystem.Preferences.CloudAutosave) CloudManager.UploadChart();
         ChartSaveLocation = ChartPath;
         CurrentProject.ChartPath = ChartPath;
@@ -340,6 +343,8 @@ public class LimProjectManager : MonoBehaviour
         if (isCreateProject)
         {
             ChartPath.text = LimLanguageManager.TextDict["Project_ChartWillGenerate"];
+            string EmptyChartPath = Path + "/EmptyChart.txt";
+            if (File.Exists(EmptyChartPath)) EmptyChartPath = Path + "/EmptyChart_" + (new System.Random().Next(1000, 9999)).ToString() + ".txt";
             File.WriteAllText(Path + "/EmptyChart.txt", "{\"events\":null,\"eos\":0,\"bpm\":null,\"scroll\":null}");
             CurrentProject.ChartPath = Path + "/EmptyChart.txt";
             Name.text = new DirectoryInfo(Path).Name;
@@ -399,6 +404,8 @@ public class LimProjectManager : MonoBehaviour
             isLoadFinished = true;
             yield break;
         }
+
+        Lanotalium.ChartContainer LastChartContainer = LimSystem.ChartContainer;
 
         LimSystem.ChartContainer = new Lanotalium.ChartContainer
         {
@@ -577,6 +584,19 @@ public class LimProjectManager : MonoBehaviour
         SaveProjectFile();
         LimSystem.Preferences.LastOpenedChartFolder = LimSystem.ChartContainer.ChartProperty.ChartFolder;
         LimSystem.Preferences.Designer = CurrentProject.Designer;
+
+        CleanUpEvent.AddListener(() =>
+        {
+            if (LastChartContainer != null)
+            {
+                LastChartContainer.CleanUp();
+                LastChartContainer = null;
+                DestroyImmediate(BGA0.sprite);
+                DestroyImmediate(BGA1.sprite);
+                DestroyImmediate(BGA2.sprite);
+                GC.Collect();
+            }
+        });
 
         AsyncOperation LoadAsync = SceneManager.LoadSceneAsync("LimTuner");
         while (!LoadAsync.isDone)

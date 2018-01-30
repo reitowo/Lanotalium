@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Windows.Forms;
 using System.IO;
 using System;
 using System.Reflection;
@@ -37,7 +36,7 @@ public class LimNotifyIcon : MonoBehaviour
             
         }*/
     }
-    public static void ShowMessage(string Message, ToolTipIcon Mode, string Title = "Lanotalium", string MessageBoxOnlyText = "")
+    public static void ShowMessage(string Message)
     {
         /*if (UnityEngine.Application.isEditor) return;
         if (UnityEngine.Application.platform != RuntimePlatform.WindowsPlayer) return;

@@ -83,6 +83,7 @@ public class LimMediaPlayerManager : MonoBehaviour
     {
         get
         {
+            if (MusicPlayer.clip == null) return 0;
             if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return BackgroundManager.VideoLength;
             else return MusicPlayer.clip.length;
         }

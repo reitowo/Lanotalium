@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
 using UnityEngine;
 
 public class LimAutosaver : MonoBehaviour
@@ -54,7 +53,7 @@ public class LimAutosaver : MonoBehaviour
         if (!LimSystem.Preferences.Autosave) return;
         if (LimSystem.ChartContainer.ChartData == null) return;
         string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave {0}.txt", CurrentTimeString());
-        if (LastAutosave != "") File.Delete(LastAutosave);
+        if (!string.IsNullOrEmpty(LastAutosave)) if (File.Exists(LastAutosave)) File.Delete(LastAutosave);
         LastAutosave = ChartPath;
         File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
     }

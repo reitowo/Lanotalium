@@ -42,6 +42,7 @@ public class LimBackgroundManager : MonoBehaviour
 
     private void Update()
     {
+        if (LimSystem.ChartContainer == null) return;
         if (!isInitialized) return;
         SyncRenderTextureWithWindowSize();
         BackgroundImageSizeUpdator();
@@ -73,7 +74,7 @@ public class LimBackgroundManager : MonoBehaviour
         ColorImg.color = new Color(1, 1, 1, 1);
         GrayImg.color = new Color(1, 1, 1, 0);
         LinearImg.color = new Color(1, 1, 1, 0);
-        LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Background_VideoWarning"], System.Windows.Forms.ToolTipIcon.Warning);
+        LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Background_VideoWarning"]);
     }
 
     private void ImageBackgroundInitialize()

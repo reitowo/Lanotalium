@@ -11,6 +11,7 @@ public class LimNoteCounter : MonoBehaviour
     public float ApproximatelyThreshold = 0.0003f;
     private void Update()
     {
+        if (LimSystem.ChartContainer == null) return;
         if (TunerManager.isInitialized == false) return;
         NoteCountText.text = string.Format("{0}/{1}", CalculateNoteCount(TunerManager.ChartTime), CalculateNoteCount(TunerManager.MediaPlayerManager.Length));
     }

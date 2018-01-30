@@ -31,6 +31,7 @@ Window_TimeLine_Rot_Label$调律器动作（旋转）
 Window_TimeLine_WaveformL$波形 左声道
 Window_TimeLine_WaveformR$波形 右声道
 Window_TimeLine_Waveform$波形
+Window_TimeLine_Waveform_LowMemory$因达到32位应用内存限制，波形图停用
 Window_Creator_Label$创造
 Window_Creator_CreateTap$新建普通键
 Window_Creator_CreateHold$新建长条

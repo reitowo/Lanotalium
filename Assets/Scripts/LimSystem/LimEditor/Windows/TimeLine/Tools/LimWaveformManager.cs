@@ -1,41 +1,45 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LimWaveformManager : MonoBehaviour
 {
+    public LimDialogUtils DialogUtils;
     public LimTimeLineManager TimeLineManager;
     public LimTunerManager TunerManager;
     public LineRenderer LineL, LineR;
     public RectTransform Blocker;
-    public List<float> FormL, FormR;
+    private static List<float> FormL = new List<float>(), FormR = new List<float>();
     public int SamplesToRead = 10000;
     public int WaveScale = 25;
 
-    private AudioClip Music;
     private bool isDataLoaded = false;
 
     public void OnMusicLoaded()
     {
         try
         {
-            Music = LimSystem.ChartContainer.ChartMusic.Music;
-            float[] Data = new float[Music.samples * Music.channels];
-            Music.GetData(Data, 0);
+            float[] Data = new float[LimSystem.ChartContainer.ChartMusic.Music.samples * LimSystem.ChartContainer.ChartMusic.Music.channels];
+            LimSystem.ChartContainer.ChartMusic.Music.GetData(Data, 0);
             FormL.Clear();
             FormR.Clear();
-            for (int i = 0; i < Music.samples * Music.channels; i += 2)
+            FormL.Capacity = LimSystem.ChartContainer.ChartMusic.Music.samples;
+            FormR.Capacity = LimSystem.ChartContainer.ChartMusic.Music.samples;
+            for (int i = 0; i < LimSystem.ChartContainer.ChartMusic.Music.samples * LimSystem.ChartContainer.ChartMusic.Music.channels; i += 2)
             {
                 FormL.Add(Data[i]);
                 FormR.Add(Data[i + 1]);
             }
             isDataLoaded = true;
+            Data = null;
+            GC.Collect();
         }
-        catch(OutOfMemoryException)
+        catch (Exception)
         {
-
+            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Window_TimeLine_Waveform_LowMemory"]);
         }
     }
     private void Start()
@@ -44,9 +48,17 @@ public class LimWaveformManager : MonoBehaviour
     }
     public void Update()
     {
-        MoveBlocker();
-        if (!isDataLoaded || !TunerManager.isInitialized) return;
-        UpdateWaveform();
+        try
+        {
+            if (LimSystem.ChartContainer == null) return;
+            MoveBlocker();
+            if (!isDataLoaded || !TunerManager.isInitialized) return;
+            UpdateWaveform();
+        }
+        catch (Exception)
+        {
+            isDataLoaded = false;
+        }
     }
     public int FindNearestSampleInt(int Current, int SampleDelta)
     {
@@ -64,9 +76,9 @@ public class LimWaveformManager : MonoBehaviour
         }
         int StartSample = TunerManager.MediaPlayerManager.MusicPlayer.timeSamples;
         int CurrentSample = StartSample;
-        int EndSample = (int)((Blocker.anchoredPosition.x - 200f) / TimeLineManager.Scale * Music.frequency) + StartSample;
+        int EndSample = (int)((Blocker.anchoredPosition.x - 200f) / TimeLineManager.Scale * LimSystem.ChartContainer.ChartMusic.Music.frequency) + StartSample;
         int SampleDelta = Mathf.CeilToInt((EndSample - CurrentSample) * 1f / ScaledSamplesToRead);
-        int PositionCount = (int)(ScaledSamplesToRead * (EndSample > Music.samples ? (Music.samples - CurrentSample) * 1f / (EndSample - CurrentSample) : 1));
+        int PositionCount = (int)(ScaledSamplesToRead * (EndSample > LimSystem.ChartContainer.ChartMusic.Music.samples ? (LimSystem.ChartContainer.ChartMusic.Music.samples - CurrentSample) * 1f / (EndSample - CurrentSample) : 1));
         if (PositionCount <= 0) return;
         LineL.positionCount = PositionCount;
         LineR.positionCount = PositionCount;
@@ -80,14 +92,14 @@ public class LimWaveformManager : MonoBehaviour
         }
         for (int i = PositionIndex; i < PositionCount; ++i)
         {
-            float x = 1f * (CurrentSample - StartSample) / Music.frequency * TimeLineManager.Scale;
+            float x = 1f * (CurrentSample - StartSample) / LimSystem.ChartContainer.ChartMusic.Music.frequency * TimeLineManager.Scale;
             if (x > Blocker.anchoredPosition.x - 200f)
             {
                 LineL.positionCount = i;
                 LineR.positionCount = i;
                 break;
             }
-            if (i >= PositionCount || CurrentSample > Music.samples) break;
+            if (i >= PositionCount || CurrentSample > LimSystem.ChartContainer.ChartMusic.Music.samples) break;
             LineL.SetPosition(i, new Vector3(x, WaveScale * FormL[CurrentSample]));
             LineR.SetPosition(i, new Vector3(x, WaveScale * FormR[CurrentSample]));
             CurrentSample += SampleDelta;

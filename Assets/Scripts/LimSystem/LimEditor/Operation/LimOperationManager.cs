@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using System.Windows.Forms;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
 
@@ -816,7 +815,7 @@ public class LimOperationManager : MonoBehaviour
     {
         if (CheckNewHorizontalTimeExisted(Hor))
         {
-            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"], ToolTipIcon.Warning);
+            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"]);
             return false;
         }
         TunerManager.CameraManager.Horizontal.Add(Hor);
@@ -824,7 +823,7 @@ public class LimOperationManager : MonoBehaviour
         TimeLineManager.InstantiateSingleHorizontal(Hor);
         if (CheckHorizontalInPreviousDuration(Hor))
         {
-            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_InPrevious"], ToolTipIcon.Warning);
+            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_InPrevious"]);
             DeleteHorizontal(Hor);
             return false;
         }
@@ -833,7 +832,7 @@ public class LimOperationManager : MonoBehaviour
         {
             if (!CheckHorizontalDurationValid(Hor, Hor.Duration))
             {
-                LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_DurationOverflow"], ToolTipIcon.Warning);
+                LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_DurationOverflow"]);
                 DeleteHorizontal(Hor);
                 return false;
             }
@@ -847,7 +846,7 @@ public class LimOperationManager : MonoBehaviour
     {
         if (CheckNewVerticalTimeExisted(Ver))
         {
-            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"], ToolTipIcon.Warning);
+            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"]);
             return false;
         }
         TunerManager.CameraManager.Vertical.Add(Ver);
@@ -855,7 +854,7 @@ public class LimOperationManager : MonoBehaviour
         TimeLineManager.InstantiateSingleVertical(Ver);
         if (CheckVerticalInPreviousDuration(Ver))
         {
-            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_InPrevious"], ToolTipIcon.Warning);
+            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_InPrevious"]);
             DeleteVertical(Ver);
             return false;
         }
@@ -864,7 +863,7 @@ public class LimOperationManager : MonoBehaviour
         {
             if (!CheckVerticalDurationValid(Ver, Ver.Duration))
             {
-                LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_DurationOverflow"], ToolTipIcon.Warning);
+                LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_DurationOverflow"]);
                 DeleteVertical(Ver);
                 return false;
             }
@@ -878,7 +877,7 @@ public class LimOperationManager : MonoBehaviour
     {
         if (CheckNewRotationTimeExisted(Rot))
         {
-            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"], ToolTipIcon.Warning);
+            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"]);
             return false;
         }
         TunerManager.CameraManager.Rotation.Add(Rot);
@@ -886,7 +885,7 @@ public class LimOperationManager : MonoBehaviour
         TimeLineManager.InstantiateSingleRotation(Rot);
         if (CheckRotationInPreviousDuration(Rot))
         {
-            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_InPrevious"], ToolTipIcon.Warning);
+            LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_InPrevious"]);
             DeleteRotation(Rot);
             return false;
         }
@@ -895,7 +894,7 @@ public class LimOperationManager : MonoBehaviour
         {
             if (!CheckRotationDurationValid(Rot, Rot.Duration))
             {
-                LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_DurationOverflow"], ToolTipIcon.Warning);
+                LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_DurationOverflow"]);
                 DeleteRotation(Rot);
                 return false;
             }

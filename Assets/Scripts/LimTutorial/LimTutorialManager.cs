@@ -23,6 +23,7 @@ public class LimTutorialManager : MonoBehaviour
     private static string ShownTutorialSavePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/Lanotalium/Tutorial.json";
     private static float ShownTime = 0;
     private static LimTutorialAsset ShowingTutorial;
+
     private void Start()
     {
         ContentTextStatic = ContentText;
@@ -63,8 +64,15 @@ public class LimTutorialManager : MonoBehaviour
     }
     public static void ShowTutorial(string TutorialId)
     {
-        if (ShownTutorial.Contains(TutorialId)) return;
-        ShowTutorial(FindTutorialById(TutorialId).RectTransformId.ToArray(), TutorialId);
+        try
+        {
+            if (ShownTutorial.Contains(TutorialId)) return;
+            ShowTutorial(FindTutorialById(TutorialId).RectTransformId.ToArray(), TutorialId);
+        }
+        catch (Exception)
+        {
+
+        }
     }
     public static void ShowTutorial(string UIRectTransformId, string TutorialId)
     {
@@ -147,6 +155,6 @@ public class LimTutorialManager : MonoBehaviour
         FullScreenMaskStatic.SetActive(false);
         IsShowing = false;
         File.WriteAllText(ShownTutorialSavePath, JsonConvert.SerializeObject(ShownTutorial));
-        if (ShowingTutorial.NextId != "") ShowTutorial(ShowingTutorial.NextId);
+        if (!string.IsNullOrEmpty(ShowingTutorial.NextId)) ShowTutorial(ShowingTutorial.NextId);
     }
 }
