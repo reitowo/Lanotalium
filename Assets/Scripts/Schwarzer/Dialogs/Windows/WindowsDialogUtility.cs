@@ -9,7 +9,7 @@ using System.IO;
 using System.Text;
 using System.Runtime.CompilerServices;
 
-public class LimDialogUtils : MonoBehaviour
+public class WindowsDialogUtility : MonoBehaviour
 {
     public MessageBoxManager MessageBox;
     public ProgressBarManager ProgressBar;
@@ -29,6 +29,7 @@ public class LimDialogUtils : MonoBehaviour
         public int maxFile = 0;
         public String fileTitle = null;
         public int maxFileTitle = 0;
+        [MarshalAs(UnmanagedType.LPTStr)]
         public String initialDir = null;
         public String title = null;
         public int flags = 0;
@@ -61,7 +62,7 @@ public class LimDialogUtils : MonoBehaviour
     [DllImport("Comdlg32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     private static extern bool GetSaveFileName([In, Out] OpenFileName ofn);
     [DllImport("shell32.dll")]
-    static extern IntPtr SHBrowseForFolder([In, Out] BrowserInfo bi);
+    private static extern IntPtr SHBrowseForFolder([In, Out] BrowserInfo bi);
     [DllImport("user32.dll")]
     private static extern IntPtr GetActiveWindow();
     [DllImport("shell32.dll")]
@@ -76,7 +77,7 @@ public class LimDialogUtils : MonoBehaviour
         ofn.maxFile = ofn.file.Length;
         ofn.fileTitle = new String(new char[256]);
         ofn.maxFileTitle = ofn.fileTitle.Length;
-        ofn.initialDir = InitPath;
+        ofn.initialDir = InitPath.Replace("/", "\\");
         ofn.title = Title;
         ofn.flags = 0x00000008;
         bool Result = GetOpenFileName(ofn);
@@ -107,9 +108,10 @@ public class LimDialogUtils : MonoBehaviour
         ofn.maxFile = ofn.file.Length;
         ofn.fileTitle = new String(new char[256]);
         ofn.maxFileTitle = ofn.fileTitle.Length;
-        ofn.initialDir = InitPath;
+        ofn.initialDir = InitPath.Replace("/", "\\");
         ofn.title = Title;
         ofn.flags = 0x00000008;
+        ofn.defExt = ".txt";
         bool Result = GetSaveFileName(ofn);
         if (Result) return ofn.file;
         else return null;

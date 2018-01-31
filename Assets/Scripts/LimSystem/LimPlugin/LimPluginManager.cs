@@ -12,7 +12,7 @@ public class LimPluginManager : MonoBehaviour
 {
     [HideInInspector]
     public bool isPluginLoadFinished = false;
-    public LimDialogUtils DialogUtils;
+    public WindowsDialogUtility DialogUtils;
     public Transform PluginListTransform;
     public RectTransform PluginListContent;
     public GameObject PluginPrefab;

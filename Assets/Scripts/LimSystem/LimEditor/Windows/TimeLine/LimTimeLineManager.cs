@@ -4,6 +4,7 @@ using Lanotalium.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 using Lanotalium.Chart;
+using System.Linq;
 
 public class LimTimeLineManager : MonoBehaviour
 {
@@ -22,7 +23,10 @@ public class LimTimeLineManager : MonoBehaviour
     public LimWaveformManager WaveformManager;
     public RectTransform TimePointer;
     public LimBoxSelectionManager BoxSelectionManager;
-
+    public LimEditorManager EditorManager;
+    public GameObject TimeLineBeatLinePrefab;
+    private List<LineRenderer> TimeLineBeatLines = new List<LineRenderer>();
+    private int CurrentOrder = 0;
     public float Scale;
 
     private void Start()
@@ -55,6 +59,7 @@ public class LimTimeLineManager : MonoBehaviour
         UpdateTimePointer();
         UpdateTimelineTimes();
         UpdateTimeLinePosition();
+        UpdateTimeLineBeatLine();
         DetectScaleChange();
         SelectMotionsInBoxArea();
         TimingText.text = TunerManager.ChartTime.ToString("f4");
@@ -145,7 +150,7 @@ public class LimTimeLineManager : MonoBehaviour
             Rot.InstanceId = Rot.TimeLineGameObject.GetInstanceID();
         }
     }
-    public void InstantiateSingleHorizontal(Lanotalium.Chart.LanotaCameraXZ Hor)
+    public void InstantiateSingleHorizontal(LanotaCameraXZ Hor)
     {
         if (Hor.TimeLineGameObject != null) Destroy(Hor.TimeLineGameObject);
         Hor.TimeLineGameObject = Instantiate(TimeLineObject, HorTransform);
@@ -155,7 +160,7 @@ public class LimTimeLineManager : MonoBehaviour
         Hor.TimeLineGameObject.GetComponent<Button>().onClick.AddListener(OperationManager.OnTimeLineClick);
         Hor.InstanceId = Hor.TimeLineGameObject.GetInstanceID();
     }
-    public void InstantiateSingleVertical(Lanotalium.Chart.LanotaCameraY Ver)
+    public void InstantiateSingleVertical(LanotaCameraY Ver)
     {
         if (Ver.TimeLineGameObject != null) Destroy(Ver.TimeLineGameObject);
         Ver.TimeLineGameObject = Instantiate(TimeLineObject, VerTransform);
@@ -165,7 +170,7 @@ public class LimTimeLineManager : MonoBehaviour
         Ver.TimeLineGameObject.GetComponent<Button>().onClick.AddListener(OperationManager.OnTimeLineClick);
         Ver.InstanceId = Ver.TimeLineGameObject.GetInstanceID();
     }
-    public void InstantiateSingleRotation(Lanotalium.Chart.LanotaCameraRot Rot)
+    public void InstantiateSingleRotation(LanotaCameraRot Rot)
     {
         if (Rot.TimeLineGameObject != null) Destroy(Rot.TimeLineGameObject);
         Rot.TimeLineGameObject = Instantiate(TimeLineObject, RotTransform);
@@ -237,7 +242,7 @@ public class LimTimeLineManager : MonoBehaviour
     }
     public void UpdateMotionBarActive()
     {
-        float Start = TunerManager.ChartTime - 70f / Scale;
+        float Start = TunerManager.ChartTime;
         float End = TunerManager.ChartTime + (ViewRect.sizeDelta.x - 200f) / Scale;
         foreach (Lanotalium.Chart.LanotaCameraXZ Hor in CameraManager.Horizontal)
         {
@@ -276,6 +281,40 @@ public class LimTimeLineManager : MonoBehaviour
             }
         }
     }
+    public void AcquireBeatlineObject(int Quantity)
+    {
+        int Delta = Quantity - TimeLineBeatLines.Count;
+        if (Delta == 0) return;
+        else if (Delta > 0)
+        {
+            for (int i = 0; i < Delta; ++i)
+            {
+                GameObject gameObject = Instantiate(TimeLineBeatLinePrefab, ComponentRect);
+                gameObject.GetComponent<LineRenderer>().sortingOrder = CurrentOrder + 2;
+                TimeLineBeatLines.Add(gameObject.GetComponent<LineRenderer>());
+            }
+        }
+        else if (Delta < 0)
+        {
+            for (int i = 0; i < -Delta; ++i)
+            {
+                if (TimeLineBeatLines.Count == 0) return;
+                Destroy(TimeLineBeatLines[0].gameObject);
+                TimeLineBeatLines.RemoveAt(0);
+            }
+        }
+    }
+    public void UpdateTimeLineBeatLine()
+    {
+        float Start = TunerManager.ChartTime;
+        float End = TunerManager.ChartTime + (ViewRect.sizeDelta.x - 200f) / Scale;
+        List<float> BeatlineTimes = EditorManager.InspectorWindow.ComponentBpm.BeatlineTimes.Where(time => (time >= Start && time <= End)).ToList();
+        AcquireBeatlineObject(BeatlineTimes.Count);
+        for (int i = 0; i < BeatlineTimes.Count; ++i)
+        {
+            TimeLineBeatLines[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(200 + (BeatlineTimes[i] - Start) * Scale, 0);
+        }
+    }
     public void ApplyScale()
     {
         foreach (TimeLineTimeContainer t in TimeLineTimes)
@@ -285,8 +324,10 @@ public class LimTimeLineManager : MonoBehaviour
         TimeLineTimes.Clear();
         for (float t = 0; t < TunerManager.MediaPlayerManager.Length; t += 70f / Scale)
         {
-            TimeLineTimeContainer c = new TimeLineTimeContainer();
-            c.Timing = t;
+            TimeLineTimeContainer c = new TimeLineTimeContainer
+            {
+                Timing = t
+            };
             TimeLineTimes.Add(c);
         }
         InstantiateAllTimeLine();
@@ -360,7 +401,12 @@ public class LimTimeLineManager : MonoBehaviour
     }
     public void OnWindowSorted(int Order)
     {
+        CurrentOrder = Order;
         WaveformManager.LineL.sortingOrder = Order + 1;
         WaveformManager.LineR.sortingOrder = Order + 1;
+        foreach(LineRenderer lineRenderer in TimeLineBeatLines)
+        {
+            lineRenderer.sortingOrder = Order + 2;
+        }
     }
 }

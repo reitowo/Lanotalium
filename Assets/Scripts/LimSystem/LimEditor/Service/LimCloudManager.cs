@@ -205,7 +205,7 @@ public class LimCloudManager : MonoBehaviour
         string Chart = Download.text;
         if (Chart == "F A Q!") yield break;
 
-        string ChartPath = LimDialogUtils.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
+        string ChartPath = WindowsDialogUtility.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
         if (ChartPath != null)
         {
             File.WriteAllText(ChartPath, Chart);

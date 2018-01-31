@@ -17,10 +17,11 @@ using UnityEngine.Events;
 
 public class LimProjectManager : MonoBehaviour
 {
-    public LimDialogUtils DialogUtils;
+    public WindowsDialogUtility DialogUtils;
     public LimSystem SystemManager;
     public LimAutosaver Autosaver;
     public LimCloudManager CloudManager;
+    public LimTunerManager TunerManager;
 
     public GameObject ProjectWizard;
     public RectTransform BGAScroll;
@@ -129,7 +130,7 @@ public class LimProjectManager : MonoBehaviour
     }
     public void LoadProject()
     {
-        string Path = LimDialogUtils.OpenFileDialog("", LimLanguageManager.TextDict["Project_LoadFilter"], LimSystem.Preferences.LastOpenedChartFolder);
+        string Path = WindowsDialogUtility.OpenFileDialog("", LimLanguageManager.TextDict["Project_LoadFilter"], LimSystem.Preferences.LastOpenedChartFolder);
         if (Path == null) return;
         LapPath = Path;
         InitializeProjectWizard(Path);
@@ -147,7 +148,7 @@ public class LimProjectManager : MonoBehaviour
     public void SaveAsProject()
     {
         if (LimSystem.ChartContainer == null) return;
-        string ChartPath = LimDialogUtils.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
+        string ChartPath = WindowsDialogUtility.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
         if (ChartPath == null) return;
         File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
         LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Project_Saved"]);
@@ -240,7 +241,7 @@ public class LimProjectManager : MonoBehaviour
     public void AddBGA()
     {
         if (CurrentProject.BGACount() >= 3) return;
-        string Path = LimDialogUtils.OpenFileDialog("", "", ProjectFolderPath.text);
+        string Path = WindowsDialogUtility.OpenFileDialog("", "", CurrentProject.ProjectFolder);
         StartCoroutine(AddBGACoroutine(Path));
     }
     IEnumerator AddBGACoroutine(string Path)
@@ -337,7 +338,7 @@ public class LimProjectManager : MonoBehaviour
     }
     public void OpenProjectFolderDialog()
     {
-        string Path = LimDialogUtils.OpenFolderDialog("");
+        string Path = WindowsDialogUtility.OpenFolderDialog("");
         if (Path == null) return;
         ProjectFolderPath.text = Path;
         if (isCreateProject)
@@ -348,19 +349,21 @@ public class LimProjectManager : MonoBehaviour
             File.WriteAllText(Path + "/EmptyChart.txt", "{\"events\":null,\"eos\":0,\"bpm\":null,\"scroll\":null}");
             CurrentProject.ChartPath = Path + "/EmptyChart.txt";
             Name.text = new DirectoryInfo(Path).Name;
+            CurrentProject.Name = Name.text;
+            LapPath = Path + "/" + Name.text + ".lap";
         }
         LimTutorialManager.ShowTutorial("FirstProject4");
     }
     public void OpenChartDialog()
     {
-        string Path = LimDialogUtils.OpenFileDialog("", "", ProjectFolderPath.text);
+        string Path = WindowsDialogUtility.OpenFileDialog("", "", CurrentProject.ProjectFolder);
         if (Path == null) return;
         ChartPath.text = Path;
         CurrentProject.ChartPath = Path;
     }
     public void OpenMusicDialog()
     {
-        string Path = LimDialogUtils.OpenFileDialog("", "", ProjectFolderPath.text);
+        string Path = WindowsDialogUtility.OpenFileDialog("", "", CurrentProject.ProjectFolder);
         if (Path == null) return;
         MusicPath.text = Path;
         CurrentProject.MusicPath = Path;
@@ -382,9 +385,17 @@ public class LimProjectManager : MonoBehaviour
     }
     public void SaveProjectFile()
     {
+        if (!TunerManager.isInitialized) return;
         if (!CurrentProject.IsValid()) return;
-        string ProjectFile = JsonConvert.SerializeObject(CurrentProject);
-        File.WriteAllText(isCreateProject ? (ProjectFolderPath.text + "/" + CurrentProject.Name + ".lap") : LapPath, ProjectFile);
+        try
+        {
+            string ProjectFile = JsonConvert.SerializeObject(CurrentProject);
+            File.WriteAllText(isCreateProject ? (CurrentProject.ProjectFolder + "/" + CurrentProject.Name + ".lap") : LapPath, ProjectFile);
+        }
+        catch (Exception)
+        {
+
+        }
     }
     IEnumerator LoadCurrentProject()
     {

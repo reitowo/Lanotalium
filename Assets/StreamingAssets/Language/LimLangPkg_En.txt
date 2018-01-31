@@ -45,7 +45,7 @@ Window_Creator_CreateCatchRail$Create Catch Rail
 Window_Creator_CreateCatchRail_Quantity$Quantity
 Window_Creator_CreateCatchRail_ErrSelection$You need to select two short notes.
 Window_Creator_CreateCatchRail_ErrQuantity$You need to input valid quantity.
-Window_Creator_CreateCatchRail_ErrRange$You need to input a number between 1 and 40.
+Window_Creator_CreateCatchRail_ErrRange$You need to input a number larger than 0.
 Window_Creator_CreateCatchRail_Success$Successfully created.
 Window_Creator_ConvertSelectedToHoldNote$Convert to Hold Note
 Window_Creator_DeleteSelected$Delete Selected
@@ -119,7 +119,7 @@ TopMenu_File$File
 TopMenu_File_NewProject$New Project...
 TopMenu_File_OpenProject$Open Project...
 TopMenu_File_SaveProject$Save Project
-TopMenu_File_SaveAsProject$Save As Project
+TopMenu_File_SaveAsProject$Save As Chart
 TopMenu_File_Release$Make Release
 TopMenu_File_Exit$Exit
 TopMenu_Window$Window

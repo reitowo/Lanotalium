@@ -75,8 +75,9 @@ public class LimMediaPlayerManager : MonoBehaviour
         }
         set
         {
-            MusicPlayer.time = value;
-            CurrentTime = value;
+            MusicPlayer.time = Mathf.Clamp(value, 0, Length);
+            CurrentTime = Mathf.Clamp(value, 0, Length);
+            if (MediaPlayerMode == MediaPlayerMode.MusicPrecise) FixCurrentTime();
         }
     }
     public float Length
@@ -89,13 +90,13 @@ public class LimMediaPlayerManager : MonoBehaviour
         }
     }
 
-    public Lanotalium.MediaPlayer.SyncValuesDelegate SyncValues;
-    public Lanotalium.MediaPlayer.PlayMediaDelegate PlayMedia;
-    public Lanotalium.MediaPlayer.PauseMediaDelegate PauseMedia;
-    public Lanotalium.MediaPlayer.StopMediaDelegate StopMedia;
+    public SyncValuesDelegate SyncValues;
+    public PlayMediaDelegate PlayMedia;
+    public PauseMediaDelegate PauseMedia;
+    public StopMediaDelegate StopMedia;
 
     private RectTransform ViewRect;
-    public Lanotalium.MediaPlayer.MediaPlayerMode MediaPlayerMode = Lanotalium.MediaPlayer.MediaPlayerMode.MusicSync;
+    public MediaPlayerMode MediaPlayerMode = Lanotalium.MediaPlayer.MediaPlayerMode.MusicSync;
     private float UiWidth;
     private bool ProgressOnEdit, PitchOnEdit;
 
@@ -281,7 +282,7 @@ public class LimMediaPlayerManager : MonoBehaviour
         }
         if (MediaPlayerMode != Lanotalium.MediaPlayer.MediaPlayerMode.MusicPrecise) return;
         CurrentTime = MusicPlayer.time + PreciseModeTimeOffset;
-        ProgressSlider.value = CurrentTime;
+        ProgressSlider.value = Mathf.Clamp(CurrentTime, 0, ProgressSlider.maxValue);
     }
     public void OnOffsetChange()
     {

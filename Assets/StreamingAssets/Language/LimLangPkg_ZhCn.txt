@@ -45,7 +45,7 @@ Window_Creator_CreateCatchRail$新建蓝键条
 Window_Creator_CreateCatchRail_Quantity$数量
 Window_Creator_CreateCatchRail_ErrSelection$请选中两个非长条Note
 Window_Creator_CreateCatchRail_ErrQuantity$请输入有效的个数
-Window_Creator_CreateCatchRail_ErrRange$请输入1~40的数
+Window_Creator_CreateCatchRail_ErrRange$请输入大于0的数
 Window_Creator_CreateCatchRail_Success$创建成功
 Window_Creator_ConvertSelectedToHoldNote$转换为长条
 Window_Creator_DeleteSelected$删除已选择项
@@ -119,7 +119,7 @@ TopMenu_File$文件
 TopMenu_File_NewProject$新建工程...
 TopMenu_File_OpenProject$打开工程...
 TopMenu_File_SaveProject$保存工程
-TopMenu_File_SaveAsProject$另存为工程
+TopMenu_File_SaveAsProject$另存为谱面
 TopMenu_File_Release$制作发布文件
 TopMenu_File_Exit$退出
 TopMenu_Window$窗口

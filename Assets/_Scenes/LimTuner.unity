@@ -1349,7 +1349,7 @@ MonoBehaviour:
   MaxVertical: Infinity
   MinHorizontal: 300
   MaxHorizontal: Infinity
-  RequiredSortingOrder: 2
+  RequiredSortingOrder: 3
 --- !u!114 &22561827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1392,6 +1392,9 @@ MonoBehaviour:
   WaveformManager: {fileID: 22561828}
   TimePointer: {fileID: 1912762172}
   BoxSelectionManager: {fileID: 22561831}
+  EditorManager: {fileID: 1133812281}
+  TimeLineBeatLinePrefab: {fileID: 1486972693519496, guid: ba1cc7d96da8acf4ea925ee1034eeacf,
+    type: 2}
   Scale: 100
 --- !u!114 &22561828
 MonoBehaviour:
@@ -24144,6 +24147,7 @@ MonoBehaviour:
   SystemManager: {fileID: 1930403551}
   Autosaver: {fileID: 82739293}
   CloudManager: {fileID: 559523503}
+  TunerManager: {fileID: 2140049780}
   ProjectWizard: {fileID: 157086949}
   BGAScroll: {fileID: 456878771}
   BGA0: {fileID: 1615303215}
@@ -26675,7 +26679,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &668494140
@@ -27842,7 +27846,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -37071,7 +37075,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000022888184}
+  m_AnchoredPosition: {x: 0, y: 0.00006866455}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &911910878
@@ -48824,7 +48828,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000084122}
+  m_AnchoredPosition: {x: 0, y: 0.000003403111}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1197987025
@@ -61919,7 +61923,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000011573822}
+  m_AnchoredPosition: {x: 0, y: -0.00000032117168}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1553370355
@@ -68816,7 +68820,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 198, y: -28.000854}
-  m_SizeDelta: {x: 2, y: 188}
+  m_SizeDelta: {x: 2, y: 190}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1706905509
 MonoBehaviour:

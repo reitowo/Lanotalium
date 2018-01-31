@@ -1,7 +1,7 @@
 {
-    "name": "Lanotalium",
+    "name": "Schwarzer.Lanotalium",
     "references": [
-        "Schwarzer"
+        "Schwarzer.Dialogs"
     ],
     "includePlatforms": [],
     "excludePlatforms": []

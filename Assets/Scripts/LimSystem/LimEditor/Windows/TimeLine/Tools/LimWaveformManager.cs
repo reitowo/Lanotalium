@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class LimWaveformManager : MonoBehaviour
 {
-    public LimDialogUtils DialogUtils;
+    public WindowsDialogUtility DialogUtils;
     public LimTimeLineManager TimeLineManager;
     public LimTunerManager TunerManager;
     public LineRenderer LineL, LineR;
@@ -83,12 +83,15 @@ public class LimWaveformManager : MonoBehaviour
         LineL.positionCount = PositionCount;
         LineR.positionCount = PositionCount;
         int PositionIndex = 0;
-        if (CurrentSample % SampleDelta != 0)
+        if (TunerManager.MediaPlayerManager.IsPlaying)
         {
-            LineL.SetPosition(PositionIndex, new Vector3(0, WaveScale * FormL[CurrentSample]));
-            LineR.SetPosition(PositionIndex, new Vector3(0, WaveScale * FormR[CurrentSample]));
-            CurrentSample = FindNearestSampleInt(CurrentSample, SampleDelta);
-            PositionIndex++;
+            if (CurrentSample % SampleDelta != 0)
+            {
+                LineL.SetPosition(PositionIndex, new Vector3(0, WaveScale * FormL[CurrentSample]));
+                LineR.SetPosition(PositionIndex, new Vector3(0, WaveScale * FormR[CurrentSample]));
+                CurrentSample = FindNearestSampleInt(CurrentSample, SampleDelta);
+                PositionIndex++;
+            }
         }
         for (int i = PositionIndex; i < PositionCount; ++i)
         {

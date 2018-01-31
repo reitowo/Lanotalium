@@ -213,7 +213,13 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            {
+                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                {
+                    continue;
+                }
+            }
             float Percent = CalculateMovePercent(Note.Time);
             Percent = CalculateEasedPercent(Percent);
             Note.Percent = Percent;
@@ -230,7 +236,13 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            {
+                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                { 
+                    continue;
+                }
+            }
             if (Note.Percent < 20) continue;
             if (Note.Jcount == 0)
             {
@@ -290,7 +302,13 @@ public class LimHoldNoteManager : MonoBehaviour
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
-            { if (Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false); continue; }
+            {
+                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                {
+                    if (Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
+                    continue;
+                }
+            }
             if (Tuner.ChartTime > Note.Time + Note.Duration && Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
             else if (Tuner.ChartTime < Note.Time)
             {
@@ -324,13 +342,16 @@ public class LimHoldNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
-                if (Note.Joints == null) continue;
-                for (int i = 0; i < Note.Joints.Count - 1; ++i)
+                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
                 {
-                    Lanotalium.Chart.LanotaJoints Joint = Note.Joints[i];
-                    if (Joint.JointGameObject.activeInHierarchy) Joint.JointGameObject.SetActive(false);
+                    if (Note.Joints == null) continue;
+                    for (int i = 0; i < Note.Joints.Count - 1; ++i)
+                    {
+                        Lanotalium.Chart.LanotaJoints Joint = Note.Joints[i];
+                        if (Joint.JointGameObject.activeInHierarchy) Joint.JointGameObject.SetActive(false);
+                    }
+                    continue;
                 }
-                continue;
             }
             if (Note.Joints == null) continue;
             for (int i = 0; i < Note.Joints.Count - 1; ++i)
@@ -355,7 +376,13 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            {
+                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                {
+                    continue;
+                }
+            }
             if (Note.Percent < 20) continue;
             if (Tuner.ChartTime >= Note.Time && Tuner.ChartTime < Note.Time + Note.Duration)
             {
@@ -379,7 +406,13 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            {
+                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                {
+                    continue;
+                }
+            }
             if (Note.OnSelect) { if (Note.Sprite.color == NormalColor) Note.Sprite.color = OnSelectColor; }
             else if (!Note.OnSelect) { if (Note.Sprite.color == OnSelectColor) Note.Sprite.color = NormalColor; }
         }
@@ -390,7 +423,13 @@ public class LimHoldNoteManager : MonoBehaviour
         bool ShouldPlayRail = false;
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note)) continue;
+            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            {
+                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                {
+                    continue;
+                }
+            }
             if (Note.Time + Note.Duration <= Tuner.ChartTime)
             {
                 if (!Note.EndEffectPlayed)

@@ -46,8 +46,7 @@ public class LimCreatorManager : MonoBehaviour
     }
     private void OnWindowSorted(int Order)
     {
-        Canvas[] Cs = transform.GetComponentsInChildren<Canvas>(true);
-        Debug.Log(Cs.Length);
+        
     }
     private void Update()
     {
@@ -157,7 +156,7 @@ public class LimCreatorManager : MonoBehaviour
         int Quantity;
         if (OperationManager.SelectedTapNote.Count != 2) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrSelection"]); return; }
         if (!int.TryParse(CreateCatchRailQuantityInputField.text, out Quantity)) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrQuantity"]); return; }
-        if (Quantity > 40 || Quantity <= 0) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrRange"]); return; }
+        if (Quantity <= 0) { LimNotifyIcon.ShowMessage(LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_ErrRange"]); return; }
         OperationManager.SelectedTapNote.Sort((Lanotalium.Chart.LanotaTapNote a, Lanotalium.Chart.LanotaTapNote b) => { return a.Time.CompareTo(b.Time); });
         float DeltaTime = (OperationManager.SelectedTapNote[1].Time - OperationManager.SelectedTapNote[0].Time) / (Quantity + 1);
         float DeltaDegree = (OperationManager.SelectedTapNote[1].Degree - OperationManager.SelectedTapNote[0].Degree) / (Quantity + 1);
