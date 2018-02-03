@@ -1,7 +1,8 @@
 {
     "name": "Schwarzer.Lanotalium",
     "references": [
-        "Schwarzer.Dialogs"
+        "Schwarzer.Dialogs",
+        "Schwarzer.Chart"
     ],
     "includePlatforms": [],
     "excludePlatforms": []

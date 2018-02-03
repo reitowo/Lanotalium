@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.Security.Permissions;
 using System.Security;
 using UnityEngine.Events;
+using NAudio.Wave;
+using System.Threading.Tasks;
 
 public class LimProjectManager : MonoBehaviour
 {
@@ -401,7 +403,7 @@ public class LimProjectManager : MonoBehaviour
     {
         bool isLoadFinished = false;
         DialogUtils.ProgressBar.ShowProgress(() => { return isLoadFinished; });
-
+        #region Prepare Loading
         if (string.IsNullOrEmpty(CurrentProject.Name))
         {
             DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_NoName"]);
@@ -425,7 +427,8 @@ public class LimProjectManager : MonoBehaviour
         };
         SystemManager.SavePreferences();
         DialogUtils.ProgressBar.Percent = 0.5f;
-
+        #endregion
+        #region Load Chart
         try
         {
             File.Copy(CurrentProject.ChartPath, CurrentProject.ChartPath.Replace(".txt", "_backup.txt"), true);
@@ -440,7 +443,8 @@ public class LimProjectManager : MonoBehaviour
         }
         LimSystem.ChartContainer.ChartLoadResult.isChartLoaded = true;
         DialogUtils.ProgressBar.Percent = 0.6f;
-
+        #endregion
+        #region Load Background Images
         string BGAColor = null, BGAGray = null, BGALinear = null;
         switch (CurrentProject.BGACount())
         {
@@ -549,53 +553,106 @@ public class LimProjectManager : MonoBehaviour
             }
         }
         DialogUtils.ProgressBar.Percent = 0.9f;
-
-        WWW AudioRead = null;
-        try
+        #endregion
+        #region Load Music
+        switch (Path.GetExtension(CurrentProject.MusicPath))
         {
-            if (!File.Exists(CurrentProject.MusicPath)) throw new FileNotFoundException();
-            AudioRead = new WWW("file:///" + CurrentProject.MusicPath);
+            case ".wav":
+            case ".ogg":
+                WWW AudioRead = null;
+                try
+                {
+                    if (!File.Exists(CurrentProject.MusicPath)) throw new FileNotFoundException();
+                    AudioRead = new WWW("file:///" + CurrentProject.MusicPath);
+                }
+                catch (Exception)
+                {
+                    DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+                    isLoadFinished = true;
+                    yield break;
+                }
+                yield return AudioRead;
+                if (AudioRead != null && string.IsNullOrEmpty(AudioRead.error))
+                {
+                    try
+                    {
+                        LimSystem.ChartContainer.ChartMusic = new Lanotalium.Chart.ChartMusic(AudioRead.GetAudioClip());
+                        LimSystem.ChartContainer.ChartLoadResult.isMusicLoaded = true;
+                    }
+                    catch (Exception)
+                    {
+                        DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+                        isLoadFinished = true;
+                        yield break;
+                    }
+                }
+                else
+                {
+                    DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+                    isLoadFinished = true;
+                    yield break;
+                }
+                break;
+            case ".mp3":
+                /*Task ReadMp3Task = null;
+                WaveFormat waveFormat = null;
+                List<float> AudioData = new List<float>();
+                ReadMp3Task = Task.Run(() =>
+                 {
+                     MemoryStream memoryStream = new MemoryStream();
+                     MediaFoundationReader audioFileReader = new MediaFoundationReader(CurrentProject.MusicPath);
+                     WaveFileWriter.WriteWavFileToStream(memoryStream, audioFileReader);
+                     WaveFileReader waveFileReader = new WaveFileReader(memoryStream);
+                     waveFormat = waveFileReader.ToSampleProvider().WaveFormat;
+                     while (true)
+                     {
+                         float[] Frame = waveFileReader.ReadNextSampleFrame();
+                         AudioData.AddRange(Frame);
+                         if (Frame == null) break;
+                     }
+                 });
+                while (!ReadMp3Task.IsCompleted)
+                {
+                    yield return null;
+                }
+                if (ReadMp3Task.Exception != null)
+                {
+                    throw ReadMp3Task.Exception;
+                    DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+                    isLoadFinished = true;
+                    yield break;
+                }
+                try
+                {
+                    AudioClip audioClip = AudioClip.Create("", AudioData.Count / waveFormat.Channels, waveFormat.Channels, waveFormat.SampleRate, false);
+                    LimSystem.ChartContainer.ChartMusic = new Lanotalium.Chart.ChartMusic(audioClip);
+                    LimSystem.ChartContainer.ChartLoadResult.isMusicLoaded = true;
+                }
+                catch (Exception Ex)
+                {
+                    throw Ex;
+                    DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+                    isLoadFinished = true;
+                    yield break;
+                }*/
+                break;
         }
-        catch (Exception)
-        {
-            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
-            isLoadFinished = true;
-            yield break;
-        }
-        yield return AudioRead;
-        if (AudioRead != null && string.IsNullOrEmpty(AudioRead.error))
-        {
-            try
-            {
-                LimSystem.ChartContainer.ChartMusic = new Lanotalium.Chart.ChartMusic(AudioRead.GetAudioClip());
-                LimSystem.ChartContainer.ChartLoadResult.isMusicLoaded = true;
-            }
-            catch (Exception)
-            {
-                DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
-                isLoadFinished = true;
-                yield break;
-            }
-        }
-        else
-        {
-            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
-            isLoadFinished = true;
-            yield break;
-        }
-
+        #endregion
+        #region Load Video If Exist
         if (File.Exists(CurrentProject.ProjectFolder + "/background.mp4"))
         {
             LimSystem.ChartContainer.ChartBackground.VideoPath = CurrentProject.ProjectFolder + "/background.mp4";
             LimSystem.ChartContainer.ChartLoadResult.isBackgroundVideoDetected = true;
         }
-
+        #endregion
+        #region Handle Project File
         ChartSaveLocation = LimSystem.ChartContainer.ChartProperty.ChartPath;
         DialogUtils.ProgressBar.Percent = 0.95f;
         SaveProjectFile();
         LimSystem.Preferences.LastOpenedChartFolder = LimSystem.ChartContainer.ChartProperty.ChartFolder;
         LimSystem.Preferences.Designer = CurrentProject.Designer;
-
+        #endregion
+        #region Clean Up
         CleanUpEvent.AddListener(() =>
         {
             if (LastChartContainer != null)
@@ -608,7 +665,7 @@ public class LimProjectManager : MonoBehaviour
                 GC.Collect();
             }
         });
-
+        #endregion
         AsyncOperation LoadAsync = SceneManager.LoadSceneAsync("LimTuner");
         while (!LoadAsync.isDone)
         {

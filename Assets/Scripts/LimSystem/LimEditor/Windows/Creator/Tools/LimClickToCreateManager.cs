@@ -94,11 +94,11 @@ public class LimClickToCreateManager : MonoBehaviour
         if (LimSystem.ChartContainer == null) return;
         UpdateNoteCurserTransformAndDetectCreate();
         UpdatePointerInfo();
-        DetectHotkeys();
+        //DetectHotkeys();
     }
     private void DetectHotkeys()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.LeftAlt)) Enable = !Enable;
+        //if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.LeftAlt)) Enable = !Enable;
     }
     private void OnDisable()
     {

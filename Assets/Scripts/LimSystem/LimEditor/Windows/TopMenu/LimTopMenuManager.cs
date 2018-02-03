@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class LimTopMenuManager : MonoBehaviour
 {
     public LimProjectManager ProjectManager;
-    public GameObject FilePanel, WindowPanel, SettingPanel, PluginPanel;
+    public GameObject FilePanel, WindowPanel, SettingPanel, PluginPanel, ChartConvertPanel;
     public Text FileText;
     public Text NewProjectText, OpenProjectText, SaveProjectText, SaveAsProjectText, ExitText;
     public Text WindowText;
@@ -17,6 +17,8 @@ public class LimTopMenuManager : MonoBehaviour
     public Text PreferencesText, ResetLayoutText;
     public Text PluginText;
     public Text PluginCenterText;
+    public Text ChartConvertText;
+    public Text ChartConvertBmsText;
     public Text TopText;
 
     private void Start()
@@ -45,6 +47,8 @@ public class LimTopMenuManager : MonoBehaviour
         ResetLayoutText.text = LimLanguageManager.TextDict["TopMenu_Setting_ResetLayout"];
         PluginText.text = LimLanguageManager.TextDict["TopMenu_Plugin"];
         PluginCenterText.text = LimLanguageManager.TextDict["TopMenu_Plugin_PluginCenter"];
+        ChartConvertText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert"];
+        ChartConvertBmsText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert_Bms"];
     }
     public void OpenFileMenu()
     {
@@ -88,5 +92,9 @@ public class LimTopMenuManager : MonoBehaviour
     {
         if (PluginPanel.activeInHierarchy) PluginPanel.SetActive(false);
         else PluginPanel.SetActive(true);
+    }
+    public void OpenChartConvertMenu()
+    {
+        ChartConvertPanel.SetActive(!ChartConvertPanel.activeInHierarchy);
     }
 }

@@ -8,7 +8,7 @@ public class LimTunerWindowManager : MonoBehaviour
     public LimWindowManager BaseWindow;
     public RenderTexture TunerRenderTexture;
     public Camera TunerCamera;
-    public Text SkinText, CapturerText, FullScreenText, CameraMotionText;
+    public Text SkinText, FullScreenText, CameraMotionText, StretchBGAText;
     public GameObject SkinPanel;
     public Image RitmoImg, FisicaImg;
     public SpriteRenderer TunerBackground, TunerBorder;
@@ -16,7 +16,7 @@ public class LimTunerWindowManager : MonoBehaviour
     public LimDisplayManager DisplayManager;
     public LimTunerHeadManager TunerHeadManager;
     public GameObject TunerSettingPanel;
-    public Toggle EnableMotionToggle;
+    public Toggle EnableMotionToggle, StretchBGAToggle;
     public LimCameraManager CameraManager;
     public LimBoxSelectionManager BoxSelectionManager;
     public LimTunerManager TunerManager;
@@ -24,15 +24,16 @@ public class LimTunerWindowManager : MonoBehaviour
 
     private void Start()
     {
+        StretchBGAToggle.isOn = LimSystem.Preferences.StretchBGA;
         EnsureSkinUIWorksProperly();
     }
     public void SetTexts()
     {
         BaseWindow.WindowName = LimLanguageManager.TextDict["Window_Tuner_Label"];
         SkinText.text = LimLanguageManager.TextDict["Window_Tuner_Skin"];
-        CapturerText.text = LimLanguageManager.TextDict["Window_Tuner_Capturer"];
         FullScreenText.text = LimLanguageManager.TextDict["Window_Tuner_FullScreen"];
         CameraMotionText.text = LimLanguageManager.TextDict["Window_Tuner_Motion"];
+        StretchBGAText.text = LimLanguageManager.TextDict["Window_Tuner_StretchBGA"];
     }
     private void Update()
     {
@@ -158,5 +159,10 @@ public class LimTunerWindowManager : MonoBehaviour
     public void OnEnableMotionToggled()
     {
         CameraManager.DisableMotion = !EnableMotionToggle.isOn;
+    }
+    public void OnStretchBGAToggled()
+    {
+        if (StretchBGAToggle == null) return;
+        LimSystem.Preferences.StretchBGA = StretchBGAToggle.isOn;
     }
 }

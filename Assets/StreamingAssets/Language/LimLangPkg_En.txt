@@ -6,6 +6,7 @@ Window_Tuner_Capturer$Capturer
 Window_Tuner_FullScreen$Full
 Window_Tuner_Head_Designer$Chart Designer
 Window_Tuner_Motion$Tuner Motion
+Window_Tuner_StretchBGA$Stretch BGA
 Window_Inspector_Label$Inspector
 Window_Inspector_Switcher_Bpm$BPM
 Window_Inspector_Switcher_Scroll$Scroll Speed
@@ -134,6 +135,8 @@ TopMenu_Setting_Preferences$Preferences
 TopMenu_Setting_ResetLayout$Reset Editor Layout
 TopMenu_Plugin$Plugin
 TopMenu_Plugin_PluginCenter$Plugin Center
+TopMenu_ChartConvert$Chart Convert
+TopMenu_ChartConvert_Bms$From Bms
 GizmoMotion_Label$Manually Motion
 GizmoMotion_ToCreate$Motion Types To Create
 GizmoMotion_EditMode$Edit Mode
@@ -226,6 +229,8 @@ Updator_DoUpdate$Save and update Lanotalium
 Updator_Ignore$Ignore and continue working
 Updator_DeltaFileSize$Delta update: {0}
 Updator_FullFileSize$Unable to delta update, full size update needed: {0}
+ChartConverting_BmsTitle$Select a Bms Chart
+ChartConverting_BmsExtension$Bms Chart(*.bms,*.bme,*.bml,*.pms)|*.bms;*.bme;*.bml;*.pms
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.

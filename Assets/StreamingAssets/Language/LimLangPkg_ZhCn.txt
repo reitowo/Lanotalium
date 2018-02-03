@@ -6,6 +6,7 @@ Window_Tuner_Capturer$导出视频
 Window_Tuner_FullScreen$全屏
 Window_Tuner_Head_Designer$设计者
 Window_Tuner_Motion$调律器动作
+Window_Tuner_StretchBGA$拉伸背景
 Window_Inspector_Label$属性
 Window_Inspector_Switcher_Bpm$BPM
 Window_Inspector_Switcher_Scroll$谱面速度
@@ -134,6 +135,8 @@ TopMenu_Setting_Preferences$偏好
 TopMenu_Setting_ResetLayout$重置界面布局
 TopMenu_Plugin$插件
 TopMenu_Plugin_PluginCenter$插件中心
+TopMenu_ChartConvert$谱面转换
+TopMenu_ChartConvert_Bms$转换Bms谱面
 GizmoMotion_Label$手动调律器动作编辑器
 GizmoMotion_ToCreate$需要创建的动作类型
 GizmoMotion_EditMode$编辑模式
@@ -226,6 +229,8 @@ Updator_DoUpdate$保存并更新Lanotalium
 Updator_Ignore$忽略并继续制谱
 Updator_DeltaFileSize$增量升级: {0}
 Updator_FullFileSize$无法增量升级，需要下载完整包: {0}
+ChartConverting_BmsTitle$选择Bms谱面
+ChartConverting_BmsExtension$Bms谱面(*.bms,*.bme,*.bml,*.pms)|*.bms;*.bme;*.bml;*.pms
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建

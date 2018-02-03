@@ -1,3 +1,6 @@
-﻿{
-	"name": "Schwarzer.Chart"
+{
+    "name": "Schwarzer.Chart",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": []
 }

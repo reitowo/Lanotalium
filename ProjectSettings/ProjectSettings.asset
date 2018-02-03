@@ -128,7 +128,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.8.7
+  bundleVersion: 1.8.8
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -164,7 +164,7 @@ PlayerSettings:
     Standalone: com.Schwarzer.Lanotalium
     iOS: com.Schwarzer.Lanotalium
   buildNumber:
-    Standalone: 38
+    Standalone: 39
     iOS: 31
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16

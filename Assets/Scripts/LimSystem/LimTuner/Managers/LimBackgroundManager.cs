@@ -199,7 +199,7 @@ public class LimBackgroundManager : MonoBehaviour
             }
             return;
         }
-        Vector2 Size = new Vector2(TunerWindowRectTransform.sizeDelta.y * HorizontalRatio * VerticalRatio, TunerWindowRectTransform.sizeDelta.y * VerticalRatio);
+        Vector2 Size = new Vector2(TunerWindowRectTransform.sizeDelta.y * (LimSystem.Preferences.StretchBGA ? HorizontalRatio : 1), TunerWindowRectTransform.sizeDelta.y * (LimSystem.Preferences.StretchBGA ? VerticalRatio : 1));
         if (Mode == Lanotalium.Background.BackgroundMode.Single) ColorRect.sizeDelta = Size;
         else if (Mode == Lanotalium.Background.BackgroundMode.Duo)
         {
@@ -219,7 +219,7 @@ public class LimBackgroundManager : MonoBehaviour
     }
     public void SetBackgroundImageSize(int Height)
     {
-        Vector2 Size = new Vector2(Height * HorizontalRatio, Height * VerticalRatio);
+        Vector2 Size = new Vector2(Height * (LimSystem.Preferences.StretchBGA ? HorizontalRatio : 1), Height * (LimSystem.Preferences.StretchBGA ? VerticalRatio : 1));
         if (Mode == Lanotalium.Background.BackgroundMode.Single) ColorRect.sizeDelta = Size;
         else if (Mode == Lanotalium.Background.BackgroundMode.Duo)
         {

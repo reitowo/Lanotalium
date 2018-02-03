@@ -1060,7 +1060,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 38;
+        public int Build = 39;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1072,6 +1072,7 @@ namespace Lanotalium
         public bool LapInjected = false;
         public bool PlayWorkingBGM = false;
         public bool TimeLineBeatLine = true;
+        public bool StretchBGA = true;
         public Editor.TunerSkin TunerSkin;
         public Tuner.AudioEffectTheme AudioEffectTheme = Tuner.AudioEffectTheme.Lanota;
     }
@@ -1079,8 +1080,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.8.7";
-    public static int Build = 38;
+    public static string Version = "v1.8.8";
+    public static int Build = 39;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;

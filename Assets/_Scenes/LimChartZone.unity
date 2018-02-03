@@ -1198,14 +1198,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
+  m_Color: {r: 0.29411763, g: 0.29411763, b: 0.29411763, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1341,6 +1341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0767a07009e6ff04eb47680240854712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UpdateDetector: {fileID: 0}
   ExceptionManager: {fileID: 0}
   EditorManager: {fileID: 0}
   ChartZoneManager: {fileID: 2004709720}

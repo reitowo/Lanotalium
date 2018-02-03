@@ -79,7 +79,7 @@ public class LimChartBarManager : MonoBehaviour
         string SavePath = WindowsDialogUtility.SaveFileDialog("", "(.zip)|*.zip", Data.ChartName + ".zip");
         if (SavePath == null) yield break;
         File.WriteAllBytes(SavePath, Chart);
-        Process.Start("explorer.exe", "/select," + SavePath);
+        Process.Start("explorer.exe", "/select," + SavePath.Replace("/", "\\"));
 #endif
 #if UNITY_IOS
         string SaveDirectory = UnityEngine.Application.persistentDataPath + "/chartzone/" + Data.ChartName;

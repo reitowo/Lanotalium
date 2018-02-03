@@ -289,6 +289,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Vorbis">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NAudio.Vorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NVorbis.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:/Users/hasee/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
@@ -318,7 +327,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\BMSChart.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\BMSEvent.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\BMSResourceData.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\Chart.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\EventDispatcher.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\Utils\Base36.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\Utils\BinarySearch.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\BmsChartHandler.cs" />
     <Compile Include="Assets\Scripts\Schwarzer\Chart\ChartConvert.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\Lanota\LanotaChartHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Extras\IOS\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />

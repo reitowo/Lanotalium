@@ -710,11 +710,24 @@ public class LimOperationManager : MonoBehaviour
     {
         SelectNothing();
         int InstanceId = EventSystem.current.currentSelectedGameObject.gameObject.GetInstanceID();
-        if (!Input.GetKey(KeyCode.LeftControl)) DeSelectAllMotions();
+        OnTimeLineClick(InstanceId);
+    }
+    public void OnTimeLineClick(int InstanceId)
+    {
         Lanotalium.Chart.LanotaCameraBase MotionBase = FindMotionBase(InstanceId);
         if (MotionBase == null) return;
-        SelectedMotions.Add(MotionBase);
-        MotionBase.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Selected;
+        if (!SelectedMotions.Contains(MotionBase))
+        {
+            if (!Input.GetKey(KeyCode.LeftControl))
+            {
+                DeSelectAllMotions();
+            }
+            SelectMotion(MotionBase);
+        }
+        else
+        {
+            DeSelectMotion(MotionBase);
+        }
         if (SelectedMotions.Count >= 2)
         {
             InspectorManager.ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Multiple, 0);
@@ -735,7 +748,11 @@ public class LimOperationManager : MonoBehaviour
             }
         }
         InspectorManager.ArrangeComponentsUi();
-
+    }
+    public void SelectMotion(Lanotalium.Chart.LanotaCameraBase Base)
+    {
+        SelectedMotions.Add(Base);
+        Base.TimeLineGameObject.GetComponent<Image>().color = TimeLineManager.Selected;
     }
     public void DeSelectMotion(Lanotalium.Chart.LanotaCameraBase Base)
     {

@@ -77,7 +77,7 @@ public class WindowsDialogUtility : MonoBehaviour
         ofn.maxFile = ofn.file.Length;
         ofn.fileTitle = new String(new char[256]);
         ofn.maxFileTitle = ofn.fileTitle.Length;
-        ofn.initialDir = InitPath.Replace("/", "\\");
+        ofn.initialDir = InitPath?.Replace("/", "\\");
         ofn.title = Title;
         ofn.flags = 0x00000008;
         bool Result = GetOpenFileName(ofn);
@@ -108,13 +108,17 @@ public class WindowsDialogUtility : MonoBehaviour
         ofn.maxFile = ofn.file.Length;
         ofn.fileTitle = new String(new char[256]);
         ofn.maxFileTitle = ofn.fileTitle.Length;
-        ofn.initialDir = InitPath.Replace("/", "\\");
+        ofn.initialDir = InitPath?.Replace("/", "\\");
         ofn.title = Title;
         ofn.flags = 0x00000008;
         ofn.defExt = ".txt";
         bool Result = GetSaveFileName(ofn);
         if (Result) return ofn.file;
         else return null;
+    }
+    public static void OpenExplorer(string SelectPath)
+    {
+        Process.Start("explorer.exe", "/select," + SelectPath?.Replace("/", "\\"));
     }
 #endif
 

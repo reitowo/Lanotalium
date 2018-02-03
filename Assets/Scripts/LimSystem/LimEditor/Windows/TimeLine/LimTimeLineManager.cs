@@ -306,6 +306,11 @@ public class LimTimeLineManager : MonoBehaviour
     }
     public void UpdateTimeLineBeatLine()
     {
+        if (!EditorManager.InspectorWindow.ComponentBpm.EnableBeatline)
+        {
+            AcquireBeatlineObject(0);
+            return;
+        }
         float Start = TunerManager.ChartTime;
         float End = TunerManager.ChartTime + (ViewRect.sizeDelta.x - 200f) / Scale;
         List<float> BeatlineTimes = EditorManager.InspectorWindow.ComponentBpm.BeatlineTimes.Where(time => (time >= Start && time <= End)).ToList();
@@ -374,17 +379,17 @@ public class LimTimeLineManager : MonoBehaviour
         else if (ComponentMotion.Mode == Lanotalium.Editor.ComponentMotionMode.Horizontal)
         {
             if (CameraManager.Horizontal == null || CameraManager.Horizontal.Count == 0) return;
-            ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Horizontal, Mathf.Clamp(ComponentMotion.Index + Delta, 0, CameraManager.Horizontal.Count - 1));
+            OperationManager.OnTimeLineClick(TunerManager.CameraManager.Horizontal[Mathf.Clamp(ComponentMotion.Index + Delta, 0, CameraManager.Horizontal.Count - 1)].TimeLineGameObject.GetInstanceID());
         }
         else if (ComponentMotion.Mode == Lanotalium.Editor.ComponentMotionMode.Vertical)
         {
             if (CameraManager.Vertical == null || CameraManager.Vertical.Count == 0) return;
-            ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Vertical, Mathf.Clamp(ComponentMotion.Index + Delta, 0, CameraManager.Vertical.Count - 1));
+            OperationManager.OnTimeLineClick(TunerManager.CameraManager.Vertical[Mathf.Clamp(ComponentMotion.Index + Delta, 0, CameraManager.Vertical.Count - 1)].TimeLineGameObject.GetInstanceID());
         }
         else if (ComponentMotion.Mode == Lanotalium.Editor.ComponentMotionMode.Rotation)
         {
             if (CameraManager.Rotation == null || CameraManager.Rotation.Count == 0) return;
-            ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Rotation, Mathf.Clamp(ComponentMotion.Index + Delta, 0, CameraManager.Rotation.Count - 1));
+            OperationManager.OnTimeLineClick(TunerManager.CameraManager.Rotation[Mathf.Clamp(ComponentMotion.Index + Delta, 0, CameraManager.Rotation.Count - 1)].TimeLineGameObject.GetInstanceID());
         }
     }
     public void OnWaveformToggle()

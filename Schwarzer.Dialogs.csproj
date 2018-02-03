@@ -289,6 +289,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Vorbis">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NAudio.Vorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NVorbis.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements">
       <HintPath>C:/Users/hasee/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.3/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
