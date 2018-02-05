@@ -209,13 +209,18 @@ public class LimHoldNoteManager : MonoBehaviour
             }
         }
     }
+    private void AddLineRendererPosition(int PositionIndex, LineRenderer lineRenderer ,Vector3 Position)
+    {
+        if (lineRenderer.positionCount <= PositionIndex) lineRenderer.positionCount = PositionIndex + 1;
+        lineRenderer.SetPosition(PositionIndex, Position);
+    }
     private void UpdateAllNoteTransforms()
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     continue;
                 }
@@ -238,8 +243,8 @@ public class LimHoldNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
-                { 
+                if (!Tuner.ScrollManager.IsStopped)
+                {
                     continue;
                 }
             }
@@ -259,7 +264,7 @@ public class LimHoldNoteManager : MonoBehaviour
             else
             {
                 float EndPercent = 0;
-                List<Vector3> Positions = new List<Vector3>();
+                int PositionIndex = 0;
                 float LastaTime = Note.Time, LastaDegree = Note.Degree;
                 for (int i = 0; i < Note.Joints.Count; ++i)
                 {
@@ -269,29 +274,42 @@ public class LimHoldNoteManager : MonoBehaviour
                         float Percent = (t - LastaTime) / Note.Joints[i].dTime;
                         float LocationPercent = CalculateMovePercent(t);
                         EndPercent = CalculateEasedPercent(LocationPercent);
-                        if (Tuner.ScrollManager.IsBackwarding(Tuner.ChartTime))
+                        if (Tuner.ScrollManager.IsBackwarding)
                         {
                             if (EndPercent != 100)
-                                Positions.Add(CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
+                            {
+                                AddLineRendererPosition(PositionIndex, Note.LineRenderer, CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
+                                PositionIndex++;
+                            }
                         }
-                        else Positions.Add(CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
+                        else
+                        {
+                            AddLineRendererPosition(PositionIndex, Note.LineRenderer, CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
+                            PositionIndex++;
+                        }
                         if (t + Interval > Note.Joints[i].aTime)
                         {
                             float TempPercent = CalculateMovePercent(Note.Joints[i].aTime);
-                            if (Tuner.ScrollManager.IsBackwarding(Tuner.ChartTime))
+                            if (Tuner.ScrollManager.IsBackwarding)
                             {
                                 if (TempPercent != 100)
-                                    Positions.Add(CalculateLineRendererPoint(CalculateEasedPercent(TempPercent), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
+                                {
+                                    AddLineRendererPosition(PositionIndex, Note.LineRenderer, CalculateLineRendererPoint(CalculateEasedPercent(TempPercent), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
+                                    PositionIndex++;
+                                }
                             }
-                            else Positions.Add(CalculateLineRendererPoint(CalculateEasedPercent(TempPercent), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
+                            else
+                            {
+                                AddLineRendererPosition(PositionIndex, Note.LineRenderer, CalculateLineRendererPoint(CalculateEasedPercent(TempPercent), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
+                                PositionIndex++;
+                            }
                             break;
                         }
                     }
                     LastaTime = Note.Joints[i].aTime;
                     LastaDegree = Note.Joints[i].aDegree;
                 }
-                Note.LineRenderer.positionCount = Positions.Count;
-                Note.LineRenderer.SetPositions(Positions.ToArray());
+                Note.LineRenderer.positionCount = PositionIndex;
                 Note.LineRenderer.startWidth = Note.Percent / 100 + (Note.OnTouch ? OnTouchWidthAdd : 0);
                 Note.LineRenderer.endWidth = EndPercent / 100 + (Note.OnTouch ? OnTouchWidthAdd : 0);
             }
@@ -303,7 +321,7 @@ public class LimHoldNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     if (Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
                     continue;
@@ -314,7 +332,7 @@ public class LimHoldNoteManager : MonoBehaviour
             {
                 if (Note.Percent <= 20 || Note.Percent >= 100)
                 {
-                    if (Tuner.ScrollManager.IsBackwarding(Tuner.ChartTime))
+                    if (Tuner.ScrollManager.IsBackwarding)
                     {
                         if (Note.Percent == 100 && !Note.HoldNoteGameObject.activeInHierarchy)
                         {
@@ -342,7 +360,7 @@ public class LimHoldNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     if (Note.Joints == null) continue;
                     for (int i = 0; i < Note.Joints.Count - 1; ++i)
@@ -378,7 +396,7 @@ public class LimHoldNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     continue;
                 }
@@ -408,7 +426,7 @@ public class LimHoldNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     continue;
                 }
@@ -425,7 +443,7 @@ public class LimHoldNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsHoldNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     continue;
                 }

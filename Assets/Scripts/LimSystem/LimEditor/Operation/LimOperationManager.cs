@@ -89,6 +89,17 @@ public class LimOperationManager : MonoBehaviour
             SelectNothing();
             DeSelectAllMotions();
         }
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.A))
+        {
+            foreach (Lanotalium.Chart.LanotaTapNote Tap in TunerManager.TapNoteManager.TapNote)
+            {
+                SelectTapNote(Tap, true);
+            }
+            foreach (Lanotalium.Chart.LanotaHoldNote Hold in TunerManager.HoldNoteManager.HoldNote)
+            {
+                SelectHoldNote(Hold, true);
+            }
+        }
     }
     public void DetectDeleteRequest()
     {

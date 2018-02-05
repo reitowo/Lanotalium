@@ -49,6 +49,7 @@ Window_Creator_CreateCatchRail_ErrQuantity$You need to input valid quantity.
 Window_Creator_CreateCatchRail_ErrRange$You need to input a number larger than 0.
 Window_Creator_CreateCatchRail_Success$Successfully created.
 Window_Creator_ConvertSelectedToHoldNote$Convert to Hold Note
+Window_Creator_AutoHighlight$Auto Highlight
 Window_Creator_DeleteSelected$Delete Selected
 Window_Creator_ClickToCreate$Click To Create
 Window_Creator_Angleline$Angleline
@@ -215,7 +216,7 @@ ChartZone_Notes$Notes
 ChartZone_Download$Download
 ChartZone_Video$Video
 ChartZone_Rating$Rating
-ChartZone_CopyRight$Recording and uploading to video sites is not permitted
+ChartZone_CopyRight$Except designer, recording charts here and uploading to video sites is not permitted
 WhatsNew_Label$What's New
 WhatsNew_Toggle$Don't show again.
 Spectrum_Name$Spectrum

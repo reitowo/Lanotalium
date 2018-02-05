@@ -118,7 +118,7 @@ public class LimScanTime : MonoBehaviour
     {
         KeyTimes = KeyTimes.Distinct().ToList();
         KeyTimes.Sort();
-        if (TunerManager.ScrollManager.IsBackwarding(KeyTimes[0])) KeyTimes.RemoveAt(0);
+        if (TunerManager.ScrollManager.IsBackwarding) KeyTimes.RemoveAt(0);
         if (KeyTimes.Count % 2 == 1)
         {
             if (KeyTimes[KeyTimes.Count - 1] == TunerManager.MediaPlayerManager.Length)

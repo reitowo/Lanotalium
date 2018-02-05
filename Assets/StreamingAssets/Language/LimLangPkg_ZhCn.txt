@@ -49,6 +49,7 @@ Window_Creator_CreateCatchRail_ErrQuantity$请输入有效的个数
 Window_Creator_CreateCatchRail_ErrRange$请输入大于0的数
 Window_Creator_CreateCatchRail_Success$创建成功
 Window_Creator_ConvertSelectedToHoldNote$转换为长条
+Window_Creator_AutoHighlight$自动多押高亮
 Window_Creator_DeleteSelected$删除已选择项
 Window_Creator_ClickToCreate$点立得
 Window_Creator_Angleline$角度线
@@ -215,7 +216,7 @@ ChartZone_Notes$Note数
 ChartZone_Download$下载
 ChartZone_Video$视频
 ChartZone_Rating$评分
-ChartZone_CopyRight$请勿上传视频网站
+ChartZone_CopyRight$除作者外，请勿上传视频网站
 WhatsNew_Label$更新日志
 WhatsNew_Toggle$下次不再显示
 Spectrum_Name$频谱

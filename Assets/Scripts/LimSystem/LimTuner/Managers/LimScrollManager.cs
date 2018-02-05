@@ -7,10 +7,12 @@ public class LimScrollManager : MonoBehaviour
     private bool isInitialized = false;
     public List<Lanotalium.Chart.LanotaScroll> Scroll;
     public LimTunerManager Tuner;
+    public bool IsBackwarding = false, IsStopped = false;
 
     void Update()
     {
         if (!isInitialized) return;
+        UpdateCurrentScrollSpeed();
     }
 
     public void Initialize(List<Lanotalium.Chart.LanotaScroll> ScrollData)
@@ -25,34 +27,22 @@ public class LimScrollManager : MonoBehaviour
             return A.Time.CompareTo(B.Time);
         });
     }
-    public bool IsBackwarding(float Time)
+    public void UpdateCurrentScrollSpeed()
     {
+        IsBackwarding = false;
+        IsStopped = false;
         for (int i = 0; i < Scroll.Count - 1; ++i)
         {
-            if (Time >= Scroll[i].Time && Time < Scroll[i + 1].Time)
+            if (Tuner.ChartTime >= Scroll[i].Time && Tuner.ChartTime < Scroll[i + 1].Time)
             {
-                if (Scroll[i].Speed < 0) return true;
+                if (Scroll[i].Speed < 0) IsBackwarding = true;
+                else if (Scroll[i].Speed == 0) IsStopped = true;
             }
         }
-        if (Time > Scroll[Scroll.Count - 1].Time)
+        if (Tuner.ChartTime > Scroll[Scroll.Count - 1].Time)
         {
-            if (Scroll[Scroll.Count - 1].Speed < 0) return true;
+            if (Scroll[Scroll.Count - 1].Speed < 0) IsBackwarding = true;
+            else if(Scroll[Scroll.Count - 1].Speed == 0) IsStopped = true;
         }
-        return false;
-    }
-    public bool IsStopped(float Time)
-    {
-        for (int i = 0; i < Scroll.Count - 1; ++i)
-        {
-            if (Time >= Scroll[i].Time && Time < Scroll[i + 1].Time)
-            {
-                if (Scroll[i].Speed == 0) return true;
-            }
-        }
-        if (Time > Scroll[Scroll.Count - 1].Time)
-        {
-            if (Scroll[Scroll.Count - 1].Speed == 0) return true;
-        }
-        return false;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public class LimCreatorManager : MonoBehaviour
     public LimGizmoMotionManager GizmoMotionManager;
     public Text CreateTapText, CreateHoldText, CreateMotionHorText, CreateMotionVerText,
         CreateMotionRotText, CreateMotionMaunallyText, CreateBpmText, CreateScrollSpeedText,
-        CreateCatchRailText, CreateCatchRailQuantityText, DeleteSelectedText, ConvertSelectedToHoldNoteText;
+        CreateCatchRailText, CreateCatchRailQuantityText, AutoHighlightText, DeleteSelectedText, ConvertSelectedToHoldNoteText;
     public Text ClickToCreateText, AngleLineText, CopierText;
     public LimClickToCreateManager ClickToCreateManager;
     public LimAngleLineManager AngleLineManager;
@@ -33,6 +34,7 @@ public class LimCreatorManager : MonoBehaviour
         CreateScrollSpeedText.text = LimLanguageManager.TextDict["Window_Creator_CreateScrollSpeed"];
         CreateCatchRailText.text = LimLanguageManager.TextDict["Window_Creator_CreateCatchRail"];
         CreateCatchRailQuantityText.text = LimLanguageManager.TextDict["Window_Creator_CreateCatchRail_Quantity"];
+        AutoHighlightText.text = LimLanguageManager.TextDict["Window_Creator_AutoHighlight"];
         DeleteSelectedText.text = LimLanguageManager.TextDict["Window_Creator_DeleteSelected"];
         ConvertSelectedToHoldNoteText.text = LimLanguageManager.TextDict["Window_Creator_ConvertSelectedToHoldNote"];
         ClickToCreateText.text = LimLanguageManager.TextDict["Window_Creator_ClickToCreate"];
@@ -46,7 +48,7 @@ public class LimCreatorManager : MonoBehaviour
     }
     private void OnWindowSorted(int Order)
     {
-        
+
     }
     private void Update()
     {
@@ -206,6 +208,28 @@ public class LimCreatorManager : MonoBehaviour
             OperationManager.AddHoldNote(New, true, true, true);
         }
     }
+    public void AutoHighlight()
+    {
+        Dictionary<string, int> Occurance = new Dictionary<string, int>();
+        foreach (Lanotalium.Chart.LanotaTapNote Tap in TunerManager.TapNoteManager.TapNote)
+        {
+            if (!Occurance.ContainsKey(Tap.Time.ToString())) Occurance[Tap.Time.ToString()] = 0;
+            Occurance[Tap.Time.ToString()]++;
+        }
+        foreach (Lanotalium.Chart.LanotaHoldNote Hold in TunerManager.HoldNoteManager.HoldNote)
+        {
+            if (!Occurance.ContainsKey(Hold.Time.ToString())) Occurance[Hold.Time.ToString()] = 0;
+            Occurance[Hold.Time.ToString()]++;
+        }
+        foreach (Lanotalium.Chart.LanotaTapNote Tap in TunerManager.TapNoteManager.TapNote)
+        {
+            OperationManager.SetTapNoteCombination(Tap, (Occurance[Tap.Time.ToString()] > 1));
+        }
+        foreach (Lanotalium.Chart.LanotaHoldNote Hold in TunerManager.HoldNoteManager.HoldNote)
+        {
+            OperationManager.SetHoldNoteCombination(Hold, (Occurance[Hold.Time.ToString()] > 1));
+        }
+    }
 
     public void DeleteSelected()
     {
@@ -216,7 +240,7 @@ public class LimCreatorManager : MonoBehaviour
 
     public void ArrangeCreatorsUi()
     {
-        float Height = -345;
+        float Height = -375;
         Height -= ClickToCreateManager.ToolBase.Height;
         AngleLineManager.ToolBase.ToolRect.anchoredPosition = new Vector2(0, Height);
         Height -= AngleLineManager.ToolBase.Height;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class LimCameraManager : MonoBehaviour
 {
     private bool isInitialized = false;
@@ -18,6 +19,8 @@ public class LimCameraManager : MonoBehaviour
     public float CurrentHorizontalX = 0;
     public float CurrentHorizontalZ = 0;
     public float CurrentVerticalY = 0;
+    public float CurrentRou = 0;
+    public float CurrentTheta = 0;
 
     void Update()
     {
@@ -248,6 +251,8 @@ public class LimCameraManager : MonoBehaviour
                 }
             }
         }
+        CurrentRou = Rou;
+        CurrentTheta = Theta;
         CalculatePolarToRectangle(Rou, Theta);
     }
     private void UpdateCameraVertical()

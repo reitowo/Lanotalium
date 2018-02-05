@@ -154,7 +154,7 @@ public class LimTapNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsTapNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     continue;
                 }
@@ -175,7 +175,7 @@ public class LimTapNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsTapNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     if (Note.TapNoteGameObject.activeInHierarchy) Note.TapNoteGameObject.SetActive(false);
                     continue;
@@ -205,7 +205,7 @@ public class LimTapNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsTapNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     continue;
                 }
@@ -228,7 +228,7 @@ public class LimTapNoteManager : MonoBehaviour
         {
             if (!LimScanTime.IsTapNoteinScanRange(Note))
             {
-                if (!Tuner.ScrollManager.IsStopped(Tuner.ChartTime))
+                if (!Tuner.ScrollManager.IsStopped)
                 {
                     continue;
                 }
