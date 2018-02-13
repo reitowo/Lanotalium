@@ -216,7 +216,7 @@ ChartZone_Notes$Notes
 ChartZone_Download$Download
 ChartZone_Video$Video
 ChartZone_Rating$Rating
-ChartZone_CopyRight$Except designer, recording charts here and uploading to video sites is not permitted
+ChartZone_CopyRight$Except designer, recording charts here and uploading to video sites is not permitted<br><size=25>Low quality charts will not be collected.</size><br><size=25><color=#FFE57AFF>Click top bar to sort.</color></size>
 WhatsNew_Label$What's New
 WhatsNew_Toggle$Don't show again.
 Spectrum_Name$Spectrum

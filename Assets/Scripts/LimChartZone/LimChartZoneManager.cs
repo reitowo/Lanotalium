@@ -14,6 +14,8 @@ public class LimChartZoneManager : MonoBehaviour
     public Text HeadText, ChartNameText, DesignerText, NotesText, DownloadText, VideoText, RatingText, CopyRightText;
     public RectTransform ChartListContent;
     public GameObject ChartBarPrefab;
+    private List<LimChartBarManager> BarManagers = new List<LimChartBarManager>();
+    private bool LoadChartListFinished = false;
 
     void Start()
     {
@@ -30,7 +32,7 @@ public class LimChartZoneManager : MonoBehaviour
         DownloadText.text = LimLanguageManager.TextDict["ChartZone_Download"];
         VideoText.text = LimLanguageManager.TextDict["ChartZone_Video"];
         RatingText.text = LimLanguageManager.TextDict["ChartZone_Rating"];
-        CopyRightText.text = LimLanguageManager.TextDict["ChartZone_CopyRight"];
+        CopyRightText.text = LimLanguageManager.TextDict["ChartZone_CopyRight"].Replace("<br>", "\n");
     }
     IEnumerator GetChartList()
     {
@@ -43,9 +45,54 @@ public class LimChartZoneManager : MonoBehaviour
             GameObject tGO = Instantiate(ChartBarPrefab, ChartListContent);
             tGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, HeightCount);
             tGO.GetComponent<LimChartBarManager>().Initialize(Chart);
+            BarManagers.Add(tGO.GetComponent<LimChartBarManager>());
+            HeightCount -= 50;
+        }
+        LoadChartListFinished = true;
+    }
+    public void SortByName()
+    {
+        if (!LoadChartListFinished) return;
+        BarManagers.Sort((LimChartBarManager a, LimChartBarManager b) =>
+        {
+            return a.Name.CompareTo(b.Name);
+        });
+        int HeightCount = 0;
+        foreach (LimChartBarManager chartBarManager in BarManagers)
+        {
+            chartBarManager.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, HeightCount);
             HeightCount -= 50;
         }
     }
+    public void SortByDesigner()
+    {
+        if (!LoadChartListFinished) return;
+        BarManagers.Sort((LimChartBarManager a, LimChartBarManager b) =>
+        {
+            return a.Designer.CompareTo(b.Designer);
+        });
+        int HeightCount = 0;
+        foreach (LimChartBarManager chartBarManager in BarManagers)
+        {
+            chartBarManager.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, HeightCount);
+            HeightCount -= 50;
+        }
+    }
+    public void SortByRating()
+    {
+        if (!LoadChartListFinished) return;
+        BarManagers.Sort((LimChartBarManager a, LimChartBarManager b) =>
+        {
+            return b.OnlineRating.CompareTo(a.OnlineRating);
+        });
+        int HeightCount = 0;
+        foreach (LimChartBarManager chartBarManager in BarManagers)
+        {
+            chartBarManager.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, HeightCount);
+            HeightCount -= 50;
+        }
+    }
+
     public void BackToLaunch()
     {
         SceneManager.LoadScene("LimLaunch");

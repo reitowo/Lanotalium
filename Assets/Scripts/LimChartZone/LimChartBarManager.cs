@@ -19,9 +19,25 @@ public class LimChartBarManager : MonoBehaviour
     private bool isDownloading;
     private float QrCodeAnimateDuration = 0.25f;
     private Coroutine QrCodeAnimateCoroutine;
-    private Lanotalium.ChartZone.ChartZoneChart Data = new Lanotalium.ChartZone.ChartZoneChart();
-    private int UserRating;
-    private float OnlineRating;
+
+    public Lanotalium.ChartZone.ChartZoneChart Data = new Lanotalium.ChartZone.ChartZoneChart();
+    public int UserRating;
+    public float OnlineRating;
+    public string Name
+    {
+        get
+        {
+            return Data.ChartName;
+        }
+    }
+    public string Designer
+    {
+        get
+        {
+            return Data.Designer;
+        }
+    }
+
     public string BilibiliUrl;
     private bool isInitialized = false;
 
@@ -129,7 +145,7 @@ public class LimChartBarManager : MonoBehaviour
         if (!isInitialized) return;
         bool Post = false;
         if (UserRating != Value) Post = true;
-        UserRating = (int)Value;
+        UserRating = Mathf.RoundToInt(Value);
         if (Post) StartPostRating();
     }
     public void StartPostRating()

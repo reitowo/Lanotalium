@@ -216,7 +216,7 @@ ChartZone_Notes$Note数
 ChartZone_Download$下载
 ChartZone_Video$视频
 ChartZone_Rating$评分
-ChartZone_CopyRight$除作者外，请勿上传视频网站
+ChartZone_CopyRight$除作者外，请勿上传视频网站<br><size=25>低质量谱将不会被收录</size><br><size=25><color=#FFE57AFF>点击顶部可排序</color></size>
 WhatsNew_Label$更新日志
 WhatsNew_Toggle$下次不再显示
 Spectrum_Name$频谱
