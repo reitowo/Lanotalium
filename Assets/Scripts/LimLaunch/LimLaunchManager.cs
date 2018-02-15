@@ -11,8 +11,8 @@ public class LimLaunchManager : MonoBehaviour
 {
     public Text Message, VersionText;
     public Slider EnterLanotaliumSlider;
-    public Text EnterLanotaliumText, TutorialText, SupportMeText, AboutText, QuitText, ChartZoneText;
-    public GameObject SupportMePanel, About;
+    public Text EnterLanotaliumText, TutorialText, SupportMeText, QuitText, ChartZoneText;
+    public GameObject SupportMePanel;
 
     private int LatestBuild;
     private string LatestVersion;
@@ -49,7 +49,6 @@ public class LimLaunchManager : MonoBehaviour
             EnterLanotaliumText.text = LaunchLanguageDict["EnterLanotalium_ZhCn"];
             TutorialText.text = LaunchLanguageDict["Tutorial_ZhCn"];
             SupportMeText.text = LaunchLanguageDict["SupportMe_ZhCn"];
-            AboutText.text = LaunchLanguageDict["About_ZhCn"];
             QuitText.text = LaunchLanguageDict["Quit_ZhCn"];
         }
         else
@@ -58,7 +57,6 @@ public class LimLaunchManager : MonoBehaviour
             EnterLanotaliumText.text = LaunchLanguageDict["EnterLanotalium_En"];
             TutorialText.text = LaunchLanguageDict["Tutorial_En"];
             SupportMeText.text = LaunchLanguageDict["SupportMe_En"];
-            AboutText.text = LaunchLanguageDict["About_En"];
             QuitText.text = LaunchLanguageDict["Quit_En"];
         }
     }
@@ -66,11 +64,6 @@ public class LimLaunchManager : MonoBehaviour
     {
         if (SupportMePanel.activeInHierarchy) SupportMePanel.SetActive(false);
         else SupportMePanel.SetActive(true);
-    }
-    public void OpenAbout()
-    {
-        if (About.activeInHierarchy) About.SetActive(false);
-        else About.SetActive(true);
     }
     public void QuitFromMenu()
     {
@@ -114,6 +107,7 @@ public class LimLaunchManager : MonoBehaviour
     }
     public void ToChartZone()
     {
+        LimChartZoneManager.FromScene = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene("LimChartZone");
     }
 }

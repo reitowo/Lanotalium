@@ -41,8 +41,15 @@ public class LimTunerHeadManager : MonoBehaviour
     private void Start()
     {
         Mode = Lanotalium.Editor.TunerHeadMode.InEditor;
-        if (LimSystem.ChartContainer != null) ChartName.text = LimSystem.ChartContainer.ChartProperty.ChartName;
-        DesignerInputField.text = LimSystem.Preferences.Designer;
+        if (LimSystem.ChartContainer != null) ChartName.text = LimProjectManager.CurrentProject.Name;
+        if (LimProjectManager.CurrentProject != null)
+        {
+            DesignerInputField.text = LimProjectManager.CurrentProject.Designer;
+        }
+        else
+        {
+            DesignerInputField.text = LimSystem.Preferences.Designer;
+        }
     }
     public void SetTexts()
     {

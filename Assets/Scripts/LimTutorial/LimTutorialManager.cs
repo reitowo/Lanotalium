@@ -9,6 +9,7 @@ using System;
 
 public class LimTutorialManager : MonoBehaviour
 {
+    public bool EnableInEditor;
     public List<LimTutorialAsset> TutorialAssets;
     public GameObject FullScreenMask;
     public Text ContentText;
@@ -26,6 +27,7 @@ public class LimTutorialManager : MonoBehaviour
 
     private void Start()
     {
+        if(Application.platform == RuntimePlatform.WindowsEditor && !EnableInEditor) return;
         ContentTextStatic = ContentText;
         FullScreenMaskStatic = FullScreenMask;
         TutorialList = TutorialAssets.ToArray();
@@ -35,6 +37,7 @@ public class LimTutorialManager : MonoBehaviour
     }
     private void Update()
     {
+        if (Application.platform == RuntimePlatform.WindowsEditor && !EnableInEditor) return;
         if (IsShowing)
         {
             if (Input.GetMouseButtonUp(0))
@@ -45,6 +48,7 @@ public class LimTutorialManager : MonoBehaviour
     }
     private void OnDestroy()
     {
+        if (Application.platform == RuntimePlatform.WindowsEditor && !EnableInEditor) return;
         File.WriteAllText(ShownTutorialSavePath, JsonConvert.SerializeObject(ShownTutorial));
     }
 

@@ -6,6 +6,7 @@ using Lanotalium.Service.Cloud;
 using System.IO;
 using System;
 using System.Diagnostics;
+using System.Net;
 
 public class LimCloudManager : MonoBehaviour
 {
@@ -109,11 +110,11 @@ public class LimCloudManager : MonoBehaviour
     }
     IEnumerator GetLastModifyTimeInternal(string FileName, Text TargetText)
     {
-        WWWForm RequestForm = new WWWForm();
-        RequestForm.AddField("UserId", UserId);
-        RequestForm.AddField("FileName", FileName);
-        RequestForm.AddField("ProjectName", LimSystem.ChartContainer.ChartProperty.ChartName);
-        WWW GetMTime = new WWW(LimSystem.LanotaliumServer + "/lanotalium/cloud/LimCloudGetMTime.php", RequestForm);
+        WWWForm Form = new WWWForm();
+        Form.AddField("UserId", UserId);
+        Form.AddField("FileName", FileName);
+        Form.AddField("ProjectName", LimProjectManager.CurrentProject.Name);
+        WWW GetMTime = new WWW(LimSystem.LanotaliumServer + "/lanotalium/cloud/LimCloudGetMTime.php", Form.data, Form.headers);
         yield return GetMTime;
         if (GetMTime.text == "Not Uploaded Before") TargetText.text = LimLanguageManager.TextDict["Cloud_GetMTime_NotUploadedBefore"];
         else

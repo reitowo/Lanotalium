@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LimTopMenuManager : MonoBehaviour
 {
     public LimProjectManager ProjectManager;
+    public WindowsDialogUtility DialogUtility;
     public GameObject FilePanel, WindowPanel, SettingPanel, PluginPanel, ChartConvertPanel;
     public Text FileText;
     public Text NewProjectText, OpenProjectText, SaveProjectText, SaveAsProjectText, ExitText;
@@ -20,6 +22,7 @@ public class LimTopMenuManager : MonoBehaviour
     public Text ChartConvertText;
     public Text ChartConvertBmsText;
     public Text TopText;
+    public Text ChartZoneText;
 
     private void Start()
     {
@@ -49,6 +52,7 @@ public class LimTopMenuManager : MonoBehaviour
         PluginCenterText.text = LimLanguageManager.TextDict["TopMenu_Plugin_PluginCenter"];
         ChartConvertText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert"];
         ChartConvertBmsText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert_Bms"];
+        ChartZoneText.text = LimLanguageManager.TextDict["TopMenu_ChartZone"];
     }
     public void OpenFileMenu()
     {
@@ -96,5 +100,13 @@ public class LimTopMenuManager : MonoBehaviour
     public void OpenChartConvertMenu()
     {
         ChartConvertPanel.SetActive(!ChartConvertPanel.activeInHierarchy);
+    }
+    public void GotoChartZone()
+    {
+        DialogUtility.MessageBox.ShowMessage(LimLanguageManager.TextDict["TopMenu_ChartZone_MessageBox"],
+            new MessageBoxManager.MessageBoxCallBack(() => {
+                LimChartZoneManager.FromScene = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(3);
+            }));
     }
 }

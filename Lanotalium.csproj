@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F9FB416B-927F-614F-59BD-12E03D898691}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
+    <UnityVersion>2017.1.1f1</UnityVersion>
+    <RootNamespace></RootNamespace>
+    <LangVersion>6</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoConfig>true</NoConfig>
+    <NoStdLib>true</NoStdLib>
+    <AddAdditionalExplicitAssemblyReferences>false</AddAdditionalExplicitAssemblyReferences>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_1_1;UNITY_2017_1;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_1_1;UNITY_2017_1;UNITY_2017;PLATFORM_ARCH_64;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_DIRECTOR;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_TIMELINE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;ENABLE_SPRITE_MASKING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;ENABLE_MONO_BDWGC;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_VIDEO;ENABLE_RMGUI;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_STYLE_SHEETS;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_4_6;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>E:\Program Files\Unity2017.1.1f1\Editor\Data\MonoBleedingEdge\lib\mono\4.5\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>E:\Program Files\Unity2017.1.1f1\Editor\Data\MonoBleedingEdge\lib\mono\4.5\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.XML">
+      <HintPath>E:\Program Files\Unity2017.1.1f1\Editor\Data\MonoBleedingEdge\lib\mono\4.5\System.XML.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>E:\Program Files\Unity2017.1.1f1\Editor\Data\MonoBleedingEdge\lib\mono\4.5\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>E:\Program Files\Unity2017.1.1f1\Editor\Data\MonoBleedingEdge\lib\mono\4.5\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <HintPath>E:\Program Files\Unity2017.1.1f1\Editor\Data\MonoBleedingEdge\lib\mono\4.5\System.Runtime.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <HintPath>E:\Program Files\Unity2017.1.1f1\Editor\Data\MonoBleedingEdge\lib\mono\4.5\System.Xml.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Timeline">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Analytics">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.HoloLens">
+      <HintPath>E:/Program Files/Unity2017.1.1f1/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+    </Reference>
+    <Reference Include="DragAndDrop">
+      <HintPath>Assets/Plugins/DragAndDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Assets/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets/Plugins/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Vorbis">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NAudio.Vorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>Assets/Scripts/Schwarzer/Chart/Plugins/NVorbis.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Scripts\LimChartZone\LimChartBarManager.cs" />
+    <Compile Include="Assets\Scripts\LimChartZone\LimChartZoneManager.cs" />
+    <Compile Include="Assets\Scripts\LimFirstRun\LimFirstRunManager.cs" />
+    <Compile Include="Assets\Scripts\LimLaunch\LimLaunchManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Language\LimLanguageManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\LimEditorManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Operation\LimOperationManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Project\LimProjectManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Service\LimCloudManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Arranger\LimWindowArranger.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Base\LimWindowManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\LimCreatorManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\Base\LimCreatorToolBase.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\LimAngleLineManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\LimClickToCreateManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\LimCopierManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\LimGizmoMotionManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentBasicManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentBpmManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentDefaultManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentHoldNoteManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentJointManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentMotionManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentScrollSpeedManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentTypeManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\TimeValuePairManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\LimInspectorManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\MediaPlayer\LimMediaPlayerManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\MediaPlayer\Tools\LimWorkingBGMManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Preferences\LimPreferencesManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Spectrum\LimSpectrumManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Spectrum\Tools\LimSpectrumBarManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TimeLine\LimTimeLineManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TimeLine\Tools\LimWaveformManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TopMenu\LimTopMenuManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TunerWindow\LimTunerWindowManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TunerWindow\Tools\LimiOSReplayKitManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Utilities\LimBoxSelectionManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimAnalytics.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimAutosaver.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimChartConverting.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimDisplayManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimEditableText.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimExceptionManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimHighPermission.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMathUtil.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMouseOverHint.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMousePosition.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimNoteCounter.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimNotifyIcon.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimQuitBox.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimScanTime.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimUpdateDetector.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimPlugin\LimPluginManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimSystem.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Effects\LimAudioEffectManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\LimTunerManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimBackgroundManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimBpmManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimCameraManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimHoldNoteManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimScrollManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimTapNoteManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimTuner\UI\LimTunerHeadManager.cs" />
+    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialAsset.cs" />
+    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialComponent.cs" />
+    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialManager.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\BMSChart.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\BMSEvent.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\BMSResourceData.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\Chart.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\EventDispatcher.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\Utils\Base36.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\Bemusilization\Utils\BinarySearch.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\BMS\BmsChartHandler.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\ChartConvert.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Chart\Lanota\LanotaChartHandler.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Dialogs\Unity\MessageBox\MessageBoxManager.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Dialogs\Unity\ProgressBar\ProgressBarManager.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\Dialogs\Windows\WindowsDialogUtility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Extras\IOS\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
+    <None Include="Assets\Extras\IOS\JsonDotNet\link.xml" />
+    <None Include="Assets\StreamingAssets\Language\LimLangPkg_En.txt" />
+    <None Include="Assets\StreamingAssets\Language\LimLangPkg_ZhCn.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="GenerateTargetFrameworkMonikerAttribute" />
+</Project>

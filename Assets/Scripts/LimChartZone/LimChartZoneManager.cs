@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 
 public class LimChartZoneManager : MonoBehaviour
 {
+    public static int FromScene = 0;
     public static bool OpenDownloadedChart = false;
     public static string DownloadedChartLapPath = string.Empty;
     public static string BilibiliVideoPrefix = "https://www.bilibili.com/video/";
@@ -95,6 +96,6 @@ public class LimChartZoneManager : MonoBehaviour
 
     public void BackToLaunch()
     {
-        SceneManager.LoadScene("LimLaunch");
+        SceneManager.LoadScene(FromScene);
     }
 }

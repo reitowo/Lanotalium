@@ -117,6 +117,8 @@ Preferences_AudioEffect$Audio Effect
 Preferences_AudioEffectTheme$Effect Theme
 Preferences_Unsafe$Unsafe Motion
 Preferences_WorkingBGM$Pausing BGM
+TopMenu_ChartZone$ChartZone
+TopMenu_ChartZone_MessageBox$Will lost everything not saved, guarantee you have saved.
 TopMenu_File$File
 TopMenu_File_NewProject$New Project...
 TopMenu_File_OpenProject$Open Project...
