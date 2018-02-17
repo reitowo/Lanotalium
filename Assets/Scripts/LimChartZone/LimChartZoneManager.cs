@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
+using System.IO;
 
 public class LimChartZoneManager : MonoBehaviour
 {
@@ -37,11 +38,35 @@ public class LimChartZoneManager : MonoBehaviour
     }
     IEnumerator GetChartList()
     {
-        WWW ChartList = new WWW(LimSystem.LanotaliumServer + "/lanotalium/chartzone/ChartList.json");
-        yield return ChartList;
-        List<Lanotalium.ChartZone.ChartZoneChart> Charts = JsonConvert.DeserializeObject<List<Lanotalium.ChartZone.ChartZoneChart>>(ChartList.text);
+        #region Seed
+        /*List<Lanotalium.ChartZone.ChartZoneChart> charts = JsonConvert.DeserializeObject<List<Lanotalium.ChartZone.ChartZoneChart>>(File.ReadAllText(@"H:\Server\html\lanotalium\chartzone\ChartList.json"));
+        foreach (var chart in charts)
+        {
+            yield return LimChartZoneWebApi.AddChart(new LimChartZoneWebApi.ChartDto()
+            {
+                ChartName = chart.ChartName,
+                Designer = chart.Designer,
+                NoteCount = chart.NoteCount,
+                Size = chart.Size,
+                BilibiliAvIndex = chart.BilibiliAvIndex
+            });
+        }
+        Dictionary<string, int> rat = JsonConvert.DeserializeObject<Dictionary<string, int>>(File.ReadAllText(@"H:\Server\html\lanotalium\chartzone\Modelista\Rating.json"));
+        foreach (string key in rat.Keys)
+        {
+            LimChartZoneWebApi.Rating rating = new LimChartZoneWebApi.Rating
+            {
+                Rate = rat[key],
+                UserId = key
+            };
+            yield return LimChartZoneWebApi.PostRating(14, rating);
+        }*/
+        #endregion
+        Ref<List<LimChartZoneWebApi.ChartDto>> Charts = new Ref<List<LimChartZoneWebApi.ChartDto>>();
+        yield return LimChartZoneWebApi.GetAllCharts(Charts);
+
         int HeightCount = 0;
-        foreach (Lanotalium.ChartZone.ChartZoneChart Chart in Charts)
+        foreach (LimChartZoneWebApi.ChartDto Chart in Charts.Reference)
         {
             GameObject tGO = Instantiate(ChartBarPrefab, ChartListContent);
             tGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, HeightCount);

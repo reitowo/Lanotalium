@@ -2,7 +2,8 @@
     "name": "Schwarzer.Lanotalium",
     "references": [
         "Schwarzer.Dialogs",
-        "Schwarzer.Chart"
+        "Schwarzer.Chart",
+        "Schwarzer.WebApi"
     ],
     "includePlatforms": [],
     "excludePlatforms": []

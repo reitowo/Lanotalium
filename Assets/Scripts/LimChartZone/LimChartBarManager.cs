@@ -20,7 +20,7 @@ public class LimChartBarManager : MonoBehaviour
     private float QrCodeAnimateDuration = 0.25f;
     private Coroutine QrCodeAnimateCoroutine;
 
-    public Lanotalium.ChartZone.ChartZoneChart Data = new Lanotalium.ChartZone.ChartZoneChart();
+    public LimChartZoneWebApi.ChartDto Data = new LimChartZoneWebApi.ChartDto();
     public int UserRating;
     public float OnlineRating;
     public string Name
@@ -46,12 +46,14 @@ public class LimChartBarManager : MonoBehaviour
         RatingText.text = string.Format("{0} : {1} | {2} : {3}", LimLanguageManager.TextDict["ChartZone_Rating_You"], UserRating, LimLanguageManager.TextDict["ChartZone_Rating_Online"], OnlineRating == 0 ? "-.-" : OnlineRating.ToString("f1"));
     }
 
-    public void Initialize(Lanotalium.ChartZone.ChartZoneChart Data)
+    public void Initialize(LimChartZoneWebApi.ChartDto Data)
     {
         this.Data = Data;
         BilibiliUrl = string.Format("{0}av{1}", LimChartZoneManager.BilibiliVideoPrefix, Data.BilibiliAvIndex.ToString());
         StartCoroutine(GetBilibiliQrCode());
-        StartCoroutine(GetRating());
+        OnlineRating = (float)Data.AvgRating;
+        RatingSlider.value = OnlineRating;
+        UserRating = Data.UsrRating;
         ChartNameText.text = Data.ChartName;
         DesignerText.text = Data.Designer;
         NoteCountText.text = Data.NoteCount.ToString();
@@ -123,58 +125,49 @@ public class LimChartBarManager : MonoBehaviour
         isDownloading = false;
     }
 
-    private bool isReceivingUserRating = false;
     public void ReceiveUserRating()
     {
-        isReceivingUserRating = true;
         RatingSlider.interactable = true;
         RatingSlider.wholeNumbers = true;
         RatingSlider.value = UserRating;
-        RatingSlider.onValueChanged.AddListener(OnRatingChange);
     }
     public void ShowOnlineRating()
     {
-        isReceivingUserRating = false;
-        RatingSlider.onValueChanged.RemoveAllListeners();
         RatingSlider.interactable = false;
         RatingSlider.wholeNumbers = false;
         RatingSlider.value = OnlineRating;
     }
-    public void OnRatingChange(float Value)
+    public void OnRatingChange()
     {
         if (!isInitialized) return;
-        bool Post = false;
-        if (UserRating != Value) Post = true;
-        UserRating = Mathf.RoundToInt(Value);
-        if (Post) StartPostRating();
-    }
-    public void StartPostRating()
-    {
-        if (!isInitialized) return;
+        UserRating = Mathf.RoundToInt(RatingSlider.value);
         StartCoroutine(PostRating());
     }
     IEnumerator PostRating()
     {
-        WWWForm Form = new WWWForm();
-        Form.AddField("ChartName", Data.ChartName);
-        Form.AddField("Rating", UserRating.ToString());
-        Form.AddField("UserId", SystemInfo.deviceUniqueIdentifier);
-        WWW Rating = new WWW(LimSystem.LanotaliumServer + "/lanotalium/chartzone/ChartZonePostRating.php", Form);
-        yield return Rating;
-        StartCoroutine(GetRating());
+        yield return LimChartZoneWebApi.PostRating(Data.Id, new LimChartZoneWebApi.Rating() { Rate = UserRating, UserId = SystemInfo.deviceUniqueIdentifier });
+        yield return GetRating();
     }
     IEnumerator GetRating()
     {
-        WWWForm Form = new WWWForm();
+        Ref<LimChartZoneWebApi.ChartDto> DataRef = new Ref<LimChartZoneWebApi.ChartDto>();
+        yield return LimChartZoneWebApi.GetChartById(Data.Id, DataRef);
+        Data = DataRef.Reference;
+        OnlineRating = (float)Data.AvgRating;
+        RatingSlider.value = OnlineRating;
+        UserRating = Data.UsrRating;
+
+        /*WWWForm Form = new WWWForm();
         Form.AddField("ChartName", Data.ChartName);
         WWW Rating = new WWW(LimSystem.LanotaliumServer + "/lanotalium/chartzone/ChartZoneGetRating.php", Form);
         yield return Rating;
-        float.TryParse(Rating.text, out OnlineRating);
+        UnityEngine.Debug.Log(Rating.text);
+
         if (!isReceivingUserRating) RatingSlider.value = OnlineRating;
         Form.AddField("UserId", SystemInfo.deviceUniqueIdentifier);
         Rating = new WWW(LimSystem.LanotaliumServer + "/lanotalium/chartzone/ChartZoneGetRating.php", Form);
         yield return Rating;
-        int.TryParse(Rating.text, out UserRating);
+        int.TryParse(Rating.text, out UserRating);*/
     }
 
     public void StartShowQrCode()

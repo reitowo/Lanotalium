@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwarzer.Dialogs", "Schwar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwarzer.Chart", "Schwarzer.Chart.csproj", "{9CFBFEE5-30E2-390C-0671-E7343568AFBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwarzer.WebApi", "Schwarzer.WebApi.csproj", "{ECAECBA1-3EC5-62AB-644B-C606BB4D6731}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{9CFBFEE5-30E2-390C-0671-E7343568AFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CFBFEE5-30E2-390C-0671-E7343568AFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CFBFEE5-30E2-390C-0671-E7343568AFBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECAECBA1-3EC5-62AB-644B-C606BB4D6731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECAECBA1-3EC5-62AB-644B-C606BB4D6731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECAECBA1-3EC5-62AB-644B-C606BB4D6731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECAECBA1-3EC5-62AB-644B-C606BB4D6731}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

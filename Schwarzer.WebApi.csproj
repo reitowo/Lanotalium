@@ -5,9 +5,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5C95C291-710A-6922-7D20-C2644597570C}</ProjectGuid>
+    <ProjectGuid>{ECAECBA1-3EC5-62AB-644B-C606BB4D6731}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Schwarzer.Lanotalium</AssemblyName>
+    <AssemblyName>Schwarzer.WebApi</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
@@ -318,88 +318,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Schwarzer.Dialogs.csproj">
-      <Project>{FAE7C25A-3B42-2C8C-AEE6-C640A827DDB4}</Project>
-      <Name>Schwarzer.Dialogs</Name>
-    </ProjectReference>
-    <ProjectReference Include="Schwarzer.Chart.csproj">
-      <Project>{9CFBFEE5-30E2-390C-0671-E7343568AFBE}</Project>
-      <Name>Schwarzer.Chart</Name>
-    </ProjectReference>
-    <ProjectReference Include="Schwarzer.WebApi.csproj">
-      <Project>{ECAECBA1-3EC5-62AB-644B-C606BB4D6731}</Project>
-      <Name>Schwarzer.WebApi</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Assets\Scripts\LimChartZone\LimChartBarManager.cs" />
-    <Compile Include="Assets\Scripts\LimChartZone\LimChartZoneManager.cs" />
-    <Compile Include="Assets\Scripts\LimChartZone\LimChartZoneWebApi.cs" />
-    <Compile Include="Assets\Scripts\LimFirstRun\LimFirstRunManager.cs" />
-    <Compile Include="Assets\Scripts\LimLaunch\LimLaunchManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Language\LimLanguageManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\LimEditorManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Operation\LimOperationManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Project\LimProjectManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Service\LimCloudManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Arranger\LimWindowArranger.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Base\LimWindowManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\LimCreatorManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\Base\LimCreatorToolBase.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\LimAngleLineManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\LimClickToCreateManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\LimCopierManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Creator\Tools\LimGizmoMotionManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentBasicManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentBpmManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentDefaultManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentHoldNoteManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentJointManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentMotionManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentScrollSpeedManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\ComponentTypeManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\Components\TimeValuePairManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Inspector\LimInspectorManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\MediaPlayer\LimMediaPlayerManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\MediaPlayer\Tools\LimWorkingBGMManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Preferences\LimPreferencesManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Spectrum\LimSpectrumManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Spectrum\Tools\LimSpectrumBarManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TimeLine\LimTimeLineManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TimeLine\Tools\LimWaveformManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TopMenu\LimTopMenuManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TunerWindow\LimTunerWindowManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TunerWindow\Tools\LimiOSReplayKitManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Utilities\LimBoxSelectionManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimAnalytics.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimAutosaver.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimChartConverting.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimDisplayManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimEditableText.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimExceptionManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimHighPermission.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMathUtil.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMouseOverHint.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimMousePosition.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimNoteCounter.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimNotifyIcon.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimQuitBox.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimScanTime.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimHelpers\LimUpdateDetector.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimPlugin\LimPluginManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimSystem.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Effects\LimAudioEffectManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\LimTunerManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimBackgroundManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimBpmManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimCameraManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimHoldNoteManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimScrollManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\Managers\LimTapNoteManager.cs" />
-    <Compile Include="Assets\Scripts\LimSystem\LimTuner\UI\LimTunerHeadManager.cs" />
-    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialAsset.cs" />
-    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialComponent.cs" />
-    <Compile Include="Assets\Scripts\LimTutorial\LimTutorialManager.cs" />
+    <Compile Include="Assets\Scripts\Schwarzer\WebApi\WebApiHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Extras\IOS\JsonDotNet\Assemblies\AOT\Newtonsoft.Json.XML" />
