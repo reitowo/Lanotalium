@@ -1,14 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using UnityEngine;
-using UnityEngine.UI;
-using System.Threading.Tasks;
-using UnityEngine.SceneManagement;
+using Lanotalium.ChartZone.WebApi;
 #if UNITY_IOS
 using System.IO.Compression;
 #endif
+using UnityEngine;
+using UnityEngine.UI;
 
 public class LimChartBarManager : MonoBehaviour
 {
@@ -20,7 +18,7 @@ public class LimChartBarManager : MonoBehaviour
     private float QrCodeAnimateDuration = 0.25f;
     private Coroutine QrCodeAnimateCoroutine;
 
-    public LimChartZoneWebApi.ChartDto Data = new LimChartZoneWebApi.ChartDto();
+    public ChartDto Data = new ChartDto();
     public int UserRating;
     public float OnlineRating;
     public string Name
@@ -39,14 +37,14 @@ public class LimChartBarManager : MonoBehaviour
     }
 
     public string BilibiliUrl;
-    private bool isInitialized = false;
+    private bool _IsInitialized = false;
 
     private void Update()
     {
         RatingText.text = string.Format("{0} : {1} | {2} : {3}", LimLanguageManager.TextDict["ChartZone_Rating_You"], UserRating, LimLanguageManager.TextDict["ChartZone_Rating_Online"], OnlineRating == 0 ? "-.-" : OnlineRating.ToString("f1"));
     }
 
-    public void Initialize(LimChartZoneWebApi.ChartDto Data)
+    public void Initialize(ChartDto Data)
     {
         this.Data = Data;
         BilibiliUrl = string.Format("{0}av{1}", LimChartZoneManager.BilibiliVideoPrefix, Data.BilibiliAvIndex.ToString());
@@ -58,7 +56,7 @@ public class LimChartBarManager : MonoBehaviour
         DesignerText.text = Data.Designer;
         NoteCountText.text = Data.NoteCount.ToString();
         SizeText.text = Data.Size;
-        isInitialized = true;
+        _IsInitialized = true;
     }
     IEnumerator GetBilibiliQrCode()
     {
@@ -74,7 +72,7 @@ public class LimChartBarManager : MonoBehaviour
     }
     public void StartDownloadChart()
     {
-        if (!isInitialized) return;
+        if (!_IsInitialized) return;
         if (isDownloading) return;
         StartCoroutine(DownloadChart());
     }
@@ -139,18 +137,18 @@ public class LimChartBarManager : MonoBehaviour
     }
     public void OnRatingChange()
     {
-        if (!isInitialized) return;
+        if (!_IsInitialized) return;
         UserRating = Mathf.RoundToInt(RatingSlider.value);
         StartCoroutine(PostRating());
     }
     IEnumerator PostRating()
     {
-        yield return LimChartZoneWebApi.PostRating(Data.Id, new LimChartZoneWebApi.Rating() { Rate = UserRating, UserId = SystemInfo.deviceUniqueIdentifier });
+        yield return LimChartZoneWebApi.PostRating(Data.Id, new Rating() { Rate = UserRating, UserId = SystemInfo.deviceUniqueIdentifier });
         yield return GetRating();
     }
     IEnumerator GetRating()
     {
-        Ref<LimChartZoneWebApi.ChartDto> DataRef = new Ref<LimChartZoneWebApi.ChartDto>();
+        ObjectWrap<ChartDto> DataRef = new ObjectWrap<ChartDto>();
         yield return LimChartZoneWebApi.GetChartById(Data.Id, DataRef);
         Data = DataRef.Reference;
         OnlineRating = (float)Data.AvgRating;

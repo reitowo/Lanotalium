@@ -3,7 +3,8 @@
     "references": [
         "Schwarzer.Dialogs",
         "Schwarzer.Chart",
-        "Schwarzer.WebApi"
+        "Schwarzer.WebApi",
+        "Schwarzer.Unity"
     ],
     "includePlatforms": [],
     "excludePlatforms": []

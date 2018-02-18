@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Analytics;
 using UnityEngine.UI;
+using Schwarzer.Lanotalium.WebApi.Analytics;
 
 public class LimOperationManager : MonoBehaviour
 {
@@ -17,34 +18,34 @@ public class LimOperationManager : MonoBehaviour
     public List<Lanotalium.Chart.LanotaTapNote> SelectedTapNote = new List<Lanotalium.Chart.LanotaTapNote>();
     public List<Lanotalium.Chart.LanotaHoldNote> SelectedHoldNote = new List<Lanotalium.Chart.LanotaHoldNote>();
     public List<Lanotalium.Chart.LanotaCameraBase> SelectedMotions = new List<Lanotalium.Chart.LanotaCameraBase>();
-    private List<Lanotalium.Editor.OperationSave> OperationSaver = new List<Lanotalium.Editor.OperationSave>();
-    private int CurrentOperationSaverPosition = -1;
+    private List<Lanotalium.Editor.OperationSave> _OperationSaver = new List<Lanotalium.Editor.OperationSave>();
+    private int _CurrentOperationSaverPosition = -1;
 
     public void AddToOperationSaver(Lanotalium.Editor.OperationSave OpSave)
     {
-        if (CurrentOperationSaverPosition != OperationSaver.Count - 1)
+        if (_CurrentOperationSaverPosition != _OperationSaver.Count - 1)
         {
-            for (int i = OperationSaver.Count - 1; i > CurrentOperationSaverPosition; --i)
+            for (int i = _OperationSaver.Count - 1; i > _CurrentOperationSaverPosition; --i)
             {
-                OperationSaver.RemoveAt(i);
+                _OperationSaver.RemoveAt(i);
             }
         }
-        OperationSaver.Add(OpSave);
-        CurrentOperationSaverPosition = OperationSaver.Count - 1;
+        _OperationSaver.Add(OpSave);
+        _CurrentOperationSaverPosition = _OperationSaver.Count - 1;
     }
     public void Undo()
     {
-        if (OperationSaver.Count == 0) return;
-        if (CurrentOperationSaverPosition == -1) return;
-        OperationSaver[CurrentOperationSaverPosition].Reverse();
-        CurrentOperationSaverPosition = Mathf.Clamp(CurrentOperationSaverPosition - 1, -1, OperationSaver.Count - 1);
+        if (_OperationSaver.Count == 0) return;
+        if (_CurrentOperationSaverPosition == -1) return;
+        _OperationSaver[_CurrentOperationSaverPosition].Reverse();
+        _CurrentOperationSaverPosition = Mathf.Clamp(_CurrentOperationSaverPosition - 1, -1, _OperationSaver.Count - 1);
     }
     public void Redo()
     {
-        if (OperationSaver.Count == 0) return;
-        if (CurrentOperationSaverPosition == OperationSaver.Count - 1) return;
-        CurrentOperationSaverPosition = Mathf.Clamp(CurrentOperationSaverPosition + 1, -1, OperationSaver.Count - 1);
-        OperationSaver[CurrentOperationSaverPosition].Forward();
+        if (_OperationSaver.Count == 0) return;
+        if (_CurrentOperationSaverPosition == _OperationSaver.Count - 1) return;
+        _CurrentOperationSaverPosition = Mathf.Clamp(_CurrentOperationSaverPosition + 1, -1, _OperationSaver.Count - 1);
+        _OperationSaver[_CurrentOperationSaverPosition].Forward();
     }
 
     private void Update()
@@ -248,6 +249,7 @@ public class LimOperationManager : MonoBehaviour
     }
     public void AddTapNote(Lanotalium.Chart.LanotaTapNote TapNoteData, bool SaveOperation = true, bool SelectNote = false, bool CallSelectNothing = true)
     {
+        LimApiAnalytics.GatherAnalysis("CreateTapNote");
         TunerManager.TapNoteManager.InstantiateNote(TapNoteData);
         TunerManager.TapNoteManager.TapNote.Add(TapNoteData);
         TunerManager.TapNoteManager.SortTapNoteList();
@@ -357,6 +359,7 @@ public class LimOperationManager : MonoBehaviour
     }
     public void AddHoldNote(Lanotalium.Chart.LanotaHoldNote HoldNoteData, bool SaveOperation = true, bool SelectNote = false, bool CallSelectNothing = true)
     {
+        LimApiAnalytics.GatherAnalysis("CreateHoldNote");
         TunerManager.HoldNoteManager.InstantiateHeadNote(HoldNoteData);
         TunerManager.HoldNoteManager.InstantiateAllJointNote(HoldNoteData);
         TunerManager.HoldNoteManager.HoldNote.Add(HoldNoteData);
@@ -841,6 +844,7 @@ public class LimOperationManager : MonoBehaviour
     }
     public bool AddHorizontal(Lanotalium.Chart.LanotaCameraXZ Hor, bool AutoDuration = true, bool SaveOperation = true, bool CallSelectNothing = true)
     {
+        LimApiAnalytics.GatherAnalysis("CreateHorizontal");
         if (CheckNewHorizontalTimeExisted(Hor))
         {
             LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"]);
@@ -872,6 +876,7 @@ public class LimOperationManager : MonoBehaviour
     }
     public bool AddVertical(Lanotalium.Chart.LanotaCameraY Ver, bool AutoDuration = true, bool SaveOperation = true, bool CallSelectNothing = true)
     {
+        LimApiAnalytics.GatherAnalysis("CreateVertical");
         if (CheckNewVerticalTimeExisted(Ver))
         {
             LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"]);
@@ -903,6 +908,7 @@ public class LimOperationManager : MonoBehaviour
     }
     public bool AddRotation(Lanotalium.Chart.LanotaCameraRot Rot, bool AutoDuration = true, bool SaveOperation = true, bool CallSelectNothing = true)
     {
+        LimApiAnalytics.GatherAnalysis("CreateRotation");
         if (CheckNewRotationTimeExisted(Rot))
         {
             LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Motion_TimeExisted"]);
@@ -1243,6 +1249,7 @@ public class LimOperationManager : MonoBehaviour
     }
     public void AddBpm(Lanotalium.Chart.LanotaChangeBpm BpmData, bool SaveOperation = true)
     {
+        LimApiAnalytics.GatherAnalysis("CreateBpm");
         if (CheckNewBpmTimeExisted(BpmData)) return;
         TunerManager.BpmManager.Bpm.Add(BpmData);
         TunerManager.BpmManager.SortBpmList();
@@ -1397,6 +1404,7 @@ public class LimOperationManager : MonoBehaviour
     }
     public void AddScrollSpeed(Lanotalium.Chart.LanotaScroll ScrollData, bool SaveOperation = true)
     {
+        LimApiAnalytics.GatherAnalysis("CreateScrollSpeed");
         if (CheckNewScrollTimeExisted(ScrollData)) return;
         TunerManager.ScrollManager.Scroll.Add(ScrollData);
         TunerManager.ScrollManager.SortScrollList();

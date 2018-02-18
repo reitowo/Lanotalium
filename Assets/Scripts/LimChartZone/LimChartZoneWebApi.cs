@@ -6,12 +6,7 @@ using Schwarzer.Lanotalium.WebApi;
 using System.Net;
 using System.IO;
 
-public class Ref<T>
-{
-    public T Reference;
-}
-
-public static class LimChartZoneWebApi
+namespace Lanotalium.ChartZone.WebApi
 {
     public class Chart
     {
@@ -41,26 +36,31 @@ public static class LimChartZoneWebApi
         public int Rate { get; set; }
     }
 
-    public static IEnumerator GetAllCharts(Ref<List<ChartDto>> charts)
+    public static class LimChartZoneWebApi
     {
-        WWW Get = new WWW("http://api.lanotalium.cn/chartzone/charts/enum/" + SystemInfo.deviceUniqueIdentifier);
-        yield return Get;
-        //Debug.Log(Get.text);
-        charts.Reference = JsonConvert.DeserializeObject<List<ChartDto>>(Get.text);
-    }
-    public static IEnumerator GetChartById(int id, Ref<ChartDto> chartDto)
-    {
-        WWW Get = new WWW("http://api.lanotalium.cn/chartzone/charts/get/" + SystemInfo.deviceUniqueIdentifier + "/" + id.ToString());
-        yield return Get;
-        //Debug.Log(Get.text);
-        chartDto.Reference = JsonConvert.DeserializeObject<ChartDto>(Get.text);
-    }
-    public static IEnumerator AddChart(ChartDto chart)
-    {
-        yield return WebApiHelper.Post("chartzone/charts/add", chart);
-    }
-    public static IEnumerator PostRating(int id, Rating rating)
-    {
-        yield return WebApiHelper.Post("chartzone/charts/rating/set/" + id.ToString(), rating);
+        public static IEnumerator GetAllCharts(ObjectWrap<List<ChartDto>> charts)
+        {
+            WWW Get = new WWW("http://api.lanotalium.cn/chartzone/charts/enum/" + SystemInfo.deviceUniqueIdentifier);
+            yield return Get;
+            //Debug.Log(Get.text);
+            charts.Reference = JsonConvert.DeserializeObject<List<ChartDto>>(Get.text);
+        }
+        public static IEnumerator GetChartById(int id, ObjectWrap<ChartDto> chartDto)
+        {
+            WWW Get = new WWW("http://api.lanotalium.cn/chartzone/charts/get/" + SystemInfo.deviceUniqueIdentifier + "/" + id.ToString());
+            yield return Get;
+            //Debug.Log(Get.text);
+            chartDto.Reference = JsonConvert.DeserializeObject<ChartDto>(Get.text);
+        }
+        public static IEnumerator AddChart(ChartDto chart)
+        {
+            yield return WebApiHelper.PostObjectCoroutine("chartzone/charts/add", chart);
+        }
+        public static IEnumerator PostRating(int id, Rating rating)
+        {
+            yield return WebApiHelper.PostObjectCoroutine("chartzone/charts/rating/set/" + id.ToString(), rating);
+        }
     }
 }
+
+

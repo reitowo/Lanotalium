@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 using System.IO;
+using Lanotalium.ChartZone.WebApi;
 
 public class LimChartZoneManager : MonoBehaviour
 {
@@ -62,11 +63,11 @@ public class LimChartZoneManager : MonoBehaviour
             yield return LimChartZoneWebApi.PostRating(14, rating);
         }*/
         #endregion
-        Ref<List<LimChartZoneWebApi.ChartDto>> Charts = new Ref<List<LimChartZoneWebApi.ChartDto>>();
+        ObjectWrap<List<ChartDto>> Charts = new ObjectWrap<List<ChartDto>>();
         yield return LimChartZoneWebApi.GetAllCharts(Charts);
 
         int HeightCount = 0;
-        foreach (LimChartZoneWebApi.ChartDto Chart in Charts.Reference)
+        foreach (ChartDto Chart in Charts.Reference)
         {
             GameObject tGO = Instantiate(ChartBarPrefab, ChartListContent);
             tGO.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, HeightCount);

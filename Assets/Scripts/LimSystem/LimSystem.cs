@@ -5,6 +5,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System;
 using UnityEngine.Events;
+using Schwarzer.Lanotalium.WebApi.User;
 
 namespace Lanotalium
 {
@@ -1060,7 +1061,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 42;
+        public int Build = 43;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1080,8 +1081,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.8.11";
-    public static int Build = 42;
+    public static string Version = "v1.8.12";
+    public static int Build = 43;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
@@ -1158,7 +1159,7 @@ public class LimSystem : MonoBehaviour
 #if UNITY_EDITOR
         //if (File.Exists(PreferencesSavePath)) File.Delete(PreferencesSavePath);
 #endif
-        
+        StartReportingAlive();
         if (Directory.Exists(AppDataRoaming + "/Updator")) Directory.Delete(AppDataRoaming + "/Updator", true);
         if (!Directory.Exists(AppDataRoaming)) Directory.CreateDirectory(AppDataRoaming);
         RestorePreferences();
@@ -1169,12 +1170,26 @@ public class LimSystem : MonoBehaviour
 #endif
     }
 
-    private string LastLog;
+    protected void StartReportingAlive()
+    {
+        if (ReportAliveCoroutine != null) StopCoroutine(ReportAliveCoroutine);
+        ReportAliveCoroutine = StartCoroutine(ReportAlive());
+    }
+    protected Coroutine ReportAliveCoroutine;
+    protected IEnumerator ReportAlive()
+    {
+        while(true)
+        {
+            LimApiUser.ReportAlive(Version);
+            yield return new WaitForSeconds(60);
+        }
+    }
+    private string _LastLog;
     private void ReceiveUnityLog(string condition, string stackTrace, LogType type)
     {
-        if (condition == LastLog) return;
+        if (condition == _LastLog) return;
         LimNotifyIcon.ShowMessage(condition);
-        LastLog = condition;
+        _LastLog = condition;
     }
 
     private void OnDestroy()
