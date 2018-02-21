@@ -179,7 +179,7 @@ namespace Lanotalium
 
             public void SetSpritesActive(bool Active)
             {
-                foreach(SpriteRenderer s in HoldNoteGameObject.GetComponentsInChildren<SpriteRenderer>())
+                foreach (SpriteRenderer s in HoldNoteGameObject.GetComponentsInChildren<SpriteRenderer>())
                 {
                     s.enabled = Active;
                 }
@@ -1061,7 +1061,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 43;
+        public int Build = 44;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1081,8 +1081,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.8.12";
-    public static int Build = 43;
+    public static string Version = "v1.8.13";
+    public static int Build = 44;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
@@ -1132,6 +1132,7 @@ public class LimSystem : MonoBehaviour
             Preferences.HideWhatsNew = false;
             Preferences.DoNotRunAsAdmin = false;
             Preferences.LapInjected = false;
+            if (Build == 44) EditorManager.ResetEditorLayout();
         }
         Preferences.Build = Build;
         if (!File.Exists(EditorLayoutSavePath)) return;
@@ -1178,7 +1179,7 @@ public class LimSystem : MonoBehaviour
     protected Coroutine ReportAliveCoroutine;
     protected IEnumerator ReportAlive()
     {
-        while(true)
+        while (true)
         {
             LimApiUser.ReportAlive(Version);
             yield return new WaitForSeconds(60);

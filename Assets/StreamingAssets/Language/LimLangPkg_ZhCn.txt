@@ -234,6 +234,18 @@ Updator_DeltaFileSize$增量升级: {0}
 Updator_FullFileSize$无法增量升级，需要下载完整包: {0}
 ChartConverting_BmsTitle$选择Bms谱面
 ChartConverting_BmsExtension$Bms谱面(*.bms,*.bme,*.bml,*.pms)|*.bms;*.bme;*.bml;*.pms
+Status$状态
+Status_LoadProject$请先加载工程
+Status_TunerStatus$调律器状态
+Status_Rotation$旋转
+Status_Height$高度
+Status_Coordinate_Polar$位置(极坐标)
+Status_Coordinate_Rect$位置(直角坐标)
+Status_ChartStatus$谱面状态
+Status_TapNote$普通按键数
+Status_HoldNote$长条数
+Status_CurrentBpm$当前BPM
+Status_CurrentSpeed$当前谱面速度
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建

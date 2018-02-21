@@ -35,6 +35,15 @@ public class LimChartBarManager : MonoBehaviour
             return Data.Designer;
         }
     }
+    public float Size
+    {
+        get
+        {
+            float _Size = 0;
+            float.TryParse(Data.Size.Replace(" MB", ""), out _Size);
+            return _Size;
+        }
+    }
 
     public string BilibiliUrl;
     private bool _IsInitialized = false;

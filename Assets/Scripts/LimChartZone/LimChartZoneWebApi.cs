@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Schwarzer.Lanotalium.WebApi;
 using System.Net;
 using System.IO;
+using System;
 
 namespace Lanotalium.ChartZone.WebApi
 {
@@ -43,7 +44,14 @@ namespace Lanotalium.ChartZone.WebApi
             WWW Get = new WWW("http://api.lanotalium.cn/chartzone/charts/enum/" + SystemInfo.deviceUniqueIdentifier);
             yield return Get;
             //Debug.Log(Get.text);
-            charts.Reference = JsonConvert.DeserializeObject<List<ChartDto>>(Get.text);
+            try
+            {
+                charts.Reference = JsonConvert.DeserializeObject<List<ChartDto>>(Get.text);
+            }
+            catch (Exception Ex)
+            {
+                Debug.Log(Ex);
+            }
         }
         public static IEnumerator GetChartById(int id, ObjectWrap<ChartDto> chartDto)
         {

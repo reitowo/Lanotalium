@@ -9,24 +9,24 @@ public class LimBoxSelectionManager : MonoBehaviour
     public RectTransform BoxSelectionPanel;
     public RectTransform UsingWindow;
     public LimTunerManager TunerManager;
-
-    private bool enable = true;
-    private Vector2 AnchorPosition;
-    private bool ShouldDraw = false;
+    public LimGizmoMotionManager GizmoMotionManager;
+    private bool _Enable = true;
+    private Vector2 _AnchorPosition;
+    private bool _ShouldDraw = false;
 
     public bool Enable
     {
         get
         {
-            return enable;
+            return _Enable;
         }
         set
         {
-            enable = value;
+            _Enable = value;
             if (!value)
             {
                 BoxSelectionPanel.sizeDelta = new Vector2();
-                ShouldDraw = false;
+                _ShouldDraw = false;
             }
         }
     }
@@ -42,6 +42,7 @@ public class LimBoxSelectionManager : MonoBehaviour
     {
         if (!TunerManager.isInitialized) return;
         if (!Enable) return;
+        if (GizmoMotionManager.IsOpen) return;
         DrawBoxSelectionArea();
     }
     private void DrawBoxSelectionArea()
@@ -49,22 +50,22 @@ public class LimBoxSelectionManager : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             BoxSelectionPanel.sizeDelta = new Vector2();
-            ShouldDraw = false;
+            _ShouldDraw = false;
         }
         Vector2 MousePositionInWindow = LimMousePosition.MousePositionInWindow(UsingWindow);
         if (Input.GetMouseButtonDown(0) && LimMousePosition.IsMouseOverWindow(UsingWindow))
         {
             BoxSelectionPanel.sizeDelta = new Vector2();
             BoxSelectionPanel.anchoredPosition = new Vector2(MousePositionInWindow.x, MousePositionInWindow.y);
-            AnchorPosition = BoxSelectionPanel.anchoredPosition;
-            ShouldDraw = true;
+            _AnchorPosition = BoxSelectionPanel.anchoredPosition;
+            _ShouldDraw = true;
         }
-        if (!ShouldDraw) return;
+        if (!_ShouldDraw) return;
         if (Input.GetMouseButton(0) && LimMousePosition.IsMouseOverWindow(UsingWindow))
         {
-            BoxSelectionPanel.sizeDelta = new Vector2(Mathf.Abs(MousePositionInWindow.x - AnchorPosition.x), Mathf.Abs(AnchorPosition.y - MousePositionInWindow.y));
-            BoxSelectionPanel.anchoredPosition = new Vector2(MousePositionInWindow.x > AnchorPosition.x ? AnchorPosition.x : MousePositionInWindow.x,
-                AnchorPosition.y > MousePositionInWindow.y ? AnchorPosition.y : MousePositionInWindow.y);
+            BoxSelectionPanel.sizeDelta = new Vector2(Mathf.Abs(MousePositionInWindow.x - _AnchorPosition.x), Mathf.Abs(_AnchorPosition.y - MousePositionInWindow.y));
+            BoxSelectionPanel.anchoredPosition = new Vector2(MousePositionInWindow.x > _AnchorPosition.x ? _AnchorPosition.x : MousePositionInWindow.x,
+                _AnchorPosition.y > MousePositionInWindow.y ? _AnchorPosition.y : MousePositionInWindow.y);
         }
     }
     public Vector2 TunerScreenToWindowPosition(Vector3 ScreenPosition, RectTransform Window)

@@ -18,12 +18,12 @@ public class LimLanguageManager : MonoBehaviour
     public static Dictionary<string, string> HintDict;
     public static Dictionary<string, string> TutorialDict;
 
-    private string LanguagePackageFolder;
+    private string _LanguagePackageFolder;
 
     void Start()
     {
         LanguagePackages = new Dictionary<string, Lanotalium.Editor.LanguagePackage>();
-        LanguagePackageFolder = Application.streamingAssetsPath + "/Language";
+        _LanguagePackageFolder = Application.streamingAssetsPath + "/Language";
         LoadAllLanguagePackages();
         CollectSetTextsDelegates();
         SetLanguage(LimSystem.Preferences.LanguageName);
@@ -52,7 +52,7 @@ public class LimLanguageManager : MonoBehaviour
     }
     private void LoadAllLanguagePackages()
     {
-        string[] Paths = Directory.GetFiles(LanguagePackageFolder);
+        string[] Paths = Directory.GetFiles(_LanguagePackageFolder);
         foreach (string Path in Paths) LoadPackageFromFile(Path);
     }
     public void CollectSetTextsDelegates()
@@ -82,6 +82,7 @@ public class LimLanguageManager : MonoBehaviour
             SetTextDelegates.Add(EditorManager.TopMenu.ProjectManager.SetTexts);
             SetTextDelegates.Add(EditorManager.SetTexts);
             SetTextDelegates.Add(EditorManager.SpectrumWindow.SetTexts);
+            SetTextDelegates.Add(EditorManager.StatusManager.SetTexts);
         }
         if (ChartZoneManager != null)
         {

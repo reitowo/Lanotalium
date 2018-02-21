@@ -409,7 +409,7 @@ public class LimTimeLineManager : MonoBehaviour
         CurrentOrder = Order;
         WaveformManager.LineL.sortingOrder = Order + 1;
         WaveformManager.LineR.sortingOrder = Order + 1;
-        foreach(LineRenderer lineRenderer in TimeLineBeatLines)
+        foreach (LineRenderer lineRenderer in TimeLineBeatLines)
         {
             lineRenderer.sortingOrder = Order + 2;
         }

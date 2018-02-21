@@ -369,6 +369,7 @@
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Preferences\LimPreferencesManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Spectrum\LimSpectrumManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Spectrum\Tools\LimSpectrumBarManager.cs" />
+    <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\Status\LimStatusManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TimeLine\LimTimeLineManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TimeLine\Tools\LimWaveformManager.cs" />
     <Compile Include="Assets\Scripts\LimSystem\LimEditor\Windows\TopMenu\LimTopMenuManager.cs" />

@@ -79,23 +79,19 @@ public class FileSize
         B = ByteCount;
     }
 }
-public class ValueRef<T>
-{
-    public T Value;
-}
 public class LimUpdateDetector : MonoBehaviour
 {
     public LimProjectManager ProjectManager;
     public RectTransform Banner;
     public Text LabelText, VersionText, WhatsNewText, UpdateText, IgnoreText, FileSizeText;
-    private Coroutine BannerAnimationCoroutine;
-    private bool DeltaUpdate = false;
+    private Coroutine _BannerAnimationCoroutine;
+    private bool _DeltaUpdate = false;
 
     private void Start()
     {
         StartCoroutine(CheckUpdateCoroutine());
     }
-    IEnumerator GetWebFileLength(ValueRef<long> Length, string FileUri)
+    IEnumerator GetWebFileLength(ObjectWrap<long> Length, string FileUri)
     {
         HttpWebRequest Request = (HttpWebRequest)WebRequest.CreateDefault(new Uri(FileUri));
         Request.Method = "HEAD";
@@ -107,17 +103,17 @@ public class LimUpdateDetector : MonoBehaviour
             HttpWebResponse Response = AsyncResponse.Result as HttpWebResponse;
             if (Response.StatusCode == HttpStatusCode.OK)
             {
-                Length.Value = Response.ContentLength;
+                Length.Reference = Response.ContentLength;
             }
             else
             {
-                Length.Value = -1;
+                Length.Reference = -1;
             }
             Response.Close();
         }
-        catch(Exception)
+        catch (Exception)
         {
-            Length.Value = -1;
+            Length.Reference = -1;
         }
     }
     IEnumerator CheckUpdateCoroutine()
@@ -143,18 +139,18 @@ public class LimUpdateDetector : MonoBehaviour
                 }
                 #endregion
                 #region Get Filesize
-                ValueRef<long> Filesize = new ValueRef<long>();
+                ObjectWrap<long> Filesize = new ObjectWrap<long>();
                 yield return GetWebFileLength(Filesize, LimSystem.LanotaliumServer + "/lanotalium/updator/patch/" + LimSystem.Version + ".lapatch");
-                if (Filesize.Value == -1 || !Environment.Is64BitProcess)
+                if (Filesize.Reference == -1 || !Environment.Is64BitProcess)
                 {
-                    ValueRef<long> FullFilesize = new ValueRef<long>();
+                    ObjectWrap<long> FullFilesize = new ObjectWrap<long>();
                     yield return GetWebFileLength(FullFilesize, LimSystem.LanotaliumServer + "/lanotalium/full/Lanotalium_Latest.zip");
-                    FileSizeText.text = string.Format(LimLanguageManager.TextDict["Updator_FullFileSize"], new FileSize(FullFilesize.Value).StrMB);
+                    FileSizeText.text = string.Format(LimLanguageManager.TextDict["Updator_FullFileSize"], new FileSize(FullFilesize.Reference).StrMB);
                 }
                 else
                 {
-                    FileSizeText.text = string.Format(LimLanguageManager.TextDict["Updator_DeltaFileSize"], new FileSize(Filesize.Value).StrKB);
-                    DeltaUpdate = true;
+                    FileSizeText.text = string.Format(LimLanguageManager.TextDict["Updator_DeltaFileSize"], new FileSize(Filesize.Reference).StrKB);
+                    _DeltaUpdate = true;
                 }
                 #endregion
                 StartBannerAnimation(true);
@@ -170,7 +166,7 @@ public class LimUpdateDetector : MonoBehaviour
     public void DownloadUpdate()
     {
         ProjectManager.SaveProject();
-        if (DeltaUpdate)
+        if (_DeltaUpdate)
         {
             if (!File.Exists(Application.streamingAssetsPath + "/Updator/Newtonsoft.Json.dll"))
                 File.Copy(Application.dataPath + "/Managed/Newtonsoft.Json.dll", Application.streamingAssetsPath + "/Updator/Newtonsoft.Json.dll", true);
@@ -189,9 +185,9 @@ public class LimUpdateDetector : MonoBehaviour
     }
     public void StartBannerAnimation(bool Show)
     {
-        if (BannerAnimationCoroutine != null) StopCoroutine(BannerAnimationCoroutine);
-        if (Show) BannerAnimationCoroutine = StartCoroutine(ShowBannerCoroutine());
-        else BannerAnimationCoroutine = StartCoroutine(HideBannerCoroutine());
+        if (_BannerAnimationCoroutine != null) StopCoroutine(_BannerAnimationCoroutine);
+        if (Show) _BannerAnimationCoroutine = StartCoroutine(ShowBannerCoroutine());
+        else _BannerAnimationCoroutine = StartCoroutine(HideBannerCoroutine());
     }
     IEnumerator ShowBannerCoroutine()
     {

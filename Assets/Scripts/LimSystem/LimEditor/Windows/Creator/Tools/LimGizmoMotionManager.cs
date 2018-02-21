@@ -26,15 +26,22 @@ public class LimGizmoMotionManager : MonoBehaviour
     {
         ResetGizmoMotionEditor();
     }
+    public bool IsOpen
+    {
+        get
+        {
+            return gameObject.activeInHierarchy;
+        }
+    }
     public bool UseType8
     {
         get
         {
-            return Tp8;
+            return _Tp8;
         }
         set
         {
-            Tp8 = value;
+            _Tp8 = value;
             if (value)
             {
                 if (UseType11) UseType11 = false;
@@ -50,7 +57,7 @@ public class LimGizmoMotionManager : MonoBehaviour
                 Tp8Btn.color = UnPressedColor;
                 RadiusInput.interactable = false;
                 DegreeInput.interactable = false;
-                if (Mode == Lanotalium.Editor.GizmoMotionMode.Horizontal) UseType11 = true;
+                if (_Mode == Lanotalium.Editor.GizmoMotionMode.Horizontal) UseType11 = true;
             }
         }
     }
@@ -58,11 +65,11 @@ public class LimGizmoMotionManager : MonoBehaviour
     {
         get
         {
-            return Tp10;
+            return _Tp10;
         }
         set
         {
-            Tp10 = value;
+            _Tp10 = value;
             if (value)
             {
                 Tp10Btn.color = PressedColor;
@@ -82,11 +89,11 @@ public class LimGizmoMotionManager : MonoBehaviour
     {
         get
         {
-            return Tp11;
+            return _Tp11;
         }
         set
         {
-            Tp11 = value;
+            _Tp11 = value;
             if (value)
             {
                 if (UseType8) UseType8 = false;
@@ -102,7 +109,7 @@ public class LimGizmoMotionManager : MonoBehaviour
                 Tp11Btn.color = UnPressedColor;
                 RadiusInput.interactable = false;
                 DegreeInput.interactable = false;
-                if (Mode == Lanotalium.Editor.GizmoMotionMode.Horizontal) UseType8 = true;
+                if (_Mode == Lanotalium.Editor.GizmoMotionMode.Horizontal) UseType8 = true;
             }
         }
     }
@@ -110,11 +117,11 @@ public class LimGizmoMotionManager : MonoBehaviour
     {
         get
         {
-            return Tp13;
+            return _Tp13;
         }
         set
         {
-            Tp13 = value;
+            _Tp13 = value;
             if (value)
             {
                 Tp13Btn.color = PressedColor;
@@ -134,16 +141,16 @@ public class LimGizmoMotionManager : MonoBehaviour
     {
         get
         {
-            return ModeMove;
+            return _ModeMove;
         }
         set
         {
-            ModeMove = value;
+            _ModeMove = value;
             if (value)
             {
                 UseRotate = false;
                 UseInput = false;
-                UsingMode = MoveModeUpdate;
+                _UsingMode = MoveModeUpdate;
                 MoveBtn.color = PressedColor;
                 if (UseType8 || UseType11) RadiusInput.interactable = false;
                 if (UseType8 || UseType11) DegreeInput.interactable = false;
@@ -153,7 +160,7 @@ public class LimGizmoMotionManager : MonoBehaviour
             }
             else
             {
-                UsingMode = null;
+                _UsingMode = null;
                 MoveBtn.color = UnPressedColor;
                 CameraManager.DisableCameraUpdate = false;
             }
@@ -163,16 +170,16 @@ public class LimGizmoMotionManager : MonoBehaviour
     {
         get
         {
-            return ModeRotate;
+            return _ModeRotate;
         }
         set
         {
-            ModeRotate = value;
+            _ModeRotate = value;
             if (value)
             {
                 UseMove = false;
                 UseInput = false;
-                UsingMode = RotateModeUpdate;
+                _UsingMode = RotateModeUpdate;
                 RotateBtn.color = PressedColor;
                 if (UseType8 || UseType11) RadiusInput.interactable = false;
                 if (UseType8 || UseType11) DegreeInput.interactable = false;
@@ -182,7 +189,7 @@ public class LimGizmoMotionManager : MonoBehaviour
             }
             else
             {
-                UsingMode = null;
+                _UsingMode = null;
                 RotateBtn.color = UnPressedColor;
                 CameraManager.DisableCameraUpdate = false;
             }
@@ -192,16 +199,16 @@ public class LimGizmoMotionManager : MonoBehaviour
     {
         get
         {
-            return ModeInput;
+            return _ModeInput;
         }
         set
         {
-            ModeInput = value;
+            _ModeInput = value;
             if (value)
             {
                 UseMove = false;
                 UseRotate = false;
-                UsingMode = InputModeUpdate;
+                _UsingMode = InputModeUpdate;
                 InputBtn.color = PressedColor;
                 if (UseType8 || UseType11) RadiusInput.interactable = true;
                 if (UseType8 || UseType11) DegreeInput.interactable = true;
@@ -211,7 +218,7 @@ public class LimGizmoMotionManager : MonoBehaviour
             }
             else
             {
-                UsingMode = null;
+                _UsingMode = null;
                 InputBtn.color = UnPressedColor;
                 if (UseType8 || UseType11) RadiusInput.interactable = false;
                 if (UseType8 || UseType11) DegreeInput.interactable = false;
@@ -223,31 +230,31 @@ public class LimGizmoMotionManager : MonoBehaviour
     }
     public bool EditMode;
 
-    private bool Tp8, Tp10, Tp11, Tp13, ModeMove, ModeRotate, ModeInput = true, isPointerinTunerWindow = false;
-    private Lanotalium.Editor.GizmoEditMode UsingMode = null;
-    private Vector3 LastMousePosition;
-    private float TimeToCreate;
-    private Lanotalium.Editor.GizmoMotionMode Mode = Lanotalium.Editor.GizmoMotionMode.Create;
-    private Lanotalium.Chart.LanotaCameraXZ HorReference;
-    private Lanotalium.Chart.LanotaCameraY VerReference;
-    private Lanotalium.Chart.LanotaCameraRot RotReference;
+    private bool _Tp8, _Tp10, _Tp11, _Tp13, _ModeMove, _ModeRotate, _ModeInput = true, _IsPointerinTunerWindow = false;
+    private Lanotalium.Editor.GizmoEditMode _UsingMode = null;
+    private Vector3 _LastMousePosition;
+    private float _TimeToCreate;
+    private Lanotalium.Editor.GizmoMotionMode _Mode = Lanotalium.Editor.GizmoMotionMode.Create;
+    private Lanotalium.Chart.LanotaCameraXZ _HorReference;
+    private Lanotalium.Chart.LanotaCameraY _VerReference;
+    private Lanotalium.Chart.LanotaCameraRot _RotReference;
 
     private void Update()
     {
         if (LimSystem.ChartContainer == null || !TunerManager.isInitialized) return;
-        if (UsingMode != null) UsingMode();
+        if (_UsingMode != null) _UsingMode();
         if (!UseInput) SetTunerStatusToInputField();
         SetStartStatusToText();
         SetTimeToInputField();
         SetMotionPreviewer();
-        LastMousePosition = Input.mousePosition;
+        _LastMousePosition = Input.mousePosition;
     }
 
     public void ResetGizmoMotionEditor()
     {
         CameraManager.DisableCameraUpdate = false;
         if (MotionPreviewer != null) MotionPreviewer.positionCount = 0;
-        Mode = Lanotalium.Editor.GizmoMotionMode.Idle;
+        _Mode = Lanotalium.Editor.GizmoMotionMode.Idle;
         UseType8 = false;
         UseType10 = false;
         UseType11 = false;
@@ -275,7 +282,7 @@ public class LimGizmoMotionManager : MonoBehaviour
     }
     public void OnClickTp8()
     {
-        if (EditMode && Mode != Lanotalium.Editor.GizmoMotionMode.Horizontal) return;
+        if (EditMode && _Mode != Lanotalium.Editor.GizmoMotionMode.Horizontal) return;
         if (UseType8) UseType8 = false;
         else UseType8 = true;
     }
@@ -287,7 +294,7 @@ public class LimGizmoMotionManager : MonoBehaviour
     }
     public void OnClickTp11()
     {
-        if (EditMode && Mode != Lanotalium.Editor.GizmoMotionMode.Horizontal) return;
+        if (EditMode && _Mode != Lanotalium.Editor.GizmoMotionMode.Horizontal) return;
         if (UseType11) UseType11 = false;
         else UseType11 = true;
     }
@@ -315,14 +322,14 @@ public class LimGizmoMotionManager : MonoBehaviour
 
     public void MoveModeUpdate()
     {
-        if (!isPointerinTunerWindow) return;
+        if (!_IsPointerinTunerWindow) return;
         Vector3 Old = TunerCamera.transform.position;
         if (UseType10) TunerCamera.transform.position = new Vector3(Old.x, Old.y + Input.GetAxis("Mouse ScrollWheel") * (Input.GetKey(KeyCode.LeftControl) ? 50 : 5), Old.z);
         if (Input.GetMouseButton(0) && (UseType8 || UseType11))
         {
             Vector3 MousePosition = Input.mousePosition;
             Vector3 WorldMousePosition = TunerCamera.ScreenToWorldPoint(new Vector3(MousePosition.x, MousePosition.y, -Old.y));
-            Vector3 WorldLastMousePosition = TunerCamera.ScreenToWorldPoint(new Vector3(LastMousePosition.x, LastMousePosition.y, -Old.y));
+            Vector3 WorldLastMousePosition = TunerCamera.ScreenToWorldPoint(new Vector3(_LastMousePosition.x, _LastMousePosition.y, -Old.y));
             Vector3 Delta = WorldLastMousePosition - WorldMousePosition;
             TunerCamera.transform.position = new Vector3(Old.x + Delta.x, Old.y, Old.z + Delta.z);
         }
@@ -330,7 +337,7 @@ public class LimGizmoMotionManager : MonoBehaviour
     }
     public void RotateModeUpdate()
     {
-        if (!isPointerinTunerWindow) return;
+        if (!_IsPointerinTunerWindow) return;
         Vector3 Old = TunerGameObject.transform.rotation.eulerAngles;
         if (Input.GetMouseButton(0))
         {
@@ -339,14 +346,14 @@ public class LimGizmoMotionManager : MonoBehaviour
             Vector3 MousePosition = Input.mousePosition;
             MousePosition.x -= TunerWindowRect.anchoredPosition.x;
             MousePosition.y -= (Screen.height - TunerWindowRect.anchoredPosition.y - TunerWindowRect.sizeDelta.y);
-            LastMousePosition.x -= TunerWindowRect.anchoredPosition.x;
-            LastMousePosition.y -= (Screen.height - TunerWindowRect.anchoredPosition.y - TunerWindowRect.sizeDelta.y);
-            float Angle = Vector3.Angle(MousePosition - CenterPosition, LastMousePosition - CenterPosition);
-            bool Clockwise = Vector3.Cross(MousePosition - CenterPosition, LastMousePosition - CenterPosition).z > 0 ? true : false;
+            _LastMousePosition.x -= TunerWindowRect.anchoredPosition.x;
+            _LastMousePosition.y -= (Screen.height - TunerWindowRect.anchoredPosition.y - TunerWindowRect.sizeDelta.y);
+            float Angle = Vector3.Angle(MousePosition - CenterPosition, _LastMousePosition - CenterPosition);
+            bool Clockwise = Vector3.Cross(MousePosition - CenterPosition, _LastMousePosition - CenterPosition).z > 0 ? true : false;
             TunerGameObject.transform.rotation = Quaternion.Euler(new Vector3(0, Old.y + (Clockwise ? -1 : 1) * Angle * (Input.GetKey(KeyCode.LeftControl) ? 3 : 1), 0));
             CameraManager.CurrentRotation = TunerGameObject.transform.rotation.eulerAngles.y;
-            LastMousePosition.x += TunerWindowRect.anchoredPosition.x;
-            LastMousePosition.y += (Screen.height - TunerWindowRect.anchoredPosition.y - TunerWindowRect.sizeDelta.y);
+            _LastMousePosition.x += TunerWindowRect.anchoredPosition.x;
+            _LastMousePosition.y += (Screen.height - TunerWindowRect.anchoredPosition.y - TunerWindowRect.sizeDelta.y);
         }
         SetTunerStatusToInputField();
     }
@@ -409,9 +416,9 @@ public class LimGizmoMotionManager : MonoBehaviour
     private void SetStartStatusToText()
     {
         float Rou, Theta;
-        CameraManager.CalculateCameraHorizontal(TimeToCreate, out Rou, out Theta);
-        float Height = CameraManager.CalculateCameraVertical(TimeToCreate);
-        float Rotation = CameraManager.CalculateCameraRotation(TimeToCreate);
+        CameraManager.CalculateCameraHorizontal(_TimeToCreate, out Rou, out Theta);
+        float Height = CameraManager.CalculateCameraVertical(_TimeToCreate);
+        float Rotation = CameraManager.CalculateCameraRotation(_TimeToCreate);
         BeginRadiusText.text = Rou.ToString();
         BeginDegreeText.text = Theta.ToString();
         BeginHeightText.text = Height.ToString();
@@ -475,7 +482,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         { DurationImg.color = InvalidColor; return; }
         else DurationImg.color = ValidColor;
         DurationImg.color = ValidColor;
-        TimeEndInput.text = (TimeToCreate + Duration).ToString();
+        TimeEndInput.text = (_TimeToCreate + Duration).ToString();
     }
     public void OnTimeStartChange()
     {
@@ -492,7 +499,7 @@ public class LimGizmoMotionManager : MonoBehaviour
             return;
         }
         TimeStartImg.color = ValidColor;
-        TimeToCreate = TimeTmp;
+        _TimeToCreate = TimeTmp;
         OnDurationChange();
         if (TunerManager.MediaPlayerManager.IsPlaying) TunerManager.MediaPlayerManager.Time = TimeTmp;
     }
@@ -505,27 +512,27 @@ public class LimGizmoMotionManager : MonoBehaviour
             TimeEndImg.color = InvalidColor;
             return;
         }
-        if (TimeTmp < TimeToCreate + 0.0001f)
+        if (TimeTmp < _TimeToCreate + 0.0001f)
         {
             TimeEndImg.color = InvalidColor;
             return;
         }
         TimeEndImg.color = ValidColor;
-        DurationInput.text = (TimeTmp - TimeToCreate).ToString();
+        DurationInput.text = (TimeTmp - _TimeToCreate).ToString();
     }
     public void OnPointerEnterTunerWindow()
     {
-        isPointerinTunerWindow = true;
+        _IsPointerinTunerWindow = true;
     }
     public void OnPointerExitTunerWindow()
     {
-        isPointerinTunerWindow = false;
+        _IsPointerinTunerWindow = false;
     }
 
     public void Create()
     {
         ResetGizmoMotionEditor();
-        Mode = Lanotalium.Editor.GizmoMotionMode.Create;
+        _Mode = Lanotalium.Editor.GizmoMotionMode.Create;
         EditMode = false;
         UseType8 = false;
         UseType10 = false;
@@ -535,7 +542,7 @@ public class LimGizmoMotionManager : MonoBehaviour
         UseRotate = false;
         UseInput = true;
         TimeStartInput.text = TunerManager.ChartTime.ToString();
-        TimeToCreate = TunerManager.ChartTime;
+        _TimeToCreate = TunerManager.ChartTime;
         SetStartStatusToText();
         DurationInput.text = 1.ToString();
         EaseInput.text = 0.ToString();
@@ -546,9 +553,9 @@ public class LimGizmoMotionManager : MonoBehaviour
     public void Edit(Lanotalium.Chart.LanotaCameraXZ Hor)
     {
         ResetGizmoMotionEditor();
-        Mode = Lanotalium.Editor.GizmoMotionMode.Horizontal;
+        _Mode = Lanotalium.Editor.GizmoMotionMode.Horizontal;
         EditMode = true;
-        HorReference = Hor;
+        _HorReference = Hor;
         if (Hor.Type == 8) UseType8 = true;
         else UseType8 = false;
         UseType10 = false;
@@ -559,10 +566,10 @@ public class LimGizmoMotionManager : MonoBehaviour
         UseRotate = false;
         UseInput = true;
         TimeStartInput.text = Hor.Time.ToString();
-        TimeToCreate = Hor.Time;
+        _TimeToCreate = Hor.Time;
         SetStartStatusToText();
         DurationInput.text = Hor.Duration.ToString();
-        TimeEndInput.text = (TimeToCreate + Hor.Duration).ToString();
+        TimeEndInput.text = (_TimeToCreate + Hor.Duration).ToString();
         EaseInput.text = Hor.cfmi.ToString();
         if (UseType8)
         {
@@ -582,9 +589,9 @@ public class LimGizmoMotionManager : MonoBehaviour
     public void Edit(Lanotalium.Chart.LanotaCameraY Ver)
     {
         ResetGizmoMotionEditor();
-        Mode = Lanotalium.Editor.GizmoMotionMode.Vertical;
+        _Mode = Lanotalium.Editor.GizmoMotionMode.Vertical;
         EditMode = true;
-        VerReference = Ver;
+        _VerReference = Ver;
         UseType8 = false;
         UseType10 = true;
         UseType11 = false;
@@ -593,10 +600,10 @@ public class LimGizmoMotionManager : MonoBehaviour
         UseRotate = false;
         UseInput = true;
         TimeStartInput.text = Ver.Time.ToString();
-        TimeToCreate = Ver.Time;
+        _TimeToCreate = Ver.Time;
         SetStartStatusToText();
         DurationInput.text = Ver.Duration.ToString();
-        TimeEndInput.text = (TimeToCreate + Ver.Duration).ToString();
+        TimeEndInput.text = (_TimeToCreate + Ver.Duration).ToString();
         EaseInput.text = Ver.cfmi.ToString();
         float BeginHeight;
         if (!float.TryParse(BeginHeightText.text, out BeginHeight)) return;
@@ -606,9 +613,9 @@ public class LimGizmoMotionManager : MonoBehaviour
     public void Edit(Lanotalium.Chart.LanotaCameraRot Rot)
     {
         ResetGizmoMotionEditor();
-        Mode = Lanotalium.Editor.GizmoMotionMode.Rotation;
+        _Mode = Lanotalium.Editor.GizmoMotionMode.Rotation;
         EditMode = true;
-        RotReference = Rot;
+        _RotReference = Rot;
         UseType8 = false;
         UseType10 = false;
         UseType11 = false;
@@ -617,10 +624,10 @@ public class LimGizmoMotionManager : MonoBehaviour
         UseRotate = false;
         UseInput = true;
         TimeStartInput.text = Rot.Time.ToString();
-        TimeToCreate = Rot.Time;
+        _TimeToCreate = Rot.Time;
         SetStartStatusToText();
         DurationInput.text = Rot.Duration.ToString();
-        TimeEndInput.text = (TimeToCreate + Rot.Duration).ToString();
+        TimeEndInput.text = (_TimeToCreate + Rot.Duration).ToString();
         EaseInput.text = Rot.cfmi.ToString();
         float BeginRotation;
         if (!float.TryParse(BeginRotationText.text, out BeginRotation)) return;
@@ -674,55 +681,55 @@ public class LimGizmoMotionManager : MonoBehaviour
         else EaseImg.color = ValidColor;
         if (EditMode)
         {
-            if (Mode == Lanotalium.Editor.GizmoMotionMode.Horizontal)
+            if (_Mode == Lanotalium.Editor.GizmoMotionMode.Horizontal)
             {
-                if (!OperationManager.CheckHorizontalTimeValid(HorReference, Time))
+                if (!OperationManager.CheckHorizontalTimeValid(_HorReference, Time))
                 { TimeStartImg.color = InvalidColor; return; }
                 else TimeStartImg.color = ValidColor;
-                OperationManager.SetHorizontalTime(HorReference, Time);
-                if (!OperationManager.CheckHorizontalDurationValid(HorReference, Duration))
+                OperationManager.SetHorizontalTime(_HorReference, Time);
+                if (!OperationManager.CheckHorizontalDurationValid(_HorReference, Duration))
                 { DurationImg.color = InvalidColor; return; }
                 else DurationImg.color = ValidColor;
-                OperationManager.SetHorizontalDuration(HorReference, Duration);
+                OperationManager.SetHorizontalDuration(_HorReference, Duration);
                 if (UseType8)
                 {
-                    OperationManager.SetHorizontalDegree(HorReference, Deg - StartT);
-                    OperationManager.SetHorizontalRadius(HorReference, Rad - StartR);
+                    OperationManager.SetHorizontalDegree(_HorReference, Deg - StartT);
+                    OperationManager.SetHorizontalRadius(_HorReference, Rad - StartR);
                 }
                 else if (UseType11)
                 {
-                    OperationManager.SetHorizontalDegree(HorReference, Deg);
-                    OperationManager.SetHorizontalRadius(HorReference, Rad);
+                    OperationManager.SetHorizontalDegree(_HorReference, Deg);
+                    OperationManager.SetHorizontalRadius(_HorReference, Rad);
                 }
-                OperationManager.SetHorizontalEase(HorReference, Ease);
-                if (UseType8) OperationManager.SetHorizontalType(HorReference, 8);
-                else if (UseType11) OperationManager.SetHorizontalType(HorReference, 11);
+                OperationManager.SetHorizontalEase(_HorReference, Ease);
+                if (UseType8) OperationManager.SetHorizontalType(_HorReference, 8);
+                else if (UseType11) OperationManager.SetHorizontalType(_HorReference, 11);
             }
-            else if (Mode == Lanotalium.Editor.GizmoMotionMode.Vertical)
+            else if (_Mode == Lanotalium.Editor.GizmoMotionMode.Vertical)
             {
-                if (!OperationManager.CheckVerticalTimeValid(VerReference, Time))
+                if (!OperationManager.CheckVerticalTimeValid(_VerReference, Time))
                 { TimeStartImg.color = InvalidColor; return; }
                 else TimeStartImg.color = ValidColor;
-                OperationManager.SetVerticalTime(VerReference, Time);
-                if (!OperationManager.CheckVerticalDurationValid(VerReference, Duration))
+                OperationManager.SetVerticalTime(_VerReference, Time);
+                if (!OperationManager.CheckVerticalDurationValid(_VerReference, Duration))
                 { DurationImg.color = InvalidColor; return; }
                 else DurationImg.color = ValidColor;
-                OperationManager.SetVerticalDuration(VerReference, Duration);
-                OperationManager.SetVerticalHeight(VerReference, Hei - StartH);
-                OperationManager.SetVerticalEase(VerReference, Ease);
+                OperationManager.SetVerticalDuration(_VerReference, Duration);
+                OperationManager.SetVerticalHeight(_VerReference, Hei - StartH);
+                OperationManager.SetVerticalEase(_VerReference, Ease);
             }
-            else if (Mode == Lanotalium.Editor.GizmoMotionMode.Rotation)
+            else if (_Mode == Lanotalium.Editor.GizmoMotionMode.Rotation)
             {
-                if (!OperationManager.CheckRotationTimeValid(RotReference, Time))
+                if (!OperationManager.CheckRotationTimeValid(_RotReference, Time))
                 { TimeStartImg.color = InvalidColor; return; }
                 else TimeStartImg.color = ValidColor;
-                OperationManager.SetRotationTime(RotReference, Time);
-                if (!OperationManager.CheckRotationDurationValid(RotReference, Duration))
+                OperationManager.SetRotationTime(_RotReference, Time);
+                if (!OperationManager.CheckRotationDurationValid(_RotReference, Duration))
                 { DurationImg.color = InvalidColor; return; }
                 else DurationImg.color = ValidColor;
-                OperationManager.SetRotationDuration(RotReference, Duration);
-                OperationManager.SetRotationDegree(RotReference, Rot - StartRotation);
-                OperationManager.SetRotationEase(RotReference, Ease);
+                OperationManager.SetRotationDuration(_RotReference, Duration);
+                OperationManager.SetRotationDegree(_RotReference, Rot - StartRotation);
+                OperationManager.SetRotationEase(_RotReference, Ease);
             }
         }
         else if (!EditMode)

@@ -15,6 +15,7 @@ public class LimEditorManager : MonoBehaviour
     public LimCloudManager CloudManager;
     public LimPluginManager PluginManager;
     public LimTopMenuManager TopMenu;
+    public LimStatusManager StatusManager;
 
     public GameObject WhatsNew, NewCn, NewEn;
     public Toggle WhatsNewHideToggle;
@@ -27,13 +28,16 @@ public class LimEditorManager : MonoBehaviour
         TunerWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(0, -60);
         TimeLineWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(0, -860);
         CreatorWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(1000, -60);
-        SpectrumWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(1000, -655);
+        SpectrumWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(0, -655);
+        StatusManager.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(1000, -655);
+
         MusicPlayerWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(500, 190);
         InspectorWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(500, 800);
         TunerWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(1000, 562.5f);
-        TimeLineWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(1420, 220);
+        TimeLineWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(1000, 220);
         CreatorWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(420, 562.5f);
         SpectrumWindow.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(420, 175);
+        StatusManager.BaseWindow.WindowRectTransform.sizeDelta = new Vector2(420, 425);
     }
     public void RestoreEditorLayout()
     {

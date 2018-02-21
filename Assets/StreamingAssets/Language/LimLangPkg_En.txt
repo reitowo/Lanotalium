@@ -234,6 +234,18 @@ Updator_DeltaFileSize$Delta update: {0}
 Updator_FullFileSize$Unable to delta update, full size update needed: {0}
 ChartConverting_BmsTitle$Select a Bms Chart
 ChartConverting_BmsExtension$Bms Chart(*.bms,*.bme,*.bml,*.pms)|*.bms;*.bme;*.bml;*.pms
+Status$Status
+Status_LoadProject$Load Project First
+Status_TunerStatus$Tuner Status
+Status_Rotation$Rotation
+Status_Height$Height
+Status_Coordinate_Polar$Position in (ρ,θ)
+Status_Coordinate_Rect$Position in (x,y)
+Status_ChartStatus$Chart Status
+Status_TapNote$Tap notes
+Status_HoldNote$Hold notes
+Status_CurrentBpm$Current BPM
+Status_CurrentSpeed$Current Speed
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.
