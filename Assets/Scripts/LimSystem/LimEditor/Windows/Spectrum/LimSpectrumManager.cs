@@ -89,9 +89,9 @@ public class LimSpectrumManager : MonoBehaviour
                 SpectrumBars[i].gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(BarWidth, 0);
                 SpectrumBars[i].gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(i * BarWidth, 0);
             }
-            LastContentWidth = SpectrumContent.rect.width;
-            AxisX.SetPosition(1, new Vector3(SpectrumContent.rect.width, 0, 0));
+            LastContentWidth = SpectrumContent.rect.width;        
         }
+        AxisX.SetPosition(1, new Vector3(SpectrumContent.rect.width, 0, 0));
     }
     private void FillLogAxis()
     {

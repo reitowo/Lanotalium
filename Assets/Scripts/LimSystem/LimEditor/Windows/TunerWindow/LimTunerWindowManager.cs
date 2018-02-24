@@ -8,7 +8,7 @@ public class LimTunerWindowManager : MonoBehaviour
     public LimWindowManager BaseWindow;
     public RenderTexture TunerRenderTexture;
     public Camera TunerCamera;
-    public Text SkinText, FullScreenText, CameraMotionText, StretchBGAText;
+    public Text SkinText, FullScreenText, CameraMotionText, StretchBGAText, ChartSpeedText;
     public GameObject SkinPanel;
     public Image RitmoImg, FisicaImg;
     public SpriteRenderer TunerBackground, TunerBorder;
@@ -16,7 +16,7 @@ public class LimTunerWindowManager : MonoBehaviour
     public LimDisplayManager DisplayManager;
     public LimTunerHeadManager TunerHeadManager;
     public GameObject TunerSettingPanel;
-    public Toggle EnableMotionToggle, StretchBGAToggle;
+    public Toggle EnableMotionToggle, StretchBGAToggle, ChartSpeedToggle;
     public LimCameraManager CameraManager;
     public LimBoxSelectionManager BoxSelectionManager;
     public LimTunerManager TunerManager;
@@ -34,6 +34,7 @@ public class LimTunerWindowManager : MonoBehaviour
         FullScreenText.text = LimLanguageManager.TextDict["Window_Tuner_FullScreen"];
         CameraMotionText.text = LimLanguageManager.TextDict["Window_Tuner_Motion"];
         StretchBGAText.text = LimLanguageManager.TextDict["Window_Tuner_StretchBGA"];
+        ChartSpeedText.text = LimLanguageManager.TextDict["Window_Tuner_ChartSpeed"];
     }
     private void Update()
     {
@@ -158,11 +159,17 @@ public class LimTunerWindowManager : MonoBehaviour
     }
     public void OnEnableMotionToggled()
     {
+        if (EnableMotionToggle == null) return;
         CameraManager.DisableMotion = !EnableMotionToggle.isOn;
     }
     public void OnStretchBGAToggled()
     {
         if (StretchBGAToggle == null) return;
         LimSystem.Preferences.StretchBGA = StretchBGAToggle.isOn;
+    }
+    public void OnChartSpeedToggled()
+    {
+        if (ChartSpeedToggle == null) return;
+        TunerManager.ScrollManager.DisableChartSpeed = !ChartSpeedToggle.isOn;
     }
 }

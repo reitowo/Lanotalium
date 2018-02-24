@@ -1,14 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Lanotalium.Chart;
 using UnityEngine;
 
 public class LimScrollManager : MonoBehaviour
 {
     private bool isInitialized = false;
-    public List<Lanotalium.Chart.LanotaScroll> Scroll;
+    private List<LanotaScroll> _Scroll;
+    private List<LanotaScroll> _DisabledSpeedList = new List<LanotaScroll>() { new LanotaScroll() { Speed = 1, Time = -10 } };
     public LimTunerManager Tuner;
     public bool IsBackwarding = false, IsStopped = false;
     public float CurrentScrollSpeed;
+    public bool DisableChartSpeed = false;
+    public List<LanotaScroll> Scroll
+    {
+        get
+        {
+            if (DisableChartSpeed) return _DisabledSpeedList;
+            return _Scroll;
+        }
+        set
+        {
+            _Scroll = value;
+        }
+    }
 
     void Update()
     {
@@ -31,6 +46,11 @@ public class LimScrollManager : MonoBehaviour
     {
         IsBackwarding = false;
         IsStopped = false;
+        if (Scroll.Count == 0)
+        {
+            CurrentScrollSpeed = 1;
+            return;
+        }
         for (int i = 0; i < Scroll.Count - 1; ++i)
         {
             if (Tuner.ChartTime >= Scroll[i].Time && Tuner.ChartTime < Scroll[i + 1].Time)
@@ -44,7 +64,7 @@ public class LimScrollManager : MonoBehaviour
         {
             CurrentScrollSpeed = Scroll[Scroll.Count - 1].Speed;
             if (Scroll[Scroll.Count - 1].Speed < 0) IsBackwarding = true;
-            else if(Scroll[Scroll.Count - 1].Speed == 0) IsStopped = true;
+            else if (Scroll[Scroll.Count - 1].Speed == 0) IsStopped = true;
         }
     }
 }

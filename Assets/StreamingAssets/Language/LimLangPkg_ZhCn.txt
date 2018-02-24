@@ -7,6 +7,7 @@ Window_Tuner_FullScreen$全屏
 Window_Tuner_Head_Designer$设计者
 Window_Tuner_Motion$调律器动作
 Window_Tuner_StretchBGA$拉伸背景
+Window_Tuner_ChartSpeed$谱面速度
 Window_Inspector_Label$属性
 Window_Inspector_Switcher_Bpm$BPM
 Window_Inspector_Switcher_Scroll$谱面速度
@@ -276,6 +277,7 @@ Create_Catch$在选中的两Note间创建等分的蓝键条
 Create_ConvertSelectedToHoldNote$将选中的普通Note转为长条，时间最先的作为长条头部，其余依次作为节点
 TxtToLap$要打开.txt，请创建一个新工程，在谱面路径选择您的.txt
 MusicFormat$目前仅支持wav与ogg格式
+DisableChartSpeed$当关闭时，您将无法编辑谱面速度或添加新的谱面速度
 #TutorialDict
 FirstProject1$欢迎使用Lanotalium!<br>点击“文件”创建您的第一个工程
 FirstProject2$点击“新建工程”创建您的第一个工程

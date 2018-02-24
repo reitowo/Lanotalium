@@ -11,6 +11,7 @@ public class LimInspectorManager : MonoBehaviour
     public Image BpmListSwitcherImg, ScrollListSwitcherImg, DefaultSwitcherImg;
     public Color UnpressedColor, PressedColor;
     public Text BpmSwitcherText, ScrollSpeedSwitcherText, DefaultSwitcherText;
+    public LimTunerManager TunerManager;
 
     public ComponentBasicManager ComponentBasic;
     public ComponentTypeManager ComponentType;
@@ -99,6 +100,7 @@ public class LimInspectorManager : MonoBehaviour
     public void SwitchScrollSpeedList()
     {
         if (LimSystem.ChartContainer == null) return;
+        if (TunerManager.ScrollManager.DisableChartSpeed) return;
         if (ComponentScrollSpeed.gameObject.activeInHierarchy)
         {
             ScrollListSwitcherImg.color = UnpressedColor;

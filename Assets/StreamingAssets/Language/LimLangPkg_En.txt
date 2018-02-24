@@ -7,6 +7,7 @@ Window_Tuner_FullScreen$Full
 Window_Tuner_Head_Designer$Chart Designer
 Window_Tuner_Motion$Tuner Motion
 Window_Tuner_StretchBGA$Stretch BGA
+Window_Tuner_ChartSpeed$Chart Speed
 Window_Inspector_Label$Inspector
 Window_Inspector_Switcher_Bpm$BPM
 Window_Inspector_Switcher_Scroll$Scroll Speed
@@ -276,6 +277,7 @@ Create_Catch$Create catch note rail between two selected Notes
 Create_ConvertSelectedToHoldNote$Convert selected to Hold Note, first in time as Hold Note's head, the other as the joints.
 TxtToLap$To open old .txt file, please Create a New Project and select your .txt in Chart Path.
 MusicFormat$Only support .wav or .ogg
+DisableChartSpeed$If disabled, you cannot edit Scroll Speed in Inspector and create Scroll Speed either.
 #TutorialDict
 FirstProject1$Welcome to use Lanotalium!<br>Click 'File' to create your first project!
 FirstProject2$Click 'New Project' to create your first project!

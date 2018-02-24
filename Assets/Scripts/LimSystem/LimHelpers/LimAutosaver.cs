@@ -43,7 +43,7 @@ public class LimAutosaver : MonoBehaviour
         {
             string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave {0}.txt", CurrentTimeString());
             File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
-            if (LastAutosave != "") File.Delete(LastAutosave);
+            if (File.Exists(LastAutosave)) File.Delete(LastAutosave);
             LastAutosave = ChartPath;
         }
     }

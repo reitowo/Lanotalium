@@ -60,7 +60,9 @@ public class LimCreatorManager : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl))
         {
             if (Input.GetKeyDown(KeyCode.T)) CreateTapNote();
-            if (Input.GetKeyDown(KeyCode.H)) CreateHoldNote();
+            else if (Input.GetKeyDown(KeyCode.H)) CreateHoldNote();
+            else if (Input.GetKeyDown(KeyCode.B)) CreateBpm();
+            else if (Input.GetKeyDown(KeyCode.F)) CreateScrollSpeed();
         }
     }
     private void DetectMouseScroll()
@@ -145,9 +147,12 @@ public class LimCreatorManager : MonoBehaviour
     public void CreateScrollSpeed()
     {
         if (LimSystem.ChartContainer == null) return;
-        Lanotalium.Chart.LanotaScroll New = new Lanotalium.Chart.LanotaScroll();
-        New.Time = TunerManager.ChartTime < 0 ? 0 : TunerManager.ChartTime;
-        New.Speed = 1;
+        if (TunerManager.ScrollManager.DisableChartSpeed) return;
+        Lanotalium.Chart.LanotaScroll New = new Lanotalium.Chart.LanotaScroll
+        {
+            Time = TunerManager.ChartTime < 0 ? 0 : TunerManager.ChartTime,
+            Speed = 1
+        };
         OperationManager.AddScrollSpeed(New);
         OperationManager.InspectorManager.ArrangeComponentsUi();
     }

@@ -28,7 +28,7 @@ public class LimTopMenuManager : MonoBehaviour
     {
         LimTutorialManager.ShowTutorial("FirstProject1");
         if (LimSystem.ChartContainer == null) return;
-        TopText.text = string.Format("Lanotalium - <{0}>", LimSystem.ChartContainer.ChartProperty.ChartName);
+        TopText.text = string.Format("Lanotalium - <{0}>", LimProjectManager.CurrentProject.Name);
     }
     public void SetTexts()
     {

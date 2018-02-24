@@ -197,7 +197,7 @@ public class LimMediaPlayerManager : MonoBehaviour
     public void Initialize(Lanotalium.Chart.ChartMusic MusicData, Lanotalium.Chart.ChartProperty PropertyData)
     {
         if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return;
-        MusicName = PropertyData.ChartName;
+        MusicName = LimProjectManager.CurrentProject.Name;
         ProgressSlider.maxValue = MusicData.Length;
         MusicPlayer.clip = MusicData.Music;
         OnMusicLoad.Invoke(MusicPlayer.clip);
@@ -446,7 +446,7 @@ public class LimMediaPlayerManager : MonoBehaviour
     }
     public void OnPrepared()
     {
-        MusicName = LimSystem.ChartContainer.ChartProperty.ChartName;
+        MusicName = LimProjectManager.CurrentProject.Name;
         ProgressSlider.maxValue = BackgroundManager.VideoLength;
         LimSystem.ChartContainer.ChartData.SongLength = BackgroundManager.VideoLength;
         PreciseModeTimeOffset = LimSystem.Preferences.MusicPlayerPreciseOffset;

@@ -5852,7 +5852,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: 200}
+  m_AnchoredPosition: {x: 50, y: 250}
   m_SizeDelta: {x: 500, y: 450}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1476913300
@@ -5934,7 +5934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1535310506
 Transform:
   m_ObjectHideFlags: 0
@@ -5957,9 +5957,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 077aee103bf80ff4794718509a1dd3fc, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 86a4fb509c22841458f81871f3d91056, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6660,7 +6660,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 50, y: 0}
-  m_SizeDelta: {x: 500, y: 200}
+  m_SizeDelta: {x: 500, y: 250}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2055198490
 MonoBehaviour:
@@ -6697,6 +6697,8 @@ MonoBehaviour:
   m_Text: '<size=55>Lanotalium</size>  <size=30>by Schwarzer</size>
 
     <size=35>Freedom Dive Chan</size>  <size=25>by Ner</size>
+
+    <size=35>Freedom Dive Piano</size>  <size=25>by LLW</size>
 
     <size=35>Bemusilization</size>  <size=25>by JLChnToZ</size>'
 --- !u!222 &2055198491

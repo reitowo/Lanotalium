@@ -108,6 +108,6 @@ public class LimLaunchManager : MonoBehaviour
     }
     public void RaisePaypalRequest()
     {
-        Application.OpenURL("lanotalium.cn/Paypal.html");
+        Application.OpenURL("http://lanotalium.cn/PaypalSupport.html");
     }
 }

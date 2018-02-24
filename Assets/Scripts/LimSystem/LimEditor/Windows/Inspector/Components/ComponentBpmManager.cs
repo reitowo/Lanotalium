@@ -64,7 +64,7 @@ public class ComponentBpmManager : MonoBehaviour
     private void Update()
     {
         OnUiWidthChange();
-        BeatlineUpdator();
+        UpdateBeatline();
     }
     private void OnDisable()
     {
@@ -241,7 +241,7 @@ public class ComponentBpmManager : MonoBehaviour
         }
         return Points.ToArray();
     }
-    public void BeatlineUpdator()
+    public void UpdateBeatline()
     {
         if (!isBeatlineOpen) return;
         float CurrentTime = TunerManager.ChartTime;

@@ -62,5 +62,7 @@ public class LimTunerHeadManager : MonoBehaviour
     public void OnDesignerChange()
     {
         LimSystem.Preferences.Designer = DesignerInputField.text;
+        if (LimProjectManager.CurrentProject != null)
+        { LimProjectManager.CurrentProject.Designer = DesignerInputField.text; }
     }
 }
