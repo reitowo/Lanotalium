@@ -13,6 +13,7 @@ namespace Schwarzer.Lanotalium.WebApi.User
         public string UserId;
         public string Version;
         public bool Is64Bit;
+        public string Language;
     }
     public static class LimApiUser
     {
@@ -22,7 +23,8 @@ namespace Schwarzer.Lanotalium.WebApi.User
             {
                 UserId = SystemInfo.deviceUniqueIdentifier,
                 Version = Version,
-                Is64Bit = Environment.Is64BitProcess
+                Is64Bit = Environment.Is64BitProcess,
+                Language = Application.systemLanguage.ToString()
             }))));
         }
     }

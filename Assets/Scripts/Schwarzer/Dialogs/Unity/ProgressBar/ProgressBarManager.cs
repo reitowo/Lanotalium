@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ProgressBarManager : MonoBehaviour
 {
+    public static ProgressBarManager Instance;
     public Text ProgressText;
     public Slider ProgressSlider;
     public GameObject Canvas;
@@ -16,6 +17,10 @@ public class ProgressBarManager : MonoBehaviour
     public delegate float AskProgressCallback();
     public delegate bool AskFinishCallback();
 
+    private void Start()
+    {
+        Instance = this;
+    }
     public void ShowProgress(AskFinishCallback Finish, AskProgressCallback Callback = null)
     {
         if (UpdateProgressCoroutine != null) StopCoroutine(UpdateProgressCoroutine);

@@ -141,6 +141,7 @@ TopMenu_Plugin$Plugin
 TopMenu_Plugin_PluginCenter$Plugin Center
 TopMenu_ChartConvert$Chart Convert
 TopMenu_ChartConvert_Bms$From Bms
+TopMenu_Status$Status
 GizmoMotion_Label$Manually Motion
 GizmoMotion_ToCreate$Motion Types To Create
 GizmoMotion_EditMode$Edit Mode
@@ -247,6 +248,22 @@ Status_TapNote$Tap notes
 Status_HoldNote$Hold notes
 Status_CurrentBpm$Current BPM
 Status_CurrentSpeed$Current Speed
+Submit_TimeLimit$You can only create one Chart per 24 hours.
+Submit_TooManyPending$You have too many pending submits.
+Submit_MySubmit$My Submits
+Submit_NewSubmit$New Submit
+Submit_ChartZone$Submit to ChartZone
+Submission_Accepted$Accepted
+Submission_Modified$Re Pending
+Submission_NotUploaded$Not Uploaded
+Submission_Pending$Pending
+Submission_Rejected$Rejected
+Submission_Upload$Upload
+Submission_File_Title$Upload Zip contains chart, music, backgrounds and project file.
+Submission_ChartName$Chart Name
+Submission_Designer$Designer
+Submission_Bilibili$Bilibili Av No.
+Submission_UploadRequest$Please upload a Zip contains chart, music, backgrounds and project file, Max size 16MB.
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.

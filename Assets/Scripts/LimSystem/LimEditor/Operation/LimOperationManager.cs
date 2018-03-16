@@ -730,9 +730,21 @@ public class LimOperationManager : MonoBehaviour
     {
         Lanotalium.Chart.LanotaCameraBase MotionBase = FindMotionBase(InstanceId);
         if (MotionBase == null) return;
-        if (!Input.GetKey(KeyCode.LeftControl)) DeSelectAllMotions();
-        if (!SelectedMotions.Contains(MotionBase)) SelectMotion(MotionBase);
-        else DeSelectMotion(MotionBase);
+        if (!Input.GetKey(KeyCode.LeftControl))
+        {
+            if (SelectedMotions.Count > 1) DeSelectAllMotions();
+            if (!SelectedMotions.Contains(MotionBase))
+            {
+                DeSelectAllMotions();
+                SelectMotion(MotionBase);
+            }
+            else DeSelectMotion(MotionBase);
+        }
+        else
+        {
+            if (!SelectedMotions.Contains(MotionBase)) SelectMotion(MotionBase);
+            else DeSelectMotion(MotionBase);
+        }
         if (SelectedMotions.Count >= 2)
         {
             InspectorManager.ComponentMotion.SetMode(Lanotalium.Editor.ComponentMotionMode.Multiple, 0);

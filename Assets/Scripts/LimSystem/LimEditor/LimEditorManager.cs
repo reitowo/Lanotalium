@@ -16,6 +16,7 @@ public class LimEditorManager : MonoBehaviour
     public LimPluginManager PluginManager;
     public LimTopMenuManager TopMenu;
     public LimStatusManager StatusManager;
+    public LimSubmitManager SubmitManager;
 
     public GameObject WhatsNew, NewCn, NewEn;
     public Toggle WhatsNewHideToggle;

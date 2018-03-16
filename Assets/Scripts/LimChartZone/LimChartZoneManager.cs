@@ -66,6 +66,7 @@ public class LimChartZoneManager : MonoBehaviour
         #endregion
         ObjectWrap<List<ChartDto>> Charts = new ObjectWrap<List<ChartDto>>();
         yield return LimChartZoneWebApi.GetAllCharts(Charts);
+        Charts.Reference.Reverse();
 
         int HeightCount = 0;
         foreach (ChartDto Chart in Charts.Reference)

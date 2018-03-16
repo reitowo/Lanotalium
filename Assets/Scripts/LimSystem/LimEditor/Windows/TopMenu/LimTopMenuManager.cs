@@ -14,7 +14,7 @@ public class LimTopMenuManager : MonoBehaviour
     public Text FileText;
     public Text NewProjectText, OpenProjectText, SaveProjectText, SaveAsProjectText, ExitText;
     public Text WindowText;
-    public Text InspectorText, TunerWindowText, TimeLineText, MusicPlayerText, CreatorText, SpectrumText;
+    public Text InspectorText, TunerWindowText, TimeLineText, MusicPlayerText, CreatorText, SpectrumText, StatusText;
     public Text SettingText;
     public Text PreferencesText, ResetLayoutText;
     public Text PluginText;
@@ -53,6 +53,7 @@ public class LimTopMenuManager : MonoBehaviour
         ChartConvertText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert"];
         ChartConvertBmsText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert_Bms"];
         ChartZoneText.text = LimLanguageManager.TextDict["TopMenu_ChartZone"];
+        StatusText.text = LimLanguageManager.TextDict["TopMenu_Status"];
     }
     public void OpenFileMenu()
     {

@@ -16,7 +16,30 @@ public class LimEditableText : MonoBehaviour
     public Image BackgroundImg;
     public Text PlaceHolderText;
     public InputField InputFieldRef;
+    [HideInInspector]
     public bool isMouseOver, isEditing;
+    public string Text
+    {
+        get
+        {
+            return InputFieldRef.text;
+        }
+        set
+        {
+            InputFieldRef.text = value;
+        }
+    }
+    public string PlaceHolder
+    {
+        get
+        {
+            return PlaceHolderText.text;
+        }
+        set
+        {
+            PlaceHolderText.text = value;
+        }
+    }
 
     private void Update()
     {
@@ -24,10 +47,10 @@ public class LimEditableText : MonoBehaviour
     }
     private void UpdateBackgroundAlpha()
     {
-        if (isEditing) { if (BackgroundImg.color.a != BackgroundAlpha.Editing) { BackgroundImg.color = new Color(0.3921568f, 0.3921568f, 0.3921568f, BackgroundAlpha.Editing); return; } else return; };
-        if (isMouseOver) { if (BackgroundImg.color.a != BackgroundAlpha.Over) { BackgroundImg.color = new Color(0.3921568f, 0.3921568f, 0.3921568f, BackgroundAlpha.Over); return; } else return; };
-        if (InputFieldRef.text == string.Empty) { if (BackgroundImg.color.a != BackgroundAlpha.Empty) { BackgroundImg.color = new Color(0.3921568f, 0.3921568f, 0.3921568f, BackgroundAlpha.Empty); return; } else return; };
-        if (BackgroundImg.color.a != BackgroundAlpha.Normal) { BackgroundImg.color = new Color(0.3921568f, 0.3921568f, 0.3921568f, BackgroundAlpha.Normal); return; } else return;
+        if (isEditing) { if (BackgroundImg.color.a != BackgroundAlpha.Editing) { BackgroundImg.color = new Color(0.9f, 0.9f, 0.9f, BackgroundAlpha.Editing); return; } else return; };
+        if (isMouseOver) { if (BackgroundImg.color.a != BackgroundAlpha.Over) { BackgroundImg.color = new Color(0.9f, 0.9f, 0.9f, BackgroundAlpha.Over); return; } else return; };
+        if (InputFieldRef.text == string.Empty) { if (BackgroundImg.color.a != BackgroundAlpha.Empty) { BackgroundImg.color = new Color(0.9f, 0.9f, 0.9f, BackgroundAlpha.Empty); return; } else return; };
+        if (BackgroundImg.color.a != BackgroundAlpha.Normal) { BackgroundImg.color = new Color(0.9f, 0.9f, 0.9f, BackgroundAlpha.Normal); return; } else return;
     }
     public void OnPointerEnterText()
     {

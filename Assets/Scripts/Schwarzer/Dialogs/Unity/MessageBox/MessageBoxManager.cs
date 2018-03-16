@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class MessageBoxManager : MonoBehaviour
 {
+    public static MessageBoxManager Instance;
+
     public class MessageBoxQueue
     {
         public string Message;
@@ -29,6 +31,10 @@ public class MessageBoxManager : MonoBehaviour
 
     public delegate void MessageBoxCallBack();
 
+    private void Start()
+    {
+        Instance = this;
+    }
     public void ShowMessage(string Message, MessageBoxCallBack OKCallback = null, MessageBoxCallBack CancelCallback = null)
     {
         Queue.Add(new MessageBoxQueue(Message, OKCallback, CancelCallback));

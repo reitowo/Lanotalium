@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Schwarzer.Lanotalium.WebApi
     public class WebApiHelper
     {
         public static string WebApiUri = "http://api.lanotalium.cn/";
-        public static IEnumerator PostObjectCoroutine(string Route, object Object, ObjectWrap<string> Responce = null)
+        public static IEnumerator PostObjectCoroutine(string Route, object Object, ObjectWrap<string> Response = null)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebApiUri + Route);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
@@ -36,9 +37,9 @@ namespace Schwarzer.Lanotalium.WebApi
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var result = streamReader.ReadToEnd();
-                        if (Responce != null)
+                        if (Response != null)
                         {
-                            Responce.Reference = result;
+                            Response.Reference = result;
                         }
                     }
                 }
@@ -104,6 +105,16 @@ namespace Schwarzer.Lanotalium.WebApi
                 Debug.Log(Ex);
                 return null;
             }
+        }
+        public static IEnumerator PostFormCoroutine(string Route, WWWForm Data, ObjectWrap<string> Response = null, Action<float> ProgressCallback = null)
+        {
+            WWW Post = new WWW(WebApiUri + Route, Data);
+            while (!Post.isDone)
+            {
+                ProgressCallback?.Invoke(Post.progress);
+                yield return null;
+            }
+            Response.Reference = Post.text;
         }
     }
 }

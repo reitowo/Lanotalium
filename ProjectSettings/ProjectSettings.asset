@@ -128,7 +128,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.8.13
+  bundleVersion: 1.8.14
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -164,7 +164,7 @@ PlayerSettings:
     Standalone: com.Schwarzer.Lanotalium
     iOS: com.Schwarzer.Lanotalium
   buildNumber:
-    Standalone: 44
+    Standalone: 45
     iOS: 31
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
@@ -177,7 +177,7 @@ PlayerSettings:
   ForceInternetPermission: 1
   ForceSDCardPermission: 1
   CreateWallpaper: 0
-  APKExpansionFiles: 0
+  APKExpansionFiles: 1
   keepLoadedShadersAlive: 0
   StripUnusedMeshComponents: 0
   VertexChannelCompressionMask:
@@ -270,7 +270,7 @@ PlayerSettings:
       m_Icon: {fileID: 2800000, guid: c6c502438c5867d4dbe3f1a3758a2028, type: 3}
       m_Width: 128
       m_Height: 128
-      m_Kind: 35549
+      m_Kind: 48339
   m_BuildTargetBatching: []
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: WindowsStandaloneSupport

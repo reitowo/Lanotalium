@@ -83,6 +83,7 @@ public class LimLanguageManager : MonoBehaviour
             SetTextDelegates.Add(EditorManager.SetTexts);
             SetTextDelegates.Add(EditorManager.SpectrumWindow.SetTexts);
             SetTextDelegates.Add(EditorManager.StatusManager.SetTexts);
+            SetTextDelegates.Add(EditorManager.SubmitManager.SetTexts);
         }
         if (ChartZoneManager != null)
         {

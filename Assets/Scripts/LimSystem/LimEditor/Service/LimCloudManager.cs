@@ -34,8 +34,8 @@ public class LimCloudManager : MonoBehaviour
             return SystemInfo.deviceUniqueIdentifier;
         }
     }
-    private bool isUploading;
-    private Coroutine BackupLoopCr;
+    private bool _IsUploading;
+    private Coroutine _BackupLoopCr;
 
     private void Start()
     {
@@ -47,8 +47,8 @@ public class LimCloudManager : MonoBehaviour
         }*/
         if (UnityEngine.Application.internetReachability != NetworkReachability.NotReachable)
         {
-            if (BackupLoopCr != null) StopCoroutine(BackupLoopCr);
-            BackupLoopCr = StartCoroutine(BackupLoop());
+            if (_BackupLoopCr != null) StopCoroutine(_BackupLoopCr);
+            _BackupLoopCr = StartCoroutine(BackupLoop());
         }
     }
     public void SetTexts()
@@ -59,26 +59,9 @@ public class LimCloudManager : MonoBehaviour
         BackupText.text = LimLanguageManager.TextDict["Cloud_Backup"];
     }
 
-    IEnumerator CloudAutosaveCoroutine()
-    {
-        while (true)
-        {
-            //UploadChart();
-            yield return new WaitForSeconds(30);
-        }
-    }
     public void OnCloudAutosaveToggleChange()
     {
         LimSystem.Preferences.CloudAutosave = CloudAutosaveToggle.isOn;
-        /*if (LimSystem.Preferences.CloudAutosave)
-        {
-           if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
-            CloudAutosaveCoroutineRef = StartCoroutine(CloudAutosaveCoroutine());
-        }
-        else
-        {
-            if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
-        }*/
     }
 
     private bool CheckStatusError()
@@ -116,6 +99,7 @@ public class LimCloudManager : MonoBehaviour
         Form.AddField("ProjectName", LimProjectManager.CurrentProject.Name);
         WWW GetMTime = new WWW(LimSystem.LanotaliumServer + "/lanotalium/cloud/LimCloudGetMTime.php", Form.data, Form.headers);
         yield return GetMTime;
+        if (GetMTime.error != null) yield break;
         if (GetMTime.text == "Not Uploaded Before") TargetText.text = LimLanguageManager.TextDict["Cloud_GetMTime_NotUploadedBefore"];
         else
         {
@@ -134,9 +118,9 @@ public class LimCloudManager : MonoBehaviour
     public void UploadChart()
     {
         if (Status != Status.Running) return;
-        if (isUploading) return;
+        if (_IsUploading) return;
         StartCoroutine(UploadCoroutine(TransferType.Chart, null, System.Text.Encoding.Default.GetBytes(LimSystem.ChartContainer.ChartData.ToString())));
-        isUploading = true;
+        _IsUploading = true;
     }
     IEnumerator UploadCoroutine(TransferType Type, string LocalPath = null, byte[] Bytes = null)
     {
@@ -173,7 +157,7 @@ public class LimCloudManager : MonoBehaviour
         ProgressSlider.value = 0;
         EntryText.text = LimLanguageManager.TextDict["Cloud_Cloud"];
         StartCoroutine(GetLastModifyTime());
-        isUploading = false;
+        _IsUploading = false;
     }
 
     public void DownloadChart()
@@ -228,9 +212,9 @@ public class LimCloudManager : MonoBehaviour
     public void BackupChart()
     {
         if (Status != Status.Running) return;
-        if (isUploading) return;
+        if (_IsUploading) return;
         StartCoroutine(UploadCoroutine(TransferType.Backup, null, System.Text.Encoding.Default.GetBytes(LimSystem.ChartContainer.ChartData.ToString())));
-        isUploading = true;
+        _IsUploading = true;
     }
     public void DownloadBackup()
     {
