@@ -66,22 +66,18 @@ public class LimTimeLineManager : MonoBehaviour
     }
     private void TrySelectMotion(LanotaCameraBase Base)
     {
-        if (Base.TimeLineGameObject.activeInHierarchy)
+        if (!Base.TimeLineGameObject.activeInHierarchy) return;
+        if (BoxSelectionManager.IsMotionInBoxArea(Base.TimeLineGameObject))
         {
-            if (BoxSelectionManager.IsMotionInBoxArea(Base.TimeLineGameObject))
+            if (OperationManager.SelectedMotions.Contains(Base)) return;
+            Base.TimeLineGameObject.GetComponent<Image>().color = Selected;
+            OperationManager.SelectedMotions.Add(Base);
+        }
+        else if (!Input.GetKey(KeyCode.LeftControl))
+        {
+            if (OperationManager.SelectedMotions.Contains(Base))
             {
-                if (!OperationManager.SelectedMotions.Contains(Base))
-                {
-                    Base.TimeLineGameObject.GetComponent<Image>().color = Selected;
-                    OperationManager.SelectedMotions.Add(Base);
-                }
-            }
-            else if (!Input.GetKey(KeyCode.LeftControl))
-            {
-                if (OperationManager.SelectedMotions.Contains(Base))
-                {
-                    OperationManager.DeSelectMotion(Base);
-                }
+                OperationManager.DeSelectMotion(Base);
             }
         }
     }

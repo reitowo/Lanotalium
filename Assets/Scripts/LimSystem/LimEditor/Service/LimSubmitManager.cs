@@ -49,7 +49,7 @@ public class LimSubmitManager : MonoBehaviour
         {
             for (int i = CurrentCount - 1; i >= Count; --i)
             {
-                Destroy(SubmissionList[i]);
+                Destroy(SubmissionList[i].gameObject);
                 SubmissionList.RemoveAt(i);
             }
         }
@@ -63,12 +63,22 @@ public class LimSubmitManager : MonoBehaviour
         if (Application.internetReachability == NetworkReachability.NotReachable) yield break;
         WWW Get = new WWW("http://api.lanotalium.cn/chartzone/submit/enum/" + SystemInfo.deviceUniqueIdentifier);
         yield return Get;
+        if (Get.error != null)
+        {
+            MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Error_Network"] + "\n" + Get.error);
+            yield break;
+        }
         string Response = Get.text;
 
-        //Debug.Log(Response);
-
         List<SubmitDto> UserSubmits = null;
-        UserSubmits = JsonConvert.DeserializeObject<List<SubmitDto>>(Response);
+        try
+        {
+            UserSubmits = JsonConvert.DeserializeObject<List<SubmitDto>>(Response);
+        }
+        catch(Exception)
+        {
+            yield break;
+        }
         if (UserSubmits == null) yield break;
         UserSubmits.Reverse();
 
@@ -91,6 +101,11 @@ public class LimSubmitManager : MonoBehaviour
         if (Application.internetReachability == NetworkReachability.NotReachable) yield break;
         WWW Get = new WWW("http://api.lanotalium.cn/chartzone/submit/querynew/" + SystemInfo.deviceUniqueIdentifier);
         yield return Get;
+        if (Get.error != null)
+        {
+            MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Error_Network"] + "\n" + Get.error);
+            yield break;
+        }
         string Response = Get.text;
 
         int ResponseCode = 0;
@@ -104,8 +119,18 @@ public class LimSubmitManager : MonoBehaviour
         {
             MessageBoxManager.ShowMessage(LimLanguageManager.TextDict["Submit_TooManyPending"]);
         }
-
-        //Debug.Log(Response);
+        yield return GetUserSubmissionsCoroutine();
+    }
+    public IEnumerator DeleteSubmissionCoroutine(int Id)
+    {
+        if (Application.internetReachability == NetworkReachability.NotReachable) yield break;
+        WWW Get = new WWW("http://api.lanotalium.cn/chartzone/submit/delete/" + SystemInfo.deviceUniqueIdentifier + "/" + Id);
+        yield return Get;
+        if (Get.error != null)
+        {
+            MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Error_Network"] + "\n" + Get.error);
+            yield break;
+        }
         yield return GetUserSubmissionsCoroutine();
     }
 }

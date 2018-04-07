@@ -74,12 +74,10 @@ public class LimEditorManager : MonoBehaviour
 
     private void Start()
     {
-        if (!LimSystem.Preferences.HideWhatsNew)
-        {
-            WhatsNew.SetActive(true);
-            if (LimSystem.Preferences.LanguageName == "简体中文") NewCn.SetActive(true);
-            else NewEn.SetActive(true);
-        }
+        if (LimSystem.Preferences.HideWhatsNew) return;
+        WhatsNew.SetActive(true);
+        if (LimSystem.Preferences.LanguageName == "简体中文") NewCn.SetActive(true);
+        else NewEn.SetActive(true);
     }
     public void SetTexts()
     {

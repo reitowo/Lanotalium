@@ -282,7 +282,6 @@ public class LimMediaPlayerManager : MonoBehaviour
         }
         if (MediaPlayerMode != Lanotalium.MediaPlayer.MediaPlayerMode.MusicPrecise) return;
         CurrentTime = MusicPlayer.time + PreciseModeTimeOffset;
-        ProgressSlider.value = Mathf.Clamp(CurrentTime, 0, ProgressSlider.maxValue);
     }
     public void OnOffsetChange()
     {

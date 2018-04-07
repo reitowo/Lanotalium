@@ -262,8 +262,10 @@ Submission_Upload$上传
 Submission_File_Title$上传包含谱面、音乐、背景、工程文件的压缩包
 Submission_ChartName$名称
 Submission_Designer$设计者
-Submission_Bilibili$B站av号
+Submission_NoteCount$Note数
 Submission_UploadRequest$请将最终谱面，音乐，所有背景，lap工程文件创建压缩包上传，不超过16MB
+Submission_ConfirmDelete$确认删除吗？此操作不可逆
+Error_Network$发生网络错误
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建

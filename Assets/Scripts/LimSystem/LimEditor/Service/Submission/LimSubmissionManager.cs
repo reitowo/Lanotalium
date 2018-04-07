@@ -10,22 +10,26 @@ public class LimSubmissionManager : MonoBehaviour
 {
     public Color NotUploadedColor, AcceptedColor, ModifiedColor, PendingColor, RejectedColor;
     public Text StatusText, UploadText;
-    public LimEditableText ChartName, Designer, Bilibili;
+    public LimEditableText ChartName, Designer, NoteCount;
     public Image PanelBackground;
     public Button RejectReasonBtn;
 
     private SubmitDto _SubmitDto;
     private bool _IsUploading;
+    private bool _IsInitialized;
 
     public void Initialize(SubmitDto Submission)
     {
+        _IsInitialized = false;
         _SubmitDto = Submission;
         ChartName.Text = Submission.ChartDto.ChartName;
         Designer.Text = Submission.ChartDto.Designer;
-        Bilibili.Text = Submission.ChartDto.BilibiliAvIndex.ToString();
+        NoteCount.Text = Submission.ChartDto.NoteCount.ToString();
         _SubmitDto.UserId = SystemInfo.deviceUniqueIdentifier;
         if (Submission.Status == SubmissionStatus.Rejected) RejectReasonBtn.gameObject.SetActive(true);
+        else RejectReasonBtn.gameObject.SetActive(false);
         SetColorAndStatusTexts();
+        _IsInitialized = true;
     }
     public void SetColorAndStatusTexts()
     {
@@ -56,7 +60,7 @@ public class LimSubmissionManager : MonoBehaviour
         UploadText.text = LimLanguageManager.TextDict["Submission_Upload"];
         ChartName.PlaceHolder = LimLanguageManager.TextDict["Submission_ChartName"];
         Designer.PlaceHolder = LimLanguageManager.TextDict["Submission_Designer"];
-        Bilibili.PlaceHolder = LimLanguageManager.TextDict["Submission_Bilibili"];
+        NoteCount.PlaceHolder = LimLanguageManager.TextDict["Submission_NoteCount"];
     }
     public void OnDesignerChanged()
     {
@@ -70,12 +74,12 @@ public class LimSubmissionManager : MonoBehaviour
         _SubmitDto.ChartDto.ChartName = ChartName.Text;
         StartCoroutine(UpdateChartInfo());
     }
-    public void OnBilibiliChanged()
+    public void OnNoteCountChanged()
     {
         if (_SubmitDto == null) return;
-        int BilibiliAv = 0;
-        int.TryParse(Bilibili.Text, out BilibiliAv);
-        _SubmitDto.ChartDto.BilibiliAvIndex = BilibiliAv;
+        int TmpNoteCount = 0;
+        int.TryParse(NoteCount.Text, out TmpNoteCount);
+        _SubmitDto.ChartDto.NoteCount = TmpNoteCount;
         StartCoroutine(UpdateChartInfo());
     }
     public void UploadFile()
@@ -102,22 +106,26 @@ public class LimSubmissionManager : MonoBehaviour
         WWW Post = new WWW("http://api.lanotalium.cn/chartzone/submit/file", Form);
         ProgressBarManager.Instance.ShowProgress(() => Post.isDone, () => Post.uploadProgress);
         yield return Post;
-        //Debug.Log(Post.text);
+        if (Post.error != null) MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Error_Network"] + "\n" + Post.error);
         _IsUploading = false;
         yield return new WaitForSeconds(0.1f);
         yield return LimSubmitManager.Instance.GetUserSubmissionsCoroutine();
     }
     IEnumerator UpdateChartInfo()
     {
+        if (!_IsInitialized) yield break;
         if (Application.internetReachability == NetworkReachability.NotReachable) yield break;
         ObjectWrap<string> Resp = new ObjectWrap<string>();
         yield return WebApiHelper.PostObjectCoroutine("chartzone/submit/edit", _SubmitDto, Resp);
-        //Debug.Log(Resp.Reference);
         yield return LimSubmitManager.Instance.GetUserSubmissionsCoroutine();
     }
     public void ShowReason()
     {
         if (_SubmitDto == null) return;
         MessageBoxManager.Instance.ShowMessage(_SubmitDto.RejectReason);
+    }
+    public void DeleteChart()
+    {
+        MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Submission_ConfirmDelete"], () => { StartCoroutine(LimSubmitManager.Instance.DeleteSubmissionCoroutine(_SubmitDto.SubmissionId)); });
     }
 }
