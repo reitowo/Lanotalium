@@ -192,6 +192,7 @@ public class LimOperationManager : MonoBehaviour
             if (Note.InstanceId == TapNoteData.InstanceId) break;
             Index++;
         }
+        if (Index >= SelectedTapNote.Count) return;
         TapNoteData.OnSelect = false;
         SelectedTapNote.RemoveAt(Index);
         InspectorManager.OnSelectChange();
@@ -204,6 +205,7 @@ public class LimOperationManager : MonoBehaviour
             if (Note.InstanceId == HoldNoteData.InstanceId) break;
             Index++;
         }
+        if (Index >= SelectedHoldNote.Count) return;
         HoldNoteData.OnSelect = false;
         SelectedHoldNote.RemoveAt(Index);
         InspectorManager.OnSelectChange();

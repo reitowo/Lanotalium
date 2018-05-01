@@ -76,7 +76,7 @@ public class LimMediaPlayerManager : MonoBehaviour
         set
         {
             MusicPlayer.time = Mathf.Clamp(value, 0, Length);
-            CurrentTime = Mathf.Clamp(value, 0, Length);
+            CurrentTime = Mathf.Clamp(value, 0, Length) ;
             if (MediaPlayerMode == MediaPlayerMode.MusicPrecise) FixCurrentTime();
         }
     }
@@ -202,7 +202,7 @@ public class LimMediaPlayerManager : MonoBehaviour
         MusicPlayer.clip = MusicData.Music;
         OnMusicLoad.Invoke(MusicPlayer.clip);
         LimSystem.ChartContainer.ChartData.SongLength = MusicData.Length;
-        PreciseModeTimeOffset = LimSystem.Preferences.MusicPlayerPreciseOffset;
+        //PreciseModeTimeOffset = LimSystem.Preferences.MusicPlayerPreciseOffset;
         OffsetInputField.text = PreciseModeTimeOffset.ToString();
         WaveformManager.OnMusicLoaded();
         IsPlaying = true;
