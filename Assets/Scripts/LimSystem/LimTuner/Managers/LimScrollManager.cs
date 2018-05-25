@@ -9,7 +9,7 @@ public class LimScrollManager : MonoBehaviour
     private List<LanotaScroll> _Scroll;
     private List<LanotaScroll> _DisabledSpeedList = new List<LanotaScroll>() { new LanotaScroll() { Speed = 1, Time = -10 } };
     public LimTunerManager Tuner;
-    public bool IsBackwarding = false, IsStopped = false;
+    public bool IsBackwarding = false, IsStopped = false, WillBackward = false;
     public float CurrentScrollSpeed;
     public bool DisableChartSpeed = false;
     public List<LanotaScroll> Scroll
@@ -58,6 +58,26 @@ public class LimScrollManager : MonoBehaviour
                 CurrentScrollSpeed = Scroll[i].Speed;
                 if (Scroll[i].Speed < 0) IsBackwarding = true;
                 else if (Scroll[i].Speed == 0) IsStopped = true;
+                if (IsStopped)
+                {
+                    int k = i;
+                    while (k < Scroll.Count - 1)
+                    {
+                        k++;
+                        if (Scroll[k].Speed < 0)
+                        {
+                            WillBackward = true;
+                            break;
+                        }
+                        else if (Scroll[k].Speed > 0)
+                        {
+                            WillBackward = false;
+                            break;
+                        }
+                    }
+                }
+                else WillBackward = false;
+                break;
             }
         }
         if (Tuner.ChartTime > Scroll[Scroll.Count - 1].Time)
@@ -68,3 +88,4 @@ public class LimScrollManager : MonoBehaviour
         }
     }
 }
+

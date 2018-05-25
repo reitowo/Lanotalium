@@ -5,32 +5,43 @@ using System.Linq;
 
 public class LimScanTime : MonoBehaviour
 {
+    private static LimScanTime instance;
+    public static LimScanTime Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
     public LimTunerManager TunerManager;
-    private static List<float> Starts = new List<float>();
-    private static List<float> Ends = new List<float>();
-    private static int RangePairCount = 0;
+    private List<float> Starts = new List<float>();
+    private List<float> Ends = new List<float>();
+    private int RangePairCount = 0;
     public bool Enable = true;
     public List<float> KeyTimes = new List<float>();
 
-    public static bool IsTapNoteinScanRange(Lanotalium.Chart.LanotaTapNote Note)
+    public bool IsTapNoteinScanRange(Lanotalium.Chart.LanotaTapNote Note)
     {
-        if (RangePairCount == 0) return true;
+        if (!Enable) return true;
+        if (RangePairCount == 0) return false;
         for (int i = 0; i < RangePairCount; ++i)
         {
-            if (Note.Time + 0.1 >= Starts[i] && Note.Time <= Ends[i]) return true;
+            if (Note.Time + 0.2 >= Starts[i] && Note.Time <= Ends[i]) return true;
         }
         return false;
     }
-    public static bool IsHoldNoteinScanRange(Lanotalium.Chart.LanotaHoldNote Note)
+    public bool IsHoldNoteinScanRange(Lanotalium.Chart.LanotaHoldNote Note)
     {
-        if (RangePairCount == 0) return true;
+        if (!Enable) return true;
+        if (RangePairCount == 0) return false;
         for (int i = 0; i < RangePairCount; ++i)
         {
             if (Note.Time >= Starts[i] && Note.Time <= Ends[i]) return true;
             else if (Note.Time <= Starts[i] && Note.Time + Note.Duration >= Ends[i]) return true;
             else if (Note.Time + Note.Duration >= Starts[i] && Note.Time + Note.Duration <= Ends[i]) return true;
             else if (Note.Time >= Starts[i] && Note.Time + Note.Duration <= Ends[i]) return true;
-        } 
+        }
         return false;
     }
     private float CalculateTimeByPercent(float Percent, int Depth = 0)
@@ -54,19 +65,19 @@ public class LimScanTime : MonoBehaviour
                 if (i == StartScroll)
                 {
                     Delta = (TunerManager.ScrollManager.Scroll[i + 1].Time - TunerManager.ChartTime) * TunerManager.ScrollManager.Scroll[i].Speed * 10 * TunerManager.ChartPlaySpeed;
-                    if ((StartPercent - Delta < EndPercent && StartPercent >= EndPercent) || (StartPercent - Delta > EndPercent && StartPercent <= EndPercent)) { if (Depth == DepthCount) { BreakLocation = i; break; } else { DepthCount++; } }
+                    if ((StartPercent - Delta <= EndPercent && StartPercent >= EndPercent) || (StartPercent - Delta >= EndPercent && StartPercent <= EndPercent)) { if (Depth == DepthCount) { BreakLocation = i; break; } else { DepthCount++; } }
                     StartPercent -= Delta;
                 }
                 else if (i != EndScroll && i != StartScroll)
                 {
                     Delta = (TunerManager.ScrollManager.Scroll[i + 1].Time - TunerManager.ScrollManager.Scroll[i].Time) * TunerManager.ScrollManager.Scroll[i].Speed * 10 * TunerManager.ChartPlaySpeed;
-                    if ((StartPercent - Delta < EndPercent && StartPercent >= EndPercent) || (StartPercent - Delta > EndPercent && StartPercent <= EndPercent)) { if (Depth == DepthCount) { BreakLocation = i; break; } else { DepthCount++; } }
+                    if ((StartPercent - Delta < EndPercent && StartPercent > EndPercent) || (StartPercent - Delta > EndPercent && StartPercent < EndPercent)) { if (Depth == DepthCount) { BreakLocation = i; break; } else { DepthCount++; } }
                     StartPercent -= Delta;
                 }
                 else if (i == EndScroll)
                 {
                     Delta = (TunerManager.MediaPlayerManager.Length - TunerManager.ScrollManager.Scroll[i].Time) * TunerManager.ScrollManager.Scroll[i].Speed * 10 * TunerManager.ChartPlaySpeed;
-                    if ((StartPercent - Delta < EndPercent && StartPercent >= EndPercent) || (StartPercent - Delta > EndPercent && StartPercent <= EndPercent)) { if (Depth == DepthCount) { BreakLocation = i; break; } else { DepthCount++; } }
+                    if ((StartPercent - Delta < EndPercent && StartPercent > EndPercent) || (StartPercent - Delta > EndPercent && StartPercent < EndPercent)) { if (Depth == DepthCount) { BreakLocation = i; break; } else { DepthCount++; } }
                     StartPercent -= Delta;
                 }
             }
@@ -81,7 +92,8 @@ public class LimScanTime : MonoBehaviour
         if (BreakLocation == StartScroll)
         {
             Delta = (StartPercent - EndPercent);
-            EndTime = Delta / (TunerManager.ScrollManager.Scroll[BreakLocation].Speed * 10 * TunerManager.ChartPlaySpeed) + TunerManager.ChartTime;
+            if (Delta == 0) EndTime = TunerManager.ChartTime;
+            else EndTime = Delta / (TunerManager.ScrollManager.Scroll[BreakLocation].Speed * 10 * TunerManager.ChartPlaySpeed) + TunerManager.ChartTime;
         }
         else if (BreakLocation != -1)
         {
@@ -102,7 +114,7 @@ public class LimScanTime : MonoBehaviour
             KeyTime1 = CalculateTimeByPercent(100, Depth);
             if (KeyTimes.Contains(KeyTime1)) KeyTime1End = true;
             else KeyTimes.Add(KeyTime1);
-            KeyTime2 = CalculateTimeByPercent(77, Depth);
+            KeyTime2 = CalculateTimeByPercent(75.5f, Depth);
             if (KeyTimes.Contains(KeyTime2)) KeyTime2End = true;
             else KeyTimes.Add(KeyTime2);
             Depth++;
@@ -118,7 +130,7 @@ public class LimScanTime : MonoBehaviour
     {
         KeyTimes = KeyTimes.Distinct().ToList();
         KeyTimes.Sort();
-        if (TunerManager.ScrollManager.IsBackwarding) KeyTimes.RemoveAt(0);
+        if (TunerManager.ScrollManager.IsBackwarding || TunerManager.ScrollManager.WillBackward) KeyTimes.RemoveAt(0);
         if (KeyTimes.Count % 2 == 1)
         {
             if (KeyTimes[KeyTimes.Count - 1] == TunerManager.MediaPlayerManager.Length)
@@ -133,19 +145,13 @@ public class LimScanTime : MonoBehaviour
             Ends.Add(KeyTimes[i + 1]);
             RangePairCount++;
         }
-        for (int i = 0; i < RangePairCount; ++i)
-        {
-            if (Starts[i] > Ends[i])
-            {
-                float t = Starts[i];
-                Starts[i] = Ends[i];
-                Ends[i] = t;
-            }
-        }
     }
-    void Update()
+    private void Start()
     {
-        if (LimSystem.ChartContainer == null) return;
+        instance = this;
+    }
+    private void Update()
+    {
         if (!TunerManager.isInitialized) return;
         RangePairCount = 0;
         if (!Enable) return;

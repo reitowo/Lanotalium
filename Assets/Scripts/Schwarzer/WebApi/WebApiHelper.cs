@@ -106,6 +106,11 @@ namespace Schwarzer.Lanotalium.WebApi
                 return null;
             }
         }
+        public static IEnumerator PostStringCoroutine(string Route,string String)
+        {
+            Task<string> task = PostStringAsync(Route, String);
+            while (!task.IsCompleted) yield return null;
+        }
         public static IEnumerator PostFormCoroutine(string Route, WWWForm Data, ObjectWrap<string> Response = null, Action<float> ProgressCallback = null)
         {
             WWW Post = new WWW(WebApiUri + Route, Data);

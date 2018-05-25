@@ -17,9 +17,9 @@ namespace Schwarzer.Lanotalium.WebApi.User
     }
     public static class LimApiUser
     {
-        public static async void ReportAlive(string Version)
+        public static IEnumerator ReportAlive(string Version)
         {
-            await WebApiHelper.PostStringAsync("user/alive", Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new UserDto()
+            yield return WebApiHelper.PostStringCoroutine("user/alive", Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new UserDto()
             {
                 UserId = SystemInfo.deviceUniqueIdentifier,
                 Version = Version,

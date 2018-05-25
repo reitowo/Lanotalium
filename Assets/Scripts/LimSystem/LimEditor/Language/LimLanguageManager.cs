@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class LimLanguageManager : MonoBehaviour
@@ -17,6 +18,8 @@ public class LimLanguageManager : MonoBehaviour
     public static Dictionary<string, string> NotificationDict;
     public static Dictionary<string, string> HintDict;
     public static Dictionary<string, string> TutorialDict;
+
+    public static UnityEvent OnLanguageChanged = new UnityEvent();
 
     private string _LanguagePackageFolder;
 
@@ -100,6 +103,7 @@ public class LimLanguageManager : MonoBehaviour
     }
     public void CallAllSetTexts()
     {
+        OnLanguageChanged.Invoke();
         foreach (Lanotalium.Editor.SetTextDelegate SetTexts in SetTextDelegates) SetTexts();
     }
     public void SetLanguage(string LanguageName)

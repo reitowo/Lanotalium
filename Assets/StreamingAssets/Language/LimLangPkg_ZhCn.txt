@@ -266,6 +266,17 @@ Submission_NoteCount$Note数
 Submission_UploadRequest$请将最终谱面，音乐，所有背景，lap工程文件创建压缩包上传，不超过16MB
 Submission_ConfirmDelete$确认删除吗？此操作不可逆
 Error_Network$发生网络错误
+Layesta_Download$下载
+Layesta_Download_Hint$使用 Layesta 需要下载一些依赖文件
+Layesta_NoProject$请先加载工程
+Layesta_Send_Hint$向此设备发送当前工程
+Layesta_Overwrite$重新转换音乐与背景
+Layesta_Send$发送
+Layesta_1$编码背景
+Layesta_2$转换音频
+Layesta_3$生成封面
+Layesta_4$最终处理
+Layesta_5$发送中
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建
@@ -273,6 +284,7 @@ Motion_DurationOverflow$（持续时间错误）当前时间+持续时间大于�
 Background_VideoWarning$如果失去同步，请修改偏移量并点击校准时间
 Project_Saved$保存成功
 #HintDict
+Layesta_Play_Hint$点击将当前工程加载至此设备
 GizmoMotion_Tp8$调律器动作（水平）- 螺线
 GizmoMotion_Tp11$调律器动作（水平）- 直线
 GizmoMotion_Tp10$调律器动作（垂直）

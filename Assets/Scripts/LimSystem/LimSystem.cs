@@ -94,6 +94,7 @@ namespace Lanotalium
             public bool Critical;
             public bool Combination;
             public float Bpm;
+            public float Sizef;
 
             public bool AudioEffectPlayed;
             public bool OnSelect;
@@ -101,6 +102,7 @@ namespace Lanotalium
             public GameObject TapNoteGameObject;
             public int InstanceId;
             public SpriteRenderer Sprite;
+            public bool shouldUpdate;
 
             public LanotaHoldNote ToHoldNote()
             {
@@ -166,6 +168,7 @@ namespace Lanotalium
             public bool Combination;
             public float Bpm;
             public float FinalDegree;
+            public float Sizef;
 
             public bool StartEffectPlayed;
             public bool EndEffectPlayed;
@@ -176,6 +179,7 @@ namespace Lanotalium
             public LineRenderer LineRenderer;
             public int InstanceId;
             public SpriteRenderer Sprite;
+            public bool shouldUpdate;
 
             public void SetSpritesActive(bool Active)
             {
@@ -1061,7 +1065,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 45;
+        public int Build = 47;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1081,8 +1085,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v1.9.0";
-    public static int Build = 46;
+    public static string Version = "v2.0.0";
+    public static int Build = 47;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
@@ -1181,7 +1185,7 @@ public class LimSystem : MonoBehaviour
     {
         while (true)
         {
-            LimApiUser.ReportAlive(Version);
+            yield return LimApiUser.ReportAlive(Version);
             yield return new WaitForSeconds(60);
         }
     }

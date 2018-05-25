@@ -6,6 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class LimTunerManager : MonoBehaviour
 {
+    public static LimTunerManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+    private static LimTunerManager instance;
+
     public Lanotalium.ChartContainer ChartContainer;
     public Transform NotesTransform;
     public LimBpmManager BpmManager;
@@ -22,6 +31,7 @@ public class LimTunerManager : MonoBehaviour
 
     void Start()
     {
+        instance = this;
         Initialize();
     }
     public void Initialize()

@@ -18,6 +18,7 @@ public class LimHoldNoteManager : MonoBehaviour
     void Update()
     {
         if (!isInitialized) return;
+        UpdateAllNoteShouldUpdate();
         UpdateAllNoteTransforms();
         UpdateAllLineMaterial();
         UpdateAllLineRenderers();
@@ -214,16 +215,25 @@ public class LimHoldNoteManager : MonoBehaviour
         if (lineRenderer.positionCount <= PositionIndex) lineRenderer.positionCount = PositionIndex + 1;
         lineRenderer.SetPosition(PositionIndex, Position);
     }
+
+    private void UpdateAllNoteShouldUpdate()
+    {
+        foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
+        {
+            Note.shouldUpdate = true;
+            if (!LimScanTime.Instance.IsHoldNoteinScanRange(Note))
+            {
+                Note.shouldUpdate = false;
+            }
+        }
+    }
     private void UpdateAllNoteTransforms()
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            if (!Note.shouldUpdate)
             {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    continue;
-                }
+                continue;
             }
             float Percent = CalculateMovePercent(Note.Time);
             Percent = CalculateEasedPercent(Percent);
@@ -241,12 +251,9 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            if (!Note.shouldUpdate)
             {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    continue;
-                }
+                continue;
             }
             if (Note.Percent < 20) continue;
             if (Note.Jcount == 0)
@@ -319,13 +326,10 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            if (!Note.shouldUpdate)
             {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    if (Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
-                    continue;
-                }
+                if (Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
+                continue;
             }
             if (Tuner.ChartTime > Note.Time + Note.Duration && Note.HoldNoteGameObject.activeInHierarchy) Note.HoldNoteGameObject.SetActive(false);
             else if (Tuner.ChartTime < Note.Time)
@@ -358,18 +362,16 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+
+            if (!Note.shouldUpdate)
             {
-                if (!Tuner.ScrollManager.IsStopped)
+                if (Note.Joints == null) continue;
+                for (int i = 0; i < Note.Joints.Count - 1; ++i)
                 {
-                    if (Note.Joints == null) continue;
-                    for (int i = 0; i < Note.Joints.Count - 1; ++i)
-                    {
-                        Lanotalium.Chart.LanotaJoints Joint = Note.Joints[i];
-                        if (Joint.JointGameObject.activeInHierarchy) Joint.JointGameObject.SetActive(false);
-                    }
-                    continue;
+                    Lanotalium.Chart.LanotaJoints Joint = Note.Joints[i];
+                    if (Joint.JointGameObject.activeInHierarchy) Joint.JointGameObject.SetActive(false);
                 }
+                continue;
             }
             if (Note.Joints == null) continue;
             for (int i = 0; i < Note.Joints.Count - 1; ++i)
@@ -394,12 +396,9 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            if (!Note.shouldUpdate)
             {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    continue;
-                }
+                continue;
             }
             if (Note.Percent < 20) continue;
             if (Tuner.ChartTime >= Note.Time && Tuner.ChartTime < Note.Time + Note.Duration)
@@ -424,12 +423,9 @@ public class LimHoldNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            if (!Note.shouldUpdate)
             {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    continue;
-                }
+                continue;
             }
             if (Note.OnSelect) { if (Note.Sprite.color == NormalColor) Note.Sprite.color = OnSelectColor; }
             else if (!Note.OnSelect) { if (Note.Sprite.color == OnSelectColor) Note.Sprite.color = NormalColor; }
@@ -441,12 +437,9 @@ public class LimHoldNoteManager : MonoBehaviour
         bool ShouldPlayRail = false;
         foreach (Lanotalium.Chart.LanotaHoldNote Note in HoldNote)
         {
-            if (!LimScanTime.IsHoldNoteinScanRange(Note))
+            if (!Note.shouldUpdate)
             {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    continue;
-                }
+                continue;
             }
             if (Note.Time + Note.Duration <= Tuner.ChartTime)
             {

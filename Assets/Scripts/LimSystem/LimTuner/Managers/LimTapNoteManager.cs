@@ -22,6 +22,7 @@ public class LimTapNoteManager : MonoBehaviour
     void Update()
     {
         if (!isInitialized) return;
+        UpdateAllNoteShouldUpdate();
         UpdateAllNoteTransforms();
         UpdateAllNoteActive();
         UpdateAllNoteColor();
@@ -148,17 +149,22 @@ public class LimTapNoteManager : MonoBehaviour
         return Mathf.Pow(2, 10 * (Percent / 100 - 1)) * 100;
     }
 
+    private void UpdateAllNoteShouldUpdate()
+    {
+        foreach (Lanotalium.Chart.LanotaTapNote Note in TapNote)
+        {
+            Note.shouldUpdate = true;
+            if (!LimScanTime.Instance.IsTapNoteinScanRange(Note))
+            {
+                Note.shouldUpdate = false;
+            }
+        }
+    }
     private void UpdateAllNoteTransforms()
     {
         foreach (Lanotalium.Chart.LanotaTapNote Note in TapNote)
         {
-            if (!LimScanTime.IsTapNoteinScanRange(Note))
-            {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    continue;
-                }
-            }
+            if (!Note.shouldUpdate) continue;
             float Percent = CalculateMovePercent(Note.Time);
             Percent = CalculateEasedPercent(Percent);
             Note.Percent = Percent;
@@ -173,13 +179,10 @@ public class LimTapNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaTapNote Note in TapNote)
         {
-            if (!LimScanTime.IsTapNoteinScanRange(Note))
+            if (!Note.shouldUpdate)
             {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    if (Note.TapNoteGameObject.activeInHierarchy) Note.TapNoteGameObject.SetActive(false);
-                    continue;
-                }
+                if (Note.TapNoteGameObject.activeInHierarchy) Note.TapNoteGameObject.SetActive(false);
+                continue;
             }
             if (Tuner.ChartTime > Note.Time + 0.1f && Note.TapNoteGameObject.activeInHierarchy) Note.TapNoteGameObject.SetActive(false);
             else if (Tuner.ChartTime < Note.Time)
@@ -203,13 +206,7 @@ public class LimTapNoteManager : MonoBehaviour
     {
         foreach (Lanotalium.Chart.LanotaTapNote Note in TapNote)
         {
-            if (!LimScanTime.IsTapNoteinScanRange(Note))
-            {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    continue;
-                }
-            }
+            if (!Note.shouldUpdate) continue;
             if (Note.OnSelect) { if (Note.Sprite.color != OnSelectColor) Note.Sprite.color = OnSelectColor; }
             else if (!Note.OnSelect) { if (Note.Sprite.color != NormalColor) Note.Sprite.color = NormalColor; }
             if (LimSystem.Preferences.JudgeColor && !Note.OnSelect)
@@ -226,13 +223,7 @@ public class LimTapNoteManager : MonoBehaviour
         if (!LimSystem.Preferences.AudioEffect) return;
         foreach (Lanotalium.Chart.LanotaTapNote Note in TapNote)
         {
-            if (!LimScanTime.IsTapNoteinScanRange(Note))
-            {
-                if (!Tuner.ScrollManager.IsStopped)
-                {
-                    continue;
-                }
-            }
+            if (!Note.shouldUpdate) continue;
             if (Note.Time <= Tuner.ChartTime)
             {
                 if (!Note.AudioEffectPlayed)
