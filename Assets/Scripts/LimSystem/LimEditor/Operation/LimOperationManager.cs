@@ -169,6 +169,7 @@ public class LimOperationManager : MonoBehaviour
         TapNoteData.OnSelect = true;
         SelectedTapNote.Add(TapNoteData);
         InspectorManager.OnSelectChange();
+        DeSelectAllMotions();
     }
     public void SelectHoldNote(Lanotalium.Chart.LanotaHoldNote HoldNoteData, bool MultiSelect = false)
     {
@@ -183,6 +184,7 @@ public class LimOperationManager : MonoBehaviour
         HoldNoteData.OnSelect = true;
         SelectedHoldNote.Add(HoldNoteData);
         InspectorManager.OnSelectChange();
+        DeSelectAllMotions();
     }
     public void DeSelectTapNote(Lanotalium.Chart.LanotaTapNote TapNoteData)
     {

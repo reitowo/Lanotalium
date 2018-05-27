@@ -39,17 +39,24 @@ public class ComponentTypeManager : MonoBehaviour
             RefreshUiWidth();
         }
     }
+    public void RemakeTypeDropdown(bool multiSelect = false)
+    {
+        List<Dropdown.OptionData> Options = new List<Dropdown.OptionData>
+        {
+            new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type0"]),
+            new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type2"]),
+            new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type3"]),
+            new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type4"]),
+            new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type5"])
+        };
+        if (multiSelect) Options.Add(new Dropdown.OptionData("-"));
+        Type.options = Options;
+    }
     public void SetTexts()
     {
         LabelText.text = LimLanguageManager.TextDict["Component_Type_Label"];
         TypeText.text = LimLanguageManager.TextDict["Component_Type_Type"];
-        List<Dropdown.OptionData> Options = new List<Dropdown.OptionData>();
-        Options.Add(new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type0"]));
-        Options.Add(new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type2"]));
-        Options.Add(new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type3"]));
-        Options.Add(new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type4"]));
-        Options.Add(new Dropdown.OptionData(LimLanguageManager.TextDict["Component_Type_DropDown_Type5"]));
-        Type.options = Options;
+        RemakeTypeDropdown();
     }
     public void Fold()
     {
@@ -85,20 +92,23 @@ public class ComponentTypeManager : MonoBehaviour
         EnsureDropdownUseable(Type);
         if (OperationManager.SelectedTapNote.Count == 1 && OperationManager.SelectedHoldNote.Count == 0)
         {
+            RemakeTypeDropdown(false);
             Mode = Lanotalium.Editor.ComponentTypeMode.Work;
             Type.value = ConvertTypeToValue(OperationManager.SelectedTapNote[0].Type);
             gameObject.SetActive(true);
         }
         else if (OperationManager.SelectedTapNote.Count == 0 && OperationManager.SelectedHoldNote.Count == 1)
         {
+            RemakeTypeDropdown(false);
             Mode = Lanotalium.Editor.ComponentTypeMode.Work;
             Type.value = ConvertTypeToValue(OperationManager.SelectedHoldNote[0].Type);
             gameObject.SetActive(true);
         }
         else if (OperationManager.SelectedTapNote.Count + OperationManager.SelectedHoldNote.Count > 1)
         {
+            RemakeTypeDropdown(true);
             Mode = Lanotalium.Editor.ComponentTypeMode.Work;
-            Type.value = 0;
+            Type.value = 5;
             gameObject.SetActive(true);
         }
         else if (OperationManager.SelectedTapNote.Count == 0 && OperationManager.SelectedHoldNote.Count == 0)
@@ -112,6 +122,7 @@ public class ComponentTypeManager : MonoBehaviour
     public void OnTypeChange()
     {
         if (!EnableValueChange) return;
+        if (Type.value == 5) return;
         int TypeTmp = ConvertValueToType(Type.value);
         List<Lanotalium.Chart.LanotaTapNote> ToConvertTapNote = new List<Lanotalium.Chart.LanotaTapNote>();
         List<Lanotalium.Chart.LanotaHoldNote> ToConvertHoldNote = new List<Lanotalium.Chart.LanotaHoldNote>();

@@ -17,9 +17,9 @@ public class LimLayestaManager : MonoBehaviour
     public GameObject SendPanel;
     public Button SendToButton;
     public Toggle OverwriteToggle;
-    public Text Hint, SendText, OverwriteText, Status;
+    public Text Hint, SendText, OverwriteText, Status,Export;
     public GameObject LayestaPanel, DevicePrefab;
-    public Transform DevicesContent;
+    public RectTransform DevicesContent;
     private bool hasDepends = false;
 
     public bool Debug = false;
@@ -74,6 +74,7 @@ public class LimLayestaManager : MonoBehaviour
         Hint.text = LimLanguageManager.TextDict["Layesta_Send_Hint"];
         SendText.text = LimLanguageManager.TextDict["Layesta_Send"];
         OverwriteText.text = LimLanguageManager.TextDict["Layesta_Overwrite"];
+        Export.text = LimLanguageManager.TextDict["Layesta_Export"];
     }
     public void GenerateDeviceList(int Count)
     {
@@ -101,6 +102,7 @@ public class LimLayestaManager : MonoBehaviour
             l.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, height);
             height -= 50;
         }
+        DevicesContent.sizeDelta = new Vector2(0, -height);
     }
     public void UpdateDeviceViews()
     {
@@ -225,7 +227,7 @@ public class LimLayestaManager : MonoBehaviour
             filesToZip.Add(LimProjectManager.LapFolder + "/Layesta/chart.txt");
         });
     }
-    private async Task PackLayestaFile()
+    private async Task PackLayestaFileAsync()
     {
         await Task.Run(() =>
         {
@@ -253,7 +255,7 @@ public class LimLayestaManager : MonoBehaviour
         await ConvertBackgroundBlurAsync(overwrite);
         Status.text = LimLanguageManager.TextDict["Layesta_4"];
         await ConvertChartAsync();
-        await PackLayestaFile();
+        await PackLayestaFileAsync();
     }
 
     IEnumerator sendCoroutine;
@@ -314,6 +316,24 @@ public class LimLayestaManager : MonoBehaviour
         SendToButton.interactable = true;
         Status.text = "";
         sendCoroutine = null;
+    }
+
+    public async void GenerateOnly()
+    {
+        if (!LimTunerManager.Instance.isInitialized)
+        {
+            MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_NoProject"]);
+            return;
+        }
+        string path = WindowsDialogUtility.OpenFileDialog(LimLanguageManager.TextDict["Layesta_Export"], "Layesta Level|*.layesta", LimProjectManager.LapFolder);
+        if (path == null) return;
+        if (!path.EndsWith(".layesta")) path += ".layesta";
+        filesToZip.Clear();
+        Directory.CreateDirectory(LimProjectManager.LapFolder + "/Layesta");
+        EncodeBackgrounds(true);
+        await PrepareLayestaFileAsync(true);
+        File.Move(LimProjectManager.LapFolder + "/instance.layesta", path);
+        WindowsDialogUtility.OpenExplorer(path);
     }
 
     public void CheckDepends()

@@ -277,6 +277,7 @@ Layesta_2$Converting audio
 Layesta_3$Making Blur
 Layesta_4$Finalizing
 Layesta_5$Sending
+Layesta_Export$Export .layesta file only
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.

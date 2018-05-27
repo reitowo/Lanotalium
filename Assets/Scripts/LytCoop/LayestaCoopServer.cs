@@ -118,25 +118,9 @@ public class LayestaCoopServer : MonoBehaviour
         deviceList = new LayestaDeviceList();
         detectLayestaSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-        detectLayestaSocket.Bind(new IPEndPoint(IPAddress.Parse(GetLocalIPAddress()), MulticastingPort));
-        detectLayestaSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse(MulticastingAddress), IPAddress.Parse(GetLocalIPAddress())));
+        detectLayestaSocket.Bind(new IPEndPoint(IPAddress.Any, MulticastingPort));
+        detectLayestaSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse(MulticastingAddress), IPAddress.Any));
         detectLayestaSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 200);
-
-        NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
-        foreach (NetworkInterface adapter in nics)
-        {
-            if (!adapter.GetIPProperties().MulticastAddresses.Any())
-                continue; // most of VPN adapters will be skipped
-            if (!adapter.SupportsMulticast)
-                continue; // multicast is meaningless for this type of connection
-            if (OperationalStatus.Up != adapter.OperationalStatus)
-                continue; // this adapter is off or not connected
-            IPv4InterfaceProperties p = adapter.GetIPProperties().GetIPv4Properties();
-            if (null == p)
-                continue; // IPv4 is not configured on this adapter
-            detectLayestaSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastInterface, IPAddress.HostToNetworkOrder(p.Index));
-            break;
-        }
 
         detectLayestaThread = new Thread(DetectLayestaThread);
         detectLayestaThread.Start();
@@ -145,21 +129,8 @@ public class LayestaCoopServer : MonoBehaviour
     }
     private void CleanUp()
     {
-        detectLayestaSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.DropMembership, new MulticastOption(IPAddress.Parse(MulticastingAddress), IPAddress.Parse(GetLocalIPAddress())));
         detectLayestaSocket.Close();
         working = false;
-    }
-    public string GetLocalIPAddress()
-    {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ip in host.AddressList)
-        {
-            if (ip.AddressFamily == AddressFamily.InterNetwork)
-            {
-                return ip.ToString();
-            }
-        }
-        throw new Exception("No network adapters with an IPv4 address in the system!");
     }
     public void DetectLayestaThread()
     {

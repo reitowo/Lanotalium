@@ -98,7 +98,7 @@ public class LimClickToCreateManager : MonoBehaviour
     }
     private void DetectHotkeys()
     {
-        //if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.LeftAlt)) Enable = !Enable;
+        if (Input.GetKeyDown(KeyCode.F2)) Enable = !Enable;
     }
     private void OnDisable()
     {
