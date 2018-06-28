@@ -232,8 +232,8 @@ Exception_Exception$异常
 Updator_Update$更新
 Updator_DoUpdate$保存并更新Lanotalium
 Updator_Ignore$忽略并继续制谱
-Updator_DeltaFileSize$增量升级: {0}
-Updator_FullFileSize$无法增量升级，需要下载完整包: {0}
+Updator_DeltaFileSize$文件大小: {0}
+Updator_FullFileSize$文件大小: {0}
 ChartConverting_BmsTitle$选择Bms谱面
 ChartConverting_BmsExtension$Bms谱面(*.bms,*.bme,*.bml,*.pms)|*.bms;*.bme;*.bml;*.pms
 Status$状态
@@ -277,7 +277,16 @@ Layesta_2$转换音频
 Layesta_3$生成封面
 Layesta_4$最终处理
 Layesta_5$发送中
-Layesta_Export$导出 .layesta 文件
+Layesta_Build_Title$生成 <color=#459bff>.layesta</color> 文件
+Layesta_Build$生成
+Layesta_Build_Artist$曲师
+Layesta_Build_Designer$谱师
+Layesta_Build_Chart$谱面
+Layesta_Build_Chart_AddFile$增加文件
+Layesta_Build_Chart_AddThis$增加当前谱面
+Layesta_Build_Chart_Difficulty$难度
+Layesta_Build_Chart_Delete$删除
+Layesta_Build_Name$曲名
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建

@@ -289,6 +289,18 @@ public class LimOperationManager : MonoBehaviour
         OpSave.Reverse = new Lanotalium.Editor.OperationReverse(() => { SetTapNoteSize(TapNoteData, OriginSize, false); InspectorManager.OnSelectChange(); });
         AddToOperationSaver(OpSave);
     }
+    public void SetTapNoteSizef(Lanotalium.Chart.LanotaTapNote TapNoteData,float Size, bool SaveOperation = true)
+    {
+        float OriginSize = TapNoteData.Sizef;
+        TapNoteData.Sizef = Size;
+        if (!SaveOperation) return;
+        Lanotalium.Editor.OperationSave OpSave = new Lanotalium.Editor.OperationSave
+        {
+            Forward = new Lanotalium.Editor.OperationForward(() => { SetTapNoteSizef(TapNoteData, Size, false); }),
+            Reverse = new Lanotalium.Editor.OperationReverse(() => { SetTapNoteSizef(TapNoteData, OriginSize, false); InspectorManager.OnSelectChange(); })
+        };
+        AddToOperationSaver(OpSave);
+    }
     public void SetTapNoteType(Lanotalium.Chart.LanotaTapNote TapNoteData, int Type, bool SaveOperation = true)
     {
         int OriginType = TapNoteData.Type;
@@ -424,6 +436,18 @@ public class LimOperationManager : MonoBehaviour
         Lanotalium.Editor.OperationSave OpSave = new Lanotalium.Editor.OperationSave();
         OpSave.Forward = new Lanotalium.Editor.OperationForward(() => { SetHoldNoteSize(HoldNoteData, Size, false); });
         OpSave.Reverse = new Lanotalium.Editor.OperationReverse(() => { SetHoldNoteSize(HoldNoteData, OriginSize, false); InspectorManager.OnSelectChange(); });
+        AddToOperationSaver(OpSave);
+    }
+    public void SetHoldNoteSizef(Lanotalium.Chart.LanotaHoldNote HoldNoteData, float Size, bool SaveOperation = true)
+    {
+        float OriginSize = HoldNoteData.Sizef;
+        HoldNoteData.Sizef = Size;
+        if (!SaveOperation) return;
+        Lanotalium.Editor.OperationSave OpSave = new Lanotalium.Editor.OperationSave
+        {
+            Forward = new Lanotalium.Editor.OperationForward(() => { SetHoldNoteSizef(HoldNoteData, Size, false); }),
+            Reverse = new Lanotalium.Editor.OperationReverse(() => { SetHoldNoteSizef(HoldNoteData, OriginSize, false); InspectorManager.OnSelectChange(); })
+        };
         AddToOperationSaver(OpSave);
     }
     public void SetHoldNoteDuration(Lanotalium.Chart.LanotaHoldNote HoldNoteData, float Duration, bool SaveOperation = true)

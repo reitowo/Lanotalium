@@ -114,23 +114,37 @@ public class LayestaCoopServer : MonoBehaviour
     }
     private void Initialize()
     {
-        working = true;
-        deviceList = new LayestaDeviceList();
-        detectLayestaSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        try
+        {
+            working = true;
+            deviceList = new LayestaDeviceList();
+            detectLayestaSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-        detectLayestaSocket.Bind(new IPEndPoint(IPAddress.Any, MulticastingPort));
-        detectLayestaSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse(MulticastingAddress), IPAddress.Any));
-        detectLayestaSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 200);
+            detectLayestaSocket.Bind(new IPEndPoint(IPAddress.Any, MulticastingPort));
+            detectLayestaSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(IPAddress.Parse(MulticastingAddress), IPAddress.Any));
+            detectLayestaSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 200);
 
-        detectLayestaThread = new Thread(DetectLayestaThread);
-        detectLayestaThread.Start();
-        activeSelfThread = new Thread(ActiveSelfThread);
-        activeSelfThread.Start();
+            detectLayestaThread = new Thread(DetectLayestaThread);
+            detectLayestaThread.Start();
+            activeSelfThread = new Thread(ActiveSelfThread);
+            activeSelfThread.Start();
+        }
+        catch (Exception)
+        {
+
+        }
     }
     private void CleanUp()
     {
-        detectLayestaSocket.Close();
-        working = false;
+        try
+        {
+            detectLayestaSocket.Close();
+            working = false;
+        }
+        catch(Exception)
+        {
+
+        }
     }
     public void DetectLayestaThread()
     {

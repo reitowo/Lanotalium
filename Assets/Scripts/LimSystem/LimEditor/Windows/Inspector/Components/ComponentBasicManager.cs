@@ -7,7 +7,7 @@ public class ComponentBasicManager : MonoBehaviour
     public RectTransform ViewRect, ComponentRect;
     public int UnFoldHeight;
     public InputField Timing, Degree;
-    public Image TimingImg, DegreeImg;
+    public Image TimingImg, DegreeImg, SizefImg;
     public Text LabelText, SizeText, TimingText, DegreeText, CombinationText, AbsoluteText;
     public Toggle Combination;
     public Dropdown Size;
@@ -15,6 +15,7 @@ public class ComponentBasicManager : MonoBehaviour
     public LimInspectorManager InspectorManager;
     public LimOperationManager OperationManager;
     public Toggle Absolute;
+    public InputField Sizef;
 
     private bool isFolded = false, EnableValueChange = false, isAbsolute = false;
     private Lanotalium.Editor.ComponentBasicMode Mode = Lanotalium.Editor.ComponentBasicMode.Idle;
@@ -169,5 +170,27 @@ public class ComponentBasicManager : MonoBehaviour
             foreach (Lanotalium.Chart.LanotaTapNote Tap in OperationManager.SelectedTapNote) OperationManager.SetTapNoteCombination(Tap, CombinationTmp);
             foreach (Lanotalium.Chart.LanotaHoldNote Hold in OperationManager.SelectedHoldNote) OperationManager.SetHoldNoteCombination(Hold, CombinationTmp);
         }
+    }
+    public void OnLayestaToggle(Toggle toggle)
+    {
+        if (Sizef == null || Size == null) return;
+        Sizef.gameObject.SetActive(toggle.isOn);
+        Size.gameObject.SetActive(!toggle.isOn);
+    }
+    public void OnSizefChange()
+    {
+        if (!EnableValueChange) return;
+        float SizefTmp = 0;
+        if(!float.TryParse(Sizef.text,out SizefTmp))
+        {
+            SizefImg.color = InvalidColor;
+            return;
+        }
+        if (Mode == Lanotalium.Editor.ComponentBasicMode.Work)
+        {
+            foreach (Lanotalium.Chart.LanotaTapNote Tap in OperationManager.SelectedTapNote) OperationManager.SetTapNoteSizef(Tap, SizefTmp);
+            foreach (Lanotalium.Chart.LanotaHoldNote Hold in OperationManager.SelectedHoldNote) OperationManager.SetHoldNoteSizef(Hold, SizefTmp);
+        }
+        SizefImg.color = ValidColor;
     }
 }

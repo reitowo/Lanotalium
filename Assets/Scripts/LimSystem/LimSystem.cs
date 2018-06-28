@@ -1065,7 +1065,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 48;
+        public int Build = 49;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1085,8 +1085,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v2.0.1";
-    public static int Build = 48;
+    public static string Version = "v2.1.0";
+    public static int Build = 49;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;

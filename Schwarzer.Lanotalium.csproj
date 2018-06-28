@@ -424,6 +424,7 @@
     <Compile Include="Assets\Scripts\LytCoop\Helper\LayestaDependsDownloader.cs" />
     <Compile Include="Assets\Scripts\LytCoop\Helper\lzip.cs" />
     <Compile Include="Assets\Scripts\LytCoop\LayestaCoopServer.cs" />
+    <Compile Include="Assets\Scripts\LytCoop\LimLayestaBuildChart.cs" />
     <Compile Include="Assets\Scripts\LytCoop\LimLayestaDevice.cs" />
     <Compile Include="Assets\Scripts\LytCoop\LimLayestaManager.cs" />
   </ItemGroup>

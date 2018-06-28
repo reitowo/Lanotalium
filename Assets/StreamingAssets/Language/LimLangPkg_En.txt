@@ -232,8 +232,8 @@ Exception_Exception$Exception
 Updator_Update$Update
 Updator_DoUpdate$Save and update Lanotalium
 Updator_Ignore$Ignore and continue working
-Updator_DeltaFileSize$Delta update: {0}
-Updator_FullFileSize$Unable to delta update, full size update needed: {0}
+Updator_DeltaFileSize$File size: {0}
+Updator_FullFileSize$File size: {0}
 ChartConverting_BmsTitle$Select a Bms Chart
 ChartConverting_BmsExtension$Bms Chart(*.bms,*.bme,*.bml,*.pms)|*.bms;*.bme;*.bml;*.pms
 Status$Status
@@ -277,7 +277,16 @@ Layesta_2$Converting audio
 Layesta_3$Making Blur
 Layesta_4$Finalizing
 Layesta_5$Sending
-Layesta_Export$Export .layesta file only
+Layesta_Build_Title$Build <color=#459bff>.layesta</color> File
+Layesta_Build$Build
+Layesta_Build_Artist$Artist
+Layesta_Build_Designer$Designer
+Layesta_Build_Chart$Chart
+Layesta_Build_Chart_AddFile$Add File
+Layesta_Build_Chart_AddThis$Add Current 
+Layesta_Build_Chart_Difficulty$Difficulty
+Layesta_Build_Chart_Delete$Delete
+Layesta_Build_Name$Name
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.

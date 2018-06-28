@@ -218,21 +218,21 @@ public class LimCreatorManager : MonoBehaviour
         Dictionary<string, int> Occurance = new Dictionary<string, int>();
         foreach (Lanotalium.Chart.LanotaTapNote Tap in TunerManager.TapNoteManager.TapNote)
         {
-            if (!Occurance.ContainsKey(Tap.Time.ToString())) Occurance[Tap.Time.ToString()] = 0;
-            Occurance[Tap.Time.ToString()]++;
+            if (!Occurance.ContainsKey(Tap.Time.ToString("f4"))) Occurance[Tap.Time.ToString("f4")] = 0;
+            Occurance[Tap.Time.ToString("f4")]++;
         }
         foreach (Lanotalium.Chart.LanotaHoldNote Hold in TunerManager.HoldNoteManager.HoldNote)
         {
-            if (!Occurance.ContainsKey(Hold.Time.ToString())) Occurance[Hold.Time.ToString()] = 0;
-            Occurance[Hold.Time.ToString()]++;
+            if (!Occurance.ContainsKey(Hold.Time.ToString("f4"))) Occurance[Hold.Time.ToString("f4")] = 0;
+            Occurance[Hold.Time.ToString("f4")]++;
         }
         foreach (Lanotalium.Chart.LanotaTapNote Tap in TunerManager.TapNoteManager.TapNote)
         {
-            OperationManager.SetTapNoteCombination(Tap, (Occurance[Tap.Time.ToString()] > 1));
+            OperationManager.SetTapNoteCombination(Tap, (Occurance[Tap.Time.ToString("f4")] > 1));
         }
         foreach (Lanotalium.Chart.LanotaHoldNote Hold in TunerManager.HoldNoteManager.HoldNote)
         {
-            OperationManager.SetHoldNoteCombination(Hold, (Occurance[Hold.Time.ToString()] > 1));
+            OperationManager.SetHoldNoteCombination(Hold, (Occurance[Hold.Time.ToString("f4")] > 1));
         }
     }
 
