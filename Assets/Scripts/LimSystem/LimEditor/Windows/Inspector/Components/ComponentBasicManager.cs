@@ -86,6 +86,7 @@ public class ComponentBasicManager : MonoBehaviour
             else Degree.text = OperationManager.SelectedTapNote[0].Degree.ToString("f5");
             Combination.isOn = OperationManager.SelectedTapNote[0].Combination;
             Size.value = OperationManager.SelectedTapNote[0].Size;
+            Sizef.text = OperationManager.SelectedTapNote[0].Sizef.ToString();
             gameObject.SetActive(true);
         }
         else if (OperationManager.SelectedTapNote.Count == 0 && OperationManager.SelectedHoldNote.Count == 1)
@@ -96,6 +97,7 @@ public class ComponentBasicManager : MonoBehaviour
             else Degree.text = OperationManager.SelectedHoldNote[0].Degree.ToString("f5");
             Combination.isOn = OperationManager.SelectedHoldNote[0].Combination;
             Size.value = OperationManager.SelectedHoldNote[0].Size;
+            Sizef.text = OperationManager.SelectedHoldNote[0].Sizef.ToString();
             gameObject.SetActive(true);
         }
         else if (OperationManager.SelectedTapNote.Count + OperationManager.SelectedHoldNote.Count > 1)
@@ -105,6 +107,7 @@ public class ComponentBasicManager : MonoBehaviour
             Degree.text = "-";
             Combination.isOn = false;
             Size.value = 0;
+            Sizef.text = "-";
             gameObject.SetActive(true);
         }
         else if (OperationManager.SelectedTapNote.Count == 0 && OperationManager.SelectedHoldNote.Count == 0)

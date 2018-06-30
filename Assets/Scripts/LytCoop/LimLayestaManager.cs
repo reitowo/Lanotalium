@@ -248,17 +248,18 @@ public class LimLayestaManager : MonoBehaviour
     {
         await Task.Run(() =>
         {
-            foreach(LimLayestaBuildChart c in buildChartViews)
+            foreach (LimLayestaBuildChart c in buildChartViews)
             {
+                if (string.IsNullOrWhiteSpace(c.Difficulty)) continue;
                 if (c.ChartPath != "Instance")
                 {
-                    File.Copy(c.ChartPath, LimProjectManager.LapFolder + $"/Layesta/chart_{c.Difficulty}.txt", true);
+                    File.Copy(c.ChartPath, LimProjectManager.LapFolder + $"/Layesta/chart_{Convert.ToBase64String(Encoding.UTF8.GetBytes(c.Difficulty))}.txt", true);
                 }
                 else
                 {
-                    File.WriteAllText(LimProjectManager.LapFolder + $"/Layesta/chart_{c.Difficulty}.txt", LimTunerManager.Instance.ChartContainer.ChartData.ToString());                    
+                    File.WriteAllText(LimProjectManager.LapFolder + $"/Layesta/chart_{Convert.ToBase64String(Encoding.UTF8.GetBytes(c.Difficulty))}.txt", LimTunerManager.Instance.ChartContainer.ChartData.ToString());
                 }
-                filesToZip.Add(LimProjectManager.LapFolder + $"/Layesta/chart_{c.Difficulty}.txt");
+                filesToZip.Add(LimProjectManager.LapFolder + $"/Layesta/chart_{Convert.ToBase64String(Encoding.UTF8.GetBytes(c.Difficulty))}.txt");
             }
         });
     }
@@ -271,7 +272,7 @@ public class LimLayestaManager : MonoBehaviour
             b.Write(Name.text);
             b.Write(Designer.text);
             b.Write(buildChartViews.Count);
-            foreach(LimLayestaBuildChart c in buildChartViews)
+            foreach (LimLayestaBuildChart c in buildChartViews)
             {
                 b.Write(c.Difficulty);
             }
@@ -279,6 +280,7 @@ public class LimLayestaManager : MonoBehaviour
             b.Write(k.Width);
             b.Write(k.Height);
             b.Write(Artist.text);
+            b.Write(2);
             b.Close();
             fs.Close();
             filesToZip.Add(LimProjectManager.LapFolder + "/Layesta/info.bytes");
@@ -296,6 +298,46 @@ public class LimLayestaManager : MonoBehaviour
         await ConvertChartAsync();
         await PackLayestaFileAsync();
     }
+    private async Task PrepareLayestaFileInstanceAsync(bool overwrite)
+    {
+        Directory.CreateDirectory(LimProjectManager.LapFolder + "/Layesta");
+        Status.text = LimLanguageManager.TextDict["Layesta_2"];
+        await ConvertAudioAsync(overwrite);
+        Status.text = LimLanguageManager.TextDict["Layesta_3"];
+        await ConvertBackgroundBlurAsync(overwrite);
+        Status.text = LimLanguageManager.TextDict["Layesta_4"];
+        await ConvertChartInstanceAsync();
+        await PackLayestaFileInstanceAsync();
+    }
+    private async Task PackLayestaFileInstanceAsync()
+    {
+        await Task.Run(() =>
+        {
+            FileStream fs = new FileStream(LimProjectManager.LapFolder + "/Layesta/info.bytes", FileMode.Create, FileAccess.Write);
+            BinaryWriter b = new BinaryWriter(fs);
+            b.Write(Name.text);
+            b.Write(Designer.text);
+            b.Write(1);
+            b.Write("Master");
+            Kaliko.ImageLibrary.KalikoImage k = new Kaliko.ImageLibrary.KalikoImage(LimProjectManager.LapFolder + "/Layesta/background.jpg");
+            b.Write(k.Width);
+            b.Write(k.Height);
+            b.Write(Artist.text);
+            b.Write(2);
+            b.Close();
+            fs.Close();
+            filesToZip.Add(LimProjectManager.LapFolder + "/Layesta/info.bytes");
+            lzip.compress_File_List(0, LimProjectManager.LapFolder + "/instance.layesta", filesToZip.ToArray(), null, false, filesToZip.Select((s) => Path.GetFileName(s)).ToArray());
+        });
+    }
+    private async Task ConvertChartInstanceAsync()
+    {
+        await Task.Run(() =>
+        {
+            File.WriteAllText(LimProjectManager.LapFolder + $"/Layesta/chart_{Convert.ToBase64String(Encoding.UTF8.GetBytes("Master"))}.txt", LimTunerManager.Instance.ChartContainer.ChartData.ToString());
+            filesToZip.Add(LimProjectManager.LapFolder + $"/Layesta/chart_{Convert.ToBase64String(Encoding.UTF8.GetBytes("Master"))}.txt");
+        });
+    }
 
     IEnumerator sendCoroutine;
     public void SendLayesta()
@@ -309,7 +351,7 @@ public class LimLayestaManager : MonoBehaviour
         Directory.CreateDirectory(LimProjectManager.LapFolder + "/Layesta");
         Status.text = LimLanguageManager.TextDict["Layesta_1"];
         EncodeBackgrounds(OverwriteToggle.isOn);
-        Task t = PrepareLayestaFileAsync(OverwriteToggle.isOn);
+        Task t = PrepareLayestaFileInstanceAsync(OverwriteToggle.isOn);
         while (!t.IsCompleted) yield return null;
         Status.text = LimLanguageManager.TextDict["Layesta_5"];
         byte[] b = File.ReadAllBytes(LimProjectManager.LapFolder + "/instance.layesta");
@@ -364,15 +406,16 @@ public class LimLayestaManager : MonoBehaviour
             MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_NoProject"]);
             return;
         }
-            string path = WindowsDialogUtility.OpenFileDialog(LimLanguageManager.TextDict["Layesta_Build_Title"], "Layesta Level|*.layesta", LimProjectManager.LapFolder);
-            if (path == null) return;
-            if (!path.EndsWith(".layesta")) path += ".layesta";
-            filesToZip.Clear();
-            Directory.CreateDirectory(LimProjectManager.LapFolder + "/Layesta");
-            EncodeBackgrounds(true);
-            await PrepareLayestaFileAsync(true);
-            File.Move(LimProjectManager.LapFolder + "/instance.layesta", path);
-            WindowsDialogUtility.OpenExplorer(path);
+        string path = WindowsDialogUtility.SaveFileDialog(LimLanguageManager.TextDict["Layesta_Build_Title"], "Layesta Level|*.layesta", LimProjectManager.LapFolder);
+        if (path == null) return;
+        if (!path.EndsWith(".layesta")) path += ".layesta";
+        filesToZip.Clear();
+        Directory.CreateDirectory(LimProjectManager.LapFolder + "/Layesta");
+        EncodeBackgrounds(true);
+        await PrepareLayestaFileAsync(true);
+        if (File.Exists(path)) File.Delete(path);
+        File.Move(LimProjectManager.LapFolder + "/instance.layesta", path);
+        WindowsDialogUtility.OpenExplorer(path);
     }
     public void BuildAddChartInstance()
     {
@@ -384,7 +427,7 @@ public class LimLayestaManager : MonoBehaviour
         LimLayestaBuildChart chart = temp.GetComponent<LimLayestaBuildChart>();
         chart.Initialize("Instance");
         chart.DifficultyText.text = "Master";
-        buildChartViews.Insert(0,chart);
+        buildChartViews.Insert(0, chart);
         AddInstanceButton.interactable = false;
         BuildRefreshChartList();
     }
@@ -399,13 +442,13 @@ public class LimLayestaManager : MonoBehaviour
         GameObject temp = Instantiate(BuildChartPrefab, BuildChartListContent);
         LimLayestaBuildChart chart = temp.GetComponent<LimLayestaBuildChart>();
         chart.Initialize(path);
-        buildChartViews.Insert(0,chart);
+        buildChartViews.Insert(0, chart);
         BuildRefreshChartList();
     }
     public void BuildRemoveChart(LimLayestaBuildChart chart)
     {
         buildChartViews.Remove(chart);
-        if(chart.ChartPath == "Instance")
+        if (chart.ChartPath == "Instance")
         {
             AddInstanceButton.interactable = true;
         }
@@ -415,7 +458,7 @@ public class LimLayestaManager : MonoBehaviour
     private void BuildRefreshChartList()
     {
         float y = 0;
-        foreach(LimLayestaBuildChart c in buildChartViews)
+        foreach (LimLayestaBuildChart c in buildChartViews)
         {
             c.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, y);
             y -= 40;

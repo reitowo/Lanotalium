@@ -42,6 +42,7 @@ namespace Lanotalium
             public bool Critical;
             public bool Combination;
             public float Bpm;
+            public float Sizef;
             public joints joints;
         }
         [System.Serializable]
@@ -354,6 +355,7 @@ namespace Lanotalium
                             TmpTap.Critical = MidJson.events[i].Critical;
                             TmpTap.Combination = MidJson.events[i].Combination;
                             TmpTap.Bpm = MidJson.events[i].Bpm;
+                            TmpTap.Sizef = MidJson.events[i].Sizef;
                             LanotaTapNote.Add(TmpTap);
                         }
                         else if (Type == 5)
@@ -365,6 +367,7 @@ namespace Lanotalium
                             TmpHold.Jcount = MidJson.events[i].joints.j_count;
                             TmpHold.Degree = MidJson.events[i].Degree;
                             TmpHold.Combination = MidJson.events[i].Combination;
+                            TmpHold.Sizef = MidJson.events[i].Sizef;
                             if (TmpHold.Jcount != 0)
                             {
                                 TmpHold.Joints = new List<LanotaJoints>();
@@ -542,6 +545,7 @@ namespace Lanotalium
                     eventtmp.Critical = LanotaTapNote[i].Critical;
                     eventtmp.Combination = LanotaTapNote[i].Combination;
                     eventtmp.Bpm = LanotaTapNote[i].Bpm;
+                    eventtmp.Sizef = LanotaTapNote[i].Sizef;
                     OutputTmp.events.Add(eventtmp);
                 }
                 for (int i = 0; i < LanotaHoldNote.Count; ++i)
@@ -555,6 +559,7 @@ namespace Lanotalium
                     eventtmp.joints.j_count = LanotaHoldNote[i].Jcount;
                     eventtmp.Degree = LanotaHoldNote[i].Degree;
                     eventtmp.joints.j = new List<Json.j>();
+                    eventtmp.Sizef = LanotaHoldNote[i].Sizef;
                     if (eventtmp.joints.j_count != 0)
                     {
                         for (int k = 0; k < eventtmp.joints.j_count; ++k)
@@ -1065,7 +1070,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 49;
+        public int Build = 50;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1085,8 +1090,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v2.1.0";
-    public static int Build = 49;
+    public static string Version = "v2.1.1";
+    public static int Build = 50;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
