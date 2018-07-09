@@ -349,51 +349,10 @@ public class LimHoldNoteManager : MonoBehaviour
                 float currentaTime = Note.Time, currentaDegree = Note.Degree;
                 bool headPointAdded = false;
 
+                Note.LineRenderer.widthCurve = new AnimationCurve();
+
                 for (int i = 0; i < Note.Joints.Count; ++i)
                 {
-                    #region Obsolete
-                    /*float Interval = Mathf.Clamp(Mathf.Abs(Note.Joints[i].dTime / (Note.Joints[i].dDegree == 0 ? 1 : Note.Joints[i].dDegree) * 10), 0.003f, 0.03f);
-                    for (float t = LastaTime > Tuner.ChartTime ? LastaTime : Tuner.ChartTime; t < Note.Joints[i].aTime; t += Interval)
-                    {
-                        float LocationPercent = CalculateMovePercent(t);
-                        float Percent = (t - LastaTime) / Note.Joints[i].dTime;
-                        EndPercent = CalculateEasedPercent(LocationPercent);
-                        if (Tuner.ScrollManager.IsBackwarding)
-                        {
-                            if (EndPercent != 100)
-                            {
-                                AddLineRendererPosition(PositionIndex, Note.LineRenderer, CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
-                                PositionIndex++;
-                            }
-                        }
-                        else
-                        {
-                            AddLineRendererPosition(PositionIndex, Note.LineRenderer, CalculateLineRendererPoint(EndPercent, Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree * CalculateEasedCurve(Percent, Note.Joints[i].Cfmi)));
-                            PositionIndex++;
-                        }
-                        if (t + Interval > Note.Joints[i].aTime)
-                        {
-                            float TempPercent = CalculateMovePercent(Note.Joints[i].aTime);
-                            if (Tuner.ScrollManager.IsBackwarding)
-                            {
-                                if (TempPercent != 100)
-                                {
-                                    AddLineRendererPosition(PositionIndex, Note.LineRenderer, CalculateLineRendererPoint(CalculateEasedPercent(TempPercent), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
-                                    PositionIndex++;
-
-                                }
-                            }
-                            else
-                            {
-
-                                AddLineRendererPosition(PositionIndex, Note.LineRenderer, CalculateLineRendererPoint(CalculateEasedPercent(TempPercent), Tuner.CameraManager.CurrentRotation + LastaDegree + Note.Joints[i].dDegree));
-                                PositionIndex++;
-
-                            }
-                            break;
-                        }
-                    }*/
-                    #endregion
                     Lanotalium.Chart.LanotaJoints Joint = Note.Joints[i];
                     if (Joint.aTime < Tuner.ChartTime)
                     {
@@ -407,6 +366,7 @@ public class LimHoldNoteManager : MonoBehaviour
                         if (Note.Time < Tuner.ChartTime)
                         {
                             float startDegreePercent = (Tuner.ChartTime - currentaTime) / Joint.dTime;
+                            Note.LineRenderer.widthCurve.AddKey(currentaTime, 1 / CalculateEasedCurveDirevative(startDegreePercent, Joint.Cfmi));
                             AddLineRendererPosition(positionIndex, Note.LineRenderer, CalculateLineRendererPoint(100, currentaDegree + Joint.dDegree * CalculateEasedCurve(startDegreePercent, Joint.Cfmi) + Tuner.CameraManager.CurrentRotation));
                             positionIndex++;
                         }
@@ -423,6 +383,8 @@ public class LimHoldNoteManager : MonoBehaviour
                         float percent = CalculateEasedPercent(CalculateMovePercent(timing));
                         lastPercent = percent;
                         if (percent == 100 && timing <= Tuner.ChartTime) continue;
+                        float direvative = CalculateEasedCurveDirevative(timingPercent, Joint.Cfmi);
+                        Note.LineRenderer.widthCurve.AddKey(timing, 1 / direvative);
                         AddLineRendererPosition(positionIndex, Note.LineRenderer, CalculateLineRendererPoint(percent, degree + Tuner.CameraManager.CurrentRotation));
                         positionIndex++;
                         if (percent <= 15) goto end;
@@ -432,8 +394,9 @@ public class LimHoldNoteManager : MonoBehaviour
                     currentaDegree = Joint.aDegree;
                 }
                 end:
-                Note.LineRenderer.startWidth = Note.Percent / 100;
-                Note.LineRenderer.endWidth = lastPercent / 100;
+
+                /*Note.LineRenderer.startWidth = Note.Percent / 100;
+                Note.LineRenderer.endWidth = lastPercent / 100;*/
                 Note.LineRenderer.positionCount = positionIndex;
             }
         }

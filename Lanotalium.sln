@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwarzer.Chart", "Schwarze
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schwarzer.Unity", "Schwarzer.Unity.csproj", "{E7815E92-7ABE-3128-8734-4D409E8AF0EE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lanotalium", "Lanotalium.csproj", "{F9FB416B-927F-614F-59BD-12E03D898691}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{E7815E92-7ABE-3128-8734-4D409E8AF0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7815E92-7ABE-3128-8734-4D409E8AF0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7815E92-7ABE-3128-8734-4D409E8AF0EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9FB416B-927F-614F-59BD-12E03D898691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9FB416B-927F-614F-59BD-12E03D898691}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9FB416B-927F-614F-59BD-12E03D898691}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9FB416B-927F-614F-59BD-12E03D898691}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

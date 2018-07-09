@@ -1,0 +1,10 @@
+ManifestFileVersion: 0
+CRC: 1396250101
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: tutorial
+      Dependencies: {}
+    Info_1:
+      Name: event/latest
+      Dependencies: {}

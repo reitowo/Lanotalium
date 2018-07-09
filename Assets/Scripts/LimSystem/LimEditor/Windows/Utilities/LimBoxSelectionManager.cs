@@ -72,6 +72,10 @@ public class LimBoxSelectionManager : MonoBehaviour
     {
         return new Vector2(ScreenPosition.x, ScreenPosition.y - Window.sizeDelta.y);
     }
+    public Vector2 TimelineToWindowPosition(Vector3 ScreenPosition, RectTransform Window)
+    {
+        return new Vector2(ScreenPosition.x - Window.anchoredPosition.x, ScreenPosition.y - Window.anchoredPosition.y);
+    }
     public bool IsNoteInBoxArea(GameObject Note)
     {
         Vector3 ScreenPosition = Camera.WorldToScreenPoint(Note.transform.position);
@@ -81,8 +85,8 @@ public class LimBoxSelectionManager : MonoBehaviour
     public bool IsMotionInBoxArea(GameObject Motion)
     {
         Vector3 ScreenPosition = Camera.WorldToScreenPoint(Motion.transform.position);
-        Vector2 ScaledPosition = new Vector2(ScreenPosition.x, ScreenPosition.y) * (1920f / Screen.width);
-        Vector2 WindowPosition = TunerScreenToWindowPosition(ScaledPosition, UsingWindow);
+        Vector2 ScaledPosition = new Vector2(ScreenPosition.x, ScreenPosition.y - Screen.height) / Screen.width * 1920f;
+        Vector2 WindowPosition = TimelineToWindowPosition(ScaledPosition, UsingWindow);
         return LimMathUtil.InRect(WindowPosition, BoxSelectionPanel);
     }
 }

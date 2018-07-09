@@ -1,0 +1,18 @@
+ManifestFileVersion: 0
+CRC: 2176247027
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2835e274e8a6d8e3cf051bc888569432
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 70b69257d2909ce70bfbfb6a802159ef
+HashAppended: 0
+ClassTypes:
+- Class: 114
+  Script: {fileID: 11500000, guid: 6aac8bc2c18682e4ebd75b96d7918511, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/Tutorials/Tutorial_FirstProject1.asset
+Dependencies: []
