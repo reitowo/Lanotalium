@@ -349,8 +349,6 @@ public class LimHoldNoteManager : MonoBehaviour
                 float currentaTime = Note.Time, currentaDegree = Note.Degree;
                 bool headPointAdded = false;
 
-                Note.LineRenderer.widthCurve = new AnimationCurve();
-
                 for (int i = 0; i < Note.Joints.Count; ++i)
                 {
                     Lanotalium.Chart.LanotaJoints Joint = Note.Joints[i];
@@ -366,7 +364,6 @@ public class LimHoldNoteManager : MonoBehaviour
                         if (Note.Time < Tuner.ChartTime)
                         {
                             float startDegreePercent = (Tuner.ChartTime - currentaTime) / Joint.dTime;
-                            Note.LineRenderer.widthCurve.AddKey(currentaTime, 1 / CalculateEasedCurveDirevative(startDegreePercent, Joint.Cfmi));
                             AddLineRendererPosition(positionIndex, Note.LineRenderer, CalculateLineRendererPoint(100, currentaDegree + Joint.dDegree * CalculateEasedCurve(startDegreePercent, Joint.Cfmi) + Tuner.CameraManager.CurrentRotation));
                             positionIndex++;
                         }
@@ -383,8 +380,6 @@ public class LimHoldNoteManager : MonoBehaviour
                         float percent = CalculateEasedPercent(CalculateMovePercent(timing));
                         lastPercent = percent;
                         if (percent == 100 && timing <= Tuner.ChartTime) continue;
-                        float direvative = CalculateEasedCurveDirevative(timingPercent, Joint.Cfmi);
-                        Note.LineRenderer.widthCurve.AddKey(timing, 1 / direvative);
                         AddLineRendererPosition(positionIndex, Note.LineRenderer, CalculateLineRendererPoint(percent, degree + Tuner.CameraManager.CurrentRotation));
                         positionIndex++;
                         if (percent <= 15) goto end;
@@ -395,8 +390,8 @@ public class LimHoldNoteManager : MonoBehaviour
                 }
                 end:
 
-                /*Note.LineRenderer.startWidth = Note.Percent / 100;
-                Note.LineRenderer.endWidth = lastPercent / 100;*/
+                Note.LineRenderer.startWidth = Note.Percent / 100;
+                Note.LineRenderer.endWidth = lastPercent / 100;
                 Note.LineRenderer.positionCount = positionIndex;
             }
         }
