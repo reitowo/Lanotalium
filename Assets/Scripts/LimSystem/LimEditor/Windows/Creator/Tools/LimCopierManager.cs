@@ -39,7 +39,7 @@ public class LimCopierManager : MonoBehaviour
     {
         CopyTargets.Clear();
         string Instrus = CopyInstructionInputField.text;
-        string[] InstruList = Instrus.Split(',');
+        string[] InstruList = Instrus.Split(';');
         foreach (string Instru in InstruList)
         {
             float tTarget;

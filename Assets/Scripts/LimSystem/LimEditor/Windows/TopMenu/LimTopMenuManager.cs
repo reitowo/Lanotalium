@@ -20,7 +20,7 @@ public class LimTopMenuManager : MonoBehaviour
     public Text PluginText;
     public Text PluginCenterText;
     public Text ChartConvertText;
-    public Text ChartConvertBmsText;
+    public Text ChartConvertBmsText, ChartConvertArcaeaText;
     public Text TopText;
     public Text ChartZoneText;
 
@@ -51,6 +51,7 @@ public class LimTopMenuManager : MonoBehaviour
         PluginText.text = LimLanguageManager.TextDict["TopMenu_Plugin"];
         PluginCenterText.text = LimLanguageManager.TextDict["TopMenu_Plugin_PluginCenter"];
         ChartConvertText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert"];
+        ChartConvertArcaeaText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert_Arcaea"];
         ChartConvertBmsText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert_Bms"];
         ChartZoneText.text = LimLanguageManager.TextDict["TopMenu_ChartZone"];
         StatusText.text = LimLanguageManager.TextDict["TopMenu_Status"];

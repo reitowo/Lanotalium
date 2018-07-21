@@ -6,7 +6,7 @@ using Schwarzer.Chart;
 public class LimChartConverting : MonoBehaviour
 {
     public WindowsDialogUtility WindowsDialogUtility;
-    private Coroutine ConvertingCoroutine;
+    private Coroutine convertingCoroutine;
 
     IEnumerator ConvertFromBmsCoroutine()
     {
@@ -21,9 +21,21 @@ public class LimChartConverting : MonoBehaviour
         if (chartConvertTask.Task.Exception != null) throw chartConvertTask.Task.Exception;
         WindowsDialogUtility.OpenExplorer(chartConvertTask.LapPath);
     }
+    IEnumerator ConvertFromArcaeaCoroutine()
+    {
+        string ArcaeaAffPath = WindowsDialogUtility.OpenFileDialog("Open Aff File", "Arcaea File Format (*.aff)|*.aff", null);
+        if(ArcaeaAffPath == null) yield break;
+        ChartConvert.ArcaeaToLanota(ArcaeaAffPath);
+        WindowsDialogUtility.OpenExplorer(ArcaeaAffPath.Replace(".aff", "_convert.txt"));
+    }
     public void ConvertFromBms()
     {
-        if (ConvertingCoroutine != null) StopCoroutine(ConvertingCoroutine);
-        ConvertingCoroutine = StartCoroutine(ConvertFromBmsCoroutine());
+        if (convertingCoroutine != null) StopCoroutine(convertingCoroutine);
+        convertingCoroutine = StartCoroutine(ConvertFromBmsCoroutine());
+    }
+    public void ConvertFromArcaea()
+    {
+        if (convertingCoroutine != null) StopCoroutine(convertingCoroutine);
+        convertingCoroutine = StartCoroutine(ConvertFromArcaeaCoroutine());
     }
 }

@@ -42,6 +42,7 @@ public class LimMouseOverHint : MonoBehaviour
             Style.normal.textColor = new Color(255, 255, 255, 255);
             Style.stretchHeight = true;
             Style.stretchWidth = true;
+            Style.alignment = TextAnchor.LowerLeft;
             isGUIInitialized = true;
         }
         Size = Style.CalcSize(new GUIContent(LimLanguageManager.HintDict[HintTextDictKey]));

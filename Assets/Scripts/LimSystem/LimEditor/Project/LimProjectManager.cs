@@ -16,6 +16,7 @@ using System.Security;
 using UnityEngine.Events;
 using NAudio.Wave;
 using System.Threading.Tasks;
+using UnityEngine.Networking;
 
 public class LimProjectManager : MonoBehaviour
 {
@@ -555,87 +556,50 @@ public class LimProjectManager : MonoBehaviour
         DialogUtils.ProgressBar.Percent = 0.9f;
         #endregion
         #region Load Music
+        UnityWebRequest AudioRead = null;
         switch (Path.GetExtension(CurrentProject.MusicPath))
         {
             case ".wav":
+                AudioRead = UnityWebRequestMultimedia.GetAudioClip("file:///" + CurrentProject.MusicPath, AudioType.WAV);
+                break;
             case ".ogg":
-                WWW AudioRead = null;
-                try
-                {
-                    if (!File.Exists(CurrentProject.MusicPath)) throw new FileNotFoundException();
-                    AudioRead = new WWW("file:///" + CurrentProject.MusicPath);
-                }
-                catch (Exception)
-                {
-                    DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
-                    isLoadFinished = true;
-                    yield break;
-                }
-                yield return AudioRead;
-                if (AudioRead != null && string.IsNullOrEmpty(AudioRead.error))
-                {
-                    try
-                    {
-                        LimSystem.ChartContainer.ChartMusic = new Lanotalium.Chart.ChartMusic(AudioRead.GetAudioClip());
-                        LimSystem.ChartContainer.ChartLoadResult.isMusicLoaded = true;
-                    }
-                    catch (Exception)
-                    {
-                        DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
-                        isLoadFinished = true;
-                        yield break;
-                    }
-                }
-                else
-                {
-                    DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
-                    isLoadFinished = true;
-                    yield break;
-                }
+                AudioRead = UnityWebRequestMultimedia.GetAudioClip("file:///" + CurrentProject.MusicPath, AudioType.OGGVORBIS);
                 break;
             case ".mp3":
-                /*Task ReadMp3Task = null;
-                WaveFormat waveFormat = null;
-                List<float> AudioData = new List<float>();
-                ReadMp3Task = Task.Run(() =>
-                 {
-                     MemoryStream memoryStream = new MemoryStream();
-                     MediaFoundationReader audioFileReader = new MediaFoundationReader(CurrentProject.MusicPath);
-                     WaveFileWriter.WriteWavFileToStream(memoryStream, audioFileReader);
-                     WaveFileReader waveFileReader = new WaveFileReader(memoryStream);
-                     waveFormat = waveFileReader.ToSampleProvider().WaveFormat;
-                     while (true)
-                     {
-                         float[] Frame = waveFileReader.ReadNextSampleFrame();
-                         AudioData.AddRange(Frame);
-                         if (Frame == null) break;
-                     }
-                 });
-                while (!ReadMp3Task.IsCompleted)
-                {
-                    yield return null;
-                }
-                if (ReadMp3Task.Exception != null)
-                {
-                    throw ReadMp3Task.Exception;
-                    DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
-                    isLoadFinished = true;
-                    yield break;
-                }
-                try
-                {
-                    AudioClip audioClip = AudioClip.Create("", AudioData.Count / waveFormat.Channels, waveFormat.Channels, waveFormat.SampleRate, false);
-                    LimSystem.ChartContainer.ChartMusic = new Lanotalium.Chart.ChartMusic(audioClip);
-                    LimSystem.ChartContainer.ChartLoadResult.isMusicLoaded = true;
-                }
-                catch (Exception Ex)
-                {
-                    throw Ex;
-                    DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
-                    isLoadFinished = true;
-                    yield break;
-                }*/
+                AudioRead = UnityWebRequestMultimedia.GetAudioClip("file:///" + CurrentProject.MusicPath, AudioType.MPEG);
                 break;
+        }
+        try
+        {
+            if (!File.Exists(CurrentProject.MusicPath)) throw new FileNotFoundException();
+            if (AudioRead == null) throw new InvalidDataException();
+        }
+        catch (Exception)
+        {
+            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+            isLoadFinished = true;
+            yield break;
+        }
+        yield return AudioRead.SendWebRequest();
+        if (string.IsNullOrWhiteSpace(AudioRead.error))
+        {
+            try
+            {
+                LimSystem.ChartContainer.ChartMusic = new Lanotalium.Chart.ChartMusic(DownloadHandlerAudioClip.GetContent(AudioRead));
+                LimSystem.ChartContainer.ChartLoadResult.isMusicLoaded = true;
+            }
+            catch (Exception)
+            {
+                DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+                isLoadFinished = true;
+                yield break;
+            }
+        }
+        else
+        {
+            DialogUtils.MessageBox.ShowMessage(LimLanguageManager.TextDict["Project_ReadMusicFailed"]);
+            isLoadFinished = true;
+            yield break;
         }
         #endregion
         #region Load Video If Exist

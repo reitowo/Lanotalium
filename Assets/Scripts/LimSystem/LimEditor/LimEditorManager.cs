@@ -17,11 +17,7 @@ public class LimEditorManager : MonoBehaviour
     public LimTopMenuManager TopMenu;
     public LimStatusManager StatusManager;
     public LimSubmitManager SubmitManager;
-
-    public GameObject WhatsNew, NewCn, NewEn;
-    public Toggle WhatsNewHideToggle;
-    public Text WhatsNewText, WhatsNewToggleText;
-
+    
     public void ResetEditorLayout()
     {
         MusicPlayerWindow.BaseWindow.WindowRectTransform.anchoredPosition = new Vector2(1420, -890);
@@ -75,17 +71,9 @@ public class LimEditorManager : MonoBehaviour
     private void Start()
     {
         if (LimSystem.Preferences.HideWhatsNew) return;
-        WhatsNew.SetActive(true);
-        if (LimSystem.Preferences.LanguageName == "简体中文") NewCn.SetActive(true);
-        else NewEn.SetActive(true);
     }
     public void SetTexts()
     {
-        WhatsNewText.text = LimLanguageManager.TextDict["WhatsNew_Label"];
-        WhatsNewToggleText.text = LimLanguageManager.TextDict["WhatsNew_Toggle"];
-    }
-    public void OnWhatsNewHideToggle()
-    {
-        LimSystem.Preferences.HideWhatsNew = WhatsNewHideToggle.isOn;
+
     }
 }

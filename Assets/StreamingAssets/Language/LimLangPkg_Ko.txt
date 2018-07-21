@@ -1,0 +1,332 @@
+﻿!한국어
+#TextDict
+Window_Tuner_Label$조율기
+Window_Tuner_Skin$스킨
+Window_Tuner_Capturer$캡처 도구
+Window_Tuner_FullScreen$전체 화면
+Window_Tuner_Head_Designer$채보 제작자
+Window_Tuner_Motion$조율기 움직임
+Window_Tuner_StretchBGA$배경 늘리기
+Window_Tuner_ChartSpeed$스크롤 속도
+Window_Inspector_Label$인스펙터
+Window_Inspector_Switcher_Bpm$BPM
+Window_Inspector_Switcher_Scroll$스크롤 속도
+Window_Inspector_Switcher_Default$기본
+Window_MediaPlayer_Label$미디어 플레이어
+Window_MediaPlayer_Progress$진행도
+Window_MediaPlayer_PlaybackSpeed$속도
+Window_MediaPlayer_Pitch$높낮이
+Window_MediaPlayer_PitchReset$높낮이 되돌리기
+Window_MediaPlayer_Play$재생
+Window_MediaPlayer_Pause$일시 정지
+Window_MediaPlayer_Stop$정지
+Window_MediaPlayer_PreciseControl$정밀 모드 제어
+Window_MediaPlayer_Offset$오프셋
+Window_MediaPlayer_SwitchPlayerMode$모드 전환
+Window_MediaPlayer_FixTime$고치기
+Window_MediaPlayer_Precise$정밀
+Window_MediaPlayer_Sync$싱크
+Window_TimeLine_Label$타임라인
+Window_TimeLine_Hor_Label$수평 움직임
+Window_TimeLine_Ver_Label$수직 움직임
+Window_TimeLine_Rot_Label$회전 움직임
+Window_TimeLine_WaveformL$파형 좌
+Window_TimeLine_WaveformR$파형 우
+Window_TimeLine_Waveform$파형
+Window_TimeLine_Waveform_LowMemory$32비트 메모리 제한으로 인해 파형 기능이 제한됩니다.
+Window_Creator_Label$생성 도구
+Window_Creator_CreateTap$클릭 노트 만들기
+Window_Creator_CreateHold$레일 노트 만들기
+Window_Creator_CreateMotionHor$수평 움직임 만들기
+Window_Creator_CreateMotionVer$수직 움직임 만들기
+Window_Creator_CreateMotionRot$회전 움직임 만들기
+Window_Creator_CreateMotionManually$움직임 만들기 (수동)
+Window_Creator_CreateBpm$BPM 구간 만들기
+Window_Creator_CreateScrollSpeed$스크롤 속도 구간 만들기
+Window_Creator_CreateCatchRail$캐치 노트 레일 만들기
+Window_Creator_CreateCatchRail_Quantity$수량
+Window_Creator_CreateCatchRail_ErrSelection$총 두 개의 클릭 노트나 캐치 노트를 선택해야 합니다.
+Window_Creator_CreateCatchRail_ErrQuantity$수량을 입력해야 합니다.
+Window_Creator_CreateCatchRail_ErrRange$수량은 0보단 커야 합니다.
+Window_Creator_CreateCatchRail_Success$생성되었습니다.
+Window_Creator_ConvertSelectedToHoldNote$레일 노트로 변환
+Window_Creator_AutoHighlight$자동으로 동시 타 표시
+Window_Creator_DeleteSelected$선택한 요소 삭제
+Window_Creator_ClickToCreate$클릭해서 만들기
+Window_Creator_Angleline$각도 기준선
+Window_Creator_Copier$복사기
+Component_Basic_Label$기본
+Component_Basic_Size$크기
+Component_Basic_Timing$타이밍
+Component_Basic_Degree$각도
+Component_Basic_Combination$동시타 노트로 표시
+Component_Type_Label$타입
+Component_Type_Type$타입
+Component_Type_DropDown_Type0$0 - 클릭
+Component_Type_DropDown_Type2$2 - 안쪽 플릭
+Component_Type_DropDown_Type3$3 - 바깥쪽 플릭
+Component_Type_DropDown_Type4$4 - 캐치
+Component_Type_DropDown_Type5$5 - 레일
+Component_HoldNote_Label$캐치 노트
+Component_HoldNote_Duration$지속 시간
+Component_HoldNote_JCount$관절 개수
+Component_HoldNote_Joints$관절
+Component_HoldNote_Joints_Mode_Absolute$절댓값 사용
+Component_HoldNote_Joints_Mode_Chained$연결됨
+Component_HoldNote_Joints_Degree$각도 변화량
+Component_HoldNote_Joints_Time$지속 시간
+Component_HoldNote_Joints_Ease$부드럽게 하기
+Component_Basic_Degree_Absolute$절댓값 사용
+Component_Motion_Label$움직임
+Component_Motion_Timing$타이밍
+Component_Motion_Duration$지속 시간
+Component_Motion_Cfmi$부드럽게 하기
+Component_Motion_Ctp0$Ctp0
+Component_Motion_Ctp1$Ctp1
+Component_Motion_Type$타입
+Component_Motion_Ctp0_Tp8$각도 변화량
+Component_Motion_Ctp1_Tp8$반경 변화량
+Component_Motion_Ctp0_Tp11$목표 각도
+Component_Motion_Ctp1_Tp11$목표 반경
+Component_Motion_Ctp0_Tp10$높이 변화량
+Component_Motion_Ctp1_Tp10$None
+Component_Motion_Ctp0_Tp13$회전 각도
+Component_Motion_Ctp1_Tp13$None
+Component_Motion_ManuallyMotion$수동 움직임
+Component_Motion_Unavaliable$사용 불가
+Component_Bpm_Label$BPM
+Component_Bpm_Timing$타이밍
+Component_Bpm_Bpm$BPM
+Component_Bpm_Beatline$박자 기준선
+Component_Bpm_Density$밀도
+Component_Bpm_FixSelected$선택된 노트를 박자에 맞추기
+Component_Bpm_FixAll$모든 노트를 박자에 맞추기
+Component_ScrollSpeed_Label$스크롤 속도
+Component_ScrollSpeed_Timing$타이밍
+Component_ScrollSpeed_Speed$속도
+Component_ScrollSpeed_ChartSpeed$채보 속도
+Component_Default_Label$움직임 기본값
+Component_Default_Radius$시작 반경
+Component_Default_Degree$시작 각도
+Component_Default_Height$시작 높이
+Component_Default_Rotation$시작 회전 각도
+Preferences_Label$환경 설정
+Preferences_Language$언어
+Preferences_Autosave$자동 저장
+Preferences_JudgeColor$노트 판정 시 색으로 보여줌
+Preferences_AudioEffect$판정 효과음
+Preferences_AudioEffectTheme$효과음 테마
+Preferences_Unsafe$안전하지 않은 움직임
+Preferences_WorkingBGM$BGM 멈추기
+TopMenu_ChartZone$차트존
+TopMenu_ChartZone_MessageBox$차트존으로 이동합니다. 저장되지 않은 정보는 모두 잃게 됩니다.
+TopMenu_File$파일
+TopMenu_File_NewProject$새 프로젝트
+TopMenu_File_OpenProject$프로젝트 열기
+TopMenu_File_SaveProject$프로젝트 저장
+TopMenu_File_SaveAsProject$채보 파일로 저장
+TopMenu_File_Release$릴리즈 만들기
+TopMenu_File_Exit$종료
+TopMenu_Window$창
+TopMenu_Window_Inspector$인스펙터
+TopMenu_Window_Tuner$조율기
+TopMenu_Window_TimeLine$타임라인
+TopMenu_Window_MediaPlayer$미디어 플레이어
+TopMenu_Window_Creator$생성 도구
+TopMenu_Window_Spectrum$파형 스펙트럼
+TopMenu_Setting$설정
+TopMenu_Setting_Preferences$환경 설정
+TopMenu_Setting_ResetLayout$창 배열 다시 설정
+TopMenu_Plugin$플러그인
+TopMenu_Plugin_PluginCenter$플러그인 관리
+TopMenu_ChartConvert$채보 변환
+TopMenu_ChartConvert_Bms$BMS 채보를 변환
+TopMenu_ChartConvert_Arcaea$Arcaea 채보를 변환
+TopMenu_Status$상태
+GizmoMotion_Label$수동 움직임
+GizmoMotion_ToCreate$움직임의 종류
+GizmoMotion_EditMode$편집 방법
+GizmoMotion_From$값에서
+GizmoMotion_To$값으로
+GizmoMotion_Radius$반경
+GizmoMotion_Degree$각도
+GizmoMotion_Height$높이
+GizmoMotion_Rotation$회전
+GizmoMotion_Time$시간
+GizmoMotion_With$효과
+GizmoMotion_Ease$부드럽게 하기
+GizmoMotion_Duration$지속 시간
+GizmoMotion_Apply$적용
+ClickToCreate_Enable$활성화
+ClickToCreate_Size$크기
+ClickToCreate_Type$타입
+ClickToCreate_AttachTo$기준선에 붙이기
+ClickToCreate_Beatline$박자 기준선
+ClickToCreate_Angleline$각도 기준선
+ClickToCreate_Timing$타이밍
+ClickToCreate_Degree$각도
+ClickToCreate_Deltatime$변화량
+Copier_CopyNote$선택한 노트(들) 복사
+Copier_CopyMotion$선택한 움직임(들) 복사
+Copier_Msg_Success$복사 되었습니다.
+Copier_Hint$예) 1;2;4+0.1*3 라 적으면 1;2;4;4.1;4.2;4.3 초에 복사됩니다.
+Capturer_Label$캡처 도구
+Capturer_Resolution$해상도
+Capturer_FrameRate$프레임
+Capturer_Export$내보내기
+Plugin_NotFound$플러그인을 찾을 수 없습니다.
+Plugin_NotValid$올바르지 않은 플러그인 이거나 / 플러그인이 없거나 / 플러그인이 구 버전입니다. 플러그인 관리를 확인해보세요
+Plugin_LoadNotComplete$플러그인을 로딩 중입니다. 잠시만 기다려주세요...
+Plugin_Download$다운로드
+Plugin_Complete$완료
+Plugin_Center_Label$플러그인 관리
+Cloud_Cloud$클라우드
+Cloud_Backup$백업
+Cloud_Backuping$백업 중...
+Cloud_Uploading$업로드 중...
+Cloud_Downloading$다운로드 중...
+Cloud_CloudAutosave$클라우드 자동 저장
+Cloud_Chart_Label$채보
+Cloud_GetMTime_Label$클라우드 저장:
+Cloud_GetMTime_NotUploadedBefore$이전에 올라온 적 없는 파일입니다.
+Cloud_Error_UnsupportUserId$에러: 알 수 없는 사용자 ID
+Cloud_Error_NetworkNotReachable$에러: 네트워크에 연결 불가능
+Cloud_Error_NoProjectLoaded$에러: 열려있는 프로젝트 파일이 없음
+Project_LoadFilter$라노타리움 프로젝트 파일(*.lap)|*.lap
+Project_Saved$저장되었습니다.
+Project_InvalidProject$알 수 없는 프로젝트입니다!
+Project_InvalidProjectFile$알 수 없는 프로젝트 파일입니다!
+Project_NoName$채보 이름을 입력해주세요!
+Project_NoDesigner$제작자의 이름을 입력해주세요!
+Project_ReadChartFailed$채보 파일을 읽을 수 없습니다. 올바른 파일인지 확인해주세요!
+Project_ReadImageFailed$이미지 파일을 읽을 수 없습니다. 올바른 파일인지 확인해주세요!
+Project_ReadMusicFailed$음악 파일을 읽을 수 없습니다. 올바른 파일인지 확인해주세요!
+Project_ChartWillGenerate$새 채보 파일이 생성되었습니다. 만약 기존 파일이 있다면 선택해주세요.
+Project_FolderLabel$프로젝트 경로
+Project_Name$채보 이름
+Project_Designer$제작자
+Project_Music$음악 경로
+Project_Chart$채보 파일 경로
+Project_BGA$배경 이미지
+Project_WizardLabel$프로젝트 마법사
+Project_Open_Create$만들기
+Project_Open_Open$열기
+Project_NoBGA$적어도 하나의 배경 이미지가 선택되어야합니다.
+ChartZone_Rating_You$본인
+ChartZone_Rating_Online$사용자
+ChartZone_Head$차트존
+ChartZone_ChartName$이름
+ChartZone_Designer$제작자
+ChartZone_Notes$노트 수
+ChartZone_Download$다운로드
+ChartZone_Video$비디오
+ChartZone_Rating$평점
+ChartZone_CopyRight$제작자를 제외하곤 이곳의 채보를 영상으로 올리지 말아 주세요! <br><size=25>완성도가 낮은 채보는 수집되지 않습니다.</size><br><size=25><color=#FFE57AFF>상단바를 눌러 정렬할 수 있습니다.</color></size>
+WhatsNew_Label$새로운 기능
+WhatsNew_Toggle$다시 표시하지 않습니다.
+Spectrum_Name$파형
+Exception_QueuedCount${0} 개의 추가 예외 발생
+Exception_Next$다음
+Exception_Restart$저장하고 프로그램 재시작
+Exception_Ignore$무시하고 계속 작업하기
+Exception_Exception$예외 발생!
+Updator_Update$프로그램 업데이트
+Updator_DoUpdate$저장하고 업데이트하기
+Updator_Ignore$무시하고 업데이트하기
+Updator_DeltaFileSize$변경된 파일 크기: {0}
+Updator_FullFileSize$전체 파일 크기: {0}
+ChartConverting_BmsTitle$Bms 채보를 선택해주세요
+ChartConverting_BmsExtension$Bms 채보(*.bms,*.bme,*.bml,*.pms)|*.bms;*.bme;*.bml;*.pms
+Status$상태
+Status_LoadProject$프로젝트를 불러오세요
+Status_TunerStatus$조율기 상태
+Status_Rotation$회전
+Status_Height$높이
+Status_Coordinate_Polar$(ρ, θ) 위치
+Status_Coordinate_Rect$(x, y) 위치
+Status_ChartStatus$채보 상태
+Status_TapNote$탭 노트 개수
+Status_HoldNote$홀드 노트 개수
+Status_CurrentBpm$현재 BPM
+Status_CurrentSpeed$현재 속도
+Submit_TimeLimit$하루에 한 채보만 제출 할 수 있습니다.
+Submit_TooManyPending$대기 중인 채보가 너무 많습니다.
+Submit_MySubmit$제출한 목록
+Submit_NewSubmit$제출하기
+Submit_ChartZone$차트존으로 제출
+Submission_Accepted$승인 됨
+Submission_Modified$다시 제출하기
+Submission_NotUploaded$업로드 안 됨
+Submission_Pending$대기 중
+Submission_Rejected$거부 됨
+Submission_Upload$업로드
+Submission_File_Title$프로젝트 파일, 채보 파일, 배경 이미지 파일, 음악 파일이 든 zip 파일을 선택해주세요
+Submission_ChartName$채보 이름
+Submission_Designer$제작자
+Submission_NoteCount$노트 수
+Submission_UploadRequest$프로젝트 파일, 채보 파일, 배경 이미지 파일, 음악 파일이 든 zip 파일을 올려주세요.
+Submission_ConfirmDelete$정말로 삭제하실 건가요? 되돌릴 수 없습니다.
+Error_Network$네트워크 에러
+Layesta_Download$다운로드
+Layesta_Download_Hint$Layesta 기능을 이용하려면 추가 파일이 필요합니다.
+Layesta_NoProject$프로젝트 파일을 불러오세요
+Layesta_Send_Hint$보내기 버튼을 이용해 Layesta 앱으로 전송할 수 있습니다.
+Layesta_Overwrite$음악 파일과 배경 이미지 파일 다시 생성
+Layesta_Send$보내기
+Layesta_1$배경 이미지 인코딩 중...
+Layesta_2$음악 변환 중...
+Layesta_3$블러 효과 적용...
+Layesta_4$완료 중...
+Layesta_5$보내는 중...
+Layesta_Build_Title$<color=#459bff>.layesta</color> 파일 만들기
+Layesta_Build$만들기
+Layesta_Build_Artist$작곡자
+Layesta_Build_Designer$채보 제작자
+Layesta_Build_Chart$채보(난이도) 파일
+Layesta_Build_Chart_AddFile$파일 추가
+Layesta_Build_Chart_AddThis$현재 파일 추가
+Layesta_Build_Chart_Difficulty$난이도 이름
+Layesta_Build_Chart_Delete$삭제
+Layesta_Build_Name$이름
+#NotificationDict
+Motion_TimeExisted$(올바르지 않은 타이밍) 현재 타이밍에 이미 다른 움직임이 존재합니다.
+Motion_InPrevious$(올바르지 않은 타이밍) 현재 타이밍은 다른 움직임의 지속 시간 내 입니다.
+Motion_DurationOverflow$(올바르지 않은 지속 시간) 현재 타이밍+지속시간 내에 다른 움직임이 존재합니다.
+Background_VideoWarning$만약 채보와 음악의 싱크가 어긋나 있으면 고치기 기능으로 맞춰주세요.
+Project_Saved$저장되었습니다.
+#HintDict
+ClickToCreate_Hotkey$F2 키를 눌러 활성화할 수도 있습니다.
+Angleline_Hint$Format<br>단일: 바로 입력합니다. <br>여러개 지정：[시작점]>[종점]/[수]<br>0>30/5 는 0,6,12,18,24,30에 배치됩니다.<br>; 기호로 구분 짓습니다. (0;2;0>15/3)
+Copier_Hint$Format<br>단일: 바로 입력합니다. <br>여러개 지정：[시작 시간]+[간격]*[횟수]<br>15+0.1*5 는 15 15.1 15.2 15.3 15.4 15.5에 배치됩니다.<br>; 기호로 구분 짓습니다. (10;30;50+0.5*5)
+Layesta_Play_Hint$이 기기에서 현재 프로젝트를 불러옵니다.
+GizmoMotion_Tp8$수평 움직임 - 나선
+GizmoMotion_Tp11$수평 움직임 - 직선
+GizmoMotion_Tp10$수직 움직임
+GizmoMotion_Tp13$회전 움직임
+GizmoMotion_MoveMode$왼쪽 클릭 드래그로 수평 이동, 스크롤로 높이 조절, Ctrl 키로 더 빠르게 움직이기
+GizmoMotion_RotateMode$조율기 주변을 드래그 해서 회전, Ctrl 키로 더 빠르게 회전
+GizmoMotion_InputMode$값을 직접 입력합니다.
+EaseRange$0부터 12까지의 까지의 정수
+Timeline_Scroll$Alt 키로 드래그 선택, Ctrl 키로 다중 선택.<br>Ctrl + 스크롤로 타임라인 확대.<br>위의 바를 드래그해 시간 조절.
+Timeline_Prev$선택된 움직임 타입의 이전 움직임으로 이동합니다.
+Timeline_Next$선택된 움직임 타입의 다음 움직임으로 이동합니다.
+MediaPlayer_PlayControl$아무 버튼도 선택되지 않았을 때, 스페이스 바를 눌러 일시 정지/재생이 가능합니다.
+MediaPlayer_Progress$Ctrl + ←/→ 박자 기준선으로 이동합니다.<br>Alt + ←/→ 0.001초 이동합니다.<br>Shift + ←/→ 0.01초 이동합니다.
+ClickToCreate_Beatline$혹은 Alt 키를 누르고 있어도 됩니다.
+ClickToCreate_Angleline$혹은 Ctrl 키를 누르고 있어도 됩니다.
+ClickToCreate_Enable$레일 노트를 선택 중일 때 클릭해서 관절을 추가합니다.
+Capturer_Export$채보를 자동으로 저장하며, 중간의 모든 입력을 무시합니다. 중간에 취소하려면 ESC 키를 누르면 됩니다.
+TunerWindow_FullScreen$ESC 키로 복구합니다.
+Create_Catch$두 개의 선택된 노트 사이에 수 만큼의 이어진 캐치 노트 폭타를 만듭니다.
+Create_ConvertSelectedToHoldNote$선택된 노트들을 레일 노트로 만듭니다. 맨 처음 노트는 시작점이 되며 중간 노트는 관절이 됩니다.
+TxtToLap$.txt 파일을 열려면 새 프로젝트 만들기에 들어가 채보 파일을 .txt 파일로 지정해주세요.
+MusicFormat$.wav 파일과 .ogg 파일만 지원합니다.
+DisableChartSpeed$비활성화되면 스크롤 속도 변경이 되지 않고 수정, 생성할 수 없어 집니다.
+#TutorialDict
+FirstProject1$라노타리움에 오신걸 환영해요!<br>파일 탭을 눌러 새 프로젝트를 만들어봅시다!
+FirstProject2$새 프로젝트를 눌러 새로운 프로젝트를 만듭니다!
+FirstProject3$프로젝트 경로를 골라주세요!
+FirstProject4$참고로 음악 파일은 .wav 파일과 .ogg 파일만 지원합니다.
+FirstProject5$지금은 새 프로젝트를 만드는 과정이니 이 칸은 비우셔도 됩니다!<br>만약 기존 채보 파일이 있다면 선택하세요.
+FirstProject6$여길 눌러 최대 3개의 배경 이미지를 추가 할 수 있습니다.
+FirstProject7$마지막입니다! 여길 눌러 새 프로젝트를 만들어주세요!

@@ -14,7 +14,8 @@ using UnityEditor;
 
 public class LimEventManager : MonoBehaviour
 {
-    public RectTransform EventRoot;
+    private static bool hasShown = false;
+    public RectTransform Root,NewsContentRoot;
     public Font DengXian;
     private static LimEventManager instance;
     public static LimEventManager Instance
@@ -24,10 +25,12 @@ public class LimEventManager : MonoBehaviour
             return instance;
         }
     }
+    private AssetBundle eventAssets = null;
 
     private IEnumerator Start()
     {
         instance = this;
+        if (hasShown) yield break;
         yield return FetchEventAssetBundle();
     }
 
@@ -39,19 +42,27 @@ public class LimEventManager : MonoBehaviour
         AssetBundleCreateRequest request = AssetBundle.LoadFromMemoryAsync(www.bytes);
         yield return request;
         if (request.assetBundle == null) yield break;
-        AssetBundle ab = request.assetBundle;
-        AssetBundleRequest request2 = ab.LoadAssetAsync<GameObject>("EventRoot");
+        eventAssets = request.assetBundle;
+        AssetBundleRequest request2 = eventAssets.LoadAssetAsync<GameObject>("EventRoot");
         yield return request2;
         if (request2.asset == null) yield break;
         GameObject e = request2.asset as GameObject;
-        GameObject latest = Instantiate(e, EventRoot);
+        GameObject latest = Instantiate(e, NewsContentRoot);
         foreach (Text t in latest.GetComponentsInChildren<Text>(true))
         {
             t.font = DengXian;
         }
-        EventRoot.gameObject.SetActive(true);
+        Root.gameObject.SetActive(true);
     }
-
+    private void OnDestroy()
+    {
+        eventAssets?.Unload(true);
+    }
+    public void Close()
+    {
+        Root.gameObject.SetActive(false);
+        hasShown = true;
+    }
 #if UNITY_EDITOR
     [MenuItem("Lanotalium/Build Events")]
     public static void BuildEvents()

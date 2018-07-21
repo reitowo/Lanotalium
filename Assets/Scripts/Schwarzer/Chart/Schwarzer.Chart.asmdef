@@ -1,6 +1,10 @@
 {
     "name": "Schwarzer.Chart",
-    "references": [],
+    "references": [
+        "Schwarzer.StringReader"
+    ],
+    "optionalUnityReferences": [],
     "includePlatforms": [],
-    "excludePlatforms": []
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
 }

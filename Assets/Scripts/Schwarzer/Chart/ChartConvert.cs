@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Schwarzer.Chart.Lanota;
 using Schwarzer.Chart.Bms;
 using System.IO;
+using Schwarzer.Chart.Arcaea;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -143,6 +144,111 @@ namespace Schwarzer.Chart
                 task.Percent = 100;
             });
             return task;
+        }
+        public static void ArcaeaToLanota(string affPath)
+        {
+            ArcaeaAffReader reader = new ArcaeaAffReader(affPath);
+            
+            LanotaChartManaged la = new LanotaChartManaged();
+            float baseBpm = (reader.Events[0] as ArcaeaAffTiming).Bpm;
+            la.LanotaChangeBpm.Add(new Lanota.Managed.LanotaChangeBpm
+            {
+                Time = -3,
+                Bpm = baseBpm
+            });
+            la.LanotaScroll.Add(new Lanota.Managed.LanotaScroll
+            {
+                Speed = 1,
+                Time = -10
+            });
+
+            foreach (ArcaeaAffEvent e in reader.Events)
+            {
+                switch(e.Type)
+                {
+                    case Arcaea.EventType.Timing:
+                        ArcaeaAffTiming timing = e as ArcaeaAffTiming;
+                        la.LanotaChangeBpm.Add(new Lanota.Managed.LanotaChangeBpm()
+                        {
+                            Bpm = timing.Bpm,
+                            Time = (timing.Timing + reader.AudioOffset) / 1000f
+                        });
+                        la.LanotaScroll.Add(new Lanota.Managed.LanotaScroll()
+                        {
+                            Speed = timing.Bpm / baseBpm,
+                            Time = (timing.Timing + reader.AudioOffset) / 1000f
+                        });
+                        break;
+                    case Arcaea.EventType.Tap:
+                        ArcaeaAffTap tap = e as ArcaeaAffTap;
+                        la.LanotaTapNote.Add(new Lanota.Managed.LanotaTapNote()
+                        {
+                            Type = 0,
+                            Time = (tap.Timing + reader.AudioOffset) / 1000f,
+                            Size = 1,
+                            Degree = tap.Track * 30 - 70
+                        });
+                        break;
+                    case Arcaea.EventType.Hold:
+                        ArcaeaAffHold hold = e as ArcaeaAffHold;
+                        la.LanotaHoldNote.Add(new Lanota.Managed.LanotaHoldNote()
+                        {
+                            Type = 5,
+                            Time = (hold.Timing + reader.AudioOffset) / 1000f,
+                            Degree = hold.Track * 30 - 70,
+                            Duration = (hold.EndTiming - hold.Timing) / 1000f,
+                            Size = 1
+                        });
+                        break;
+                    case Arcaea.EventType.Arc:
+                        ArcaeaAffArc arc = e as ArcaeaAffArc;
+                        if (!arc.IsVoid)
+                        {
+                            la.LanotaHoldNote.Add(new Lanota.Managed.LanotaHoldNote()
+                            {
+                                Type = 5,
+                                Time = (arc.Timing + reader.AudioOffset) / 1000f,
+                                Duration = (arc.EndTiming - arc.Timing) / 1000f,
+                                Degree = ArcaeaUtility.ConvertDegree(arc.XStart, arc.YStart, arc.Color),
+                                Jcount = 1,
+                                Size = 1,
+                                Joints = new List<Lanota.Managed.LanotaJoints>()
+                                {
+                                    new Lanota.Managed.LanotaJoints()
+                                    {
+                                        dDegree = ArcaeaUtility.ConvertDegree(arc.XEnd,arc.YEnd,arc.Color) -  ArcaeaUtility.ConvertDegree(arc.XStart, arc.YStart,arc.Color),
+                                        dTime =  (arc.EndTiming - arc.Timing) / 1000f,
+                                        Cfmi = ArcaeaUtility.DetermineEase(arc.LineType)
+                                    }
+                                }
+                            });
+                        }
+                        if(arc.ArcTaps!=null)
+                        {
+                            float startDegree = ArcaeaUtility.ConvertDegree(arc.XStart, arc.YStart, arc.Color);
+                            float deltaDegree = ArcaeaUtility.ConvertDegree(arc.XEnd, arc.YEnd, arc.Color) - ArcaeaUtility.ConvertDegree(arc.XStart, arc.YStart, arc.Color);
+                            float duration = (arc.EndTiming - arc.Timing) / 1000f;
+                            float startTiming = (arc.Timing + reader.AudioOffset) / 1000f;
+                            int ease = ArcaeaUtility.DetermineEase(arc.LineType);
+                            foreach (int i in arc.ArcTaps)
+                            {
+                                float t = (i + reader.AudioOffset) / 1000f;
+                                float percent = (t - startTiming) / duration;
+                                float degree = startDegree + deltaDegree * ArcaeaUtility.CalculateEasedCurve(percent, ease);
+                                la.LanotaTapNote.Add(new Lanota.Managed.LanotaTapNote()
+                                {
+                                    Type = 0,
+                                    Time = t,
+                                    Size = 2,
+                                    Degree = degree
+                                });
+                            }
+                        }
+                        break;
+                }
+            }
+
+            File.WriteAllText(affPath.Replace(".aff", "_convert.txt"), la.ToString());
         }
     }
 }

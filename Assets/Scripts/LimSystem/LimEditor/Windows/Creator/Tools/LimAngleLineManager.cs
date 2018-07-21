@@ -137,7 +137,7 @@ public class LimAngleLineManager : MonoBehaviour
     private bool TryParse(string s)
     {
         Angles.Clear();
-        string[] AngleStrs = s.Split(',');
+        string[] AngleStrs = s.Split(';');
         foreach (string AngleStr in AngleStrs)
         {
             if (!TryParseAngle(AngleStr))

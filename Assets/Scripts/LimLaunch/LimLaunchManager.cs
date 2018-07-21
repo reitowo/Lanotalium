@@ -36,6 +36,13 @@ public class LimLaunchManager : MonoBehaviour
         _LaunchLanguageDict.Add("Quit_En", "Quit");
         _LaunchLanguageDict.Add("ChartZone_ZhCn", "谱面中心");
         _LaunchLanguageDict.Add("ChartZone_En", "ChartZone");
+
+        _LaunchLanguageDict.Add("EnterLanotalium_Ko", "<size=30>시작</size>  <size=45>Lanotalium</size>");
+        _LaunchLanguageDict.Add("Tutorial_Ko", "튜토리얼");
+        _LaunchLanguageDict.Add("SupportMe_Ko", "기부");
+        _LaunchLanguageDict.Add("About_Ko", "About");
+        _LaunchLanguageDict.Add("Quit_Ko", "나가기");
+        _LaunchLanguageDict.Add("ChartZone_Ko", "차트존");
     }
     private void SetTexts()
     {
@@ -46,6 +53,14 @@ public class LimLaunchManager : MonoBehaviour
             TutorialText.text = _LaunchLanguageDict["Tutorial_ZhCn"];
             SupportMeText.text = _LaunchLanguageDict["SupportMe_ZhCn"];
             QuitText.text = _LaunchLanguageDict["Quit_ZhCn"];
+        }
+        else if(LimSystem.Preferences.LanguageName == "한국어")
+        {
+            ChartZoneText.text = _LaunchLanguageDict["ChartZone_Ko"];
+            EnterLanotaliumText.text = _LaunchLanguageDict["EnterLanotalium_Ko"];
+            TutorialText.text = _LaunchLanguageDict["Tutorial_Ko"];
+            SupportMeText.text = _LaunchLanguageDict["SupportMe_Ko"];
+            QuitText.text = _LaunchLanguageDict["Quit_Ko"];
         }
         else
         {

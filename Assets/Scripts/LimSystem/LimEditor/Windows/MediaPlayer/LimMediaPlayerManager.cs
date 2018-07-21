@@ -84,8 +84,8 @@ public class LimMediaPlayerManager : MonoBehaviour
     {
         get
         {
-            if (MusicPlayer.clip == null) return 0;
             if (MediaPlayerMode == Lanotalium.MediaPlayer.MediaPlayerMode.Video) return BackgroundManager.VideoLength;
+            if (MusicPlayer.clip == null) return 0;
             else return MusicPlayer.clip.length;
         }
     }
@@ -172,6 +172,7 @@ public class LimMediaPlayerManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            if (EventSystem.current.currentSelectedGameObject != null) return;
             IsPlaying = !IsPlaying;
         }
     }

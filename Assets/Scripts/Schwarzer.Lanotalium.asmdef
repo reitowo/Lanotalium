@@ -4,8 +4,11 @@
         "Schwarzer.Dialogs",
         "Schwarzer.Chart",
         "Schwarzer.WebApi",
-        "Schwarzer.Unity"
+        "Schwarzer.Unity",
+        "Schwarzer.StringReader"
     ],
+    "optionalUnityReferences": [],
     "includePlatforms": [],
-    "excludePlatforms": []
+    "excludePlatforms": [],
+    "allowUnsafeCode": false
 }

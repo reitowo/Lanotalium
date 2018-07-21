@@ -141,6 +141,7 @@ TopMenu_Plugin$插件
 TopMenu_Plugin_PluginCenter$插件中心
 TopMenu_ChartConvert$谱面转换
 TopMenu_ChartConvert_Bms$转换Bms谱面
+TopMenu_ChartConvert_Arcaea$转换Arcaea谱面
 TopMenu_Status$状态
 GizmoMotion_Label$手动调律器动作编辑器
 GizmoMotion_ToCreate$需要创建的动作类型
@@ -168,7 +169,7 @@ ClickToCreate_Deltatime$时差
 Copier_CopyNote$复制选中的Note(s)
 Copier_CopyMotion$复制选择的调律器动画
 Copier_Msg_Success$复制成功
-Copier_Hint$目标时间 例：1,2,4+0.1*5 等同于 1,2,4,4.1,4.2,4.3,4.4,4.5
+Copier_Hint$目标时间 例：1;2;4+0.1*5 等同于 1;2;4;4.1;4.2;4.3;4.4;4.5
 Capturer_Label$导出视频
 Capturer_Resolution$分辨率
 Capturer_FrameRate$帧率
@@ -294,6 +295,9 @@ Motion_DurationOverflow$（持续时间错误）当前时间+持续时间大于�
 Background_VideoWarning$如果失去同步，请修改偏移量并点击校准时间
 Project_Saved$保存成功
 #HintDict
+ClickToCreate_Hotkey$按F2快速开启
+Angleline_Hint$格式<br>单个角度线：直接输入 <br>等间隔角度线：[开始]>[结束]/[数量]<br>如 0>30/5 代表 0 6 12 18 24 30<br>以分号 ; 分隔 如 0;2;0>15/3
+Copier_Hint$格式<br>单个时间：直接输入 <br>等间隔复制：[开始]+[间隔量]*[次数]<br>如 15+0.1*5 代表 15 15.1 15.2 15.3 15.4 15.5<br>以分号 ; 分隔 如 10;30;50+0.5*5
 Layesta_Play_Hint$点击将当前工程加载至此设备
 GizmoMotion_Tp8$调律器动作（水平）- 螺线
 GizmoMotion_Tp11$调律器动作（水平）- 直线
@@ -313,7 +317,6 @@ ClickToCreate_Angleline$您也可以点击时按住Ctrl
 ClickToCreate_Enable$当您仅选择1个长条时，点击将为其创建节点
 Capturer_Export$将为您自动保存谱面，并且导出过程中不接收任何操作，按ESC中止。
 TunerWindow_FullScreen$按 ESC 返回
-Copier_Hint$按格式输入要复制的时间
 Create_Catch$在选中的两Note间创建等分的蓝键条
 Create_ConvertSelectedToHoldNote$将选中的普通Note转为长条，时间最先的作为长条头部，其余依次作为节点
 TxtToLap$要打开.txt，请创建一个新工程，在谱面路径选择您的.txt

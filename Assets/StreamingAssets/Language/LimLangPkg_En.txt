@@ -141,6 +141,7 @@ TopMenu_Plugin$Plugin
 TopMenu_Plugin_PluginCenter$Plugin Center
 TopMenu_ChartConvert$Chart Convert
 TopMenu_ChartConvert_Bms$From Bms
+TopMenu_ChartConvert_Arcaea$From Arcaea
 TopMenu_Status$Status
 GizmoMotion_Label$Manually Motion
 GizmoMotion_ToCreate$Motion Types To Create
@@ -168,7 +169,7 @@ ClickToCreate_Deltatime$Delta
 Copier_CopyNote$Copy Selected Note(s)
 Copier_CopyMotion$Copy Selected Motion
 Copier_Msg_Success$Successfully copied
-Copier_Hint$Target Time,Example:1,2,4+0.1*3 equals to 1,2,4,4.1,4.2,4.3
+Copier_Hint$Target Time,Example:1;2;4+0.1*3 equals to 1;2;4;4.1;4.2;4.3
 Capturer_Label$Capturer
 Capturer_Resolution$Resolution
 Capturer_FrameRate$Frame Rate
@@ -294,6 +295,9 @@ Motion_DurationOverflow$(Duration Invalid) Current time + duration is larger tha
 Background_VideoWarning$If chart and audio not sync, adjust offset and click on fix time.
 Project_Saved$Saved.
 #HintDict
+ClickToCreate_Hotkey$Press F2 to fast enable
+Angleline_Hint$Format<br>Single：Input directly. <br>Batch：[Start]>[End]/[Quantity]<br>0>30/5 means 0,6,12,18,24,30<br>Split with ; (0;2;0>15/3)
+Copier_Hint$Format<br>Single：Input directly. <br>Batch：[Start]+[Interval]*[Times]<br>15+0.1*5 means 15 15.1 15.2 15.3 15.4 15.5<br>Split with ; (10;30;50+0.5*5)
 Layesta_Play_Hint$Click to load current project to this device
 GizmoMotion_Tp8$Motion (Horizontal) - Spiral
 GizmoMotion_Tp11$Motion (Horizontal) - Straight
@@ -313,7 +317,6 @@ ClickToCreate_Angleline$You can also Hold Ctrl when click.
 ClickToCreate_Enable$Click to create joint when you select ONE long note.
 Capturer_Export$Will autosave chart, and all inputs are ignored while exporting, Press ESC to cancel.
 TunerWindow_FullScreen$Press ESC to return.
-Copier_Hint$Input Formatted Target Time(s)
 Create_Catch$Create catch note rail between two selected Notes
 Create_ConvertSelectedToHoldNote$Convert selected to Hold Note, first in time as Hold Note's head, the other as the joints.
 TxtToLap$To open old .txt file, please Create a New Project and select your .txt in Chart Path.
