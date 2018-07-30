@@ -14,6 +14,7 @@ public class LimLanguageManager : MonoBehaviour
     public List<Lanotalium.Editor.SetTextDelegate> SetTextDelegates = new List<Lanotalium.Editor.SetTextDelegate>();
     public Dictionary<string, Lanotalium.Editor.LanguagePackage> LanguagePackages;
 
+    public static string CurrentLanguage;
     public static Dictionary<string, string> TextDict;
     public static Dictionary<string, string> NotificationDict;
     public static Dictionary<string, string> HintDict;
@@ -78,7 +79,6 @@ public class LimLanguageManager : MonoBehaviour
             SetTextDelegates.Add(EditorManager.PreferencesWindow.SetTexts);
             SetTextDelegates.Add(EditorManager.GizmoMotionWindow.SetTexts);
             SetTextDelegates.Add(EditorManager.CreatorWindow.ClickToCreateManager.SetTexts);
-            SetTextDelegates.Add(EditorManager.PluginManager.SetTexts);
             SetTextDelegates.Add(EditorManager.CloudManager.SetTexts);
             SetTextDelegates.Add(EditorManager.TunerWindow.TunerHeadManager.SetTexts);
             SetTextDelegates.Add(EditorManager.CreatorWindow.CopierManager.SetTexts);
@@ -108,6 +108,7 @@ public class LimLanguageManager : MonoBehaviour
     }
     public void SetLanguage(string LanguageName)
     {
+        CurrentLanguage = LanguageName;
         if (!LanguagePackages.ContainsKey(LanguageName))
         {
             LimNotifyIcon.ShowMessage("Language Not Found !");

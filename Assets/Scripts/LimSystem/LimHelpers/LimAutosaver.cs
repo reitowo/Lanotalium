@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class LimAutosaver : MonoBehaviour
@@ -25,10 +26,13 @@ public class LimAutosaver : MonoBehaviour
             yield return new WaitForEndOfFrame();
             if (LimSystem.Preferences.Autosave)
             {
-                string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave {0}.txt", CurrentTimeString());
-                File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
-                if (LastAutosave != "") File.Delete(LastAutosave);
-                LastAutosave = ChartPath;
+                Task.Run(() => 
+                {
+                    string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave {0}.txt", CurrentTimeString());
+                    File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
+                    if (LastAutosave != "") File.Delete(LastAutosave);
+                    LastAutosave = ChartPath;
+                });
             }
         }
     }

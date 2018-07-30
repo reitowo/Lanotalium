@@ -9,6 +9,7 @@ using Schwarzer.Lanotalium.WebApi.Analytics;
 
 public class LimOperationManager : MonoBehaviour
 {
+    public static LimOperationManager Instance { get; set; }
     public Camera TunerCamera;
     public RectTransform TunerWindowRect;
     public LimTunerManager TunerManager;
@@ -20,6 +21,10 @@ public class LimOperationManager : MonoBehaviour
     public List<Lanotalium.Chart.LanotaCameraBase> SelectedMotions = new List<Lanotalium.Chart.LanotaCameraBase>();
     private List<Lanotalium.Editor.OperationSave> _OperationSaver = new List<Lanotalium.Editor.OperationSave>();
     private int _CurrentOperationSaverPosition = -1;
+    private void Start()
+    {
+        Instance = this;
+    }
 
     public void AddToOperationSaver(Lanotalium.Editor.OperationSave OpSave)
     {

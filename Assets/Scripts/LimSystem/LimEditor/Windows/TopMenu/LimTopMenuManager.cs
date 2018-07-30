@@ -17,8 +17,6 @@ public class LimTopMenuManager : MonoBehaviour
     public Text InspectorText, TunerWindowText, TimeLineText, MusicPlayerText, CreatorText, SpectrumText, StatusText;
     public Text SettingText;
     public Text PreferencesText, ResetLayoutText;
-    public Text PluginText;
-    public Text PluginCenterText;
     public Text ChartConvertText;
     public Text ChartConvertBmsText, ChartConvertArcaeaText;
     public Text TopText;
@@ -48,8 +46,6 @@ public class LimTopMenuManager : MonoBehaviour
         SettingText.text = LimLanguageManager.TextDict["TopMenu_Setting"];
         PreferencesText.text = LimLanguageManager.TextDict["TopMenu_Setting_Preferences"];
         ResetLayoutText.text = LimLanguageManager.TextDict["TopMenu_Setting_ResetLayout"];
-        PluginText.text = LimLanguageManager.TextDict["TopMenu_Plugin"];
-        PluginCenterText.text = LimLanguageManager.TextDict["TopMenu_Plugin_PluginCenter"];
         ChartConvertText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert"];
         ChartConvertArcaeaText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert_Arcaea"];
         ChartConvertBmsText.text = LimLanguageManager.TextDict["TopMenu_ChartConvert_Bms"];

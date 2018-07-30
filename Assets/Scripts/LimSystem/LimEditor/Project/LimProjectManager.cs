@@ -78,6 +78,7 @@ public class LimProjectManager : MonoBehaviour
                 return;
             }
             LimQuitBox.OnQuitBoxConfirmed.AddListener(SaveProject);
+            if (CurrentProject != null) SaveProjectFile();
         }
         catch (Exception)
         {
@@ -470,7 +471,7 @@ public class LimProjectManager : MonoBehaviour
             try
             {
                 if (!File.Exists(BGAColor)) throw new FileNotFoundException();
-                ImageRead = new WWW("file:///" + BGAColor);
+                ImageRead = new WWW(Uri.EscapeUriString("file:///" + BGAColor));
             }
             catch (Exception)
             {
@@ -500,7 +501,7 @@ public class LimProjectManager : MonoBehaviour
             try
             {
                 if (!File.Exists(BGAGray)) throw new FileNotFoundException();
-                ImageRead = new WWW("file:///" + BGAGray);
+                ImageRead = new WWW(Uri.EscapeUriString("file:///" + BGAGray));
             }
             catch (Exception)
             {
@@ -530,7 +531,7 @@ public class LimProjectManager : MonoBehaviour
             try
             {
                 if (!File.Exists(BGALinear)) throw new FileNotFoundException();
-                ImageRead = new WWW("file:///" + BGALinear);
+                ImageRead = new WWW(Uri.EscapeUriString("file:///" + BGALinear));
             }
             catch (Exception)
             {
@@ -560,13 +561,13 @@ public class LimProjectManager : MonoBehaviour
         switch (Path.GetExtension(CurrentProject.MusicPath))
         {
             case ".wav":
-                AudioRead = UnityWebRequestMultimedia.GetAudioClip("file:///" + CurrentProject.MusicPath, AudioType.WAV);
+                AudioRead = UnityWebRequestMultimedia.GetAudioClip(Uri.EscapeUriString("file:///" + CurrentProject.MusicPath), AudioType.WAV);
                 break;
             case ".ogg":
-                AudioRead = UnityWebRequestMultimedia.GetAudioClip("file:///" + CurrentProject.MusicPath, AudioType.OGGVORBIS);
+                AudioRead = UnityWebRequestMultimedia.GetAudioClip(Uri.EscapeUriString("file:///" + CurrentProject.MusicPath), AudioType.OGGVORBIS);
                 break;
             case ".mp3":
-                AudioRead = UnityWebRequestMultimedia.GetAudioClip("file:///" + CurrentProject.MusicPath, AudioType.MPEG);
+                AudioRead = UnityWebRequestMultimedia.GetAudioClip(Uri.EscapeUriString("file:///" + CurrentProject.MusicPath), AudioType.MPEG);
                 break;
         }
         try
@@ -612,7 +613,6 @@ public class LimProjectManager : MonoBehaviour
         #region Handle Project File
         ChartSaveLocation = LimSystem.ChartContainer.ChartProperty.ChartPath;
         DialogUtils.ProgressBar.Percent = 0.95f;
-        SaveProjectFile();
         LimSystem.Preferences.LastOpenedChartFolder = LimSystem.ChartContainer.ChartProperty.ChartFolder;
         LimSystem.Preferences.Designer = CurrentProject.Designer;
         #endregion
@@ -637,6 +637,7 @@ public class LimProjectManager : MonoBehaviour
             yield return null;
         }
 
+        SaveProjectFile();
         DialogUtils.ProgressBar.Percent = 1f;
         isLoadFinished = true;
     }

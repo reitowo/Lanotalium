@@ -406,7 +406,7 @@ public class LimLayestaManager : MonoBehaviour
             MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_NoProject"]);
             return;
         }
-        string path = WindowsDialogUtility.SaveFileDialog(LimLanguageManager.TextDict["Layesta_Build_Title"], "Layesta Level|*.layesta", LimProjectManager.LapFolder);
+        string path = WindowsDialogUtility.SaveFileDialog(LimLanguageManager.TextDict["Layesta_Build_Window"], "Layesta Level|*.layesta", LimProjectManager.LapFolder);
         if (path == null) return;
         if (!path.EndsWith(".layesta")) path += ".layesta";
         filesToZip.Clear();

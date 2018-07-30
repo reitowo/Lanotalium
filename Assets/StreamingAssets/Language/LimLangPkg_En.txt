@@ -278,6 +278,7 @@ Layesta_2$Converting audio
 Layesta_3$Making Blur
 Layesta_4$Finalizing
 Layesta_5$Sending
+Layesta_Build_Window$Save to .layesta file
 Layesta_Build_Title$Build <color=#459bff>.layesta</color> File
 Layesta_Build$Build
 Layesta_Build_Artist$Artist
@@ -288,6 +289,12 @@ Layesta_Build_Chart_AddThis$Add Current
 Layesta_Build_Chart_Difficulty$Difficulty
 Layesta_Build_Chart_Delete$Delete
 Layesta_Build_Name$Name
+EasyRequest_Title_Default$Please input data
+EasyRequest_PrimitiveTypes$<color=red>Error:</color> <color=yellow>obj</color> should not be primitive types!
+EasyRequest_Cancel$Cancel
+EasyRequest_Confirm$Confirm
+Plugin_Title_Default$Click on the plugin's name to show the description.
+Plugin_Exception$Current plugin execution has thrown an exception!
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.

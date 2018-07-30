@@ -278,6 +278,7 @@ Layesta_2$음악 변환 중...
 Layesta_3$블러 효과 적용...
 Layesta_4$완료 중...
 Layesta_5$보내는 중...
+Layesta_Build_Window$.layesta 파일
 Layesta_Build_Title$<color=#459bff>.layesta</color> 파일 만들기
 Layesta_Build$만들기
 Layesta_Build_Artist$작곡자
@@ -288,6 +289,12 @@ Layesta_Build_Chart_AddThis$현재 파일 추가
 Layesta_Build_Chart_Difficulty$난이도 이름
 Layesta_Build_Chart_Delete$삭제
 Layesta_Build_Name$이름
+EasyRequest_Title_Default$데이터를 입력하십시오
+EasyRequest_PrimitiveTypes$<color=red>Error:</color> <color=yellow>obj</color>는 원시 타입이어서는 안됩니다!
+EasyRequest_Cancel$취소
+EasyRequest_Confirm$결정
+Plugin_Title_Default$설명을 표시하려면 플러그인 이름을 클릭하십시오.
+Plugin_Exception$현재 실행중인 플러그인이 비정상입니다.
 #NotificationDict
 Motion_TimeExisted$(올바르지 않은 타이밍) 현재 타이밍에 이미 다른 움직임이 존재합니다.
 Motion_InPrevious$(올바르지 않은 타이밍) 현재 타이밍은 다른 움직임의 지속 시간 내 입니다.

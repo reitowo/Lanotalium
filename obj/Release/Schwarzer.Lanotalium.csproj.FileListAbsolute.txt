@@ -1,0 +1,2 @@
+E:\Lanotalium\Lanotalium\obj\Release\Schwarzer.Lanotalium.csprojAssemblyReference.cache
+E:\Lanotalium\Lanotalium\obj\Release\Schwarzer.Lanotalium.csproj.CoreCompileInputs.cache

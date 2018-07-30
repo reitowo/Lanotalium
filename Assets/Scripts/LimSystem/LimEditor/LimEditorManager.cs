@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class LimEditorManager : MonoBehaviour
 {
+    public static LimEditorManager Instance { get; set; }
     public LimMediaPlayerManager MusicPlayerWindow;
     public LimInspectorManager InspectorWindow;
     public LimTunerWindowManager TunerWindow;
@@ -13,7 +14,6 @@ public class LimEditorManager : MonoBehaviour
     public LimPreferencesManager PreferencesWindow;
     public LimGizmoMotionManager GizmoMotionWindow;
     public LimCloudManager CloudManager;
-    public LimPluginManager PluginManager;
     public LimTopMenuManager TopMenu;
     public LimStatusManager StatusManager;
     public LimSubmitManager SubmitManager;
@@ -70,6 +70,7 @@ public class LimEditorManager : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
         if (LimSystem.Preferences.HideWhatsNew) return;
     }
     public void SetTexts()

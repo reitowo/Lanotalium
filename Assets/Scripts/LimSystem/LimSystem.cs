@@ -892,29 +892,6 @@ namespace Lanotalium
             Triple
         }
     }
-    namespace Plugin
-    {
-        public class PluginDepend
-        {
-            public string RelativelyPath;
-            public string Sha1Hash;
-            public PluginDepend()
-            {
-
-            }
-            public PluginDepend(string RelativelyPath, string Sha1Hash)
-            {
-                this.RelativelyPath = RelativelyPath;
-                this.Sha1Hash = Sha1Hash;
-            }
-        }
-        public class PluginContainer
-        {
-            public bool isValid;
-            public string Name;
-            public List<PluginDepend> Depends = new List<PluginDepend>();
-        }
-    }
     namespace Service
     {
         namespace Cloud
@@ -1070,7 +1047,7 @@ namespace Lanotalium
         public string Designer = string.Empty;
         public float MusicPlayerPreciseOffset = 0;
         public float WaveformBlockerPosition = 0;
-        public int Build = 52;
+        public int Build = 54;
         public bool Autosave = true;
         public bool JudgeColor = true;
         public bool CloudAutosave = false;
@@ -1090,8 +1067,8 @@ namespace Lanotalium
 
 public class LimSystem : MonoBehaviour
 {
-    public static string Version = "v2.2.0";
-    public static int Build = 53;
+    public static string Version = "v2.3.0";
+    public static int Build = 54;
     public static Lanotalium.ChartContainer ChartContainer;
     public LimTunerManager TunerManager;
     public LimEditorManager EditorManager;
