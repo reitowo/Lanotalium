@@ -12,20 +12,16 @@ namespace EasyRequest
     public class RequestTest
     {
         [Name("测试")]
-        [Default(12)]
         public int TestFieldInt;
 
         [Name("测试2")]
         [Range(1, 10)]
-        [Default(8)]
         public int TestFieldIntRange;
 
         [Range(2, 20)]
-        [Default(2)]
         public float TestFieldFloat;
 
         [Name("Bool")]
-        [Default(false)]
         public bool TestFieldBool;
     }
 #endif
@@ -35,22 +31,6 @@ namespace EasyRequest
         public NameAttribute(string Name)
         {
             this.Name = Name;
-        }
-    }
-    public class DefaultAttribute : Attribute
-    {
-        public object Value { get; private set; }
-        public DefaultAttribute(bool Value)
-        {
-            this.Value = Value;
-        }
-        public DefaultAttribute(float Value)
-        {
-            this.Value = Value.ToString();
-        }
-        public DefaultAttribute(string Value)
-        {
-            this.Value = Value;
         }
     }
     public class Request<T> where T : class, new()
@@ -94,29 +74,18 @@ namespace EasyRequest
             ConfirmText.text = LimLanguageManager.TextDict["EasyRequest_Confirm"];
             CancelText.text = LimLanguageManager.TextDict["EasyRequest_Cancel"];
         }
-        private void AppendRequestBool(FieldInfo field)
+        private void AppendRequestBool(FieldInfo field, object obj)
         {
             GameObject g = Instantiate(RequestBoolPrefab, RequestListContent);
             g.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, contentY);
             IRequest r = g.GetComponent<RequestBool>() as IRequest;
             r.FieldInfo = field;
             r.Description = (field.GetCustomAttribute<NameAttribute>() == null ? field.Name : field.GetCustomAttribute<NameAttribute>().Name);
-            if (field.GetCustomAttribute<DefaultAttribute>() != null)
-            {
-                try
-                {
-                    bool value = (bool)field.GetCustomAttribute<DefaultAttribute>().Value;
-                    g.GetComponentInChildren<Toggle>().isOn = value;
-                }
-                catch (Exception)
-                {
-
-                }
-            }
+            g.GetComponentInChildren<Toggle>().isOn = (bool)field.GetValue(obj);
             requestGameObjects.Add(g);
             requests.Add(r);
         }
-        private void AppendRequestInt(FieldInfo field)
+        private void AppendRequestInt(FieldInfo field, object obj)
         {
             GameObject g = Instantiate(RequestIntPrefab, RequestListContent);
             g.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, contentY);
@@ -132,21 +101,11 @@ namespace EasyRequest
                 i.Max = (int)range.max;
                 r.Description += $" ({i.Min} - {i.Max})";
             }
-            if (field.GetCustomAttribute<DefaultAttribute>() != null)
-            {
-                try
-                {
-                    g.GetComponentInChildren<InputField>().text = (string)field.GetCustomAttribute<DefaultAttribute>().Value;
-                }
-                catch (Exception)
-                {
-
-                }
-            }
+            g.GetComponentInChildren<InputField>().text = ((int)field.GetValue(obj)).ToString();
             requestGameObjects.Add(g);
             requests.Add(r);
         }
-        private void AppendRequestFloat(FieldInfo field)
+        private void AppendRequestFloat(FieldInfo field, object obj)
         {
             GameObject g = Instantiate(RequestFloatPrefab, RequestListContent);
             g.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, contentY);
@@ -162,38 +121,18 @@ namespace EasyRequest
                 f.Max = range.max;
                 r.Description += $" ({f.Min} - {f.Max})";
             }
-            if (field.GetCustomAttribute<DefaultAttribute>() != null)
-            {
-                try
-                {
-                    g.GetComponentInChildren<InputField>().text = (string)field.GetCustomAttribute<DefaultAttribute>().Value;
-                }
-                catch (Exception)
-                {
-
-                }
-            }
+            g.GetComponentInChildren<InputField>().text = ((float)field.GetValue(obj)).ToString();
             requestGameObjects.Add(g);
             requests.Add(r);
         }
-        private void AppendRequestString(FieldInfo field)
+        private void AppendRequestString(FieldInfo field, object obj)
         {
             GameObject g = Instantiate(RequestStringPrefab, RequestListContent);
             g.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, contentY);
             IRequest r = g.GetComponent<RequestString>() as IRequest;
             r.FieldInfo = field;
             r.Description = (field.GetCustomAttribute<NameAttribute>() == null ? field.Name : field.GetCustomAttribute<NameAttribute>().Name);
-            if (field.GetCustomAttribute<DefaultAttribute>() != null)
-            {
-                try
-                {
-                    g.GetComponentInChildren<InputField>().text = (string)field.GetCustomAttribute<DefaultAttribute>().Value;
-                }
-                catch (Exception)
-                {
-
-                }
-            }
+            g.GetComponentInChildren<InputField>().text = (string)field.GetValue(obj);
             requestGameObjects.Add(g);
             requests.Add(r);
         }
@@ -208,10 +147,10 @@ namespace EasyRequest
             foreach (FieldInfo fieldInfo in typeInfo.GetFields())
             {
                 Type fieldType = fieldInfo.FieldType;
-                if (fieldType == typeof(bool)) AppendRequestBool(fieldInfo);
-                else if (fieldType == typeof(int)) AppendRequestInt(fieldInfo);
-                else if (fieldType == typeof(float)) AppendRequestFloat(fieldInfo);
-                else if (fieldType == typeof(string)) AppendRequestString(fieldInfo);
+                if (fieldType == typeof(bool)) AppendRequestBool(fieldInfo, obj);
+                else if (fieldType == typeof(int)) AppendRequestInt(fieldInfo, obj);
+                else if (fieldType == typeof(float)) AppendRequestFloat(fieldInfo, obj);
+                else if (fieldType == typeof(string)) AppendRequestString(fieldInfo, obj);
                 else continue;
                 contentY -= 50;
             }
@@ -226,6 +165,7 @@ namespace EasyRequest
             ResolveAndBuildRequests(request.Object);
             Title.text = (description ?? LimLanguageManager.TextDict["EasyRequest_Title_Default"]);
             HasInvalid:
+            RequestCanvas.gameObject.SetActive(true);
             while (!confirmed && !canceled) yield return null;
             if (confirmed)
             {
@@ -254,10 +194,12 @@ namespace EasyRequest
         public void Confirm()
         {
             confirmed = true;
+            RequestCanvas.gameObject.SetActive(false);
         }
         public void Cancel()
         {
             canceled = true;
+            RequestCanvas.gameObject.SetActive(false);
         }
 
 #if UNITY_EDITOR

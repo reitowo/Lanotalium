@@ -21,6 +21,10 @@ namespace Lanotalium.Plugin
         /// </summary>
         public Language CurrentLanguage { get; set; }
         /// <summary>
+        /// 当前工程
+        /// </summary>
+        public Project.LanotaliumProject CurrentProject { get; set; }
+        /// <summary>
         /// 游戏逻辑管理器
         /// </summary>
         public LimTunerManager TunerManager { get; set; }

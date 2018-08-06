@@ -36,6 +36,7 @@ public class LimPluginManager : MonoBehaviour
             return new LanotaliumContext()
             {
                 IsProjectLoaded = (LimProjectManager.CurrentProject != null && LimTunerManager.Instance.isInitialized),
+                CurrentProject = LimProjectManager.CurrentProject,
                 CurrentLanguage = LimLanguageManager.CurrentLanguage == "简体中文" ? Language.简体中文 : Language.English,
                 EditorManager = LimEditorManager.Instance,
                 TunerManager = LimTunerManager.Instance,
@@ -159,6 +160,10 @@ public class LimPluginManager : MonoBehaviour
         pluginProcess = plugin.Process(Context);
     }
 
+    public void KillCurrent()
+    {
+        pluginProcess = null;
+    }
     public void OpenURL(string url)
     {
         Application.OpenURL(url);
