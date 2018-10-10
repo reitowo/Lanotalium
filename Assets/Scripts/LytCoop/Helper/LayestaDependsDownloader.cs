@@ -48,7 +48,7 @@ public class LayestaDependsDownloader : MonoBehaviour
     }
     IEnumerator DownloadCoroutine()
     {
-        UnityWebRequest web = new UnityWebRequest("https://gitee.com/Schwarzer/Layesta/raw/master/Tools/ffmpeg.zip")
+        UnityWebRequest web = new UnityWebRequest("http://layesta.oss-cn-hangzhou.aliyuncs.com/ffmpeg.zip")
         {
             downloadHandler = new DownloadHandlerBuffer()
         };

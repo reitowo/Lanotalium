@@ -109,6 +109,46 @@ public class LimProjectManager : MonoBehaviour
                     InitializeProjectWizard(P);
                     return;
                 }
+                if (!File.Exists(P) && Directory.Exists(P))
+                {
+                    try
+                    {
+                        FileStream fs = new FileStream(P + "/info.bytes", FileMode.Open);
+                        BinaryReader br = new BinaryReader(fs);
+                        LanotaliumProject lp = new LanotaliumProject
+                        {
+                            Name = br.ReadString(),
+                            Designer = br.ReadString()
+                        };
+                        br.Close();
+                        fs.Close();
+                        lp.ChartPath = Directory.GetFiles(P, "*.txt")[0];
+                        lp.MusicPath = Directory.GetFiles(P, "*.ogg")[0];
+                        if (File.Exists(P + "/background_linear.jpg"))
+                        {
+                            lp.BGA2Path = P + "/background.jpg";
+                            lp.BGA1Path = P + "/background_gray.jpg";
+                            lp.BGA0Path = P + "/background_linear.jpg";
+                        }
+                        else if (File.Exists(P + "/background_gray.jpg"))
+                        {
+                            lp.BGA1Path = P + "/background.jpg";
+                            lp.BGA0Path = P + "/background_gray.jpg";
+                        }
+                        else
+                        {
+                            lp.BGA0Path = P + "/background.jpg";
+                        }
+                        File.WriteAllText(P + "/project.lap", JsonConvert.SerializeObject(lp));
+                        LapPath = P + "/project.lap";
+                        InitializeProjectWizard(LapPath);
+                        return;
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
             }
         }
     }
