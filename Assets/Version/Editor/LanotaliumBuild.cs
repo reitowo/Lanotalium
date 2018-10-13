@@ -10,23 +10,23 @@ public class LanotaliumBuild
     [MenuItem("Lanotalium/Build")]
     public static void BuildLanotalium()
     {
-        if (string.IsNullOrWhiteSpace(BuildPipeline.BuildPlayer(
+        if (BuildPipeline.BuildPlayer(
              new BuildPlayerOptions()
              {
                  locationPathName = @"E:\Lanotalium\LanotaliumReleases\Latest\x86\Lanotalium\Lanotalium.exe",
                  scenes = new string[] { "Assets/_Scenes/LimFirstRun.unity", "Assets/_Scenes/LimLaunch.unity", "Assets/_Scenes/LimTuner.unity", "Assets/_Scenes/LimChartZone.unity" },
                  target = BuildTarget.StandaloneWindows,
                  options = BuildOptions.None
-             })))
+             }).summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
             UnityEngine.Debug.Log("x86 built successfully.");
-        if (string.IsNullOrWhiteSpace(BuildPipeline.BuildPlayer(
+        if (BuildPipeline.BuildPlayer(
              new BuildPlayerOptions()
              {
                  locationPathName = @"E:\Lanotalium\LanotaliumReleases\Latest\x64\Lanotalium\Lanotalium.exe",
                  scenes = new string[] { "Assets/_Scenes/LimFirstRun.unity", "Assets/_Scenes/LimLaunch.unity", "Assets/_Scenes/LimTuner.unity", "Assets/_Scenes/LimChartZone.unity" },
                  target = BuildTarget.StandaloneWindows64,
                  options = BuildOptions.None
-             })))
+             }).summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
             UnityEngine.Debug.Log("x64 built successfully.");
     }
 
