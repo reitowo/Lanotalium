@@ -37,6 +37,10 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
     {
         MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_Submission_ConfirmDelete"], () => StartCoroutine(DeleteCoroutine()));
     }
+    public void UpdateInfo()
+    {
+        StartCoroutine(UpdateInfoCoroutine());
+    }
 
     private void UpdateUploadStatus(string langCode)
     {
@@ -187,25 +191,23 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         }
         #endregion
         UpdateUploadStatus("Layesta_Submission_Upload6");
-        #region Update Info
-        LayestaLevelDto l = new LayestaLevelDto();
+        #region Update Info 
         byte[] buf = lzip.entry2Buffer(path, "info.bytes");
         ms = new MemoryStream(buf);
         BinaryReader br = new BinaryReader(ms);
-        l.Guid = level.Guid;
-        l.ShouldDisplay = ShouldDisplay.isOn;
-        l.Title = br.ReadString();
+        level.ShouldDisplay = ShouldDisplay.isOn;
+        level.Title = br.ReadString();
         br.ReadString();
         int count = br.ReadInt32();
         for (int i = 0; i < count; ++i)
         {
-            l.Difficulties += (br.ReadString() + ((i == count - 1) ? "" : " "));
+            level.Difficulties += (br.ReadString() + ((i == count - 1) ? "" : " "));
         }
         br.ReadInt32();
         br.ReadInt32();
         if (br.BaseStream.Length > br.BaseStream.Position)
         {
-            l.SongArtist = br.ReadString();
+            level.SongArtist = br.ReadString();
         }
         if (br.BaseStream.Length > br.BaseStream.Position)
         {
@@ -216,7 +218,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         web = new UnityWebRequest
         {
             downloadHandler = new DownloadHandlerBuffer(),
-            uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(l))),
+            uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(level))),
             url = $"https://la.schwarzer.wang/layestalevel/update",
             method = "POST"
         };
@@ -327,5 +329,26 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         Debug.Log(web.downloadHandler.text);
         LimLayestaSubmissionManager.Instance.EmptyList();
         LimLayestaSubmissionManager.Instance.Refresh();
+    }
+    IEnumerator UpdateInfoCoroutine()
+    {
+        level.ShouldDisplay = ShouldDisplay.isOn;
+        UnityWebRequest web = new UnityWebRequest
+        {
+            downloadHandler = new DownloadHandlerBuffer(),
+            uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(level))),
+            url = $"https://la.schwarzer.wang/layestalevel/update",
+            method = "POST"
+        };
+        web.SetRequestHeader("Authorization", $"Bearer {LimLayestaSubmissionManager.Instance.Bearer}");
+        web.SetRequestHeader("Content-Type", $"application/json; charset=utf-8");
+        web.SetRequestHeader("Accept", $"application/json; charset=utf-8");
+        yield return web.SendWebRequest();
+        if (!string.IsNullOrWhiteSpace(web.error))
+        {
+            UpdateUploadStatus("Layesta_Submission_UploadErr2");
+            yield break;
+        }
+        Debug.Log(web.downloadHandler.text);
     }
 }
