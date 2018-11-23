@@ -57,6 +57,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
             "Layesta File|*.layesta"
 #endif
             , null);
+        if (path == null) yield break;
         bool validate = LimLayestaReader.Validate(path);
         if (!validate)
         {
@@ -239,6 +240,14 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
     }
     IEnumerator DownloadCoroutine()
     {
+        string path = WindowsDialogUtility.SaveFileDialog(LimLanguageManager.TextDict["Layesta_Submission_Save"],
+#if UNITY_EDITOR
+            "layesta"
+#else
+            "Layesta File|*.layesta"
+#endif
+            , null);
+        if (path == null) yield break;
         UnityWebRequest web = new UnityWebRequest
         {
             downloadHandler = new DownloadHandlerBuffer(),
@@ -264,14 +273,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
             MessageBoxManager.Instance.ShowMessage(((ErrorCode)response["ErrorCode"].Value<int>()).ToString());
             yield break;
         }
-        string url = response["Uri"].Value<string>();
-        string path = WindowsDialogUtility.SaveFileDialog(LimLanguageManager.TextDict["Layesta_Submission_Save"],
-#if UNITY_EDITOR
-            "layesta"
-#else
-            "Layesta File|*.layesta"
-#endif
-            , null);
+        string url = response["Uri"].Value<string>(); 
         web = new UnityWebRequest
         {
             downloadHandler = new DownloadHandlerFile(path),
