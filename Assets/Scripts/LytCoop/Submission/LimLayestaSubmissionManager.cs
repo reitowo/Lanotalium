@@ -231,6 +231,7 @@ public class LimLayestaSubmissionManager : MonoBehaviour
         {
             GameObject g = Instantiate(Cell, CellRect);
             LimLayestaSubmissionLevel c = g.GetComponent<LimLayestaSubmissionLevel>();
+            c.Initialize(l);
             cells.Add(c);
             g.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, t);
             t -= 200;
