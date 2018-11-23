@@ -295,6 +295,29 @@ EasyRequest_Cancel$取消
 EasyRequest_Confirm$确定
 Plugin_Title_Default$点击插件名称以显示描述
 Plugin_Exception$当前执行插件发生异常
+Layesta_Submission_Online$下载次数: {0}
+Layesta_Submission_User_Register$注册
+Layesta_Submission_User_Login$登陆
+Layesta_Submission_User_Username$昵称
+Layesta_Submission_User_Password$密码
+Layesta_Submission_User_ConfirmPassword$确认密码
+Layesta_Submission_User_Email$邮箱
+Layesta_Submission_User_Switch_Login$登陆
+Layesta_Submission_User_Switch_Register$注册
+Layesta_Submission_User_InvalidToken$身份过期，请重新登陆
+Layesta_Submission_User_Wait$请稍后
+Layesta_Submission_ConfirmDelete$您确定要删除吗？此操作不可逆，将彻底删除所有云端文件。
+Layesta_Submission_Save$保存 .layesta 文件
+Layesta_Submission_Load$打开 .layesta 文件
+Layesta_Submission_Upload1$准备上传<br>
+Layesta_Submission_Upload2$获取关卡文件上传地址<br>
+Layesta_Submission_Upload3$获取封面图片上传地址<br>
+Layesta_Submission_Upload4$上传关卡文件...<br>
+Layesta_Submission_Upload5$上传封面图片...<br>
+Layesta_Submission_Upload6$更新关卡信息...<br>
+Layesta_Submission_Upload7$完成
+Layesta_Submission_UploadErr1$文件无效
+Layesta_Submission_UploadErr2$上传失败
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建

@@ -139,6 +139,9 @@
     <Compile Include="Assets\Scripts\LytCoop\LimLayestaBuildChart.cs" />
     <Compile Include="Assets\Scripts\LytCoop\LimLayestaDevice.cs" />
     <Compile Include="Assets\Scripts\LytCoop\LimLayestaManager.cs" />
+    <Compile Include="Assets\Scripts\LytCoop\LimLayestaReader.cs" />
+    <Compile Include="Assets\Scripts\LytCoop\Submission\LimLayestaSubmissionLevel.cs" />
+    <Compile Include="Assets\Scripts\LytCoop\Submission\LimLayestaSubmissionManager.cs" />
     <Compile Include="Assets\Scripts\Schwarzer\EasyRequest\Scripts\EasyRequestManager.cs" />
     <Compile Include="Assets\Scripts\Schwarzer\EasyRequest\Scripts\Requests\IRequest.cs" />
     <Compile Include="Assets\Scripts\Schwarzer\EasyRequest\Scripts\Requests\RequestBool.cs" />

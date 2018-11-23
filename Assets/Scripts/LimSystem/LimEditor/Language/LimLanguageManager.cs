@@ -24,12 +24,15 @@ public class LimLanguageManager : MonoBehaviour
 
     private string _LanguagePackageFolder;
 
-    void Start()
+    void Awake()
     {
         LanguagePackages = new Dictionary<string, Lanotalium.Editor.LanguagePackage>();
         _LanguagePackageFolder = Application.streamingAssetsPath + "/Language";
         LoadAllLanguagePackages();
         CollectSetTextsDelegates();
+    }
+    private void Start()
+    {
         SetLanguage(LimSystem.Preferences.LanguageName);
     }
     private void LoadPackageFromFile(string Path)

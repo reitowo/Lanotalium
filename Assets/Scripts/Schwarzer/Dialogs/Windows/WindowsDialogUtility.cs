@@ -9,6 +9,10 @@ using System.IO;
 using System.Text;
 using System.Runtime.CompilerServices;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class WindowsDialogUtility : MonoBehaviour
 {
     public MessageBoxManager MessageBox;
@@ -69,6 +73,9 @@ public class WindowsDialogUtility : MonoBehaviour
     public static extern bool SHGetPathFromIDListW(IntPtr pidl, [MarshalAs(UnmanagedType.LPTStr)] StringBuilder pszPath);
     public static string OpenFileDialog(string Title, string Filter, string InitPath)
     {
+#if UNITY_EDITOR
+        return EditorUtility.OpenFilePanel(Title, InitPath, Filter);
+#endif
         OpenFileName ofn = new OpenFileName();
         ofn.dlgOwner = GetActiveWindow();
         ofn.structSize = Marshal.SizeOf(ofn);
@@ -86,11 +93,14 @@ public class WindowsDialogUtility : MonoBehaviour
     }
     public static string OpenFolderDialog(string Description)
     {
+#if UNITY_EDITOR
+        return EditorUtility.OpenFolderPanel("", "", "");
+#endif
         BrowserInfo bi = new BrowserInfo
         {
             hwndOwner = GetActiveWindow(),
             lpszTitle = Description,
-            ulFlags = 0x00000001 
+            ulFlags = 0x00000001
         };
         IntPtr Result = SHBrowseForFolder(bi);
         if (Result == IntPtr.Zero) return null;
@@ -100,6 +110,9 @@ public class WindowsDialogUtility : MonoBehaviour
     }
     public static string SaveFileDialog(string Title, string Filter, string InitPath)
     {
+#if UNITY_EDITOR
+        return EditorUtility.SaveFilePanel(Title, InitPath, "", Filter);
+#endif
         OpenFileName ofn = new OpenFileName();
         ofn.dlgOwner = GetActiveWindow();
         ofn.structSize = Marshal.SizeOf(ofn);

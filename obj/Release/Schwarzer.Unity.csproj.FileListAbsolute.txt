@@ -124,12 +124,10 @@ E:\Lanotalium\Lanotalium\Temp\bin\Release\System.Xml.XPath.XDocument.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\Unity.Locator.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.Advertisements.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.Analytics.dll
-E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.Android.Extensions.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.GoogleAudioSpatializer.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.Graphs.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.HoloLens.dll
-E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.iOS.Extensions.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.Networking.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.Purchasing.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.SpatialTracking.dll
@@ -218,7 +216,6 @@ E:\Lanotalium\Lanotalium\Temp\bin\Release\Boo.Lang.Compiler.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\Unity.IvyParser.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.iOS.Extensions.Xcode.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\nunit.framework.dll
-E:\Lanotalium\Lanotalium\Temp\bin\Release\UnityEditor.iOS.Extensions.Common.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\SyntaxTree.VisualStudio.Unity.Messaging.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\Boo.Lang.PatternMatching.dll
 E:\Lanotalium\Lanotalium\Temp\bin\Release\Boo.Lang.Useful.dll
@@ -304,3 +301,4 @@ E:\Lanotalium\Lanotalium\obj\Release\Schwarzer.Unity.csproj.CoreCompileInputs.ca
 E:\Lanotalium\Lanotalium\obj\Release\Schwarzer.Unity.csproj.CopyComplete
 E:\Lanotalium\Lanotalium\obj\Release\Schwarzer.Unity.dll
 E:\Lanotalium\Lanotalium\obj\Release\Schwarzer.Unity.pdb
+E:\Lanotalium\Lanotalium\Temp\bin\Release\LibGit2Sharp.dll

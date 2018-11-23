@@ -295,6 +295,29 @@ EasyRequest_Cancel$Cancel
 EasyRequest_Confirm$Confirm
 Plugin_Title_Default$Click on the plugin's name to show the description.
 Plugin_Exception$Current plugin execution has thrown an exception!
+Layesta_Submission_Online$Download Count: {0}
+Layesta_Submission_User_Register$Register
+Layesta_Submission_User_Login$Login
+Layesta_Submission_User_Username$Username
+Layesta_Submission_User_Password$Password
+Layesta_Submission_User_ConfirmPassword$ConfirmPassword
+Layesta_Submission_User_Email$Email
+Layesta_Submission_User_Switch_Login$Switch to Login
+Layesta_Submission_User_Switch_Register$Switch to Register
+Layesta_Submission_User_InvalidToken$Token expired, please login again.
+Layesta_Submission_User_Wait$Please wait.
+Layesta_Submission_ConfirmDelete$Are you sure? This is irreversable, and will delete all files on the server.
+Layesta_Submission_Save$Save .layesta file.
+Layesta_Submission_Load$Load .layesta file.
+Layesta_Submission_Upload1$Prepare to upload.<br>
+Layesta_Submission_Upload2$Fetching layesta level upload url.<br>
+Layesta_Submission_Upload3$Fetching cover image upload url.<br>
+Layesta_Submission_Upload4$Uploading layesta level...<br>
+Layesta_Submission_Upload5$Uploading cover image...<br>
+Layesta_Submission_Upload6$Uploading level info...<br>
+Layesta_Submission_Upload7$Done.
+Layesta_Submission_UploadErr1$Invalid file.<br>
+Layesta_Submission_UploadErr2$Upload failed.<br>
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.
