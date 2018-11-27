@@ -146,6 +146,7 @@ public class LimLayestaSubmissionManager : MonoBehaviour
             yield break;
         }
         Bearer = response.AccessToken;
+        Id = response.Id;
         LoginPanel.SetActive(false);
         yield return null;
     }

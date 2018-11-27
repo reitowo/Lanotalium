@@ -273,7 +273,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
             MessageBoxManager.Instance.ShowMessage(((ErrorCode)response["ErrorCode"].Value<int>()).ToString());
             yield break;
         }
-        string url = response["Uri"].Value<string>(); 
+        string url = response["Uri"].Value<string>();
         web = new UnityWebRequest
         {
             downloadHandler = new DownloadHandlerFile(path),
