@@ -240,7 +240,7 @@ public class WindowsDialogUtility : MonoBehaviour
     private static extern bool GetSaveFileName([In, Out] OpenFileName ofn);
     [DllImport("user32.dll")]
     private static extern IntPtr GetActiveWindow();
-    public static string OpenFileDialog(string Title = null, string Filename = null, string InitPath = null, string Filter = null)
+    public static string OpenFileDialog(string Title = null, string Filter = null, string InitPath = null, string Filename = null)
     {
 #if UNITY_EDITOR
         return EditorUtility.OpenFilePanel(Title, InitPath, Filter);
@@ -261,7 +261,7 @@ public class WindowsDialogUtility : MonoBehaviour
         if (result) return ofn.file.ToString();
         else return null;
     }
-    public static string SaveFileDialog(string Title = null, string Filename = null, string InitPath = null, string Filter = null)
+    public static string SaveFileDialog(string Title = null, string Filter = null, string InitPath = null, string Filename = null)
     {
 #if UNITY_EDITOR
         return EditorUtility.SaveFilePanel(Title, InitPath, Filename, Filter);
