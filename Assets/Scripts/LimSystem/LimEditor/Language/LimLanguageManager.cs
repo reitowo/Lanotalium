@@ -5,6 +5,25 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+public class TextDictIndexer : Dictionary<string, string>
+{
+    public new string this[string index]
+    {
+        get
+        {
+            if (!ContainsKey(index))
+            {
+                throw new System.Exception($"Missing Language Line : {index}");
+            }
+            return base[index];
+        }
+        set
+        {
+            base[index] = value;
+        }
+    }
+}
+
 public class LimLanguageManager : MonoBehaviour
 {
     public LimUpdateDetector UpdateDetector;
@@ -15,10 +34,10 @@ public class LimLanguageManager : MonoBehaviour
     public Dictionary<string, Lanotalium.Editor.LanguagePackage> LanguagePackages;
 
     public static string CurrentLanguage;
-    public static Dictionary<string, string> TextDict;
+    public static TextDictIndexer TextDict;
     public static Dictionary<string, string> NotificationDict;
     public static Dictionary<string, string> HintDict;
-    public static Dictionary<string, string> TutorialDict;
+    public static Dictionary<string, string> TutorialDict; 
 
     public static UnityEvent OnLanguageChanged = new UnityEvent();
 

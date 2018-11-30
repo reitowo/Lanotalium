@@ -824,7 +824,7 @@ namespace Lanotalium
         }
         public class LanguagePackage
         {
-            public Dictionary<string, string> TextDict = new Dictionary<string, string>();
+            public TextDictIndexer TextDict = new TextDictIndexer();
             public Dictionary<string, string> NotificationDict = new Dictionary<string, string>();
             public Dictionary<string, string> HintDict = new Dictionary<string, string>();
             public Dictionary<string, string> TutorialDict = new Dictionary<string, string>();

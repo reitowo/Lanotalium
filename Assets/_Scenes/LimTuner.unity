@@ -24372,9 +24372,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "\u65B0\u529F\u80FD\u9884\u544A\uFF1A\n    Layesta\uFF08\u53F3\u4E0A\uFF09\u533A\u57DF\u65B0\u589E\u6295\u7A3F\u529F\u80FD\uFF0C\u4E0E\u79FB\u52A8\u7AEF\nLayesta\u7684\u83B7\u53D6\u8C31\u9762\u76F8\u5BF9\u5E94\u3002\n\nNew
-    feature plan:\n    Layesta (Top-Right) function will add submit \nfunction, and
-    Layesta the mobile app's 'Get Levels'\nzone will also be changed like ChartZone."
+  m_Text: "Submit to chartzone is temporarily obsolete.\n\u63D0\u4EA4\u81F3\u8C31\u9762\u4E2D\u5FC3\u6682\u65F6\u505C\u7528\n\nLayesta
+    submission is now available.\nLayesta\u4F20\u8C31\u529F\u80FD\u5DF2\u7ECF\u4E0A\u7EBF"
 --- !u!222 &258939285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -62150,7 +62149,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &911910878
@@ -85666,7 +85665,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000047675057}
+  m_AnchoredPosition: {x: 0, y: 0.00000008732968}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1384792844
@@ -93361,7 +93360,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000012748755}
+  m_AnchoredPosition: {x: 0, y: 0.000025560894}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1553370355

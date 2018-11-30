@@ -75,7 +75,7 @@ public class LimSubmitManager : MonoBehaviour
         {
             UserSubmits = JsonConvert.DeserializeObject<List<SubmitDto>>(Response);
         }
-        catch(Exception)
+        catch (Exception)
         {
             yield break;
         }
