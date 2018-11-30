@@ -318,6 +318,7 @@ Layesta_Submission_Upload6$Uploading level info...<br>
 Layesta_Submission_Upload7$Done.
 Layesta_Submission_UploadErr1$Invalid file.<br>
 Layesta_Submission_UploadErr2$Upload failed.<br>
+Layesta_Submission_UploadErr3$Missing info, upload denied.<br>
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.

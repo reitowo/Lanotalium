@@ -73,9 +73,62 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         ms.Close();
         byte[] cov = msOut.GetBuffer();
         msOut.Close();
+
+        UpdateUploadStatus("Layesta_Submission_Upload6");
+        #region Update Info 
+        byte[] buf = lzip.entry2Buffer(path, "info.bytes");
+        ms = new MemoryStream(buf);
+        BinaryReader br = new BinaryReader(ms);
+        level.ShouldDisplay = ShouldDisplay.isOn;
+        level.Title = br.ReadString();
+        br.ReadString();
+        int count = br.ReadInt32();
+        for (int i = 0; i < count; ++i)
+        {
+            level.Difficulties += (br.ReadString() + ((i == count - 1) ? "" : " "));
+        }
+        br.ReadInt32();
+        br.ReadInt32();
+        if (br.BaseStream.Length > br.BaseStream.Position)
+        {
+            level.SongArtist = br.ReadString();
+        }
+        if (br.BaseStream.Length > br.BaseStream.Position)
+        {
+            br.ReadInt32();
+        }
+        br.Close();
+        ms.Close();
+
+        UnityWebRequest web = new UnityWebRequest
+        {
+            downloadHandler = new DownloadHandlerBuffer(),
+            uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(level))),
+            url = $"https://la.schwarzer.wang/layestalevel/update",
+            method = "POST"
+        };
+        web.SetRequestHeader("Authorization", $"Bearer {LimLayestaSubmissionManager.Instance.Bearer}");
+        web.SetRequestHeader("Content-Type", $"application/json; charset=utf-8");
+        web.SetRequestHeader("Accept", $"application/json; charset=utf-8");
+        yield return web.SendWebRequest();
+        if (!string.IsNullOrWhiteSpace(web.error))
+        {
+            UpdateUploadStatus("Layesta_Submission_UploadErr2");
+            yield break;
+        }
+        Debug.Log(web.downloadHandler.text);
+        LayestaLevelResponse infoRet = JsonConvert.DeserializeObject<LayestaLevelResponse>(web.downloadHandler.text);
+        if (!infoRet.Succeed)
+        {
+            if (infoRet.ErrorCode == ErrorCode.MissingInfo) UpdateUploadStatus("Layesta_Submission_UploadErr3");
+            else UpdateUploadStatus("Layesta_Submission_UploadErr2");
+            yield break;
+        } 
+        #endregion
+
         UpdateUploadStatus("Layesta_Submission_Upload2");
         #region Get Layesta Upload
-        UnityWebRequest web = new UnityWebRequest
+        web = new UnityWebRequest
         {
             downloadHandler = new DownloadHandlerBuffer(),
             url = $"https://la.schwarzer.wang/auth/oss/upload/layesta/{level.Guid}",
@@ -102,6 +155,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         #endregion
         string layestaUrl = response["Uri"].Value<string>();
         string layestaCb = response["Callback"].Value<string>();
+
         UpdateUploadStatus("Layesta_Submission_Upload3");
         #region Get Cover Upload
         web = new UnityWebRequest
@@ -131,6 +185,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         #endregion
         string coverUrl = response["Uri"].Value<string>();
         string coverCb = response["Callback"].Value<string>();
+
         UpdateUploadStatus("Layesta_Submission_Upload4");
         #region Upload Layesta
         web = new UnityWebRequest
@@ -143,8 +198,8 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         web.SetRequestHeader("Content-Type", "");
         web.SetRequestHeader("User-Agent", LimLayestaSubmissionManager.Instance.Id);
         web.SetRequestHeader("x-oss-callback", layestaCb);
-        yield return web.SendWebRequest();
         ProgressBarManager.Instance.ShowProgress(() => web.isDone, () => web.uploadProgress);
+        yield return web.SendWebRequest();
         if (!string.IsNullOrWhiteSpace(web.error))
         {
             UpdateUploadStatus("Layesta_Submission_UploadErr2");
@@ -161,6 +216,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
             yield break;
         }
         #endregion
+
         UpdateUploadStatus("Layesta_Submission_Upload5");
         #region Upload Cover
         web = new UnityWebRequest
@@ -173,8 +229,8 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         web.SetRequestHeader("Content-Type", "");
         web.SetRequestHeader("User-Agent", LimLayestaSubmissionManager.Instance.Id);
         web.SetRequestHeader("x-oss-callback", coverCb);
-        yield return web.SendWebRequest();
         ProgressBarManager.Instance.ShowProgress(() => web.isDone, () => web.uploadProgress);
+        yield return web.SendWebRequest();
         if (!string.IsNullOrWhiteSpace(web.error))
         {
             UpdateUploadStatus("Layesta_Submission_UploadErr2");
@@ -191,49 +247,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
             yield break;
         }
         #endregion
-        UpdateUploadStatus("Layesta_Submission_Upload6");
-        #region Update Info 
-        byte[] buf = lzip.entry2Buffer(path, "info.bytes");
-        ms = new MemoryStream(buf);
-        BinaryReader br = new BinaryReader(ms);
-        level.ShouldDisplay = ShouldDisplay.isOn;
-        level.Title = br.ReadString();
-        br.ReadString();
-        int count = br.ReadInt32();
-        for (int i = 0; i < count; ++i)
-        {
-            level.Difficulties += (br.ReadString() + ((i == count - 1) ? "" : " "));
-        }
-        br.ReadInt32();
-        br.ReadInt32();
-        if (br.BaseStream.Length > br.BaseStream.Position)
-        {
-            level.SongArtist = br.ReadString();
-        }
-        if (br.BaseStream.Length > br.BaseStream.Position)
-        {
-            br.ReadInt32();
-        }
-        br.Close();
-        ms.Close();
-        web = new UnityWebRequest
-        {
-            downloadHandler = new DownloadHandlerBuffer(),
-            uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(level))),
-            url = $"https://la.schwarzer.wang/layestalevel/update",
-            method = "POST"
-        };
-        web.SetRequestHeader("Authorization", $"Bearer {LimLayestaSubmissionManager.Instance.Bearer}");
-        web.SetRequestHeader("Content-Type", $"application/json; charset=utf-8");
-        web.SetRequestHeader("Accept", $"application/json; charset=utf-8");
-        yield return web.SendWebRequest();
-        if (!string.IsNullOrWhiteSpace(web.error))
-        {
-            UpdateUploadStatus("Layesta_Submission_UploadErr2");
-            yield break;
-        }
-        Debug.Log(web.downloadHandler.text);
-        #endregion
+
         UpdateUploadStatus("Layesta_Submission_Upload7");
         LimLayestaSubmissionManager.Instance.EmptyList();
         LimLayestaSubmissionManager.Instance.Refresh();

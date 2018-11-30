@@ -326,6 +326,7 @@ public enum ErrorCode
     OSSAuthError = 103,
     InvalidType = 104,
     LevelNotFound = 105,
+    MissingInfo = 106,
 
     IntervalLimit = 201,
     LayestaUserNotFound = 202,

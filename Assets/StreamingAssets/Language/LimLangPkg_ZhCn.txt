@@ -318,6 +318,7 @@ Layesta_Submission_Upload6$更新关卡信息...<br>
 Layesta_Submission_Upload7$完成
 Layesta_Submission_UploadErr1$文件无效
 Layesta_Submission_UploadErr2$上传失败
+Layesta_Submission_UploadErr3$文件信息缺失，不允许上传
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建
