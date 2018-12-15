@@ -1,4 +1,6 @@
 # [Lanotalium](http://www.lanotalium.cn)
+### [Join Discord](https://discord.gg/VUG6nTw)
+### [Join Developer Discord](https://discord.gg/3HnHXQ5)
 ### Lanota Visual Fanmade Chart Maker
 Create your own Lanota chart using this software.
 ### Requirement
