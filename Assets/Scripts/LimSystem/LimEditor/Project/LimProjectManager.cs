@@ -194,6 +194,7 @@ public class LimProjectManager : MonoBehaviour
         if (LimSystem.ChartContainer == null) return;
         string ChartPath = WindowsDialogUtility.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
         if (ChartPath == null) return;
+        if (!ChartPath.EndsWith(".txt")) ChartPath += ".txt";
         File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
         LimNotifyIcon.ShowMessage(LimLanguageManager.NotificationDict["Project_Saved"]);
         if (LimSystem.Preferences.CloudAutosave) CloudManager.UploadChart();

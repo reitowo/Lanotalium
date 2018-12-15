@@ -243,7 +243,7 @@ public class WindowsDialogUtility : MonoBehaviour
     public static string OpenFileDialog(string Title = null, string Filter = null, string InitPath = null, string Filename = null)
     {
 #if UNITY_EDITOR
-        return EditorUtility.OpenFilePanel(Title, InitPath, Filter);
+        return EditorUtility.OpenFilePanel(Title, InitPath, null);
 #endif
         string filename = (Filename ?? "") + new string(new char[1024]);
         OpenFileName ofn = new OpenFileName
@@ -264,7 +264,7 @@ public class WindowsDialogUtility : MonoBehaviour
     public static string SaveFileDialog(string Title = null, string Filter = null, string InitPath = null, string Filename = null)
     {
 #if UNITY_EDITOR
-        return EditorUtility.SaveFilePanel(Title, InitPath, Filename, Filter);
+        return EditorUtility.SaveFilePanel(Title, InitPath, Filename, null);
 #endif
         string filename = (Filename ?? "") + new string(new char[1024]);
         OpenFileName ofn = new OpenFileName

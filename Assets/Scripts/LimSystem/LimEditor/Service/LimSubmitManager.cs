@@ -19,7 +19,6 @@ public class LimSubmitManager : MonoBehaviour
     private void Start()
     {
         Instance = this;
-        StartCoroutine(GetUserSubmissionsCoroutine());
     }
     public void SetTexts()
     {

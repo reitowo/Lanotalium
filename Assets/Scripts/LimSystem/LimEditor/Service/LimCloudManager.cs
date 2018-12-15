@@ -193,6 +193,7 @@ public class LimCloudManager : MonoBehaviour
         string ChartPath = WindowsDialogUtility.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
         if (ChartPath != null)
         {
+            if (!ChartPath.EndsWith(".txt")) ChartPath += ".txt";
             File.WriteAllText(ChartPath, Chart);
             Process.Start("explorer.exe", "/select," + ChartPath);
         }

@@ -260,9 +260,11 @@ public class LimClickToCreateManager : MonoBehaviour
     {
         if (NoteCurser == null) return;
         Vector3 MousePosition = LimMousePosition.MousePosition;
-        Vector3 TunerPosition = new Vector3();
-        TunerPosition.x = MousePosition.x - TunerWindowRect.anchoredPosition.x;
-        TunerPosition.y = TunerWindowRect.sizeDelta.y + (MousePosition.y - TunerWindowRect.anchoredPosition.y);
+        Vector3 TunerPosition = new Vector3
+        {
+            x = MousePosition.x - TunerWindowRect.anchoredPosition.x,
+            y = TunerWindowRect.sizeDelta.y + (MousePosition.y - TunerWindowRect.anchoredPosition.y)
+        };
         Vector3 Position = TunerCamera.ScreenToWorldPoint(new Vector3(TunerPosition.x, TunerPosition.y, -TunerCamera.transform.position.y));
         float Distance = Vector3.Distance(Position, new Vector3());
         if (!UpdateNoteCurserActive(Distance)) return;
@@ -282,7 +284,7 @@ public class LimClickToCreateManager : MonoBehaviour
         NoteCurser.transform.localScale = new Vector3(Percent / 100, Percent / 100, 0);
         NoteCursorTiming = Time;
         NoteCursorDegree = Degree - TunerManager.CameraManager.CurrentRotation;
-        if (Distance < 10) if (Input.GetMouseButtonDown(0)) CreateNoteAtCurser(NoteCursorTiming, NoteCursorDegree);
+        if (Distance < 10) if (Input.GetMouseButtonDown(0) && LimMousePosition.IsMouseOverWindow(TunerWindowRect)) CreateNoteAtCurser(NoteCursorTiming, NoteCursorDegree);
     }
     private Vector2 CalculatePointerInfoPosition(Vector2 MousePosition)
     {
