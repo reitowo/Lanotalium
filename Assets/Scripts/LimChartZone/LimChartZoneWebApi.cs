@@ -41,7 +41,7 @@ namespace Lanotalium.ChartZone.WebApi
     {
         public static IEnumerator GetAllCharts(ObjectWrap<List<ChartDto>> charts)
         {
-            WWW Get = new WWW("http://api.lanotalium.cn/chartzone/charts/enum/" + SystemInfo.deviceUniqueIdentifier);
+            WWW Get = new WWW("https://lanotaliumapi.schwarzer.wang/chartzone/charts/enum/" + SystemInfo.deviceUniqueIdentifier);
             yield return Get;
             //Debug.Log(Get.text);
             try
@@ -55,7 +55,7 @@ namespace Lanotalium.ChartZone.WebApi
         }
         public static IEnumerator GetChartById(int id, ObjectWrap<ChartDto> chartDto)
         {
-            WWW Get = new WWW("http://api.lanotalium.cn/chartzone/charts/get/" + SystemInfo.deviceUniqueIdentifier + "/" + id.ToString());
+            WWW Get = new WWW("https://lanotaliumapi.schwarzer.wang/chartzone/charts/get/" + SystemInfo.deviceUniqueIdentifier + "/" + id.ToString());
             yield return Get;
             //Debug.Log(Get.text);
             chartDto.Reference = JsonConvert.DeserializeObject<ChartDto>(Get.text);

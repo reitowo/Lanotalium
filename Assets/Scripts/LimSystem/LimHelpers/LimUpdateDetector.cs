@@ -118,7 +118,7 @@ public class LimUpdateDetector : MonoBehaviour
     }
     IEnumerator CheckUpdateCoroutine()
     {
-        LimSystem.LanotaliumServer = RemoteSettings.GetString("LanotaliumServer", "http://lanotalium.cn");
+        LimSystem.LanotaliumServer = "https://lanotalium.schwarzer.wang";
         WWW CheckUpdate = new WWW(LimSystem.LanotaliumServer + "/lanotalium/build.txt");
         yield return CheckUpdate;
         if (CheckUpdate != null && string.IsNullOrEmpty(CheckUpdate.error))
@@ -173,7 +173,7 @@ public class LimUpdateDetector : MonoBehaviour
             ProcessStartInfo Updator = new ProcessStartInfo
             {
                 FileName = Application.streamingAssetsPath + "/Updator/LanotaliumUpdateClient.exe",
-                Arguments = string.Format("{0} {1} {2}", Directory.GetParent(Application.dataPath).FullName.Replace(" ", "%20"), LimSystem.Version, "http://lanotalium.cn/lanotalium/updator")
+                Arguments = string.Format("{0} {1} {2}", Directory.GetParent(Application.dataPath).FullName.Replace(" ", "%20"), LimSystem.Version, "https://lanotalium.schwarzer.wang/lanotalium/updator")
             };
             Process.Start(Updator);
             Process.GetCurrentProcess().Kill();

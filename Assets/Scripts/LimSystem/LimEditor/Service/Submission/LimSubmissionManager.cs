@@ -103,7 +103,7 @@ public class LimSubmissionManager : MonoBehaviour
         Form.AddBinaryData("File", Bytes);
         Form.AddField("UserId", SystemInfo.deviceUniqueIdentifier);
         Form.AddField("SubmissionId", _SubmitDto.SubmissionId);
-        WWW Post = new WWW("http://api.lanotalium.cn/chartzone/submit/file", Form);
+        WWW Post = new WWW("https://lanotaliumapi.schwarzer.wang/chartzone/submit/file", Form);
         ProgressBarManager.Instance.ShowProgress(() => Post.isDone, () => Post.uploadProgress);
         yield return Post;
         if (Post.error != null) MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Error_Network"] + "\n" + Post.error);

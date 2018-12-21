@@ -12,7 +12,7 @@ namespace Schwarzer.Lanotalium.WebApi
 {
     public class WebApiHelper
     {
-        public static string WebApiUri = "http://api.lanotalium.cn/";
+        public static string WebApiUri = "https://lanotaliumapi.schwarzer.wang/";
         public static IEnumerator PostObjectCoroutine(string Route, object Object, ObjectWrap<string> Response = null)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(WebApiUri + Route);

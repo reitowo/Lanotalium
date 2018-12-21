@@ -40,11 +40,6 @@ public class LimCloudManager : MonoBehaviour
     private void Start()
     {
         CloudAutosaveToggle.isOn = LimSystem.Preferences.CloudAutosave;
-        /*if (LimSystem.Preferences.CloudAutosave)
-        {
-            if (CloudAutosaveCoroutineRef != null) StopCoroutine(CloudAutosaveCoroutineRef);
-            CloudAutosaveCoroutineRef = StartCoroutine(CloudAutosaveCoroutine());
-        }*/
         if (UnityEngine.Application.internetReachability != NetworkReachability.NotReachable)
         {
             if (_BackupLoopCr != null) StopCoroutine(_BackupLoopCr);
@@ -191,7 +186,7 @@ public class LimCloudManager : MonoBehaviour
         if (Chart == "F A Q!") yield break;
 
         string ChartPath = WindowsDialogUtility.SaveFileDialog("", "Chart (*.txt)|*.txt", "");
-        if (ChartPath != null)
+        if (!string.IsNullOrWhiteSpace(ChartPath))
         {
             if (!ChartPath.EndsWith(".txt")) ChartPath += ".txt";
             File.WriteAllText(ChartPath, Chart);
@@ -203,11 +198,11 @@ public class LimCloudManager : MonoBehaviour
 
     IEnumerator BackupLoop()
     {
-        yield return new WaitForSeconds(60);
+        yield return new WaitForSeconds(100);
         while (true)
         {
             BackupChart();
-            yield return new WaitForSeconds(45);
+            yield return new WaitForSeconds(60);
         }
     }
     public void BackupChart()

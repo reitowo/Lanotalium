@@ -1106,7 +1106,7 @@ public class LimSystem : MonoBehaviour
 #endif
     public static Lanotalium.PreferencesContainer Preferences = new Lanotalium.PreferencesContainer();
     public static Lanotalium.Editor.EditorLayout EditorLayout = new Lanotalium.Editor.EditorLayout();
-    public static string LanotaliumServer = "http://lanotalium.cn";
+    public static string LanotaliumServer = "https://lanotalium.schwarzer.wang";
 
     public void RestorePreferences()
     {

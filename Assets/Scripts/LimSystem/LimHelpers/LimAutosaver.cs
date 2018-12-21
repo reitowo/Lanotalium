@@ -13,6 +13,12 @@ public class LimAutosaver : MonoBehaviour
     {
         if (LimSystem.ChartContainer == null) return;
         AutosaveCoroutineRef = StartCoroutine(AutosaveCoroutine());
+        if (!Directory.Exists(LimSystem.ChartContainer.ChartProperty.ChartFolder + "/AutoSave"))
+            Directory.CreateDirectory(LimSystem.ChartContainer.ChartProperty.ChartFolder + "/AutoSave");
+    }
+    private void OnDestroy()
+    {
+        StopAutosave();
     }
     public static string CurrentTimeString()
     {
@@ -22,17 +28,12 @@ public class LimAutosaver : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(60);
             yield return new WaitForEndOfFrame();
             if (LimSystem.Preferences.Autosave)
             {
-                Task.Run(() => 
-                {
-                    string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave {0}.txt", CurrentTimeString());
-                    File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
-                    if (LastAutosave != "") File.Delete(LastAutosave);
-                    LastAutosave = ChartPath;
-                });
+                string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave/{0}.txt", CurrentTimeString());
+                File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
             }
         }
     }
@@ -45,10 +46,8 @@ public class LimAutosaver : MonoBehaviour
         if (LimSystem.ChartContainer == null) return;
         if (LimSystem.Preferences.Autosave)
         {
-            string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave {0}.txt", CurrentTimeString());
+            string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave/{0}.txt", CurrentTimeString());
             File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
-            if (File.Exists(LastAutosave)) File.Delete(LastAutosave);
-            LastAutosave = ChartPath;
         }
     }
     private void OnApplicationQuit()
@@ -56,9 +55,7 @@ public class LimAutosaver : MonoBehaviour
         if (LimSystem.ChartContainer == null) return;
         if (!LimSystem.Preferences.Autosave) return;
         if (LimSystem.ChartContainer.ChartData == null) return;
-        string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave {0}.txt", CurrentTimeString());
-        if (!string.IsNullOrEmpty(LastAutosave)) if (File.Exists(LastAutosave)) File.Delete(LastAutosave);
-        LastAutosave = ChartPath;
+        string ChartPath = LimSystem.ChartContainer.ChartProperty.ChartFolder + string.Format("/AutoSave/{0}.txt", CurrentTimeString());
         File.WriteAllText(ChartPath, LimSystem.ChartContainer.ChartData.ToString());
     }
 }

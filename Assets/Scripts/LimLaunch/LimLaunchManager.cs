@@ -20,7 +20,7 @@ public class LimLaunchManager : MonoBehaviour
         SetLanguageDict();
         SetTexts();
         StartCoroutine(LoadNotification());
-        LimSystem.LanotaliumServer = RemoteSettings.GetString("LanotaliumServer", "http://lanotalium.cn");
+        LimSystem.LanotaliumServer = "https://lanotalium.schwarzer.wang";
     }
     private void SetLanguageDict()
     {
@@ -123,6 +123,6 @@ public class LimLaunchManager : MonoBehaviour
     }
     public void RaisePaypalRequest()
     {
-        Application.OpenURL("http://lanotalium.cn/PaypalSupport.html");
+        Application.OpenURL("https://lanotalium.schwarzer.wang/PaypalSupport.html");
     }
 }
