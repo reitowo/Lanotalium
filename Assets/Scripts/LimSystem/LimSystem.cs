@@ -1180,6 +1180,11 @@ public class LimSystem : MonoBehaviour
         _LastLog = condition;
     }
 
+    public void OpenURL(string url)
+    {
+        Application.OpenURL(url);
+    }
+
     private void OnDestroy()
     {
         SavePreferences();
