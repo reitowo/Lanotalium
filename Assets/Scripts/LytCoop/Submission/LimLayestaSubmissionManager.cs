@@ -190,7 +190,7 @@ public class LimLayestaSubmissionManager : MonoBehaviour
             c.Initialize(l);
             cells.Add(c);
             g.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, t);
-            t -= 200;
+            t -= g.GetComponent<RectTransform>().sizeDelta.y;
         }
         CellRect.sizeDelta = new Vector2(0, -t);
         yield return null;
@@ -338,6 +338,7 @@ public class LayestaLevelResponse
     public bool Succeed;
     public ErrorCode ErrorCode;
     public string Message;
+    public LayestaLevelDto Level;
 }
 
 public class LayestaLevelDto
@@ -348,6 +349,8 @@ public class LayestaLevelDto
     public string Difficulties { get; set; }
     public int DownloadCount { get; set; }
     public bool ShouldDisplay { get; set; }
+
+    public bool ParticipantCurrentContest { get; set; }
 }
 
 public class LevelListResponse

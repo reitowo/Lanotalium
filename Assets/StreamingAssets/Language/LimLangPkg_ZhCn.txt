@@ -319,6 +319,12 @@ Layesta_Submission_Upload7$完成
 Layesta_Submission_UploadErr1$文件无效
 Layesta_Submission_UploadErr2$上传失败
 Layesta_Submission_UploadErr3$文件信息缺失，不允许上传
+Layesta_Submission_Upload_Text$上传
+Layesta_Submission_Download_Text$下载
+Layesta_Submission_Delete_Text$删除
+Layesta_Submission_Available_Text$公开
+Layesta_Submission_Participant_Text$参加2019寒假比赛
+Layesta_Submission_UploadFirst$请先上传
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建

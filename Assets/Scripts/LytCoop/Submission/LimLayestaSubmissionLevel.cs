@@ -11,7 +11,9 @@ using UnityEngine.UI;
 public class LimLayestaSubmissionLevel : MonoBehaviour
 {
     public Text Title, Artist, Difficulties, Online;
-    public Toggle ShouldDisplay;
+    public Toggle ShouldDisplay, Participant;
+
+    public Text tDownload, tUpload, tDelete, tAvailable, tParticipant;
 
     private LayestaLevelDto level;
 
@@ -22,9 +24,34 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         Artist.text = level.SongArtist;
         Difficulties.text = level.Difficulties;
         Online.text = string.Format(LimLanguageManager.TextDict["Layesta_Submission_Online"], level.DownloadCount);
+
+        interact = false;
         ShouldDisplay.isOn = level.ShouldDisplay;
+        Participant.isOn = level.ParticipantCurrentContest;
+        interact = true;
+
+        bool f = string.IsNullOrWhiteSpace(level.Title) || string.IsNullOrWhiteSpace(level.SongArtist);
+        ShouldDisplay.interactable = !f;
+        Participant.interactable = !f;
     }
 
+    private void Start()
+    {
+        LimLanguageManager.OnLanguageChanged.AddListener(SetTexts);
+        SetTexts();
+    }
+    private void OnDestroy()
+    {
+        LimLanguageManager.OnLanguageChanged.RemoveListener(SetTexts);
+    }
+    public void SetTexts()
+    {
+        tDownload.text = LimLanguageManager.TextDict["Layesta_Submission_Download_Text"];
+        tUpload.text = LimLanguageManager.TextDict["Layesta_Submission_Upload_Text"];
+        tDelete.text = LimLanguageManager.TextDict["Layesta_Submission_Delete_Text"];
+        tAvailable.text = LimLanguageManager.TextDict["Layesta_Submission_Available_Text"];
+        tParticipant.text = LimLanguageManager.TextDict["Layesta_Submission_Participant_Text"];
+    }
     public void Upload()
     {
         StartCoroutine(UploadCoroutine());
@@ -37,8 +64,11 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
     {
         MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_Submission_ConfirmDelete"], () => StartCoroutine(DeleteCoroutine()));
     }
+
+    private bool interact = true;
     public void UpdateInfo()
     {
+        if (!interact) return;
         StartCoroutine(UpdateInfoCoroutine());
     }
 
@@ -123,7 +153,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
             if (infoRet.ErrorCode == ErrorCode.MissingInfo) UpdateUploadStatus("Layesta_Submission_UploadErr3");
             else UpdateUploadStatus("Layesta_Submission_UploadErr2");
             yield break;
-        } 
+        }
         #endregion
 
         UpdateUploadStatus("Layesta_Submission_Upload2");
@@ -349,6 +379,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
     IEnumerator UpdateInfoCoroutine()
     {
         level.ShouldDisplay = ShouldDisplay.isOn;
+        level.ParticipantCurrentContest = Participant.isOn;
         UnityWebRequest web = new UnityWebRequest
         {
             downloadHandler = new DownloadHandlerBuffer(),
@@ -362,9 +393,17 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         yield return web.SendWebRequest();
         if (!string.IsNullOrWhiteSpace(web.error))
         {
-            UpdateUploadStatus("Layesta_Submission_UploadErr2");
             yield break;
         }
+        LayestaLevelResponse ret = JsonConvert.DeserializeObject<LayestaLevelResponse>(web.downloadHandler.text);
+        if (!ret.Succeed)
+        {
+            if (ret.ErrorCode == ErrorCode.MissingInfo)
+                MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_Submission_UploadFirst"]);
+            else
+                MessageBoxManager.Instance.ShowMessage(ret.ErrorCode.ToString());
+        }
+        Initialize(ret.Level);
         Debug.Log(web.downloadHandler.text);
     }
 }
