@@ -325,6 +325,7 @@ Layesta_Submission_Delete_Text$Delete
 Layesta_Submission_Available_Text$Public
 Layesta_Submission_Participant_Text$Participant 2019S1 Contest
 Layesta_Submission_UploadFirst$Please Upload First
+Layesta_Submission_WarnParticipant$Warning: Once joined, you cannot untoggle this.
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.

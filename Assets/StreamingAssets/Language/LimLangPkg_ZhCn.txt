@@ -325,6 +325,7 @@ Layesta_Submission_Delete_Text$删除
 Layesta_Submission_Available_Text$公开
 Layesta_Submission_Participant_Text$参加2019寒假比赛
 Layesta_Submission_UploadFirst$请先上传
+Layesta_Submission_WarnParticipant$注意：您无法取消勾选
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建

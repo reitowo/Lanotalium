@@ -65,11 +65,23 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_Submission_ConfirmDelete"], () => StartCoroutine(DeleteCoroutine()));
     }
 
-    private bool interact = true;
+    private bool interact = true, participantIgnore = false;
     public void UpdateInfo()
     {
         if (!interact) return;
         StartCoroutine(UpdateInfoCoroutine());
+    }
+    public void OnParticipant()
+    {
+        if (participantIgnore) return;
+        if (Participant.isOn)
+        {
+            participantIgnore = true;
+            Participant.isOn = false;
+            MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_Submission_WarnParticipant"]
+                , () => { Participant.isOn = true; UpdateInfo(); participantIgnore = false; }
+                , () => { participantIgnore = false; });
+        }
     }
 
     private void UpdateUploadStatus(string langCode)

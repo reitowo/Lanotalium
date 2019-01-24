@@ -1516,7 +1516,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114116102943526418}
-        m_MethodName: UpdateInfo
+        m_MethodName: OnParticipant
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
