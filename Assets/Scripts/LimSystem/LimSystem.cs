@@ -1154,24 +1154,9 @@ public class LimSystem : MonoBehaviour
 #if UNITY_STANDALONE
         DragAndDrop.DragAndDrop.Enable(ProjectManager.OnDragFile, Application.productName);
         lzip.setEncoding(1);
-#endif
-        StartReportingAlive();
+#endif 
     }
 
-    protected void StartReportingAlive()
-    {
-        if (ReportAliveCoroutine != null) StopCoroutine(ReportAliveCoroutine);
-        ReportAliveCoroutine = StartCoroutine(ReportAlive());
-    }
-    protected Coroutine ReportAliveCoroutine;
-    protected IEnumerator ReportAlive()
-    {
-        while (true)
-        {
-            yield return LimApiUser.ReportAlive(Version);
-            yield return new WaitForSeconds(60);
-        }
-    }
     private string _LastLog;
     private void ReceiveUnityLog(string condition, string stackTrace, LogType type)
     {

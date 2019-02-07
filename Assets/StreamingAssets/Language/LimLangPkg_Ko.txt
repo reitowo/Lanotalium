@@ -295,6 +295,37 @@ EasyRequest_Cancel$취소
 EasyRequest_Confirm$결정
 Plugin_Title_Default$설명을 표시하려면 플러그인 이름을 클릭하십시오.
 Plugin_Exception$현재 실행중인 플러그인이 비정상입니다.
+Layesta_Submission_Online$다운로드 수: {0}
+Layesta_Submission_User_Register$회원가입
+Layesta_Submission_User_Login$로그인
+Layesta_Submission_User_Username$아이디
+Layesta_Submission_User_Password$비밀번호
+Layesta_Submission_User_ConfirmPassword$확인 비밀번호
+Layesta_Submission_User_Email$이메일 주소
+Layesta_Submission_User_Switch_Login$로그인으로 전환
+Layesta_Submission_User_Switch_Register$회원가입으로 전환
+Layesta_Submission_User_InvalidToken$토큰이 만료되었습니다. 다시 시도해주세요.
+Layesta_Submission_User_Wait$잠시만 기다려주세요.
+Layesta_Submission_ConfirmDelete$정말로 삭제할까요? 이 결정은 되돌릴수 없습니다.
+Layesta_Submission_Save$Save .layesta file.
+Layesta_Submission_Load$Load .layesta file.
+Layesta_Submission_Upload1$업로드 준비 중.<br>
+Layesta_Submission_Upload2$업로드 주소를 받아오는 중.<br>
+Layesta_Submission_Upload3$이미지 업로드 주소를 받아오는 중.<br>
+Layesta_Submission_Upload4$레벨 업로드 중...<br>
+Layesta_Submission_Upload5$이미지 업로드 중...<br>
+Layesta_Submission_Upload6$레벨 정보 업로드 중...<br>
+Layesta_Submission_Upload7$완료.
+Layesta_Submission_UploadErr1$잘못된 파일입니다.<br>
+Layesta_Submission_UploadErr2$업로드에 실패하였습니다..<br>
+Layesta_Submission_UploadErr3$정보가 누락되어 있습니다. 실패하였습니다.<br>
+Layesta_Submission_Upload_Text$업로드
+Layesta_Submission_Download_Text$다운로드
+Layesta_Submission_Delete_Text$삭제
+Layesta_Submission_Available_Text$공개
+Layesta_Submission_Participant_Text$2019S1 컨테스트 참가
+Layesta_Submission_UploadFirst$먼저 업로드 해주세요.
+Layesta_Submission_WarnParticipant$경고: 한번 참가하면 되돌릴수 없습니다.
 #NotificationDict
 Motion_TimeExisted$(올바르지 않은 타이밍) 현재 타이밍에 이미 다른 움직임이 존재합니다.
 Motion_InPrevious$(올바르지 않은 타이밍) 현재 타이밍은 다른 움직임의 지속 시간 내 입니다.
