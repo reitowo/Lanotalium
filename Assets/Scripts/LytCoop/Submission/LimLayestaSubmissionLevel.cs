@@ -123,6 +123,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         BinaryReader br = new BinaryReader(ms);
         level.ShouldDisplay = ShouldDisplay.isOn;
         level.Title = br.ReadString();
+        level.Difficulties = "";
         br.ReadString();
         int count = br.ReadInt32();
         for (int i = 0; i < count; ++i)

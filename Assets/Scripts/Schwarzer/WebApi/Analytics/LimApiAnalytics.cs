@@ -15,12 +15,7 @@ namespace Schwarzer.Lanotalium.WebApi.Analytics
     {
         public static async void GatherAnalysis(string AnalysisName)
         {
-            await WebApiHelper.PostObjectAsync("analytics/gather", new AnaDto()
-            {
-                UserId = SystemInfo.deviceUniqueIdentifier,
-                Name = AnalysisName,
-                Value = 1
-            });
+             
         }
     }
 }
