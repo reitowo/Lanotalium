@@ -192,10 +192,10 @@ public class LimBackgroundManager : MonoBehaviour
     {
         if (DisplayManager.FullScreenTuner)
         {
-            if (Mode != Lanotalium.Background.BackgroundMode.Video) SetBackgroundImageSize(Screen.height);
+            if (Mode != Lanotalium.Background.BackgroundMode.Video) SetBackgroundImageSize(1080);
             else
             {
-                ColorRect.sizeDelta = new Vector2(Screen.width, Screen.height);
+                ColorRect.sizeDelta = new Vector2(1920, 1080);
             }
             return;
         }
