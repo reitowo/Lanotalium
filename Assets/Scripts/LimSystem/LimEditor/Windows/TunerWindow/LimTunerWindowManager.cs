@@ -8,7 +8,7 @@ public class LimTunerWindowManager : MonoBehaviour
     public LimWindowManager BaseWindow;
     public RenderTexture TunerRenderTexture;
     public Camera TunerCamera;
-    public Text SkinText, FullScreenText, CameraMotionText, StretchBGAText, ChartSpeedText;
+    public Text SkinText, FullScreenText, CameraMotionText, StretchBGAText, ChartSpeedText, DemoText;
     public GameObject SkinPanel;
     public Image RitmoImg, FisicaImg;
     public SpriteRenderer TunerBackground, TunerBorder;
@@ -35,6 +35,7 @@ public class LimTunerWindowManager : MonoBehaviour
         CameraMotionText.text = LimLanguageManager.TextDict["Window_Tuner_Motion"];
         StretchBGAText.text = LimLanguageManager.TextDict["Window_Tuner_StretchBGA"];
         ChartSpeedText.text = LimLanguageManager.TextDict["Window_Tuner_ChartSpeed"];
+        DemoText.text = LimLanguageManager.TextDict["Window_Tuner_Demo"];
     }
     private void Update()
     {
@@ -171,5 +172,9 @@ public class LimTunerWindowManager : MonoBehaviour
     {
         if (ChartSpeedToggle == null) return;
         TunerManager.ScrollManager.DisableChartSpeed = !ChartSpeedToggle.isOn;
+    }
+    public void OnDemoToggle(Toggle toggle)
+    {
+        LimNoteEase.Instance.DemoMode = toggle.isOn;
     }
 }
