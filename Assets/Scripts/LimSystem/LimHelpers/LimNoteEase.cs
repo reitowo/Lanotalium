@@ -24,14 +24,14 @@ public class LimNoteEase : MonoBehaviour
     private void BuildCurve()
     {
         curve = new AnimationCurve();
-        for (int i = 0; i <= 100; ++i)
+        for (int i = 0; i <= 20; ++i)
         {
-            float t = 0.01f * i;
+            float t = 0.05f * i;
             Vector2 pt = CubicBeizer(t);
             curve.AddKey(pt.x, pt.y);
         }
     }
-    public Vector2 CubicBeizer(float t)
+    private Vector2 CubicBeizer(float t)
     {
         return 3 * Mathf.Pow(1 - t, 2) * t * Point1 + 3 * Mathf.Pow(t, 2) * (1 - t) * Point2 + Mathf.Pow(t, 3) * new Vector2(1, 1);
     }
