@@ -146,7 +146,7 @@ public class LimTapNoteManager : MonoBehaviour
     }
     private float CalculateEasedPercent(float Percent)
     {
-        return LimNoteEase.CalculateEasedPercent(Percent);
+        return LimNoteEase.Instance.CalculateEasedPercent(Percent);
     }
 
     private void UpdateAllNoteShouldUpdate()

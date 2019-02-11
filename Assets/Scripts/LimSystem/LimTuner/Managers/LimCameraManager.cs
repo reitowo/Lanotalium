@@ -79,7 +79,7 @@ public class LimCameraManager : MonoBehaviour
     }
     private float CalculateEasedPercent(float Percent)
     {
-        return LimNoteEase.CalculateEasedPercent(Percent);
+        return LimNoteEase.Instance.CalculateEasedPercent(Percent);
     }
     private float CalculateEasedCurve(float Percent, int Mode)
     {
