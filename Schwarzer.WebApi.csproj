@@ -346,6 +346,12 @@
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>E:/Lanotalium/Lanotalium/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
     </Reference>
+    <Reference Include="DOTweenEditor">
+      <HintPath>E:/Lanotalium/Lanotalium/Assets/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>E:/Lanotalium/Lanotalium/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib">
       <HintPath>H:/Program Files/2018.3.0f2/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
     </Reference>

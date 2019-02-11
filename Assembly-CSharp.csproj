@@ -60,10 +60,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleAudio.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModulePhysics2D.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleSprite.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUI.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUnityVersion.cs" />
+    <Compile Include="Assets\Demigiant\DOTween\Modules\DOTweenModuleUtils.cs" />
     <Compile Include="Assets\Events\FanmadeMatchEp1\FMEp1Controller.cs" />
     <Compile Include="Assets\Realistic Fireworks Show\Scripts\RocketHandler.cs" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_En.txt" />
     <None Include="Assets\Extras\IOS\JsonDotNet\link.xml" />
+    <None Include="Assets\Demigiant\DOTween\readme.txt" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_ZhCn.txt" />
     <None Include="Assets\StreamingAssets\Language\LimLangPkg_Ko.txt" />
     <Reference Include="Unity.PackageManagerUI.Editor">
@@ -311,6 +319,9 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>E:/Lanotalium/Lanotalium/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>E:/Lanotalium/Lanotalium/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>H:/Program Files/2018.3.0f2/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
