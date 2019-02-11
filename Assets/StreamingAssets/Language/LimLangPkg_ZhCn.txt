@@ -327,6 +327,7 @@ Layesta_Submission_Participant_Text$参加2019寒假比赛
 Layesta_Submission_UploadFirst$请先上传
 Layesta_Submission_WarnParticipant$注意：您无法取消勾选
 Window_Tuner_Demo$演示
+Layesta_Contest_Warn$若参加比赛，请将谱师名填写为Hidden，或是无法体现真实身份的名称，否则将取消此谱资格。
 #NotificationDict
 Motion_TimeExisted$（时间错误）当前时间已存在调律器动作，无法创建
 Motion_InPrevious$（时间错误）当前时间处于上一动作持续时间内，无法创建

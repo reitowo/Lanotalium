@@ -327,6 +327,7 @@ Layesta_Submission_Participant_Text$Participant 2019S1 Contest
 Layesta_Submission_UploadFirst$Please Upload First
 Layesta_Submission_WarnParticipant$Warning: Once joined, you cannot untoggle this.
 Window_Tuner_Demo$Demo
+Layesta_Contest_Warn$If you want to join contest, please fill Charter name 'Hidden' or other names that cannot indicate the true identity.
 #NotificationDict
 Motion_TimeExisted$(Time Invalid) Current time already have a Motion. Failed to create.
 Motion_InPrevious$(Time Invalid) Current time is in previous Motion's duration. Failed to create.
