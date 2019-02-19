@@ -17,7 +17,7 @@ public class LimNoteEase : MonoBehaviour
     }
     public Vector2 Point1, Point2;
     public AnimationCurve curve;
-    public bool DemoMode;
+    public bool DemoMode; 
     public float CalculateEasedPercent(float Percent)
     {
         if (!DemoMode) return Mathf.Pow(2, 10 * (Percent / 100 - 1)) * 100;

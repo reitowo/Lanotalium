@@ -39,6 +39,7 @@ public class LimCloudManager : MonoBehaviour
 
     private void Start()
     {
+        return;
         CloudAutosaveToggle.isOn = LimSystem.Preferences.CloudAutosave;
         if (UnityEngine.Application.internetReachability != NetworkReachability.NotReachable)
         {

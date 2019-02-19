@@ -401,14 +401,7 @@ public class LimLayestaManager : MonoBehaviour
 
     public void BuildLayestaFilePre()
     {
-        if (DateTime.Now < new DateTime(2019, 2, 24, 0, 0, 0))
-        {
-            MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_Contest_Warn"], () => BuildLayestaFile());
-        }
-        else
-        {
-            BuildLayestaFile();
-        }
+        BuildLayestaFile();
     }
     public async void BuildLayestaFile()
     {
