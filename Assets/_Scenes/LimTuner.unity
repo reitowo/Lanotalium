@@ -25307,17 +25307,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258939282}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1283976188}
+  m_Father: {fileID: 1189390273}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -100, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &258939284
 MonoBehaviour:
@@ -25353,11 +25353,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "2019 \u5BD2\u5047\u5236\u8C31\u5927\u8D5B\n<size=30>2019 Charting Contest
-    S1</size>\n\n<size=35>2019.01.24 00:00 - 2019.02.24 00:00 (UTC+8)</size>\n\n<size=35>\u4F7F\u7528\u53F3\u4E0A\u89D2Layesta\u8FDB\u884C\u6295\u7A3F\uFF0C\u5E76\u52FE\u9009\u201C\u53C2\u52A02019\u5BD2\u5047\u6BD4\u8D5B\u201D</size>\n<size=35>\u5373\u53EF\u53C2\u52A0\u8BE5\u6BD4\u8D5B\u3002\u73A9\u5BB6\u5728Layesta\u201C\u83B7\u53D6\u8C31\u9762\u201D\u4E0A\u8FDB\u884C\u8BC4\u8BBA\u548C</size>\n<size=35>\u6253\u5206\u3002</size>\n\n<size=30>Use
-    \"Layesta\" function (top-right) to submit. Toggle \"Participant</size>\n<size=30>2019S1
-    Contest to join. Players will use Layesta's Get Levels to</size>\n<size=30>comment
-    and rate.</size>"
+  m_Text: "Lanotalium \u8C31\u9762\u4E2D\u5FC3\u4E0E\u4E91\u5907\u4EFD\u529F\u80FD\u4E0B\u7EBF\n\n\u7531\u4E8E\u8FD9\u4E24\u9879\u529F\u80FD\u4F1A\u5927\u91CF\u5360\u7528\u670D\u52A1\u5668\u8D44\u6E90\uFF0C\u4E0E\nLayesta\u51B2\u7A81\u4E1A\u52A1\uFF0C\u56E0\u6B64\u672C\u670D\u52A1\u5373\u65E5\u8D77\u4E0B\u7EBF\u3002\n"
 --- !u!222 &258939285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26172,7 +26168,7 @@ GameObject:
   - component: {fileID: 271834961}
   - component: {fileID: 271834960}
   m_Layer: 0
-  m_Name: News
+  m_Name: NewsZh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27235,7 +27231,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: What's New
+  m_Text: News - English
 --- !u!222 &302467291
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28081,7 +28077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -300, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &325453731
@@ -34536,7 +34532,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -0.000061035156, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0.5}
@@ -45760,7 +45756,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &559523502
 RectTransform:
   m_ObjectHideFlags: 0
@@ -54712,7 +54708,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400, y: -0.0000333786}
+  m_AnchoredPosition: {x: -100, y: -0.0000333786}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &724151845
@@ -55525,7 +55521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &736099028
 RectTransform:
   m_ObjectHideFlags: 0
@@ -65149,7 +65145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000045776367}
+  m_AnchoredPosition: {x: 0, y: 0.000015258789}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &911910878
@@ -68650,7 +68646,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &959518165
 RectTransform:
   m_ObjectHideFlags: 0
@@ -69617,10 +69613,10 @@ RectTransform:
   m_Father: {fileID: 1175984204}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 60}
+  m_SizeDelta: {x: -100, y: -100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &973829881
 MonoBehaviour:
@@ -69644,18 +69640,20 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5da95b4df6cfd5b4abf99627a75200b4, type: 3}
-    m_FontSize: 50
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 50
-    m_Alignment: 4
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Developing...
+  m_Text: "Lanotalium ChartZone and Cloud offline.\n\nDue to these services use a
+    lot of resources, and \nconflict with Layesta. These services went offline\nfrom
+    today."
 --- !u!222 &973829882
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -79971,7 +79969,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1283976188}
+  - {fileID: 258939283}
   m_Father: {fileID: 271834959}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -80769,7 +80767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0.0000071250834}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0.000009607731}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1197987025
@@ -85591,58 +85589,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1283976187
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 1707625709549672, guid: cada8afcaa9b636478af5b869e0ff51b,
-    type: 2}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1283976188}
-  - component: {fileID: 1283976189}
-  m_Layer: 0
-  m_Name: EventRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1283976188
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 224900061957783038, guid: cada8afcaa9b636478af5b869e0ff51b,
-    type: 2}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283976187}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 258939283}
-  m_Father: {fileID: 1189390273}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -100, y: -100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1283976189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114469559984024730, guid: cada8afcaa9b636478af5b869e0ff51b,
-    type: 2}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1283976187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6f3e7113b44ddf438e2ee3aa8f51401, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1286633143
 GameObject:
   m_ObjectHideFlags: 0
@@ -86896,7 +86842,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 662302270}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.125
+  m_Size: 0.9999998
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -88059,7 +88005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1337129247
 RectTransform:
   m_ObjectHideFlags: 0
@@ -89959,7 +89905,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: -0.000016049566}
+  m_AnchoredPosition: {x: 0.000015258789, y: -0.000014695972}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1384792844
@@ -99978,7 +99924,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: News
+  m_Text: "News - \u4E2D\u6587"
 --- !u!222 &1484369884
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -103063,7 +103009,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000015258789, y: 0.000026838377}
+  m_AnchoredPosition: {x: 0.000015258789, y: 0.000024567256}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1553370355

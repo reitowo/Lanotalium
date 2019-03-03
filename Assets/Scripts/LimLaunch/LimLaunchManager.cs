@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LimLaunchManager : MonoBehaviour
 {
-    public Text Message, VersionText;
+    public Text VersionText;
     public Slider EnterLanotaliumSlider;
     public Text EnterLanotaliumText, TutorialText, SupportMeText, QuitText, ChartZoneText;
     public GameObject SupportMePanel;
@@ -19,7 +19,6 @@ public class LimLaunchManager : MonoBehaviour
         VersionText.text = LimSystem.Version;
         SetLanguageDict();
         SetTexts();
-        StartCoroutine(LoadNotification());
         LimSystem.LanotaliumServer = "https://lanotalium.schwarzer.wang";
     }
     private void SetLanguageDict()
@@ -54,7 +53,7 @@ public class LimLaunchManager : MonoBehaviour
             SupportMeText.text = _LaunchLanguageDict["SupportMe_ZhCn"];
             QuitText.text = _LaunchLanguageDict["Quit_ZhCn"];
         }
-        else if(LimSystem.Preferences.LanguageName == "한국어")
+        else if (LimSystem.Preferences.LanguageName == "한국어")
         {
             ChartZoneText.text = _LaunchLanguageDict["ChartZone_Ko"];
             EnterLanotaliumText.text = _LaunchLanguageDict["EnterLanotalium_Ko"];
@@ -79,20 +78,6 @@ public class LimLaunchManager : MonoBehaviour
     public void QuitFromMenu()
     {
         UnityEngine.Application.Quit();
-    }
-    IEnumerator LoadNotification()
-    {
-        if (UnityEngine.Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            Message.text = (LimSystem.Preferences.LanguageName == "简体中文" ? "网络不可用" : "Network Unavaliable.");
-            yield break;
-        }
-        WWW LoadNotification = new WWW(LimSystem.LanotaliumServer + (LimSystem.Preferences.LanguageName == "简体中文" ? "/lanotalium/notification-zhcn.txt" : "/lanotalium/notification-en.txt"));
-        yield return LoadNotification;
-        if (LoadNotification != null && string.IsNullOrEmpty(LoadNotification.error))
-        {
-            Message.text = LoadNotification.text;
-        }
     }
     public void EnterLanotalium()
     {
