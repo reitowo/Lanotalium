@@ -220,9 +220,17 @@ public class LimLayestaSubmissionManager : MonoBehaviour
         }
         string ret = web.downloadHandler.text;
         JObject response = JObject.Parse(ret);
-        if (!response["Succeed"].Value<bool>())
+        if (response["Succeed"] == null || !response["Succeed"].Value<bool>())
         {
-            MessageBoxManager.Instance.ShowMessage(((ErrorCode)response["ErrorCode"].Value<int>()).ToString());
+            switch (response["ErrorCode"].Value<int>())
+            {
+                case 201:
+                    MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_Submission_IntervalLimit"]);
+                    break;
+                default:
+                    MessageBoxManager.Instance.ShowMessage(((ErrorCode)response["ErrorCode"].Value<int>()).ToString());
+                    break;
+            }
             yield break;
         }
         List<LayestaLevelDto> list = response["Levels"].ToObject<List<LayestaLevelDto>>();

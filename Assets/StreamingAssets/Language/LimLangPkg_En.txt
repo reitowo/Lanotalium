@@ -306,7 +306,7 @@ Layesta_Submission_User_Switch_Login$Switch to Login
 Layesta_Submission_User_Switch_Register$Switch to Register
 Layesta_Submission_User_InvalidToken$Token expired, please login again.
 Layesta_Submission_User_Wait$Please wait.
-Layesta_Submission_ConfirmDelete$Are you sure? This is irreversable, and will delete all files on the server.
+Layesta_Submission_ConfirmDelete$Are you sure? This is irreversable, and will delete all files on the server. <color=orange>Note: If you just want to update, please directly upload the new file again, no need to delete it.</color>
 Layesta_Submission_Save$Save .layesta file.
 Layesta_Submission_Load$Load .layesta file.
 Layesta_Submission_Upload1$Prepare to upload.<br>
@@ -326,6 +326,7 @@ Layesta_Submission_Available_Text$Public
 Layesta_Submission_Participant_Text$Participant 2019S1 Contest
 Layesta_Submission_UploadFirst$Please Upload First
 Layesta_Submission_WarnParticipant$Warning: Once joined, you cannot untoggle this.
+Layesta_Submission_IntervalLimit$You can only create 1 level per 24 hours. 
 Window_Tuner_Demo$Demo
 Layesta_Contest_Warn$If you want to join contest, please fill Charter name 'Hidden' or other names that cannot indicate the true identity.
 #NotificationDict
