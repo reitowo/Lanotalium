@@ -11,9 +11,9 @@ using UnityEngine.UI;
 public class LimLayestaSubmissionLevel : MonoBehaviour
 {
     public Text Title, Artist, Difficulties, Online;
-    public Toggle ShouldDisplay, Participant;
+    public Toggle ShouldDisplay;
 
-    public Text tDownload, tUpload, tDelete, tAvailable, tParticipant;
+    public Text tDownload, tUpload, tDelete, tAvailable;
 
     private LayestaLevelDto level;
 
@@ -26,13 +26,11 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         Online.text = string.Format(LimLanguageManager.TextDict["Layesta_Submission_Online"], level.DownloadCount);
 
         interact = false;
-        ShouldDisplay.isOn = level.ShouldDisplay;
-        Participant.isOn = level.ParticipantCurrentContest;
+        ShouldDisplay.isOn = level.ShouldDisplay; 
         interact = true;
 
         bool f = string.IsNullOrWhiteSpace(level.Title) || string.IsNullOrWhiteSpace(level.SongArtist);
-        ShouldDisplay.interactable = !f;
-        Participant.interactable = !f;
+        ShouldDisplay.interactable = !f; 
     }
 
     private void Start()
@@ -49,8 +47,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
         tDownload.text = LimLanguageManager.TextDict["Layesta_Submission_Download_Text"];
         tUpload.text = LimLanguageManager.TextDict["Layesta_Submission_Upload_Text"];
         tDelete.text = LimLanguageManager.TextDict["Layesta_Submission_Delete_Text"];
-        tAvailable.text = LimLanguageManager.TextDict["Layesta_Submission_Available_Text"];
-        tParticipant.text = LimLanguageManager.TextDict["Layesta_Submission_Participant_Text"];
+        tAvailable.text = LimLanguageManager.TextDict["Layesta_Submission_Available_Text"]; 
     }
     public void Upload()
     {
@@ -70,19 +67,7 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
     {
         if (!interact) return;
         StartCoroutine(UpdateInfoCoroutine());
-    }
-    public void OnParticipant()
-    {
-        if (participantIgnore) return;
-        if (Participant.isOn)
-        {
-            participantIgnore = true;
-            Participant.isOn = false;
-            MessageBoxManager.Instance.ShowMessage(LimLanguageManager.TextDict["Layesta_Submission_WarnParticipant"]
-                , () => { Participant.isOn = true; UpdateInfo(); participantIgnore = false; }
-                , () => { participantIgnore = false; });
-        }
-    }
+    } 
 
     private void UpdateUploadStatus(string langCode)
     {
@@ -392,7 +377,6 @@ public class LimLayestaSubmissionLevel : MonoBehaviour
     IEnumerator UpdateInfoCoroutine()
     {
         level.ShouldDisplay = ShouldDisplay.isOn;
-        level.ParticipantCurrentContest = Participant.isOn;
         UnityWebRequest web = new UnityWebRequest
         {
             downloadHandler = new DownloadHandlerBuffer(),

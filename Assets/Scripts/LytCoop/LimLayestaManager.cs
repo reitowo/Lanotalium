@@ -32,7 +32,7 @@ public class LimLayestaManager : MonoBehaviour
     {
         get
         {
-            if (Application.platform == RuntimePlatform.WindowsEditor) return "H:/ffmpeg.exe";
+            if (Application.platform == RuntimePlatform.WindowsEditor) return "E:/Lanotalium/ffmpeg.exe";
             return Application.streamingAssetsPath + "/Plugins/ffmpeg.exe";
         }
     }

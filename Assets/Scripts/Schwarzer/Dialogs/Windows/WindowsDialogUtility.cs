@@ -294,6 +294,10 @@ public class WindowsDialogUtility : MonoBehaviour
     }
     public static void OpenExplorer(string SelectPath)
     {
-        Process.Start(SelectPath?.Replace("/", "\\"));
+        string path = SelectPath?.Replace("/", "\\");
+        DirectoryInfo di = new DirectoryInfo(path);
+        if (File.Exists(path))
+            path = di.Parent.ToString();
+        Process.Start(path);
     }
 }
